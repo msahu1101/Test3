@@ -1,0 +1,204 @@
+{
+  "roomReservation": {
+    "instance": 0,
+    "customerId": 564654,
+    "propertyId": "dc00e77f-d6bb-4dd7-a8ea-dc33ee9675ad",
+    "roomTypeId": "ROOMCD-v-DPRQ-d-PROP-v-MV021",
+    "programId": "RPCD-v-BAR-d-PROP-v-MV021",
+    "operaState": "RESERVED",
+    "state": "Booked",
+    "nrgStatus": false,
+    "specialRequests": [],
+    "thirdParty": false,
+    "confirmationNumber": "15O3O23RLC",
+    "operaConfirmationNumber": "907409484",
+    "operaHotelCode": "021",
+    "bookDate": "2023-12-14",
+    "profile": {
+      "id": -1,
+      "mlifeNo": 0,
+      "operaId": "902881054",
+      "firstName": "Diana",
+      "lastName": "Nar",
+      "emailAddress1": "steve_sasser+test10@yopmail.com",
+      "phoneNumbers": [
+        {
+          "type": "Home",
+          "number": "+12568451598"
+        }
+      ],
+      "addresses": [
+        {
+          "type": "Home",
+          "preferred": true,
+          "street1": "Field 1",
+          "street2": null,
+          "city": "Miami",
+          "state": "FL",
+          "country": "US",
+          "postalCode": "33101"
+        }
+      ]
+    },
+    "billing": [
+      {
+        "payment": {
+          "cardHolder": "Diana Nar",
+          "firstName": "Diana",
+          "lastName": "Nar",
+          "ccToken": "5555550A00143UO7T02T5ZRR4444",
+          "encryptedccToken": "5555550A00143UO7T02T5ZRR4444",
+          "maskedNumber": "XXXXXXXXXXXXXXXXXXXXXXXX4444",
+          "amount": 248.30,
+          "expiry": "04/2027",
+          "type": "Mastercard"
+        },
+        "address": {
+          "street1": "Field 1",
+          "street2": null,
+          "city": "Miami",
+          "state": "FL",
+          "postalCode": "33101",
+          "country": "US"
+        }
+      }
+    ],
+    "tripDetails": {
+      "checkInDate": "2024-01-26",
+      "checkOutDate": "2024-01-27",
+      "numAdults": 2,
+      "numChildren": 0,
+      "numRooms": 1
+    },
+    "markets": [
+      {
+        "date": "2024-01-26",
+        "marketCode": "TFIT",
+        "sourceCode": "RRC0123456789"
+      }
+    ],
+    "bookings": [
+      {
+        "date": "2024-01-26",
+        "basePrice": 0.00,
+        "customerPrice": 0.00,
+        "price": 219.00,
+        "programIdIsRateTable": false,
+        "overridePrice": -1.00,
+        "overrideProgramIdIsRateTable": false,
+        "resortFeeIsSpecified": false,
+        "resortFee": 37.00,
+        "programId": "RPCD-v-BAR-d-PROP-v-MV021",
+        "isComp": false
+      }
+    ],
+    "chargesAndTaxes": {
+      "charges": [
+        {
+          "date": "2024-01-26",
+          "amount": 256.00,
+          "itemized": [
+            {
+              "itemType": "RoomCharge",
+              "amount": 219.00,
+              "item": "RoomCharge"
+            },
+            {
+              "itemType": "ResortFee",
+              "amount": 37.00,
+              "item": "RSFEE"
+            }
+          ]
+        }
+      ],
+      "taxesAndFees": [
+        {
+          "date": "2024-01-26",
+          "amount": 34.25,
+          "itemized": [
+            {
+              "itemType": "RoomChargeTax",
+              "amount": 29.30,
+              "item": "OCTAX"
+            },
+            {
+              "itemType": "ResortFeeTax",
+              "amount": 4.95,
+              "item": "RSFTX"
+            }
+          ]
+        }
+      ]
+    },
+    "ratesSummary": {
+      "roomSubtotal": 0.00,
+      "programDiscount": -219.00,
+      "discountedSubtotal": 219.00,
+      "discountedAveragePrice": 219.00,
+      "roomRequestsTotal": 0.00,
+      "adjustedRoomSubtotal": 219.00,
+      "resortFee": 37.00,
+      "resortFeePerNight": 37.00,
+      "tripSubtotal": 256.00,
+      "resortFeeAndTax": 41.95,
+      "roomChargeTax": 29.30,
+      "occupancyFee": 0.00,
+      "tourismFee": 0.00,
+      "tourismFeeAndTax": 0.00,
+      "casinoSurcharge": 0.00,
+      "casinoSurchargeAndTax": 0.00,
+      "reservationTotal": 290.25,
+      "depositDue": 248.30,
+      "balanceUponCheckIn": 41.95
+    },
+    "depositDetails": {
+      "dueDate": "2023-12-14",
+      "amount": 248.30,
+      "forfeitDate": "2024-01-23",
+      "forfeitAmount": 248.30,
+      "overrideAmount": -1.00,
+      "refundAmount": 248.30,
+      "calculatedForefeitAmount": 0.00
+    },
+    "depositPolicy": {
+      "depositRequired": true,
+      "creditCardRequired": false
+    },
+    "payments": [
+      {
+        "reservationInstance": 0,
+        "chargeAmount": 248.30,
+        "chargeCardExpiry": "2027-04-01",
+        "status": "Settled",
+        "chargeCardHolder": "Diana Nar",
+        "chargeCardType": "Mastercard",
+        "chargeCardMaskedNumber": "XXXXXXXXXXXXXXXXXXXXXXXX4444",
+        "chargeCardNumber": "5555550A00143UO7T02T5ZRR4444",
+        "fxChecked": false,
+        "fxEligible": false,
+        "fxTransDate": "2023-12-14",
+        "fxAmount": 0.00,
+        "fxRate": 0.00,
+        "fxSettleAmount": 0.00,
+        "isExternal": false,
+        "isDeposit": true
+      }
+    ],
+    "purchasedComponents": [],
+    "amountDue": 248.30,
+    "guaranteeCode": "CC",
+    "customerRank": 0,
+    "customerSegment": 0,
+    "routingInstructions": [],
+    "perpetualPricing": false,
+    "bookingSource": "mgmri",
+    "bookingChannel": "web",
+    "isGroupCode": false,
+    "f1Package": false,
+    "isCreditCardExpired": false,
+    "isStayDateModifiable": true,
+    "hdePackage": false,
+    "depositForfeit": false,
+    "isCancellable": true
+  }
+}

@@ -1,0 +1,23 @@
+{
+    "$schema" : "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion" : "1.0.0.0",
+    "parameters" : {
+        "function_app_name" : {
+            "type" : "string",
+            "value" : "$(TARGET_APP_SERVICE_NAME)"
+        },
+        "apim_vnet_resource_group_name" : {
+            "type" : "string",
+            "value" : "digengsharedservicesvnets-uw-rg-p"
+        },
+        "apim_vnet_name" : {
+            "type" : "string",
+            "value" : "digengsharedservices-uw-vnet-p"
+        },
+        "apim_subnet_name" : {
+            "type" : "string",
+            "value" : "apimngt-uw-sn-$(TARGET_NETWORK_ENVIRONMENT)"
+        }
+    },
+    "resources" : [ ]
+}

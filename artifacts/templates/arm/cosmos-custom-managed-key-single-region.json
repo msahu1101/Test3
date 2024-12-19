@@ -1,0 +1,322 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2019-08-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"team": {
+			"type": "string",
+			"defaultValue": "Cart/Order/Trip/NGL Services"
+		},
+		"keyvault-encryption-key": {
+			"type": "string",
+			"metadata": {
+				"description": "Cosmos DB custom encryption key"
+			}
+		},
+		"account-name": {
+			"type": "string",
+			"metadata": {
+				"description": "Cosmos DB account name"
+			}
+		},
+		"location": {
+			"type": "string",
+			"metadata": {
+				"description": "Location for the Cosmos DB account."
+			}
+		},
+		"primary-region": {
+			"type": "string",
+			"metadata": {
+				"description": "The primary replica region for the Cosmos DB account."
+			}
+		},
+		"default-consistency-level": {
+			"type": "string",
+			"defaultValue": "Session",
+			"allowedValues": [
+				"Eventual",
+				"ConsistentPrefix",
+				"Session",
+				"BoundedStaleness",
+				"Strong"
+			],
+			"metadata": {
+				"description": "The default consistency level of the Cosmos DB account."
+			}
+		},
+		"max-staleness-prefix": {
+			"type": "int",
+			"minValue": 10,
+			"defaultValue": 100000,
+			"maxValue": 2147483647,
+			"metadata": {
+				"description": "Max stale requests. Required for BoundedStaleness. Valid ranges, Single Region: 10 to 1000000. Multi Region: 100000 to 1000000."
+			}
+		},
+		"max-interval-in-seconds": {
+			"type": "int",
+			"minValue": 5,
+			"defaultValue": 300,
+			"maxValue": 86400,
+			"metadata": {
+				"description": "Max lag time (seconds). Required for BoundedStaleness. Valid ranges, Single Region: 5 to 84600. Multi Region: 300 to 86400."
+			}
+		},
+		"multiple-write-locations": {
+			"type": "bool",
+			"defaultValue": true,
+			"allowedValues": [
+				true,
+				false
+			],
+			"metadata": {
+				"description": "Enable multi-master to make all regions writable."
+			}
+		},
+		"automatic-failover": {
+			"type": "bool",
+			"defaultValue": true,
+			"allowedValues": [
+				true,
+				false
+			],
+			"metadata": {
+				"description": "Enable automatic failover for regions. Ignored when Multi-Master is enabled"
+			}
+		},
+		"database-name": {
+			"type": "string",
+			"metadata": {
+				"description": "The name for the SQL database"
+			}
+		},
+		"database-throughput": {
+			"type": "int",
+			"defaultValue": 400,
+			"minValue": 400,
+			"maxValue": 1000000,
+			"metadata": {
+				"description": "The throughput for the database"
+			}
+		},
+		"manual-containers": {
+			"type": "array",
+			"metadata": {
+				"description": "The configuration for the SQL containers that use manual RU settings."
+			}
+		},
+		"autoscale-containers": {
+			"type": "array",
+			"metadata": {
+				"description": "The configuration for the SQL containers that use autoscaling RU settings."
+			}
+		},
+		"environment": {
+			"type": "string",
+			"metadata": {
+				"description": "Application Environment"
+			}
+		},
+		"vnet-resource-group-name": {
+			"type": "string",
+			"metadata": {
+				"description": "The name for the vnet Resource Group Name"
+			}
+		},
+		"vnet-name": {
+			"type": "string",
+			"metadata": {
+				"description": "The name for the vnet-name"
+			}
+		},
+		"subnet-name": {
+			"type": "string",
+			"metadata": {
+				"description": "The name for the subnet-name"
+			}
+		},
+		"container-ttl": {
+			"type": "int",
+			"defaultValue": -1,
+			"metadata": {
+				"description": "Enable TTL in the container level"
+			}
+		}
+	},
+	"variables": {
+		"account-name": "[toLower(parameters('account-name'))]",
+		"consistencyPolicy": {
+			"Eventual": {
+				"defaultConsistencyLevel": "Eventual"
+			},
+			"ConsistentPrefix": {
+				"defaultConsistencyLevel": "ConsistentPrefix"
+			},
+			"Session": {
+				"defaultConsistencyLevel": "Session"
+			},
+			"BoundedStaleness": {
+				"defaultConsistencyLevel": "BoundedStaleness",
+				"maxStalenessPrefix": "[parameters('max-staleness-prefix')]",
+				"maxIntervalInSeconds": "[parameters('max-interval-in-seconds')]"
+			},
+			"Strong": {
+				"defaultConsistencyLevel": "Strong"
+			}
+		},
+		"resourceId": "[resourceId('Microsoft.DocumentDB/databaseAccounts', variables('account-name'))]",
+		"apiVersion": "[providers('Microsoft.DocumentDB', 'databaseAccounts').apiVersions[0]]",
+		"locations": [
+			{
+				"locationName": "[parameters('primary-region')]",
+				"failoverPriority": 0
+			}
+		],
+		"virtualNetwork_externalid": "[concat('/subscriptions/', subscription().subscriptionid, '/resourceGroups/', parameters('vnet-resource-group-name'), '/providers/Microsoft.Network/virtualNetworks/', parameters('vnet-name'))]"
+	},
+	"resources": [
+		{
+			"type": "Microsoft.DocumentDB/databaseAccounts",
+			"apiVersion": "2021-04-15",
+			"name": "[variables('account-name')]",
+			"location": "[parameters('location')]",
+			"tags": {
+				"environment": "[parameters('environment')]",
+				"creator": "[concat(parameters('team'), ' Team')]",
+				"application": "[parameters('team')]",
+				"businessSponsor": "Sudhakar Veluru",
+				"appOwner": "Pramod Baswaraju",
+				"lead": "Pramod Baswaraju",
+				"businessCostCenter": "516-800-80182 Digital Engineering"
+			},
+			"kind": "GlobalDocumentDB",
+			"properties": {
+				"enableAutomaticFailover": "[parameters('automatic-failover')]",
+				"enableMultipleWriteLocations": "[parameters('multiple-write-locations')]",
+				"databaseAccountOfferType": "Standard",
+				"consistencyPolicy": "[variables('consistencyPolicy')[parameters('default-consistency-level')]]",
+				"locations": "[variables('locations')]",
+				"capabilities": [
+				],
+				"ipRules": [
+					{
+						"ipAddressOrRange": "69.162.0.0/24"
+					},
+					{
+						"ipAddressOrRange": "69.162.1.0/24"
+					},
+					{
+						"ipAddressOrRange": "69.162.2.0/24"
+					},
+					{
+						"ipAddressOrRange": "69.162.16.0/24"
+					},
+					{
+						"ipAddressOrRange": "104.42.195.92"
+					},
+					{
+						"ipAddressOrRange": "40.76.54.131"
+					},
+					{
+						"ipAddressOrRange": "52.176.6.30"
+					},
+					{
+						"ipAddressOrRange": "52.169.50.45"
+					},
+					{
+						"ipAddressOrRange": "52.187.184.26"
+					}
+				],
+				"isVirtualNetworkFilterEnabled": "True",
+				"virtualNetworkRules": [
+					{
+						"id": "[concat(variables('virtualNetwork_externalid'), '/subnets/', parameters('subnet-name'))]",
+						"ignoreMissingVNetServiceEndpoint": false
+					}
+				],
+				"keyVaultKeyUri": "[parameters('keyvault-encryption-key')]"
+			}
+		},
+		{
+			"type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases",
+			"name": "[concat(variables('account-name'), '/', parameters('database-name'))]",
+			"apiVersion": "2021-04-15",
+			"dependsOn": [
+				"[resourceId('Microsoft.DocumentDB/databaseAccounts', variables('account-name'))]"
+			],
+			"properties": {
+				"resource": {
+					"id": "[parameters('database-name')]"
+				}
+			}
+		},
+		{
+			"type": "Microsoft.DocumentDb/databaseAccounts/sqlDatabases/containers",
+			"name": "[concat(variables('account-name'), '/', parameters('database-name'), '/', parameters('manual-containers')[copyIndex()].name)]",
+			"copy": {
+				"name": "ContainerCopy",
+				"count": "[length(parameters('manual-containers'))]"
+			},
+			"apiVersion": "2021-04-15",
+			"dependsOn": [
+				"[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', variables('account-name'), parameters('database-name'))]",
+				"[resourceId('Microsoft.DocumentDB/databaseAccounts', variables('account-name'))]"
+			],
+			"properties": {
+				"options": {
+					"throughput": "[parameters('manual-containers')[copyIndex()].containerThroughput]"
+				},
+				"resource": {
+					"id": "[parameters('manual-containers')[copyIndex()].name]",
+					"partitionKey": {
+						"paths": [
+							"[parameters('manual-containers')[copyIndex()].partitionKey]"
+						],
+						"kind": "hash"
+					},
+					"defaultTtl": "[parameters('manual-containers')[copyIndex()].ttl]",
+					"indexingPolicy": {
+						"indexingMode": "consistent",
+						"includedPaths": "[parameters('manual-containers')[copyIndex()].includedPaths]",
+						"excludedPaths": "[parameters('manual-containers')[copyIndex()].excludedPaths]"
+					}
+				}
+			}
+		},
+		{
+			"type": "Microsoft.DocumentDb/databaseAccounts/sqlDatabases/containers",
+			"name": "[concat(variables('account-name'), '/', parameters('database-name'), '/', parameters('autoscale-containers')[copyIndex()].name)]",
+			"copy": {
+				"name": "ContainerCopy",
+				"count": "[length(parameters('autoscale-containers'))]"
+			},
+			"apiVersion": "2021-04-15",
+			"dependsOn": [
+				"[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', variables('account-name'), parameters('database-name'))]",
+				"[resourceId('Microsoft.DocumentDB/databaseAccounts', variables('account-name'))]"
+			],
+			"properties": {
+				"options": {
+					"autoscaleSettings": {
+						"maxThroughput": "[parameters('autoscale-containers')[copyIndex()].maxContainerThroughput]"
+					}
+				},
+				"resource": {
+					"id": "[parameters('autoscale-containers')[copyIndex()].name]",
+					"partitionKey": {
+						"paths": [
+							"[parameters('autoscale-containers')[copyIndex()].partitionKey]"
+						],
+						"kind": "hash"
+					},
+					"defaultTtl": "[parameters('autoscale-containers')[copyIndex()].ttl]",
+					"indexingPolicy": {
+						"indexingMode": "consistent",
+						"includedPaths": "[parameters('autoscale-containers')[copyIndex()].includedPaths]",
+						"excludedPaths": "[parameters('autoscale-containers')[copyIndex()].excludedPaths]"
+					}
+				}
+			}
+		}
+	]
+}

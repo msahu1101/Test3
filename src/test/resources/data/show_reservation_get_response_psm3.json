@@ -1,0 +1,154 @@
+{
+  "billing": {
+    "payment": {
+      "paymentToken": "***",
+      "type": "***"
+    }
+  },
+  "bookDate": "2024-01-04 12:41:44.619",
+  "cancellable": false,
+  "charges": {
+    "deliveryFee": 0.0,
+    "discountedSubtotal": 636.0,
+    "gratuity": 0.0,
+    "let": 57.24,
+    "reservationTotal": 777.04,
+    "serviceCharge": {
+      "amount": 83.8,
+      "itemized": {
+        "charge": 76.88,
+        "tax": 6.92
+      }
+    },
+    "showSubtotal": 636.0,
+    "transactionFee": {
+      "amount": 0.0,
+      "itemized": {
+        "charge": 0.0,
+        "tax": 0.0
+      }
+    }
+  },
+  "comp": false,
+  "confirmationNumber": "114541065",
+  "deliveryMethodCode": "TF",
+  "eventDate": "2024-01-04",
+  "eventTime": "9:30 PM",
+  "hdePackage": false,
+  "id": "114541065",
+  "inventorySeasonId": "Michael Jackson ONE 2024",
+  "profile": {
+    "addresses": [
+      {
+        "city": "***",
+        "country": "***",
+        "postalCode": "***",
+        "preferred": false,
+        "state": "***",
+        "street1": "***",
+        "street2": "***",
+        "type": "***"
+      }
+    ],
+    "archticsId": "290243318",
+    "emailAddress1": "***",
+    "firstName": "***",
+    "lastName": "***",
+    "phoneNumbers": [
+      {
+        "number": "***",
+        "type": "***"
+      }
+    ]
+  },
+  "propertyId": "e0f70eb3-7e27-4c33-8bcd-f30bf3b1103a",
+  "resendEmailAllowed": true,
+  "reservationStatus": "Reserved",
+  "seasonId": "93baa260-c998-4cad-84e5-01f08f790389",
+  "sendReservationsAsyncToTM": false,
+  "showEventCode": "MJE0104L",
+  "showEventId": "43f868a9-95ef-4995-9124-e025cbb06cf9",
+  "showId": "michael-jackson-one",
+  "tickets": [
+    {
+      "accessible": false,
+      "adaCompanion": false,
+      "barCode": "487485376138",
+      "basePrice": 159.0,
+      "description": "Standard",
+      "discountedPrice": 159.0,
+      "holdClass": "DIST-OPEN",
+      "priceCode": "CN07",
+      "priceCodeDescription": "Category C",
+      "seat": {
+        "rowName": "A",
+        "seatNumber": 3,
+        "sectionName": "103"
+      },
+      "showEventCode": "MJE0104L",
+      "showEventId": "43f868a9-95ef-4995-9124-e025cbb06cf9",
+      "ticketTypeCode": "_A",
+      "ticketTypeCodeDescription": "Standard"
+    },
+    {
+      "accessible": false,
+      "adaCompanion": false,
+      "barCode": "762648494730",
+      "basePrice": 159.0,
+      "description": "Standard",
+      "discountedPrice": 159.0,
+      "holdClass": "DIST-OPEN",
+      "priceCode": "CN07",
+      "priceCodeDescription": "Category C",
+      "seat": {
+        "rowName": "A",
+        "seatNumber": 4,
+        "sectionName": "103"
+      },
+      "showEventCode": "MJE0104L",
+      "showEventId": "43f868a9-95ef-4995-9124-e025cbb06cf9",
+      "ticketTypeCode": "_A",
+      "ticketTypeCodeDescription": "Standard"
+    },
+    {
+      "accessible": false,
+      "adaCompanion": false,
+      "barCode": "900087449226",
+      "basePrice": 159.0,
+      "description": "Standard",
+      "discountedPrice": 159.0,
+      "holdClass": "DIST-OPEN",
+      "priceCode": "CN07",
+      "priceCodeDescription": "Category C",
+      "seat": {
+        "rowName": "A",
+        "seatNumber": 5,
+        "sectionName": "103"
+      },
+      "showEventCode": "MJE0104L",
+      "showEventId": "43f868a9-95ef-4995-9124-e025cbb06cf9",
+      "ticketTypeCode": "_A",
+      "ticketTypeCodeDescription": "Standard"
+    },
+    {
+      "accessible": false,
+      "adaCompanion": false,
+      "barCode": "624941105802",
+      "basePrice": 159.0,
+      "description": "Standard",
+      "discountedPrice": 159.0,
+      "holdClass": "DIST-OPEN",
+      "priceCode": "CN07",
+      "priceCodeDescription": "Category C",
+      "seat": {
+        "rowName": "A",
+        "seatNumber": 6,
+        "sectionName": "103"
+      },
+      "showEventCode": "MJE0104L",
+      "showEventId": "43f868a9-95ef-4995-9124-e025cbb06cf9",
+      "ticketTypeCode": "_A",
+      "ticketTypeCodeDescription": "Standard"
+    }
+  ]
+}

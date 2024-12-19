@@ -1,0 +1,69 @@
+{
+    "cartId": "8051e799-084d-4a4c-bc91-020faf9ad008",
+    "paymentCaptured": true,
+    "guestProfile": {
+        "firstName": "John",
+        "lastName": "Holding",
+        "emailAddress1": "John@Holding.com",
+        "addresses": [
+            {
+                "preferred": "false",
+                "street1": "6770 Edmond St",
+                "street2": "",
+                "city": "Las Vegas",
+                "state": "NV",
+                "country": "US",
+                "postalCode": "89118",
+                "type": "Home"
+            }
+        ],
+        "phoneNumbers": [
+            {
+                "type": "Home",
+                "number": "7026929138"
+            }
+        ]
+    },
+    "billings": [
+        {
+            "payment": {
+                "firstName": "John",
+                "lastName": "Holding",
+                "amount": 15000.00,
+                "maskedNumber": "401200xxxxxx0007",
+                "cardHolder": "John Holding",
+                "cvv": "123",
+                "expiry": "10/2025",
+                "type": "Visa",
+                "ccToken": "401200pNkNsp0007"
+            },
+            "address": {
+                "street1": "6770 Edmond St",
+                "city": "Las Vegas",
+                "postalCode": "89118",
+                "state": "NV",
+                "country": "US"
+            }
+        },
+        {
+            "payment": {
+                "firstName": "John",
+                "lastName": "Holding",
+                "amount": 18000.00,
+                "maskedNumber": "555555xxxxxx4444",
+                "cardHolder": "John Holding",
+                "cvv": "123",
+                "expiry": "10/2025",
+                "type": "Mastercard",
+                "ccToken": "5555550A001ARULCHUCGJ5ZI4444"
+            },
+            "address": {
+                "street1": "6770 Edmond St",
+                "city": "Las Vegas",
+                "postalCode": "89118",
+                "state": "NV",
+                "country": "US"
+            }
+        }
+    ]
+}

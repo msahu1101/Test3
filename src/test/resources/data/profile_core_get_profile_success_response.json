@@ -1,0 +1,72 @@
+{
+  "customer": {
+    "id": "1126170165250",
+    "profileId": "89433add-7a9f-47b0-9420-3b827f9cbe7c",
+    "externalId": {
+      "archticsId": "290261504",
+      "operaId": "902867226",
+      "patronId": "102780541",
+      "gseCustomerId": "1126170165250"
+    },
+    "forgetMyInfo": false,
+    "profile": {
+      "firstName": "Cart",
+      "lastName": "Sanchez",
+      "dateOfBirth": "1995-07-18",
+      "emailAddresses": [
+        {
+          "email": "cotest@yopmail.com",
+          "preferred": false,
+          "type": "PERSONAL"
+        }
+      ],
+      "phoneNumbers": [
+        {
+          "type": "MOBILE",
+          "number": "7027670356",
+          "preferred": false
+        }
+      ],
+      "addresses": [
+        {
+          "type": "HOME",
+          "street1": "3900 S Las Vegas Blvd",
+          "city": "Las Vegas",
+          "state": "NV",
+          "country": "US",
+          "zipCode": "89109",
+          "preferred": true
+        }
+      ],
+      "caslOptin": false,
+      "customerIdentifications": []
+    },
+    "memberships": {
+      "type": "MLIFE",
+      "tier": "SAPPHIRE",
+      "enrolledAt": "58083",
+      "dateOfEnrollment": "2024-02-27",
+      "isActive": true,
+      "creditAccount": false,
+      "partnerInterests": [],
+      "customerIdentifications": [],
+      "marketAuthorizers": []
+    },
+    "metadata": {
+      "createdAt": "2024-02-27T22:55:53.003Z",
+      "createdBy": "0oarhw0qwgIksMZKf0h7",
+      "modifiedAt": "2024-04-04T23:28:41.573Z",
+      "modifiedBy": "mgm_order_service"
+    }
+  },
+  "header": {
+    "origin": "API",
+    "mgmCorerelationId": "cc640c1a-872d-4578-aa96-14c4fbd2618a",
+    "apiVersion": "2.24",
+    "executionId": "3a678ae9-56fb-4319-979a-c4090e46fffa",
+    "status": {
+      "code": "SUCCESS",
+      "messages": []
+    }
+  }
+}

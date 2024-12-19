@@ -1,0 +1,566 @@
+{
+  "$ref":"#/definitions/showReservationEvent",
+  "type":"object",
+  "definitions": {
+    "showReservationEvent": {
+      "type": "object",
+      "required": false,
+      "additionalProperties": false,
+      "javaType": "com.mgmresorts.event.dto.show.ShowEvent",
+      "properties": {
+        "topic": {
+          "type": "string",
+          "required": false
+        },
+        "subject": {
+          "type": "string",
+          "required": false
+        },
+        "id": {
+          "type": "string",
+          "required": false
+        },
+        "eventType": {
+          "type": "string",
+          "required": false
+        },
+        "eventTime": {
+          "type": "string",
+          "required": false
+        },
+        "dataVersion": {
+          "type": "string",
+          "required": false
+        },
+        "metadataVersion": {
+          "type": "string",
+          "required": false
+        },
+        "data": {
+          "type": "object",
+          "required": false,
+          "$ref": "#/definitions/reservationData"
+        }
+      }
+    },
+    "reservationData": {
+      "type": "object",
+      "required": false,
+      "additionalProperties": false,
+      "javaType": "com.mgmresorts.event.dto.show.ReservationData",
+      "properties": {
+        "callbackUrl": {
+          "type": "string",
+          "required": false
+        },
+        "headers": {
+          "type": "object",
+          "required": false,
+          "$ref": "#/definitions/headersMap"
+        },
+        "dataGovernance": {
+          "type": "object",
+          "required": false,
+          "$ref": "#/definitions/reservationDataGovernance"
+        },
+        "body": {
+          "type": "string",
+          "required": false,
+          "$ref": "#/definitions/reservationFromBody"
+        },
+        "validationCode": {
+          "type": "string",
+          "required": false
+        },
+        "validationUrl": {
+          "type": "string",
+          "required": false
+        }
+      }
+    },
+    "headersMap": {
+      "type": "object",
+      "required": false,
+      "additionalProperties": false,
+      "javaType": "com.mgmresorts.event.dto.show.Headers",
+      "properties": {
+        "x-mgm-channel": {
+          "type": "string",
+          "required": false
+        },
+        "x-mgm-transaction-id": {
+          "type": "string",
+          "required": false
+        },
+        "x-mgm-source": {
+          "type": "string",
+          "required": false
+        },
+        "x-mgm-correlation-id": {
+          "type": "string",
+          "required": false
+        }
+      }
+    },
+    "reservationDataGovernance": {
+      "type": "object",
+      "required": false,
+      "additionalProperties": false,
+      "javaType": "com.mgmresorts.event.dto.show.ReservationDataGovernance",
+      "properties": {
+        "eventExpiryTime": {
+          "type": "string",
+          "required": false
+        },
+        "catalogId": {
+          "type": "string",
+          "required": false
+        },
+        "containsPCI": {
+          "type": "boolean",
+          "required": false
+        },
+        "containsPII": {
+          "type": "boolean",
+          "required": false
+        },
+        "tags": {
+          "type": "array",
+          "required": false,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "reservationFromBody": {
+      "type": "object",
+      "required": false,
+      "additionalProperties": false,
+      "javaType": "com.mgmresorts.event.dto.show.ShowReservationFromBody",
+      "properties": {
+        "error": {
+          "type": "object",
+          "required": false,
+          "additionalProperties": false,
+          "javaType": "com.mgmresorts.event.dto.show.ErrorResponse",
+          "properties": {
+            "code": {
+              "type": "string",
+              "example": "620-2-106"
+            },
+            "message": {
+              "type": "string",
+              "example": "No items held for order_num: 100516080."
+            }
+          }
+        },
+        "showReservation": {
+          "type": "object",
+          "required": false,
+          "$ref": "#/definitions/showReservation"
+        }
+      }
+    },
+    "showReservation": {
+      "type": "object",
+      "required": false,
+      "additionalProperties": false,
+      "javaType": "com.mgmresorts.event.dto.show.ShowReservation",
+      "properties": {
+        "reservationResponse": {
+          "type": "object",
+          "required": false,
+          "$ref": "#/definitions/reservationResponse"
+        }
+      }
+    },
+    "reservationResponse": {
+      "type": "object",
+      "required": false,
+      "additionalProperties": false,
+      "javaType": "com.mgmresorts.event.dto.show.ReservationResponse",
+      "properties": {
+        "id": {
+          "type": "string",
+          "required": false
+        },
+        "orderId": {
+          "type": "string",
+          "required": false
+        },
+        "orderLineItemId": {
+          "type": "string",
+          "required": false
+        },
+        "bookDate": {
+          "type": "string",
+          "required": false
+        },
+        "confirmationNumber": {
+          "type": "string",
+          "required": false
+        },
+        "programId": {
+          "type": "string",
+          "required": false
+        },
+        "propertyId": {
+          "type": "string",
+          "required": false
+        },
+        "comp": {
+          "type": "boolean",
+          "required": false
+        },
+        "hdePackage": {
+          "type": "boolean",
+          "required": false
+        },
+        "resendEmailAllowed": {
+          "type": "boolean",
+          "required": false
+        },
+        "deliveryMethodCode": {
+          "type": "string",
+          "required": false
+        },
+        "eventDate": {
+          "type": "string",
+          "required": false,
+          "format": "date"
+        },
+        "eventTime": {
+          "type": "string",
+          "required": false
+        },
+        "reservationStatus": {
+          "type": "string",
+          "required": false
+        },
+        "seasonId": {
+          "type": "string",
+          "required": false
+        },
+        "showEventId": {
+          "type": "string",
+          "required": false
+        },
+        "showEventCode": {
+          "type": "string",
+          "required": false
+        },
+        "tickets": {
+          "type": "array",
+          "$ref": "#/definitions/ticketsInfo"
+        },
+        "charges": {
+          "type": "object",
+          "$ref": "#/definitions/chargesInfo"
+        },
+        "billing": {
+          "type": "object",
+          "$ref": "#/definitions/billingInfo"
+        },
+        "profile": {
+          "type": "object",
+          "$ref": "#/definitions/profileInfo"
+        },
+        "notifyClient": {
+          "type": "boolean",
+          "required": false
+        },
+        "rtcEnabled": {
+          "type": "boolean",
+          "required": false
+        }
+      }
+    },
+    "billingInfo": {
+      "type": "object",
+      "required": false,
+      "javaType": "com.mgmresorts.event.dto.show.Billing",
+      "properties": {
+        "payment": {
+          "type": "object",
+          "$ref": "#/definitions/paymentInfo"
+        }
+      }
+    },
+    "paymentInfo": {
+      "type": "object",
+      "required": false,
+      "javaType": "com.mgmresorts.event.dto.show.Payment",
+      "properties": {
+        "type": {
+          "type": "string",
+          "example": "Visa"
+        },
+        "paymentToken": {
+          "type": "string"
+        }
+      }
+    },
+    "ticketsInfo": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "javaType": "com.mgmresorts.event.dto.show.Tickets",
+        "properties": {
+          "priceCode": {
+            "type": "string",
+            "required": false
+          },
+          "holdClass": {
+            "type": "string",
+            "required": false
+          },
+          "basePrice": {
+            "type": "number",
+            "required": false
+          },
+          "barCode": {
+            "type": "string",
+            "required": false
+          },
+          "discountedPrice": {
+            "type": "number",
+            "required": false
+          },
+          "description": {
+            "type": "string",
+            "required": false
+          },
+          "showEventId": {
+            "type": "string",
+            "required": false
+          },
+          "showEventCode": {
+            "type": "string",
+            "required": false
+          },
+          "ticketTypeCode": {
+            "type": "string",
+            "required": false
+          },
+          "seat": {
+            "type": "object",
+            "$ref": "#/definitions/seatInfo"
+          }
+        }
+      }
+    },
+    "seatInfo": {
+      "type": "object",
+      "required": "false",
+      "javaType": "com.mgmresorts.event.dto.show.Seat",
+      "properties": {
+        "seatNumber": {
+          "type": "integer",
+          "required": false
+        },
+        "sectionName": {
+          "type": "string",
+          "required": false
+        },
+        "rowName": {
+          "type": "string",
+          "required": false
+        }
+      }
+    },
+    "chargesInfo": {
+      "type": "object",
+      "required": false,
+      "javaType": "com.mgmresorts.event.dto.show.Charges",
+      "properties": {
+        "discountedSubtotal": {
+          "type": "number",
+          "format": "double",
+          "required": false
+        },
+        "showSubtotal": {
+          "type": "number",
+          "format": "double",
+          "required": false
+        },
+        "let": {
+          "type": "number",
+          "format": "double",
+          "required": false
+        },
+        "deliveryFee": {
+          "type": "number",
+          "format": "double",
+          "required": false
+        },
+        "gratuity": {
+          "type": "number",
+          "format": "double",
+          "required": false
+        },
+        "reservationTotal": {
+          "type": "number",
+          "format": "double",
+          "required": false
+        },
+        "serviceCharge": {
+          "type": "object",
+          "$ref": "#/definitions/serviceChargeInfo"
+        },
+        "transactionFee": {
+          "type": "object",
+          "$ref": "#/definitions/transactionFeeInfo"
+        }
+      }
+    },
+    "serviceChargeInfo": {
+      "type": "object",
+      "required": false,
+      "javaType": "com.mgmresorts.event.dto.show.ServiceCharge",
+      "properties": {
+        "amount": {
+          "type": "number",
+          "format": "double",
+          "required": false
+        },
+        "itemized": {
+          "type": "object",
+          "$ref": "#/definitions/itemizedInfo"
+        }
+      }
+    },
+    "transactionFeeInfo": {
+      "type": "object",
+      "required": false,
+      "javaType": "com.mgmresorts.event.dto.show.TransactionFee",
+      "properties": {
+        "amount": {
+          "type": "number",
+          "format": "double",
+          "required": false
+        },
+        "itemized": {
+          "type": "object",
+          "$ref": "#/definitions/itemizedInfo"
+        }
+      }
+    },
+    "itemizedInfo": {
+      "type": "object",
+      "required": false,
+      "javaType": "com.mgmresorts.event.dto.show.Itemized",
+      "properties": {
+        "charge": {
+          "type": "number",
+          "format": "double",
+          "required": false
+        },
+        "tax": {
+          "type": "number",
+          "format": "double",
+          "required": false
+        }
+      }
+    },
+    "profileInfo": {
+      "type": "object",
+      "required": false,
+      "javaType": "com.mgmresorts.event.dto.show.Profile",
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "required": true
+        },
+        "lastName": {
+          "type": "string",
+          "required": true
+        },
+        "archticsId": {
+          "type": "string",
+          "required": false
+        },
+        "phoneNumbers": {
+          "type": "array",
+          "$ref": "#/definitions/phoneNumbersInfo"
+        },
+        "emailAddress1": {
+          "type": "string",
+          "required": false
+        },
+        "dateOfBirth": {
+          "type": "string",
+          "required": false
+        },
+        "mlifeNo": {
+          "type": "string",
+          "required": false
+        },
+        "addresses": {
+          "type": "array",
+          "$ref": "#/definitions/addressesInfo"
+        }
+      }
+    },
+    "phoneNumbersInfo": {
+      "type": "array",
+      "required": false,
+      "items": {
+        "type": "object",
+        "javaType": "com.mgmresorts.event.dto.show.PhoneNumbers",
+        "properties":{
+          "type": {
+            "type": "string",
+            "required": false
+          },
+          "number": {
+            "type": "string",
+            "required": false
+          }
+        }
+      }
+    },
+    "addressesInfo": {
+      "type": "array",
+      "required": false,
+      "items": {
+        "type": "object",
+        "javaType": "com.mgmresorts.event.dto.show.Addresses",
+        "properties": {
+          "type": {
+            "type": "string",
+            "required": false
+          },
+          "preferred": {
+            "type": "boolean",
+            "required": false
+          },
+          "street1": {
+            "type": "string",
+            "required": false
+          },
+          "street2": {
+            "type": "string",
+            "required": false
+          },
+          "city": {
+            "type": "string",
+            "required": false
+          },
+          "state": {
+            "type": "string",
+            "required": false
+          },
+          "country": {
+            "type": "string",
+            "required": false
+          },
+          "postalCode": {
+            "type": "string",
+            "required": false
+          }
+        }
+      }
+    }
+  }
+}

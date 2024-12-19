@@ -1,0 +1,18 @@
+{
+    "header": {
+        "origin": "API",
+        "mgmCorerelationId": "",
+        "apiVersion": "3.1",
+        "executionId": "3c62f081-d9f4-4bf2-a046-e3566ccf7a28",
+        "status": {
+            "code": "FAILURE",
+            "messages": [
+                {
+                    "text": "Missing mandatory information in the request: Invalid Trip Parameters - Number Of Adults Should be greater than 0",
+                    "type": "ERROR",
+                    "code": "120-1-1018"
+                }
+            ]
+        }
+    }
+}

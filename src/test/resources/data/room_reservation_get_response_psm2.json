@@ -1,0 +1,383 @@
+{
+  "roomReservation": {
+    "instance": 0,
+    "id": "string",
+    "customerId": "string",
+    "itineraryId": "string",
+    "propertyId": "string",
+    "roomTypeId": "string",
+    "programId": "string",
+    "upgradeRoomTypeId": "string",
+    "operaState": "string",
+    "state": "Saved",
+    "nrgStatus": true,
+    "notifyCustomer": true,
+    "ratesFormat": "string",
+    "hdePackage": true,
+    "f1Package": true,
+    "holdId": "string",
+    "orderId": "string",
+    "orderLineItemId": "string",
+    "depositForfeit": true,
+    "isGroupCode": true,
+    "perpetualPricing": true,
+    "promo": "string",
+    "specialRequests": [
+      "string"
+    ],
+    "roomNumber": "string",
+    "confirmationNumber": "string",
+    "partyConfirmationNumber": "string",
+    "primarySharerConfirmationNumber": "string",
+    "operaConfirmationNumber": "string",
+    "operaHotelCode": "string",
+    "operaRoomCode": "string",
+    "otaConfirmationNumber": "string",
+    "cancellationReason": "string",
+    "cancellationPolicyInfo": "string",
+    "cancellationNumber": "string",
+    "bookDate": "2020-08-15",
+    "thirdParty": true,
+    "tripDetails": {
+      "checkInDate": "2020-08-15",
+      "checkOutDate": "2020-08-20",
+      "numAdults": 2,
+      "numChildren": 2,
+      "numRooms": 1
+    },
+    "profile": {
+      "id": 0,
+      "title": "string",
+      "operaId": "string",
+      "lmsId": "string",
+      "partnerAccounts": [
+        {
+          "partnerAccountNo": "7892345",
+          "programCategory": "R",
+          "programSubcategory": "MRD",
+          "programDescription": "Member",
+          "membershipLevel": "Member",
+          "programCode": "MI"
+        }
+      ],
+      "firstName": "John",
+      "lastName": "Doe",
+      "phoneNumbers": [
+        {
+          "type": "Home",
+          "number": "string"
+        }
+      ],
+      "emailAddress1": "johndoe@nomail.com",
+      "emailAddress2": "johndoe@nomail.com",
+      "dateOfBirth": "1995-12-31",
+      "tier": "sapphire",
+      "dateOfEnrollment": "1995-12-31",
+      "mlifeNo": 0,
+      "mgmId": "00usw98v0kpet9S0x0h7",
+      "hgpNo": "string",
+      "swrrNo": "string",
+      "addresses": [
+        {
+          "type": "Home",
+          "preferred": true,
+          "street1": "string",
+          "street2": "string",
+          "city": "string",
+          "state": "string",
+          "country": "string",
+          "postalCode": "string"
+        }
+      ]
+    },
+    "billing": [
+      {
+        "payment": {
+          "cardHolder": "John doe",
+          "firstName": "John",
+          "lastName": "Doe",
+          "ccToken": "string",
+          "encryptedccToken": "string",
+          "maskedNumber": "string",
+          "cvv": "123",
+          "type": "Mastercard, visa",
+          "expiry": "10/2022",
+          "amount": 0
+        },
+        "address": {
+          "street1": "234 W Main St",
+          "street2": "Unit 415",
+          "city": "Las Vegas",
+          "state": "NV",
+          "postalCode": "12345",
+          "country": "US"
+        }
+      }
+    ],
+    "markets": [
+      {
+        "date": "2020-08-15",
+        "marketCode": "string",
+        "sourceCode": "string"
+      }
+    ],
+    "bookings": [
+      {
+        "date": "2020-08-15",
+        "basePrice": 0,
+        "customerPrice": 0,
+        "price": 0,
+        "isDiscounted": true,
+        "programIdIsRateTable": true,
+        "overridePrice": 0,
+        "overrideProgramIdIsRateTable": true,
+        "isComp": true,
+        "resortFeeIsSpecified": true,
+        "resortFee": 0,
+        "programId": "string",
+        "pricingRuleId": "string",
+        "overrideProgramId": "string",
+        "overridePricingRuleId": "string"
+      }
+    ],
+    "chargesAndTaxes": {
+      "charges": [
+        {
+          "date": "2020-08-15",
+          "amount": 0,
+          "itemized": [
+            {
+              "id": "cd909839-c886-4952-8323-7f0a867a650b",
+              "shortDescription": "Guaranteed Early Check-In",
+              "active": true,
+              "pricingApplied": "NIGHTLY",
+              "itemType": "RoomCharge",
+              "amount": 0,
+              "item": "string"
+            }
+          ]
+        }
+      ],
+      "taxesAndFees": [
+        {
+          "date": "2020-08-15",
+          "amount": 0,
+          "itemized": [
+            {
+              "id": "cd909839-c886-4952-8323-7f0a867a650b",
+              "shortDescription": "Guaranteed Early Check-In",
+              "active": true,
+              "pricingApplied": "NIGHTLY",
+              "itemType": "RoomChargeTax",
+              "amount": 0,
+              "item": "string"
+            }
+          ]
+        }
+      ]
+    },
+    "ratesSummary": {
+      "roomSubtotal": 518,
+      "programDiscount": 100,
+      "discountedSubtotal": 418,
+      "discountedAveragePrice": 209,
+      "roomRequestsTotal": 0,
+      "adjustedRoomSubtotal": 418,
+      "resortFee": 75,
+      "resortFeePerNight": 60.44,
+      "tripSubtotal": 493,
+      "resortFeeAndTax": 88.44,
+      "roomChargeTax": 55.93,
+      "occupancyFee": 3,
+      "tourismFee": 2,
+      "tourismFeeAndTax": 6.82,
+      "casinoSurcharge": 2,
+      "casinoSurchargeAndTax": 6.82,
+      "reservationTotal": 562.36,
+      "depositDue": 236.96,
+      "previousDeposit": 218,
+      "changeInDeposit": 18.96,
+      "balanceUponCheckIn": 325.4
+    },
+    "depositDetails": {
+      "dueDate": "2020-08-15",
+      "amountPolicy": "string",
+      "amount": 0,
+      "forfeitDate": "2020-08-18",
+      "forfeitAmount": 0,
+      "overrideAmount": 0,
+      "depositRuleCode": "string",
+      "cancellationRuleCode": "string",
+      "refundAmount": 0,
+      "calculatedForefeitAmount": 0,
+      "itemized": [
+        {
+          "itemType": "RoomCharge",
+          "amount": 0,
+          "item": "string"
+        }
+      ]
+    },
+    "depositPolicy": {
+      "depositRequired": true,
+      "creditCardRequired": true
+    },
+    "guaranteeCode": "string",
+    "payments": [
+      {
+        "reservationInstance": 0,
+        "chargeAmount": 0,
+        "chargeCardExpiry": "string",
+        "fxChecked": true,
+        "fxEligible": true,
+        "fxTransDate": "2020-08-15",
+        "fxAmount": 0,
+        "fxRate": 0,
+        "fxSettleAmount": 0,
+        "status": "string",
+        "isDeposit": true,
+        "isExternal": true,
+        "chargeCardHolder": "string",
+        "chargeCurrencyCode": "string",
+        "chargeCardType": "string",
+        "chargeCardMaskedNumber": "string",
+        "chargeCardNumber": "string",
+        "fxCurrencyCode": "string",
+        "fxAcceptMessage": "string",
+        "fxAuthApprovalCode": "string"
+      }
+    ],
+    "purchasedComponents": [
+      {
+        "id": "cd909839-c886-4952-8323-7f0a867a650b",
+        "code": "EARLYCHECKIN",
+        "shortDescription": "Guaranteed Early Check-In",
+        "longDescription": "Room will be available for check-in beginning at 11 AM, rather than standard time of 3 PM.",
+        "active": true,
+        "nonEditable": false,
+        "pricingApplied": "NIGHTLY",
+        "tripPrice": 20,
+        "tripTax": 4,
+        "price": 10,
+        "prices": [
+          {
+            "date": "2020-08-15",
+            "amount": 10,
+            "tax": 2
+          }
+        ]
+      }
+    ],
+    "amountDue": 0,
+    "customerRank": 0,
+    "customerSegment": 0,
+    "customerDominantPlay": "Poker",
+    "shareWiths": [
+      "string"
+    ],
+    "shareWithType": "Full",
+    "rrUpSell": "string",
+    "alerts": [
+      {
+        "alertCodeId": "string",
+        "description": "string",
+        "alertAreaId": "string"
+      }
+    ],
+    "routingInstructions": [
+      {
+        "id": "string",
+        "name": "string",
+        "source": "string",
+        "memberShipNumber": "string",
+        "startDate": "2020-08-15",
+        "endDate": "2020-08-20",
+        "window": 0,
+        "limitType": "string",
+        "limit": 0,
+        "dailyYN": true,
+        "applicableSunday": true,
+        "applicableMonday": true,
+        "applicableTuesday": true,
+        "applicableWednesday": true,
+        "applicableThursday": true,
+        "applicableFriday": true,
+        "applicableSaturday": true,
+        "authorizerId": "string",
+        "routingCodes": [
+          "string"
+        ],
+        "isSystemRouting": true,
+        "comments": "string"
+      }
+    ],
+    "traces": [
+      {
+        "date": "2020-08-15",
+        "resolvedDate": "2020-08-15",
+        "departmentId": "string",
+        "text": "string",
+        "resolvedUser": "string"
+      }
+    ],
+    "shareWithCustomers": [
+      {
+        "id": 0,
+        "title": "string",
+        "operaId": "string",
+        "lmsId": "string",
+        "partnerAccounts": [
+          {
+            "partnerAccountNo": "7892345",
+            "programCategory": "R",
+            "programSubcategory": "MRD",
+            "programDescription": "Member",
+            "membershipLevel": "Member",
+            "programCode": "MI"
+          }
+        ],
+        "firstName": "John",
+        "lastName": "Doe",
+        "phoneNumbers": [
+          {
+            "type": "Home",
+            "number": "string"
+          }
+        ],
+        "emailAddress1": "johndoe@nomail.com",
+        "emailAddress2": "johndoe@nomail.com",
+        "dateOfBirth": "1995-12-31",
+        "tier": "sapphire",
+        "dateOfEnrollment": "1995-12-31",
+        "mlifeNo": 0,
+        "mgmId": "00usw98v0kpet9S0x0h7",
+        "hgpNo": "string",
+        "swrrNo": "string",
+        "addresses": [
+          {
+            "type": "Home",
+            "preferred": true,
+            "street1": "string",
+            "street2": "string",
+            "city": "string",
+            "state": "string",
+            "country": "string",
+            "postalCode": "string"
+          }
+        ]
+      }
+    ],
+    "comments": "string",
+    "additionalComments": [
+      "string"
+    ],
+    "agentInfo": {
+      "agentId": "string",
+      "agentType": "string"
+    },
+    "bookingSource": "string",
+    "bookingChannel": "string",
+    "isCreditCardExpired": true,
+    "isStayDateModifiable": true
+  }
+}

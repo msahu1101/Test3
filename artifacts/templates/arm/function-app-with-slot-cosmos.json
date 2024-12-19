@@ -1,0 +1,237 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"team": {
+			"type": "string",
+			"defaultValue": "Cart/Order/Trip/NGL Services"
+		},
+		"function_app_name": {
+			"type": "string",
+			"metadata": {
+				"description": "The name of the function app that you wish to create."
+			}
+		},
+		"slot_name": {
+			"type": "string",
+			"metadata": {
+				"description": "The name of the function app slot that you wish to create."
+			}
+		},
+		"app_insights_name": {
+			"type": "string",
+			"metadata": {
+				"description": "The created name of the app insight."
+			}
+		},
+		"app_service_plan_name": {
+			"type": "string",
+			"metadata": {
+				"description": "The created name of the app service plan."
+			}
+		},
+		"storage_account_name": {
+			"type": "string",
+			"metadata": {
+				"description": "Created name of the storage account."
+			}
+		},
+		"function_worker_runtime": {
+			"type": "string",
+			"metadata": {
+				"description": "The language worker runtime to load in the function app."
+			}
+		},
+		"function_sku": {
+			"type": "string",
+			"metadata": {
+				"description": "The SKU of App Service Plan"
+			}
+		},
+		"vnet_resource_group_name": {
+			"type": "string",
+			"metadata": {
+				"description": "Resource Group of the vnet which gets asociated with Storage"
+			}
+		},
+		"vnet_name": {
+			"type": "string",
+			"metadata": {
+				"description": "vnet Name which gets asociated with Storage"
+			}
+		},
+		"subnet_name": {
+			"type": "string",
+			"metadata": {
+				"description": "Storage Network Access Control List"
+			}
+		},
+		"app_service_resource_group_name": {
+			"type": "string",
+			"metadata": {
+				"description": "Name of the App Service Group"
+			}
+		},
+		"environment": {
+			"type": "string",
+			"metadata": {
+				"description": "Application Environment"
+			}
+		},
+		"application_backend_canned_mode": {
+			"type": "string",
+			"metadata": {
+				"description": "Created Redis Cache Name"
+			}
+		},
+		"application_version": {
+			"type": "string",
+			"metadata": {
+				"description": "The code version of the application"
+			}
+		},
+		"application_runtime_environment": {
+			"type": "string",
+			"metadata": {
+				"description": "Environment where the code is running"
+			}
+		},
+		"apim_vnet_resource_group_name": {
+			"type": "string",
+			"metadata": {
+				"description": "Resource group where api management is running"
+			}
+		},
+		"apim_vnet_name": {
+			"type": "string",
+			"metadata": {
+				"description": "Api management vnet"
+			}
+		},
+		"apim_subnet_name": {
+			"type": "string",
+			"metadata": {
+				"description": "Api management subnet"
+			}
+		},
+		"cosmos_name": {
+			"type": "string",
+			"metadata": {
+				"description": "Created Cosmos Name"
+			}
+		}
+	},
+	"variables": {
+		"storageAccountid": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', parameters('storage_account_name'))]",
+		"subnetId": "[resourceId(parameters('vnet_resource_group_name') ,'Microsoft.Network/virtualNetworks/subnets',parameters('vnet_name'),parameters('subnet_name'))]",
+		"appServicePlanId": "[resourceId(parameters('app_service_resource_group_name') ,'Microsoft.Web/serverfarms',parameters('app_service_plan_name'))]",
+		"appManagementId": "[resourceId('a07a1ed6-22e4-4781-b58e-aa1685bc93b2', parameters('apim_vnet_resource_group_name'),'Microsoft.Network/virtualNetworks/subnets',parameters('apim_vnet_name'), parameters('apim_subnet_name'))]"
+	},
+	"resources": [
+		{
+			"apiVersion": "2015-05-01",
+			"name": "[parameters('app_insights_name')]",
+			"type": "Microsoft.Insights/components",
+			"location": "[resourceGroup().location]",
+			"properties": {
+				"ApplicationId": "[parameters('app_insights_name')]"
+			},
+			"tags": {
+				"environment": "[parameters('environment')]",
+				"creator": "[concat(parameters('team'), ' Team')]",
+				"application": "[parameters('team')]",
+				"businessSponsor": "Sudhakar Veluru",
+				"appOwner": "Pramod Baswaraju",
+				"lead": "Pramod Baswaraju",
+				"businessCostCenter": "516-800-80182 Digital Engineering"
+			}
+		},
+		{
+			"type": "Microsoft.Web/sites/slots",
+			"apiVersion": "2020-06-01",
+			"name": "[concat(parameters('function_app_name'),'/',parameters('slot_name'))]",
+			"location": "[resourceGroup().location]",
+			"kind": "functionapp",
+			"identity": {
+				"type": "SystemAssigned"
+			},
+			"tags": {
+				"environment": "[parameters('environment')]",
+				"creator": "[concat(parameters('team'), ' Team')]",
+				"application": "[parameters('team')]",
+				"businessSponsor": "Sudhakar Veluru",
+				"appOwner": "Pramod Baswaraju",
+				"lead": "Pramod Baswaraju",
+				"businessCostCenter": "516-800-80182 Digital Engineering"
+			},
+			"properties": {
+				"httpsOnly": true,
+				"serverFarmId": "[variables('appServicePlanId')]",
+				"siteConfig": {
+					"alwaysOn": true,
+					"remoteDebuggingEnabled": false,
+					"netFrameworkVersion": "v4.7",
+					"requestTracingEnabled": true,
+					"httpLoggingEnabled": true,
+					"detailedErrorLoggingEnabled": true,
+					"minTlsVersion": 1.2,
+					"webSocketsEnabled": false,
+					"appSettings": [
+						{
+							"name": "AzureWebJobsStorage",
+							"value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storage_account_name'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]"
+						},
+						{
+							"name": "FUNCTIONS_EXTENSION_VERSION",
+							"value": "~2"
+						},
+						{
+							"name": "WEBSITE_NODE_DEFAULT_VERSION",
+							"value": "10.14.1"
+						},
+						{
+							"name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+							"value": "[reference(concat('microsoft.insights/components/', parameters('app_insights_name'))).InstrumentationKey]"
+						},
+						{
+							"name": "FUNCTIONS_WORKER_RUNTIME",
+							"value": "[parameters('function_worker_runtime')]"
+						},
+						{
+							"name": "application.backend.canned-mode",
+							"value": "[parameters('application_backend_canned_mode')]"
+						},
+						{
+							"name": "runtime.application.version",
+							"value": "[parameters('application_version')]"
+						},
+						{
+							"name": "runtime.environment",
+							"value": "[parameters('application_runtime_environment')]"
+						},
+						{
+							"name": "datastore.cosmos.url",
+							"value": "[concat('https://',concat(parameters('cosmos_name'),'.documents.azure.com:443'))]"
+						}
+					]
+				}
+			},
+			"resources": [
+				{
+					"condition": "[not(equals(parameters('slot_name'), 'production'))]",
+					"type": "config",
+					"apiVersion": "2018-02-01",
+					"name": "virtualNetwork",
+					"location": "[resourceGroup().location]",
+					"dependsOn": [
+						"[resourceId('Microsoft.Web/sites/slots', parameters('function_app_name'),parameters('slot_name'))]"
+					],
+					"properties": {
+						"subnetResourceId": "[variables('subnetId')]",
+						"swiftSupported": true
+					}
+				}
+			]
+		}
+	]
+}

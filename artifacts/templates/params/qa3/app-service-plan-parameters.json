@@ -1,0 +1,40 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"team": {
+			"type": "string",
+			"value": "Order Services"
+		},
+		"asp_name": {
+			"type": "string",
+			"value": "orderservicecore-$(TARGET_APP_SERVICE_LOCATION)-asp-$(TARGET_APP_SERVICE_ENVIRONMENT)"
+		},
+		"location": {
+			"type": "string",
+			"value": "West US"
+		},
+		"sku_name": {
+			"type": "string",
+			"value": "P2v2"
+		},
+		"sku_tier": {
+			"type": "string",
+			"value": "PremiumV2"
+		},
+		"sku_size": {
+			"type": "string",
+			"value": "P2v2"
+		},
+		"sku_family": {
+			"type": "string",
+			"value": "Pv2"
+		},
+		"environment": {
+			"type": "string",
+			"value": "$(TARGET_APP_SERVICE_ENVIRONMENT)"
+		}
+	},
+	"resources": [
+	]
+}

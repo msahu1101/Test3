@@ -1,0 +1,308 @@
+{
+    "roomReservation": {
+        "id": "d4197ce8-f98e-4587-a5c8-b1e31194b970",
+        "instance": 1,
+        "customerId": 1410676031745,
+        "propertyId": "f8d6a944-7816-412f-a39a-9a63aad26833",
+        "itineraryId": "16821774849",
+        "roomTypeId": "004155b0-e142-4d34-98e7-9fae6be44c0d",
+        "programId": "db30af7e-f61f-41f0-951f-71c6f378ac99",
+        "operaState": "RESERVED",
+        "state": "Booked",
+        "nrgStatus": false,
+        "specialRequests": [],
+        "thirdParty": false,
+        "confirmationNumber": "M083E2631",
+        "operaConfirmationNumber": "914068067",
+        "operaHotelCode": "285",
+        "postingState": "Success",
+        "bookDate": "2023-12-21",
+        "profile": {
+            "id": 1410676031745,
+            "mlifeNo": 0,
+            "operaId": "907298305",
+            "firstName": "Raman",
+            "lastName": "Lamba",
+            "emailAddress1": "Raman@Lamba.com",
+            "phoneNumbers": [
+                {
+                    "type": "Other",
+                    "number": "+17026923456"
+                }
+            ],
+            "addresses": [
+                {
+                    "type": "Other",
+                    "preferred": false,
+                    "street1": "6770 Edmond St",
+                    "street2": null,
+                    "city": "Las Vegas",
+                    "state": "NV",
+                    "country": "US",
+                    "postalCode": "89118"
+                }
+            ]
+        },
+        "billing": [
+            {
+                "payment": {
+                    "cardHolder": "Raman Lamba",
+                    "firstName": "Raman",
+                    "lastName": "Lamba",
+                    "ccToken": "fUt6XUOiIRSxMTwAgQ55KH10MRMQYJn6s95ZK0bHGs9AKBDaTiVAhX0cS3Uxwq7CrR9OqWLb/Ki0TLnnkcsMMA==",
+                    "encryptedccToken": "fUt6XUOiIRSxMTwAgQ55KH10MRMQYJn6s95ZK0bHGs9AKBDaTiVAhX0cS3Uxwq7CrR9OqWLb/Ki0TLnnkcsMMA==",
+                    "maskedNumber": "XXXXXXXXXXXXXXXXXXXXXXXX4444",
+                    "amount": 20408.38,
+                    "expiry": "02/2025",
+                    "type": "Mastercard"
+                },
+                "address": {
+                    "street1": "6770 Edmond St",
+                    "street2": null,
+                    "city": "Las Vegas",
+                    "state": "NV",
+                    "postalCode": "89118",
+                    "country": "US"
+                }
+            }
+        ],
+        "tripDetails": {
+            "checkInDate": "2024-02-16",
+            "checkOutDate": "2024-02-18",
+            "numAdults": 2,
+            "numChildren": 0,
+            "numRooms": 1
+        },
+        "markets": [
+            {
+                "date": "2024-02-16",
+                "marketCode": "TFIT",
+                "sourceCode": "TFITTAC"
+            },
+            {
+                "date": "2024-02-17",
+                "marketCode": "TFIT",
+                "sourceCode": "TFITTAC"
+            }
+        ],
+        "bookings": [
+            {
+                "date": "2024-02-16",
+                "basePrice": 9999.99,
+                "customerPrice": 0.00,
+                "price": 8999.99,
+                "programIdIsRateTable": false,
+                "overridePrice": -1.00,
+                "overrideProgramIdIsRateTable": false,
+                "resortFeeIsSpecified": false,
+                "resortFee": 0.00,
+                "programId": "db30af7e-f61f-41f0-951f-71c6f378ac99",
+                "pricingRuleId": "2c36efd2-3b2a-4ffb-bf1b-49007afceb1d",
+                "isComp": false
+            },
+            {
+                "date": "2024-02-17",
+                "basePrice": 9999.99,
+                "customerPrice": 0.00,
+                "price": 8999.99,
+                "programIdIsRateTable": false,
+                "overridePrice": -1.00,
+                "overrideProgramIdIsRateTable": false,
+                "resortFeeIsSpecified": false,
+                "resortFee": 0.00,
+                "programId": "db30af7e-f61f-41f0-951f-71c6f378ac99",
+                "pricingRuleId": "2c36efd2-3b2a-4ffb-bf1b-49007afceb1d",
+                "isComp": false
+            }
+        ],
+        "chargesAndTaxes": {
+            "charges": [
+                {
+                    "date": "2024-02-16",
+                    "amount": 9034.99,
+                    "itemized": [
+                        {
+                            "itemType": "RoomCharge",
+                            "amount": 8999.99,
+                            "item": "Room Charge"
+                        },
+                        {
+                            "itemType": "ExtraGuestCharge",
+                            "amount": 0.00,
+                            "item": "Extra Guest Charge"
+                        },
+                        {
+                            "itemType": "ResortFee",
+                            "amount": 35.00,
+                            "item": "Resort Fee"
+                        }
+                    ]
+                },
+                {
+                    "date": "2024-02-17",
+                    "amount": 9034.99,
+                    "itemized": [
+                        {
+                            "itemType": "RoomCharge",
+                            "amount": 8999.99,
+                            "item": "Room Charge"
+                        },
+                        {
+                            "itemType": "ExtraGuestCharge",
+                            "amount": 0.00,
+                            "item": "Extra Guest Charge"
+                        },
+                        {
+                            "itemType": "ResortFee",
+                            "amount": 35.00,
+                            "item": "Resort Fee"
+                        }
+                    ]
+                }
+            ],
+            "taxesAndFees": [
+                {
+                    "date": "2024-02-16",
+                    "amount": 1208.88,
+                    "itemized": [
+                        {
+                            "itemType": "RoomChargeTax",
+                            "amount": 1204.20,
+                            "item": "Room Tax"
+                        },
+                        {
+                            "itemType": "ExtraGuestChargeTax",
+                            "amount": 0.00,
+                            "item": "Extra Guest Tax"
+                        },
+                        {
+                            "itemType": "ResortFeeTax",
+                            "amount": 4.68,
+                            "item": "Resort Fee Tax"
+                        }
+                    ]
+                },
+                {
+                    "date": "2024-02-17",
+                    "amount": 1208.88,
+                    "itemized": [
+                        {
+                            "itemType": "RoomChargeTax",
+                            "amount": 1204.20,
+                            "item": "Room Tax"
+                        },
+                        {
+                            "itemType": "ExtraGuestChargeTax",
+                            "amount": 0.00,
+                            "item": "Extra Guest Tax"
+                        },
+                        {
+                            "itemType": "ResortFeeTax",
+                            "amount": 4.68,
+                            "item": "Resort Fee Tax"
+                        }
+                    ]
+                }
+            ]
+        },
+        "ratesSummary": {
+            "roomSubtotal": 19999.98,
+            "programDiscount": 2000.00,
+            "discountedSubtotal": 17999.98,
+            "discountedAveragePrice": 8999.99,
+            "roomRequestsTotal": 0.00,
+            "adjustedRoomSubtotal": 17999.98,
+            "resortFee": 70.00,
+            "resortFeePerNight": 35.00,
+            "tripSubtotal": 18069.98,
+            "resortFeeAndTax": 79.37,
+            "roomChargeTax": 2408.40,
+            "occupancyFee": 0.00,
+            "tourismFee": 0.00,
+            "tourismFeeAndTax": 0.00,
+            "casinoSurcharge": 0.00,
+            "casinoSurchargeAndTax": 0.00,
+            "reservationTotal": 20487.75,
+            "depositDue": 20408.38,
+            "balanceUponCheckIn": 79.37,
+            "previousDeposit": 20408.38,
+            "changeInDeposit": 0.00
+        },
+        "depositDetails": {
+            "dueDate": "2023-12-21",
+            "amountPolicy": "PercentAmount",
+            "amount": 20408.38,
+            "forfeitDate": "2024-02-14",
+            "forfeitAmount": 10204.19,
+            "overrideAmount": -1.00,
+            "depositRuleCode": "FULL",
+            "cancellationRuleCode": "48H",
+            "itemized": [
+                {
+                    "itemType": "RoomCharge",
+                    "amount": 17999.98,
+                    "item": "Room Charge"
+                },
+                {
+                    "itemType": "RoomChargeTax",
+                    "amount": 2408.40,
+                    "item": "Room Tax"
+                },
+                {
+                    "itemType": "ExtraGuestCharge",
+                    "amount": 0.00,
+                    "item": "Extra Guest Charge"
+                },
+                {
+                    "itemType": "ExtraGuestChargeTax",
+                    "amount": 0.00,
+                    "item": "Extra Guest Tax"
+                }
+            ]
+        },
+        "depositPolicy": {
+            "depositRequired": true,
+            "creditCardRequired": true
+        },
+        "payments": [
+            {
+                "reservationInstance": 1,
+                "chargeAmount": 20408.38,
+                "chargeCardExpiry": "2025-02-01",
+                "status": "Settled",
+                "chargeCardHolder": "Raman Lamba",
+                "chargeCurrencyCode": "USD",
+                "chargeCardType": "Mastercard",
+                "chargeCardMaskedNumber": "XXXXXXXXXXXXXXXXXXXXXXXX4444",
+                "chargeCardNumber": "fUt6XUOiIRSxMTwAgQ55KH10MRMQYJn6s95ZK0bHGs9AKBDaTiVAhX0cS3Uxwq7CrR9OqWLb/Ki0TLnnkcsMMA==",
+                "fxChecked": true,
+                "fxEligible": false,
+                "fxTransDate": "2023-12-21",
+                "fxAmount": 0.00,
+                "fxRate": 0.00,
+                "fxSettleAmount": 20408.38,
+                "fxCurrencyCode": "USD",
+                "fxAcceptMessage": "Approved",
+                "fxAuthApprovalCode": "936053",
+                "isDeposit": true,
+                "isExternal": false
+            }
+        ],
+        "purchasedComponents": [],
+        "amountDue": 20408.38,
+        "guaranteeCode": "CC",
+        "customerRank": 0,
+        "customerSegment": 0,
+        "routingInstructions": [],
+        "perpetualPricing": false,
+        "bookingSource": "mgmri",
+        "bookingChannel": "web",
+        "isGroupCode": false,
+        "f1Package": false,
+        "isCreditCardExpired": false,
+        "isStayDateModifiable": true,
+        "hdePackage": false,
+        "depositForfeit": false,
+        "isCancellable": true
+    }
+}

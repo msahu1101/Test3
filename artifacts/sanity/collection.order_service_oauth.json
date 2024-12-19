@@ -1,0 +1,2984 @@
+{
+	"info": {
+		"_postman_id": "5c6043f2-96e5-4d26-beef-83eea90ae01d",
+		"name": "Order-Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Checkout",
+			"item": [
+				{
+					"name": "oauth-token",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uuid = require('uuid'); \r",
+									"pm.environment.set('x_mgm_correlation_id', uuid.v4());\r",
+									"\r",
+									"const moment = require('moment');\r",
+									"pm.environment.set(\"checkin_date\", moment().add(1, 'month').format(\"YYYY-MM-DD\"));\r",
+									"pm.environment.set(\"checkout_date\", moment().add(1, 'month').add(1, 'day').format(\"YYYY-MM-DD\"));\r",
+									"\r",
+									"//pm.environment.set(\"property_id\", 'dc00e77f-d6bb-4dd7-a8ea-dc33ee9675ad');\r",
+									"//pm.environment.set(\"property_id\", '66964e2b-2550-4476-84c3-1a4c0c5c067f');\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json(),\r",
+									"newAccessToken = jsonResponse.access_token;\r",
+									"pm.environment.set('oauth_access_token', newAccessToken);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "client_id",
+									"value": "{{ords_client_id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{ords_client_secret}}",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "rooms.reservation:create rooms.reservation:update rooms.reservation:read rooms.reservation:override rooms.reservation.charges:override rooms.reservation.charges:read rooms.availability:read rooms.program:read booking.room.resv:update booking.room.resv:search rcs.rmqs:all rcs.rcs:all rcs.ns:all rcs.dls:all booking.room.resv:batch profile:read profile:create profile:update directory:read:guest directory:search:guest directory:create:guest directory.passcode:issue:guest loyalty:profile:create loyalty:profile:update loyalty:profile:read profile:read loyalty:balances:read loyalty:comments:read loyalty:linkedprofiles:read loyalty:stopcodes:read loyalty:promos:read loyalty:taxinfo:read itinerary:read abandoned:cart:read itinerary:update itinerary:create itinerary:read loyalty:balances:read loyalty:comments:read loyalty:linkedprofiles:read loyalty:promos:read loyalty:stopcodes:read loyalty:taxinfo:read loyalty:profile:create loyalty:profile:read loyalty:profile:update restaurants.notes:read restaurants.reservation:cancel:guest restaurants.reservation:create restaurants.reservations:read:guest restaurants.reservation.cart:create restaurants.reservation:update restaurants.notes:read:guest restaurants.reservation.cart:create:guest restaurants.reservations:read restaurants.reservation:update:guest restaurants.reservation.sheet:read restaurants.reservation:cancel restaurants.reservation.cart:delete:guest restaurants.reservation.cart:delete restaurants.availability:read:guest restaurants.reservation.sheet:read:guest restaurants.availability:read restaurants.reservation:create:guest cart:checkout cart:update cart:delete cart:read cart:create\n",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{oath_token_endpoint}}",
+							"host": [
+								"{{oath_token_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-response-body\", function() {\r",
+									"    customer_id = jsonResponse.customer.id;\r",
+									"    pm.environment.set('customer_id', customer_id);\r",
+									"    pm.environment.set('first_name', jsonResponse.customer.profile.firstName);\r",
+									"    pm.environment.set('last_name', jsonResponse.customer.profile.lastName);\r",
+									"    pm.expect(jsonResponse.customer.id).to.not.have.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customer\": {\r\n        \"profile\": {\r\n            \"title\": \"MR\",\r\n            \"firstName\": \"{{$randomFirstName}}\",\r\n            \"lastName\": \"{{$randomLastName}}\",\r\n            \"dateOfBirth\": \"1950-01-11\",\r\n            \"emailAddresses\": [\r\n                {\r\n                    \"email\": \"PTest123@PTest123.com\",\r\n                    \"preferred\": true,\r\n                    \"type\": \"BUSINESS\"\r\n                }\r\n            ],\r\n            \"phoneNumbers\": [\r\n                {\r\n                    \"type\": \"HOME\",\r\n                    \"number\": \"1234567890\",\r\n                    \"preferred\": true\r\n                }\r\n            ],\r\n            \"addresses\": [\r\n                {\r\n                    \"type\": \"HOME\",\r\n                    \"street1\": \"Stephenie St\",\r\n                    \"street2\": \"Summerlin\",\r\n                    \"city\": \"Henderson\",\r\n                    \"state\": \"NV\",\r\n                    \"country\": \"US\",\r\n                    \"zipCode\": \"92606\",\r\n                    \"preferred\": true\r\n                }\r\n            ]\r\n        },\r\n        \"membershipOptin\": true,\r\n        \"memberships\": {\r\n            \"type\": \"MLIFE\",\r\n            \"enrolledAt\": \"mlife\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{create_customer_endpoint}}",
+							"host": [
+								"{{create_customer_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-itinerary",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-response-body\", function() {\r",
+									"    itinerary_id = jsonResponse.itinerary.itineraryId;\r",
+									"    pm.environment.set('itinerary_id', itinerary_id);\r",
+									"    pm.expect(jsonResponse.itinerary.itineraryId).to.not.have.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"value": "{{x_mgm_correlation_id}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"itineraryName\": \"mgmi-sanitytestitinerary_tobedeleted\",\r\n    \"customerId\": \"{{customer_id}}\",\r\n    \"tripParams\": {\r\n        \"numAdults\": 1,\r\n        \"numChildren\": 1,\r\n        \"departureDate\": \"{{checkout_date}}\",\r\n        \"arrivalDate\": \"{{checkin_date}}\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{itinerary_endpoint}}",
+							"host": [
+								"{{itinerary_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "room-availability",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"room-availability-validate-valid-response-code\", function() {\r",
+									"    let jsonResponse = pm.response.json();\r",
+									"    let availabilityLen = jsonResponse.availability.length; \r",
+									"    pm.environment.set('room_type_id_1', \"\");\r",
+									"    pm.environment.set('room_type_id_2', \"\");\r",
+									"    pm.environment.set('program_id_1', \"\");\r",
+									"    pm.environment.set('program_id_2', \"\");\r",
+									"\r",
+									"    for (var i = 0;i<availabilityLen;i++) {\r",
+									"        if (jsonResponse.availability[i].roomTypeId && !pm.environment.get('room_type_id_1')) {\r",
+									"            pm.environment.set('room_type_id_1', jsonResponse.availability[i].roomTypeId);\r",
+									"            pm.environment.set('program_id_1', jsonResponse.availability[i].price.itemized[0].programId);\r",
+									"        } else if (jsonResponse.availability[i].roomTypeId && !pm.environment.get('room_type_id_2')) {\r",
+									"            pm.environment.set('room_type_id_2', jsonResponse.availability[i].roomTypeId);\r",
+									"            pm.environment.set('program_id_2', jsonResponse.availability[i].price.itemized[0].programId);\r",
+									"        }\r",
+									"\r",
+									"        if(pm.environment.get('room_type_id_1') && pm.environment.get('room_type_id_2')) {\r",
+									"            break;\r",
+									"        } \r",
+									"        \r",
+									"    }\r",
+									"    if(i == availabilityLen && !pm.environment.get('room_type_id_2')) {\r",
+									"            pm.environment.set('room_type_id_2', pm.environment.get('room_type_id_1'));\r",
+									"            pm.environment.set('program_id_2', pm.environment.get('program_id_1'));\r",
+									"    }\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-mgm-source",
+								"type": "text",
+								"value": "ice"
+							},
+							{
+								"key": "x-mgm-channel",
+								"type": "text",
+								"value": "ice"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{oauth_access_token}}"
+							},
+							{
+								"key": "x-mgm-transaction-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							}
+						],
+						"url": {
+							"raw": "{{room_availability_endpoint}}?checkInDate={{checkin_date}}&checkOutDate={{checkout_date}}&numAdults=2&propertyId={{property_id}}",
+							"host": [
+								"{{room_availability_endpoint}}"
+							],
+							"query": [
+								{
+									"key": "checkInDate",
+									"value": "{{checkin_date}}"
+								},
+								{
+									"key": "checkOutDate",
+									"value": "{{checkout_date}}"
+								},
+								{
+									"key": "numAdults",
+									"value": "2"
+								},
+								{
+									"key": "propertyId",
+									"value": "{{property_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add-product-to-empty-cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"add-product-to-empty-cart-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"add-product-to-empty-cart-valid-response-body\", function() {\r",
+									"    cart_id = jsonResponse.cart.cartId;\r",
+									"    pm.environment.set('cart_id', cart_id);\r",
+									"    pm.expect(jsonResponse.cart.cartId).to.not.have.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-source",
+								"value": "ice",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-channel",
+								"value": "ice",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product\": {\r\n        \"data\": {\r\n            \"checkInDate\": \"{{checkin_date}}\",\r\n            \"checkOutDate\": \"{{checkout_date}}\",\r\n            \"numberOfAdults\": \"1\",\r\n            \"numberOfChildren\": \"1\",\r\n            \"numberOfRooms\":1,\r\n            \"propertyId\": \"{{property_id}}\",\r\n            \"roomTypeId\": \"{{room_type_id_1}}\",\r\n            \"programId\": \"{{program_id_1}}\",\r\n            \"checkPrice\": \"100.5\"\r\n        },\r\n        \"type\": \"ROOM\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{add_product_cart_endpoint}}",
+							"host": [
+								"{{add_product_cart_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add-product-to-cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-response-body\", function() {\r",
+									"    pm.expect(jsonResponse.cart.cartId).to.not.have.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-source",
+								"value": "ice",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-channel",
+								"value": "ice",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cartId\": \"{{cart_id}}\",\r\n    \"product\": {\r\n        \"data\": {\r\n            \"checkInDate\": \"{{checkin_date}}\",\r\n            \"checkOutDate\": \"{{checkout_date}}\",\r\n            \"numberOfAdults\": \"1\",\r\n            \"numberOfChildren\": \"1\",\r\n            \"numberOfRooms\":1,\r\n            \"propertyId\": \"{{property_id}}\",\r\n            \"roomTypeId\": \"{{room_type_id_2}}\",\r\n            \"programId\": \"{{program_id_2}}\",\r\n            \"checkPrice\": \"100.5\"\r\n        },\r\n        \"type\": \"ROOM\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{add_product_cart_endpoint}}",
+							"host": [
+								"{{add_product_cart_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-response-body\", function() {\r",
+									"    pm.expect(jsonResponse.cart.cartId).to.not.have.null;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-product-count\", function() {\r",
+									"    pm.expect(jsonResponse.cart.cartLineItems).length.to.greaterThan(1);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-channel",
+								"value": "ice",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-source",
+								"value": "ice",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product\": {\r\n        \"data\": {\r\n            \"checkInDate\": \"2021-02-20\",\r\n            \"checkOutDate\": \"2021-02-21\",\r\n            \"numberOfAdults\": \"1\",\r\n            \"numberOfChildren\": \"0\",\r\n            \"propertyId\": \"dc00e77f-d6bb-4dd7-a8ea-dc33ee9675ad\",\r\n            \"roomTypeId\": \"f13807cd-ec81-498f-bca2-4948b4597b6a\",\r\n            \"checkPrice\": \"100.5\"\r\n        },\r\n        \"type\": \"ROOM\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{get_cart_endpoint}}/{{cart_id}}",
+							"host": [
+								"{{get_cart_endpoint}}"
+							],
+							"path": [
+								"{{cart_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "checkout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"pm.test(\"checkout-validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"checkout-validate-valid-response-body\", function() {\r",
+									"    pm.expect(jsonResponse.order.orderLineItems[0].status).to.equal('SUCCESS');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-source",
+								"value": "ice",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-channel",
+								"value": "ice",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"cartId\": \"{{cart_id}}\",\r\n\t\"itineraryId\": \"{{itinerary_id}}\",\r\n\t\"inAuthTransactionId\": \"8a3d34be200d\",\r\n\t\"guestProfile\": {\r\n\t\t\"id\": \"{{customer_id}}\",\r\n\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\"addresses\": [\r\n                {\r\n                    \"preferred\": \"false\",\r\n                    \"street1\": \"123 Main St\",\r\n                    \"street2\": \"\",\r\n                    \"city\": \"Las Vegas\",\r\n                    \"state\": \"NV\",\r\n                    \"country\": \"US\",\r\n                    \"postalCode\": \"89118\",\r\n                    \"type\": \"Home\"\r\n                }\r\n            ]\r\n\t},\r\n\t\"billings\": [ {\r\n\t\t\t\t\"payment\": {\r\n\t\t\t\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\t\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\t\t\"amount\": 379.28,\r\n\t\t\t\t\t\"maskedNumber\": \"XXXXXXXXXXXX1111\",\r\n\t\t\t\t\t\"cardHolder\": \"{{first_name}} {{last_name}}\",\r\n\t\t\t\t\t\"cvv\": \"123\",\r\n\t\t\t\t\t\"expiry\": \"10/2022\",\r\n\t\t\t\t\t\"type\": \"Visa\",\r\n\t\t\t\t\t\"ccToken\": \"4111110A001DQXFHY79D9XCZ1111\"\r\n\t\t\t\t},\r\n\t\t\t\t\"address\": {\r\n\t\t\t\t\t\"street1\": \"234 W Main St\",\r\n\t\t\t\t\t\"city\": \"Las Vegas\",\r\n\t\t\t\t\t\"postalCode\": \"89129\",\r\n\t\t\t\t\t\"state\": \"NV\",\r\n\t\t\t\t\t\"country\": \"US\"\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"payment\": {\r\n\t\t\t\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\t\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\t\t\"amount\": 23023.38,\r\n\t\t\t\t\t\"maskedNumber\": \"XXXXXXXXXXXX1111\",\r\n\t\t\t\t\t\"cardHolder\": \"{{first_name}} {{last_name}}\",\r\n\t\t\t\t\t\"cvv\": \"123\",\r\n\t\t\t\t\t\"expiry\": \"10/2022\",\r\n\t\t\t\t\t\"type\": \"Visa\",\r\n\t\t\t\t\t\"ccToken\": \"4111110A001DQXFHY79D9XCZ1111\"\r\n\t\t\t\t},\r\n\t\t\t\t\"address\": {\r\n\t\t\t\t\t\"street1\": \"234 W Main St\",\r\n\t\t\t\t\t\"city\": \"Las Vegas\",\r\n\t\t\t\t\t\"postalCode\": \"89129\",\r\n\t\t\t\t\t\"state\": \"NV\",\r\n\t\t\t\t\t\"country\": \"US\"\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{global.apigee.endpoint}}/{{global.api.version}}/checkout",
+							"protocol": "https",
+							"host": [
+								"{{global.apigee.endpoint}}"
+							],
+							"path": [
+								"{{global.api.version}}",
+								"checkout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Checkout_NoItineraryExists",
+			"item": [
+				{
+					"name": "create-customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-response-body\", function() {\r",
+									"    customer_id = jsonResponse.customer.id;\r",
+									"    pm.environment.set('customer_id', customer_id);\r",
+									"    pm.environment.set('first_name', jsonResponse.customer.profile.firstName);\r",
+									"    pm.environment.set('last_name', jsonResponse.customer.profile.lastName);\r",
+									"    pm.expect(jsonResponse.customer.id).to.not.have.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customer\": {\r\n        \"profile\": {\r\n            \"title\": \"MR\",\r\n            \"firstName\": \"{{$randomFirstName}}\",\r\n            \"lastName\": \"{{$randomLastName}}\",\r\n            \"dateOfBirth\": \"1950-01-11\",\r\n            \"emailAddresses\": [\r\n                {\r\n                    \"email\": \"PTest123@PTest123.com\",\r\n                    \"preferred\": true,\r\n                    \"type\": \"BUSINESS\"\r\n                }\r\n            ],\r\n            \"phoneNumbers\": [\r\n                {\r\n                    \"type\": \"HOME\",\r\n                    \"number\": \"1234567890\",\r\n                    \"preferred\": true\r\n                }\r\n            ],\r\n            \"addresses\": [\r\n                {\r\n                    \"type\": \"HOME\",\r\n                    \"street1\": \"Stephenie St\",\r\n                    \"street2\": \"Summerlin\",\r\n                    \"city\": \"Henderson\",\r\n                    \"state\": \"NV\",\r\n                    \"country\": \"US\",\r\n                    \"zipCode\": \"92606\",\r\n                    \"preferred\": true\r\n                }\r\n            ]\r\n        },\r\n        \"membershipOptin\": true,\r\n        \"memberships\": {\r\n            \"type\": \"MLIFE\",\r\n            \"enrolledAt\": \"mlife\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{create_customer_endpoint}}",
+							"host": [
+								"{{create_customer_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "room-availability",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    let jsonResponse = pm.response.json();\r",
+									"    let availabilityLen = jsonResponse.availability.length; \r",
+									"    pm.environment.set('room_type_id_1', \"\");\r",
+									"    pm.environment.set('room_type_id_2', \"\");\r",
+									"    for (var i = 0;i<availabilityLen;i++) {\r",
+									"        if (jsonResponse.availability[i].roomTypeId && !pm.environment.get('room_type_id_1')) {\r",
+									"            pm.environment.set('room_type_id_1', jsonResponse.availability[i].roomTypeId);\r",
+									"            pm.environment.set('program_id_1', jsonResponse.availability[i].price.itemized[0].programId);\r",
+									"        } else if (jsonResponse.availability[i].roomTypeId && !pm.environment.get('room_type_id_2')) {\r",
+									"            pm.environment.set('room_type_id_2', jsonResponse.availability[i].roomTypeId);\r",
+									"            pm.environment.set('program_id_2', jsonResponse.availability[i].price.itemized[0].programId);\r",
+									"        }\r",
+									"\r",
+									"        if(pm.environment.get('room_type_id_1') && pm.environment.get('room_type_id_2')) {\r",
+									"            break;\r",
+									"        } \r",
+									"        \r",
+									"    }\r",
+									"    if(i == availabilityLen && !pm.environment.get('room_type_id_2')) {\r",
+									"            pm.environment.set('room_type_id_2', pm.environment.get('room_type_id_1'));\r",
+									"            pm.environment.set('program_id_2', pm.environment.get('program_id_1'));\r",
+									"    }\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-mgm-source",
+								"type": "text",
+								"value": "ice"
+							},
+							{
+								"key": "x-mgm-channel",
+								"type": "text",
+								"value": "ice"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{oauth_access_token}}"
+							},
+							{
+								"key": "x-mgm-transaction-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							}
+						],
+						"url": {
+							"raw": "{{room_availability_endpoint}}?checkInDate={{checkin_date}}&checkOutDate={{checkout_date}}&numAdults=2&propertyId={{property_id}}",
+							"host": [
+								"{{room_availability_endpoint}}"
+							],
+							"query": [
+								{
+									"key": "checkInDate",
+									"value": "{{checkin_date}}"
+								},
+								{
+									"key": "checkOutDate",
+									"value": "{{checkout_date}}"
+								},
+								{
+									"key": "numAdults",
+									"value": "2"
+								},
+								{
+									"key": "propertyId",
+									"value": "{{property_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add-product-to-empty-cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-response-body\", function() {\r",
+									"    cart_id = jsonResponse.cart.cartId;\r",
+									"    pm.environment.set('cart_id', cart_id);\r",
+									"    pm.expect(jsonResponse.cart.cartId).to.not.have.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-channel",
+								"value": "ice",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-source",
+								"value": "ice",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product\": {\r\n        \"data\": {\r\n            \"checkInDate\": \"{{checkin_date}}\",\r\n            \"checkOutDate\": \"{{checkout_date}}\",\r\n            \"numberOfAdults\": \"1\",\r\n            \"numberOfChildren\": \"1\",\r\n            \"numberOfRooms\":1,\r\n            \"propertyId\": \"{{property_id}}\",\r\n            \"roomTypeId\": \"{{room_type_id_1}}\",\r\n            \"programId\": \"{{program_id_1}}\",\r\n            \"checkPrice\": \"100.5\"\r\n        },\r\n        \"type\": \"ROOM\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{add_product_cart_endpoint}}",
+							"host": [
+								"{{add_product_cart_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "checkout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"pm.test(\"checkout-noItinerary-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"checkout-noItinerary-valid-response-body\", function() {\r",
+									"    pm.expect(jsonResponse.order.orderLineItems[0].status).to.equal('SUCCESS');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"checkout-noItinerary-itinerary-id-created\", function() {\r",
+									"    pm.expect(jsonResponse.order.orderLineItems[0].itineraryId).to.have.not.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-channel",
+								"value": "ice",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-source",
+								"value": "ice",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"cartId\": \"{{cart_id}}\",\r\n\t\"inAuthTransactionId\": \"8a3d34be200d\",\r\n\t\"guestProfile\": {\r\n\t\t\"id\": \"{{customer_id}}\",\r\n\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\"addresses\": [\r\n                {\r\n                    \"preferred\": \"false\",\r\n                    \"street1\": \"123 Main St\",\r\n                    \"street2\": \"\",\r\n                    \"city\": \"Las Vegas\",\r\n                    \"state\": \"NV\",\r\n                    \"country\": \"US\",\r\n                    \"postalCode\": \"89118\",\r\n                    \"type\": \"Home\"\r\n                }\r\n            ]\r\n\t},\r\n\t\"billings\": [\r\n\t\t\t{\r\n\t\t\t\t\"payment\": {\r\n\t\t\t\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\t\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\t\t\"amount\": 379.28,\r\n\t\t\t\t\t\"maskedNumber\": \"XXXXXXXXXXXX1111\",\r\n\t\t\t\t\t\"cardHolder\": \"{{first_name}} {{last_name}}\",\r\n\t\t\t\t\t\"cvv\": \"123\",\r\n\t\t\t\t\t\"expiry\": \"10/2022\",\r\n\t\t\t\t\t\"type\": \"Visa\",\r\n\t\t\t\t\t\"ccToken\": \"4111110A001DQXFHY79D9XCZ1111\"\r\n\t\t\t\t},\r\n\t\t\t\t\"address\": {\r\n\t\t\t\t\t\"street1\": \"234 W Main St\",\r\n\t\t\t\t\t\"city\": \"Las Vegas\",\r\n\t\t\t\t\t\"postalCode\": \"89129\",\r\n\t\t\t\t\t\"state\": \"NV\",\r\n\t\t\t\t\t\"country\": \"US\"\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"payment\": {\r\n\t\t\t\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\t\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\t\t\"amount\": 23023.38,\r\n\t\t\t\t\t\"maskedNumber\": \"XXXXXXXXXXXX1111\",\r\n\t\t\t\t\t\"cardHolder\": \"{{first_name}} {{last_name}}\",\r\n\t\t\t\t\t\"cvv\": \"123\",\r\n\t\t\t\t\t\"expiry\": \"10/2022\",\r\n\t\t\t\t\t\"type\": \"Visa\",\r\n\t\t\t\t\t\"ccToken\": \"4111110A001DQXFHY79D9XCZ1111\"\r\n\t\t\t\t},\r\n\t\t\t\t\"address\": {\r\n\t\t\t\t\t\"street1\": \"234 W Main St\",\r\n\t\t\t\t\t\"city\": \"Las Vegas\",\r\n\t\t\t\t\t\"postalCode\": \"89129\",\r\n\t\t\t\t\t\"state\": \"NV\",\r\n\t\t\t\t\t\"country\": \"US\"\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{global.apigee.endpoint}}/{{global.api.version}}/checkout",
+							"protocol": "https",
+							"host": [
+								"{{global.apigee.endpoint}}"
+							],
+							"path": [
+								"{{global.api.version}}",
+								"checkout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Checkout_NoProfileExists",
+			"item": [
+				{
+					"name": "create-itinerary",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-response-body\", function() {\r",
+									"    itinerary_id = jsonResponse.itinerary.itineraryId;\r",
+									"    pm.environment.set('itinerary_id', itinerary_id);\r",
+									"    pm.expect(jsonResponse.itinerary.itineraryId).to.not.have.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"value": "{{x_mgm_correlation_id}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"itineraryName\": \"mgmi-sanitytestitinerary_tobedeleted\",\r\n    \"customerId\": \"{{customer_id}}\",\r\n    \"tripParams\": {\r\n        \"numAdults\": 1,\r\n        \"numChildren\": 1,\r\n        \"departureDate\": \"{{checkout_date}}\",\r\n        \"arrivalDate\": \"{{checkin_date}}\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{itinerary_endpoint}}",
+							"host": [
+								"{{itinerary_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "room-availability",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    let jsonResponse = pm.response.json();\r",
+									"    let availabilityLen = jsonResponse.availability.length; \r",
+									"    pm.environment.set('room_type_id_1', \"\");\r",
+									"    pm.environment.set('room_type_id_2', \"\");\r",
+									"    for (var i = 0;i<availabilityLen;i++) {\r",
+									"        if (jsonResponse.availability[i].roomTypeId && !pm.environment.get('room_type_id_1')) {\r",
+									"            pm.environment.set('room_type_id_1', jsonResponse.availability[i].roomTypeId);\r",
+									"            pm.environment.set('program_id_1', jsonResponse.availability[i].price.itemized[0].programId);\r",
+									"        } else if (jsonResponse.availability[i].roomTypeId && !pm.environment.get('room_type_id_2')) {\r",
+									"            pm.environment.set('room_type_id_2', jsonResponse.availability[i].roomTypeId);\r",
+									"            pm.environment.set('program_id_2', jsonResponse.availability[i].price.itemized[0].programId);\r",
+									"        }\r",
+									"\r",
+									"        if(pm.environment.get('room_type_id_1') && pm.environment.get('room_type_id_2')) {\r",
+									"            break;\r",
+									"        } \r",
+									"        \r",
+									"    }\r",
+									"    if(i == availabilityLen && !pm.environment.get('room_type_id_2')) {\r",
+									"            pm.environment.set('room_type_id_2', pm.environment.get('room_type_id_1'));\r",
+									"            pm.environment.set('program_id_2', pm.environment.get('program_id_1'));\r",
+									"    }\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-mgm-source",
+								"type": "text",
+								"value": "ice"
+							},
+							{
+								"key": "x-mgm-channel",
+								"type": "text",
+								"value": "ice"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{oauth_access_token}}"
+							},
+							{
+								"key": "x-mgm-transaction-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							}
+						],
+						"url": {
+							"raw": "{{room_availability_endpoint}}?checkInDate={{checkin_date}}&checkOutDate={{checkout_date}}&numAdults=2&propertyId={{property_id}}",
+							"host": [
+								"{{room_availability_endpoint}}"
+							],
+							"query": [
+								{
+									"key": "checkInDate",
+									"value": "{{checkin_date}}"
+								},
+								{
+									"key": "checkOutDate",
+									"value": "{{checkout_date}}"
+								},
+								{
+									"key": "numAdults",
+									"value": "2"
+								},
+								{
+									"key": "propertyId",
+									"value": "{{property_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add-product-to-empty-cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-response-body\", function() {\r",
+									"    cart_id = jsonResponse.cart.cartId;\r",
+									"    pm.environment.set('cart_id', cart_id);\r",
+									"    pm.expect(jsonResponse.cart.cartId).to.not.have.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-channel",
+								"value": "ice",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-source",
+								"value": "ice",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product\": {\r\n        \"data\": {\r\n            \"checkInDate\": \"{{checkin_date}}\",\r\n            \"checkOutDate\": \"{{checkout_date}}\",\r\n            \"numberOfAdults\": \"1\",\r\n            \"numberOfChildren\": \"1\",\r\n            \"numberOfRooms\":1,\r\n            \"propertyId\": \"{{property_id}}\",\r\n            \"roomTypeId\": \"{{room_type_id_1}}\",\r\n            \"programId\": \"{{program_id_1}}\",\r\n            \"checkPrice\": \"100.5\"\r\n        },\r\n        \"type\": \"ROOM\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{add_product_cart_endpoint}}",
+							"host": [
+								"{{add_product_cart_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "checkout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"pm.test(\"checkout-noProfile-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"checkout-noProfile-valid-response-body\", function() {\r",
+									"    pm.expect(jsonResponse.order.orderLineItems[0].status).to.equal('SUCCESS');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"checkout-noProfile-customer-id-created\", function() {\r",
+									"    pm.expect(jsonResponse.order.customerId).to.have.not.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-channel",
+								"value": "ice",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-source",
+								"value": "ice",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"cartId\": \"{{cart_id}}\",\r\n\t\"itineraryId\": \"{{itinerary_id}}\",\r\n\t\"inAuthTransactionId\": \"8a3d34be200d\",\r\n\t\"guestProfile\": {\r\n\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\"addresses\": [\r\n                {\r\n                    \"preferred\": \"false\",\r\n                    \"street1\": \"123 Main St\",\r\n                    \"street2\": \"\",\r\n                    \"city\": \"Las Vegas\",\r\n                    \"state\": \"NV\",\r\n                    \"country\": \"US\",\r\n                    \"postalCode\": \"89118\",\r\n                    \"type\": \"Home\"\r\n                }\r\n            ]\r\n\t},\r\n\t\"billings\": [\r\n\t\t\t{\r\n\t\t\t\t\"payment\": {\r\n\t\t\t\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\t\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\t\t\"amount\": 379.28,\r\n\t\t\t\t\t\"maskedNumber\": \"XXXXXXXXXXXX1111\",\r\n\t\t\t\t\t\"cardHolder\": \"{{first_name}} {{last_name}}\",\r\n\t\t\t\t\t\"cvv\": \"123\",\r\n\t\t\t\t\t\"expiry\": \"10/2022\",\r\n\t\t\t\t\t\"type\": \"Visa\",\r\n\t\t\t\t\t\"ccToken\": \"4111110A001DQXFHY79D9XCZ1111\"\r\n\t\t\t\t},\r\n\t\t\t\t\"address\": {\r\n\t\t\t\t\t\"street1\": \"234 W Main St\",\r\n\t\t\t\t\t\"city\": \"Las Vegas\",\r\n\t\t\t\t\t\"postalCode\": \"89129\",\r\n\t\t\t\t\t\"state\": \"NV\",\r\n\t\t\t\t\t\"country\": \"US\"\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"payment\": {\r\n\t\t\t\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\t\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\t\t\"amount\": 23023.38,\r\n\t\t\t\t\t\"maskedNumber\": \"XXXXXXXXXXXX1111\",\r\n\t\t\t\t\t\"cardHolder\": \"{{first_name}} {{last_name}}\",\r\n\t\t\t\t\t\"cvv\": \"123\",\r\n\t\t\t\t\t\"expiry\": \"10/2022\",\r\n\t\t\t\t\t\"type\": \"Visa\",\r\n\t\t\t\t\t\"ccToken\": \"4111110A001DQXFHY79D9XCZ1111\"\r\n\t\t\t\t},\r\n\t\t\t\t\"address\": {\r\n\t\t\t\t\t\"street1\": \"234 W Main St\",\r\n\t\t\t\t\t\"city\": \"Las Vegas\",\r\n\t\t\t\t\t\"postalCode\": \"89129\",\r\n\t\t\t\t\t\"state\": \"NV\",\r\n\t\t\t\t\t\"country\": \"US\"\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t]\r\n\t}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{global.apigee.endpoint}}/{{global.api.version}}/checkout",
+							"protocol": "https",
+							"host": [
+								"{{global.apigee.endpoint}}"
+							],
+							"path": [
+								"{{global.api.version}}",
+								"checkout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Checkout_Missing_Amount",
+			"item": [
+				{
+					"name": "create-customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-response-body\", function() {\r",
+									"    customer_id = jsonResponse.customer.id;\r",
+									"    pm.environment.set('customer_id', customer_id);\r",
+									"    pm.environment.set('first_name', jsonResponse.customer.profile.firstName);\r",
+									"    pm.environment.set('last_name', jsonResponse.customer.profile.lastName);\r",
+									"    pm.expect(jsonResponse.customer.id).to.not.have.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customer\": {\r\n        \"profile\": {\r\n            \"title\": \"MR\",\r\n            \"firstName\": \"{{$randomFirstName}}\",\r\n            \"lastName\": \"{{$randomLastName}}\",\r\n            \"dateOfBirth\": \"1950-01-11\",\r\n            \"emailAddresses\": [\r\n                {\r\n                    \"email\": \"PTest123@PTest123.com\",\r\n                    \"preferred\": true,\r\n                    \"type\": \"BUSINESS\"\r\n                }\r\n            ],\r\n            \"phoneNumbers\": [\r\n                {\r\n                    \"type\": \"HOME\",\r\n                    \"number\": \"1234567890\",\r\n                    \"preferred\": true\r\n                }\r\n            ],\r\n            \"addresses\": [\r\n                {\r\n                    \"type\": \"HOME\",\r\n                    \"street1\": \"Stephenie St\",\r\n                    \"street2\": \"Summerlin\",\r\n                    \"city\": \"Henderson\",\r\n                    \"state\": \"NV\",\r\n                    \"country\": \"US\",\r\n                    \"zipCode\": \"92606\",\r\n                    \"preferred\": true\r\n                }\r\n            ]\r\n        },\r\n        \"membershipOptin\": true,\r\n        \"memberships\": {\r\n            \"type\": \"MLIFE\",\r\n            \"enrolledAt\": \"mlife\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{create_customer_endpoint}}",
+							"host": [
+								"{{create_customer_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-itinerary",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-response-body\", function() {\r",
+									"    itinerary_id = jsonResponse.itinerary.itineraryId;\r",
+									"    pm.environment.set('itinerary_id', itinerary_id);\r",
+									"    pm.expect(jsonResponse.itinerary.itineraryId).to.not.have.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"value": "{{x_mgm_correlation_id}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"itineraryName\": \"mgmi-sanitytestitinerary_tobedeleted\",\r\n    \"customerId\": \"{{customer_id}}\",\r\n    \"tripParams\": {\r\n        \"numAdults\": 1,\r\n        \"numChildren\": 1,\r\n        \"departureDate\": \"{{checkout_date}}\",\r\n        \"arrivalDate\": \"{{checkin_date}}\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{itinerary_endpoint}}",
+							"host": [
+								"{{itinerary_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "room-availability",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    let jsonResponse = pm.response.json();\r",
+									"    let availabilityLen = jsonResponse.availability.length; \r",
+									"    pm.environment.set('room_type_id_1', \"\");\r",
+									"    pm.environment.set('room_type_id_2', \"\");\r",
+									"    for (var i = 0;i<availabilityLen;i++) {\r",
+									"        if (jsonResponse.availability[i].roomTypeId && !pm.environment.get('room_type_id_1')) {\r",
+									"            pm.environment.set('room_type_id_1', jsonResponse.availability[i].roomTypeId);\r",
+									"            pm.environment.set('program_id_1', jsonResponse.availability[i].price.itemized[0].programId);\r",
+									"        } else if (jsonResponse.availability[i].roomTypeId && !pm.environment.get('room_type_id_2')) {\r",
+									"            pm.environment.set('room_type_id_2', jsonResponse.availability[i].roomTypeId);\r",
+									"            pm.environment.set('program_id_2', jsonResponse.availability[i].price.itemized[0].programId);\r",
+									"        }\r",
+									"\r",
+									"        if(pm.environment.get('room_type_id_1') && pm.environment.get('room_type_id_2')) {\r",
+									"            break;\r",
+									"        } \r",
+									"        \r",
+									"    }\r",
+									"    if(i == availabilityLen && !pm.environment.get('room_type_id_2')) {\r",
+									"            pm.environment.set('room_type_id_2', pm.environment.get('room_type_id_1'));\r",
+									"            pm.environment.set('program_id_2', pm.environment.get('program_id_1'));\r",
+									"    }\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-mgm-source",
+								"type": "text",
+								"value": "ice"
+							},
+							{
+								"key": "x-mgm-channel",
+								"type": "text",
+								"value": "ice"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{oauth_access_token}}"
+							},
+							{
+								"key": "x-mgm-transaction-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							}
+						],
+						"url": {
+							"raw": "{{room_availability_endpoint}}?checkInDate={{checkin_date}}&checkOutDate={{checkout_date}}&numAdults=2&propertyId={{property_id}}",
+							"host": [
+								"{{room_availability_endpoint}}"
+							],
+							"query": [
+								{
+									"key": "checkInDate",
+									"value": "{{checkin_date}}"
+								},
+								{
+									"key": "checkOutDate",
+									"value": "{{checkout_date}}"
+								},
+								{
+									"key": "numAdults",
+									"value": "2"
+								},
+								{
+									"key": "propertyId",
+									"value": "{{property_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add-product-to-empty-cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-response-body\", function() {\r",
+									"    cart_id = jsonResponse.cart.cartId;\r",
+									"    pm.environment.set('cart_id', cart_id);\r",
+									"    pm.expect(jsonResponse.cart.cartId).to.not.have.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-channel",
+								"value": "ice",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-source",
+								"value": "ice",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product\": {\r\n        \"data\": {\r\n            \"checkInDate\": \"{{checkin_date}}\",\r\n            \"checkOutDate\": \"{{checkout_date}}\",\r\n            \"numberOfAdults\": \"1\",\r\n            \"numberOfChildren\": \"1\",\r\n            \"numberOfRooms\":1,\r\n            \"propertyId\": \"{{property_id}}\",\r\n            \"roomTypeId\": \"{{room_type_id_1}}\",\r\n            \"programId\": \"{{program_id_1}}\",\r\n            \"checkPrice\": \"100.5\"\r\n        },\r\n        \"type\": \"ROOM\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{add_product_cart_endpoint}}",
+							"host": [
+								"{{add_product_cart_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "checkout-missing-amount",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"pm.test(\"checkout-missing-amount-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"checkout-missing-amount-valid-response-body\", function() {\r",
+									"    pm.expect(jsonResponse.order.orderLineItems[0].messages[0].sourceSystemError.sourceSystemMessage).to.equal('Missing mandatory information in the request: Billing details');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"cartId\": \"{{cart_id}}\",\r\n\t\"itineraryId\": \"{{itinerary_id}}\",\r\n\t\"inAuthTransactionId\": \"8a3d34be200d\",\r\n\t\"agent\": {\r\n\t\t\"agentId\": \"05801806\",\r\n\t\t\"agentType\": \"IATA\"\r\n\t},\r\n\t\"guestProfile\": {\r\n\t\t\"id\": \"{{customer_id}}\",\r\n\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\"addresses\": [\r\n                {\r\n                    \"preferred\": \"false\",\r\n                    \"street1\": \"123 Main St\",\r\n                    \"street2\": \"\",\r\n                    \"city\": \"Las Vegas\",\r\n                    \"state\": \"NV\",\r\n                    \"country\": \"US\",\r\n                    \"postalCode\": \"89118\",\r\n                    \"type\": \"Home\"\r\n                }\r\n            ]\r\n\t},\r\n\t\"billings\": [\r\n\t\t\t{\r\n\t\t\t\t\"payment\": {\r\n\t\t\t\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\t\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\t\t\r\n\t\t\t\t\t\"maskedNumber\": \"XXXXXXXXXXXX1111\",\r\n\t\t\t\t\t\"cardHolder\": \"{{first_name}} {{last_name}}\",\r\n\t\t\t\t\t\"cvv\": \"123\",\r\n\t\t\t\t\t\"expiry\": \"10/2022\",\r\n\t\t\t\t\t\"type\": \"Visa\",\r\n\t\t\t\t\t\"ccToken\": \"4111110A001DQXFHY79D9XCZ1111\"\r\n\t\t\t\t},\r\n\t\t\t\t\"address\": {\r\n\t\t\t\t\t\"street1\": \"234 W Main St\",\r\n\t\t\t\t\t\"city\": \"Las Vegas\",\r\n\t\t\t\t\t\"postalCode\": \"89129\",\r\n\t\t\t\t\t\"state\": \"NV\",\r\n\t\t\t\t\t\"country\": \"US\"\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"payment\": {\r\n\t\t\t\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\t\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\t\t\"amount\": 23023.38,\r\n\t\t\t\t\t\"maskedNumber\": \"XXXXXXXXXXXX1111\",\r\n\t\t\t\t\t\"cardHolder\": \"{{first_name}} {{last_name}}\",\r\n\t\t\t\t\t\"cvv\": \"123\",\r\n\t\t\t\t\t\"expiry\": \"10/2022\",\r\n\t\t\t\t\t\"type\": \"Visa\",\r\n\t\t\t\t\t\"ccToken\": \"4111110A001DQXFHY79D9XCZ1111\"\r\n\t\t\t\t},\r\n\t\t\t\t\"address\": {\r\n\t\t\t\t\t\"street1\": \"234 W Main St\",\r\n\t\t\t\t\t\"city\": \"Las Vegas\",\r\n\t\t\t\t\t\"postalCode\": \"89129\",\r\n\t\t\t\t\t\"state\": \"NV\",\r\n\t\t\t\t\t\"country\": \"US\"\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t]\r\n\t}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{global.apigee.endpoint}}/{{global.api.version}}/checkout",
+							"protocol": "https",
+							"host": [
+								"{{global.apigee.endpoint}}"
+							],
+							"path": [
+								"{{global.api.version}}",
+								"checkout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Checkout_Missing_Card_Info",
+			"item": [
+				{
+					"name": "create-customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-response-body\", function() {\r",
+									"    customer_id = jsonResponse.customer.id;\r",
+									"    pm.environment.set('customer_id', customer_id);\r",
+									"    pm.environment.set('first_name', jsonResponse.customer.profile.firstName);\r",
+									"    pm.environment.set('last_name', jsonResponse.customer.profile.lastName);\r",
+									"    pm.expect(jsonResponse.customer.id).to.not.have.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customer\": {\r\n        \"profile\": {\r\n            \"title\": \"MR\",\r\n            \"firstName\": \"{{$randomFirstName}}\",\r\n            \"lastName\": \"{{$randomLastName}}\",\r\n            \"dateOfBirth\": \"1950-01-11\",\r\n            \"emailAddresses\": [\r\n                {\r\n                    \"email\": \"PTest123@PTest123.com\",\r\n                    \"preferred\": true,\r\n                    \"type\": \"BUSINESS\"\r\n                }\r\n            ],\r\n            \"phoneNumbers\": [\r\n                {\r\n                    \"type\": \"HOME\",\r\n                    \"number\": \"1234567890\",\r\n                    \"preferred\": true\r\n                }\r\n            ],\r\n            \"addresses\": [\r\n                {\r\n                    \"type\": \"HOME\",\r\n                    \"street1\": \"Stephenie St\",\r\n                    \"street2\": \"Summerlin\",\r\n                    \"city\": \"Henderson\",\r\n                    \"state\": \"NV\",\r\n                    \"country\": \"US\",\r\n                    \"zipCode\": \"92606\",\r\n                    \"preferred\": true\r\n                }\r\n            ]\r\n        },\r\n        \"membershipOptin\": true,\r\n        \"memberships\": {\r\n            \"type\": \"MLIFE\",\r\n            \"enrolledAt\": \"mlife\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{create_customer_endpoint}}",
+							"host": [
+								"{{create_customer_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-itinerary",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-response-body\", function() {\r",
+									"    itinerary_id = jsonResponse.itinerary.itineraryId;\r",
+									"    pm.environment.set('itinerary_id', itinerary_id);\r",
+									"    pm.expect(jsonResponse.itinerary.itineraryId).to.not.have.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"value": "{{x_mgm_correlation_id}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"itineraryName\": \"mgmi-sanitytestitinerary_tobedeleted\",\r\n    \"customerId\": \"{{customer_id}}\",\r\n    \"tripParams\": {\r\n        \"numAdults\": 1,\r\n        \"numChildren\": 1,\r\n        \"departureDate\": \"{{checkout_date}}\",\r\n        \"arrivalDate\": \"{{checkin_date}}\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{itinerary_endpoint}}",
+							"host": [
+								"{{itinerary_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "room-availability",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    let jsonResponse = pm.response.json();\r",
+									"    let availabilityLen = jsonResponse.availability.length; \r",
+									"    pm.environment.set('room_type_id_1', \"\");\r",
+									"    pm.environment.set('room_type_id_2', \"\");\r",
+									"    for (var i = 0;i<availabilityLen;i++) {\r",
+									"        if (jsonResponse.availability[i].roomTypeId && !pm.environment.get('room_type_id_1')) {\r",
+									"            pm.environment.set('room_type_id_1', jsonResponse.availability[i].roomTypeId);\r",
+									"            pm.environment.set('program_id_1', jsonResponse.availability[i].price.itemized[0].programId);\r",
+									"        } else if (jsonResponse.availability[i].roomTypeId && !pm.environment.get('room_type_id_2')) {\r",
+									"            pm.environment.set('room_type_id_2', jsonResponse.availability[i].roomTypeId);\r",
+									"            pm.environment.set('program_id_2', jsonResponse.availability[i].price.itemized[0].programId);\r",
+									"        }\r",
+									"\r",
+									"        if(pm.environment.get('room_type_id_1') && pm.environment.get('room_type_id_2')) {\r",
+									"            break;\r",
+									"        } \r",
+									"        \r",
+									"    }\r",
+									"    if(i == availabilityLen && !pm.environment.get('room_type_id_2')) {\r",
+									"            pm.environment.set('room_type_id_2', pm.environment.get('room_type_id_1'));\r",
+									"            pm.environment.set('program_id_2', pm.environment.get('program_id_1'));\r",
+									"    }\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-mgm-source",
+								"type": "text",
+								"value": "ice"
+							},
+							{
+								"key": "x-mgm-channel",
+								"type": "text",
+								"value": "ice"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{oauth_access_token}}"
+							},
+							{
+								"key": "x-mgm-transaction-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							}
+						],
+						"url": {
+							"raw": "{{room_availability_endpoint}}?checkInDate={{checkin_date}}&checkOutDate={{checkout_date}}&numAdults=2&propertyId={{property_id}}",
+							"host": [
+								"{{room_availability_endpoint}}"
+							],
+							"query": [
+								{
+									"key": "checkInDate",
+									"value": "{{checkin_date}}"
+								},
+								{
+									"key": "checkOutDate",
+									"value": "{{checkout_date}}"
+								},
+								{
+									"key": "numAdults",
+									"value": "2"
+								},
+								{
+									"key": "propertyId",
+									"value": "{{property_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add-product-to-empty-cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-response-body\", function() {\r",
+									"    cart_id = jsonResponse.cart.cartId;\r",
+									"    pm.environment.set('cart_id', cart_id);\r",
+									"    pm.expect(jsonResponse.cart.cartId).to.not.have.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-channel",
+								"value": "ice",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-source",
+								"value": "ice",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product\": {\r\n        \"data\": {\r\n            \"checkInDate\": \"{{checkin_date}}\",\r\n            \"checkOutDate\": \"{{checkout_date}}\",\r\n            \"numberOfAdults\": \"1\",\r\n            \"numberOfChildren\": \"1\",\r\n            \"numberOfRooms\":1,\r\n            \"propertyId\": \"{{property_id}}\",\r\n            \"roomTypeId\": \"{{room_type_id_1}}\",\r\n            \"programId\": \"{{program_id_1}}\",\r\n            \"checkPrice\": \"100.5\"\r\n        },\r\n        \"type\": \"ROOM\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{add_product_cart_endpoint}}",
+							"host": [
+								"{{add_product_cart_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "checkout-missing-card-info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"pm.test(\"checkout-missing-card-info-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"checkout-missing-card-info-valid-response-body\", function() {\r",
+									"    pm.expect(jsonResponse.order.orderLineItems[0].messages[0].sourceSystemError.sourceSystemCode).to.equal('632-1-127');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-source",
+								"value": "ice",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-channel",
+								"value": "ice",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"cartId\": \"{{cart_id}}\",\r\n\t\"itineraryId\": \"{{itinerary_id}}\",\r\n\t\"inAuthTransactionId\": \"8a3d34be200d\",\r\n\t\"guestProfile\": {\r\n\t\t\"id\": \"{{customer_id}}\",\r\n\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\"addresses\": [\r\n                {\r\n                    \"preferred\": \"false\",\r\n                    \"street1\": \"123 Main St\",\r\n                    \"street2\": \"\",\r\n                    \"city\": \"Las Vegas\",\r\n                    \"state\": \"NV\",\r\n                    \"country\": \"US\",\r\n                    \"postalCode\": \"89118\",\r\n                    \"type\": \"Home\"\r\n                }\r\n            ]\r\n\t},\r\n\t\"billings\": [\r\n\t\t\t{\r\n\t\t\t\t\"payment\": {\r\n\t\t\t\t\t\"firstName\": \"\",\r\n\t\t\t\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\t\t\"amount\": 379.28,\r\n\t\t\t\t\t\"maskedNumber\": \"XXXXXXXXXXXX1111\",\r\n\t\t\t\t\t\"cardHolder\": \"{{first_name}} {{last_name}}\",\r\n\t\t\t\t\t\"cvv\": \"123\",\r\n\t\t\t\t\t\"expiry\": \"10/2022\",\r\n\t\t\t\t\t\"type\": \"Visa\"\r\n\t\t\t\t},\r\n\t\t\t\t\"address\": {\r\n\t\t\t\t\t\"street1\": \"234 W Main St\",\r\n\t\t\t\t\t\"city\": \"Las Vegas\",\r\n\t\t\t\t\t\"postalCode\": \"89129\",\r\n\t\t\t\t\t\"state\": \"NV\",\r\n\t\t\t\t\t\"country\": \"US\"\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"payment\": {\r\n\t\t\t\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\t\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\t\t\"amount\": 23023.38,\r\n\t\t\t\t\t\"maskedNumber\": \"XXXXXXXXXXXX1111\",\r\n\t\t\t\t\t\"cardHolder\": \"{{first_name}} {{last_name}}\",\r\n\t\t\t\t\t\"cvv\": \"123\",\r\n\t\t\t\t\t\"expiry\": \"10/2022\",\r\n\t\t\t\t\t\"type\": \"Visa\"\r\n\t\t\t\t},\r\n\t\t\t\t\"address\": {\r\n\t\t\t\t\t\"street1\": \"234 W Main St\",\r\n\t\t\t\t\t\"city\": \"Las Vegas\",\r\n\t\t\t\t\t\"postalCode\": \"89129\",\r\n\t\t\t\t\t\"state\": \"NV\",\r\n\t\t\t\t\t\"country\": \"US\"\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t]\r\n\t}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{global.apigee.endpoint}}/{{global.api.version}}/checkout",
+							"protocol": "https",
+							"host": [
+								"{{global.apigee.endpoint}}"
+							],
+							"path": [
+								"{{global.api.version}}",
+								"checkout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Checkout_Missing_PostalCode",
+			"item": [
+				{
+					"name": "create-customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-response-body\", function() {\r",
+									"    customer_id = jsonResponse.customer.id;\r",
+									"    pm.environment.set('customer_id', customer_id);\r",
+									"    pm.environment.set('first_name', jsonResponse.customer.profile.firstName);\r",
+									"    pm.environment.set('last_name', jsonResponse.customer.profile.lastName);\r",
+									"    pm.expect(jsonResponse.customer.id).to.not.have.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customer\": {\r\n        \"profile\": {\r\n            \"title\": \"MR\",\r\n            \"firstName\": \"{{$randomFirstName}}\",\r\n            \"lastName\": \"{{$randomLastName}}\",\r\n            \"dateOfBirth\": \"1950-01-11\",\r\n            \"emailAddresses\": [\r\n                {\r\n                    \"email\": \"PTest123@PTest123.com\",\r\n                    \"preferred\": true,\r\n                    \"type\": \"BUSINESS\"\r\n                }\r\n            ],\r\n            \"phoneNumbers\": [\r\n                {\r\n                    \"type\": \"HOME\",\r\n                    \"number\": \"1234567890\",\r\n                    \"preferred\": true\r\n                }\r\n            ],\r\n            \"addresses\": [\r\n                {\r\n                    \"type\": \"HOME\",\r\n                    \"street1\": \"Stephenie St\",\r\n                    \"street2\": \"Summerlin\",\r\n                    \"city\": \"Henderson\",\r\n                    \"state\": \"NV\",\r\n                    \"country\": \"US\",\r\n                    \"zipCode\": \"92606\",\r\n                    \"preferred\": true\r\n                }\r\n            ]\r\n        },\r\n        \"membershipOptin\": true,\r\n        \"memberships\": {\r\n            \"type\": \"MLIFE\",\r\n            \"enrolledAt\": \"mlife\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{create_customer_endpoint}}",
+							"host": [
+								"{{create_customer_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-itinerary",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-response-body\", function() {\r",
+									"    itinerary_id = jsonResponse.itinerary.itineraryId;\r",
+									"    pm.environment.set('itinerary_id', itinerary_id);\r",
+									"    pm.expect(jsonResponse.itinerary.itineraryId).to.not.have.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"value": "{{x_mgm_correlation_id}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"itineraryName\": \"mgmi-sanitytestitinerary_tobedeleted\",\r\n    \"customerId\": \"{{customer_id}}\",\r\n    \"tripParams\": {\r\n        \"numAdults\": 1,\r\n        \"numChildren\": 1,\r\n        \"departureDate\": \"{{checkout_date}}\",\r\n        \"arrivalDate\": \"{{checkin_date}}\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{itinerary_endpoint}}",
+							"host": [
+								"{{itinerary_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "room-availability",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    let jsonResponse = pm.response.json();\r",
+									"    let availabilityLen = jsonResponse.availability.length; \r",
+									"    pm.environment.set('room_type_id_1', \"\");\r",
+									"    pm.environment.set('room_type_id_2', \"\");\r",
+									"    for (var i = 0;i<availabilityLen;i++) {\r",
+									"        if (jsonResponse.availability[i].roomTypeId && !pm.environment.get('room_type_id_1')) {\r",
+									"            pm.environment.set('room_type_id_1', jsonResponse.availability[i].roomTypeId);\r",
+									"            pm.environment.set('program_id_1', jsonResponse.availability[i].price.itemized[0].programId);\r",
+									"        } else if (jsonResponse.availability[i].roomTypeId && !pm.environment.get('room_type_id_2')) {\r",
+									"            pm.environment.set('room_type_id_2', jsonResponse.availability[i].roomTypeId);\r",
+									"            pm.environment.set('program_id_2', jsonResponse.availability[i].price.itemized[0].programId);\r",
+									"        }\r",
+									"\r",
+									"        if(pm.environment.get('room_type_id_1') && pm.environment.get('room_type_id_2')) {\r",
+									"            break;\r",
+									"        } \r",
+									"        \r",
+									"    }\r",
+									"    if(i == availabilityLen && !pm.environment.get('room_type_id_2')) {\r",
+									"            pm.environment.set('room_type_id_2', pm.environment.get('room_type_id_1'));\r",
+									"            pm.environment.set('program_id_2', pm.environment.get('program_id_1'));\r",
+									"    }\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-mgm-source",
+								"type": "text",
+								"value": "ice"
+							},
+							{
+								"key": "x-mgm-channel",
+								"type": "text",
+								"value": "ice"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{oauth_access_token}}"
+							},
+							{
+								"key": "x-mgm-transaction-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							}
+						],
+						"url": {
+							"raw": "{{room_availability_endpoint}}?checkInDate={{checkin_date}}&checkOutDate={{checkout_date}}&numAdults=2&propertyId={{property_id}}",
+							"host": [
+								"{{room_availability_endpoint}}"
+							],
+							"query": [
+								{
+									"key": "checkInDate",
+									"value": "{{checkin_date}}"
+								},
+								{
+									"key": "checkOutDate",
+									"value": "{{checkout_date}}"
+								},
+								{
+									"key": "numAdults",
+									"value": "2"
+								},
+								{
+									"key": "propertyId",
+									"value": "{{property_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add-product-to-empty-cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-response-body\", function() {\r",
+									"    cart_id = jsonResponse.cart.cartId;\r",
+									"    pm.environment.set('cart_id', cart_id);\r",
+									"    pm.expect(jsonResponse.cart.cartId).to.not.have.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-channel",
+								"value": "ice",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-source",
+								"value": "ice",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product\": {\r\n        \"data\": {\r\n            \"checkInDate\": \"{{checkin_date}}\",\r\n            \"checkOutDate\": \"{{checkout_date}}\",\r\n            \"numberOfAdults\": \"1\",\r\n            \"numberOfChildren\": \"1\",\r\n            \"numberOfRooms\":1,\r\n            \"propertyId\": \"{{property_id}}\",\r\n            \"roomTypeId\": \"{{room_type_id_1}}\",\r\n            \"programId\": \"{{program_id_1}}\",\r\n            \"checkPrice\": \"100.5\"\r\n        },\r\n        \"type\": \"ROOM\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{add_product_cart_endpoint}}",
+							"host": [
+								"{{add_product_cart_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "checkout-missing-postalcode",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"pm.test(\"checkout-missing-postalcode-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"checkout-missing-postalcode-valid-response-body\", function() {\r",
+									"    pm.expect(jsonResponse.order.orderLineItems[0].messages[0].sourceSystemError.sourceSystemCode).to.equal('632-1-139');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-source",
+								"value": "ice",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-channel",
+								"value": "ice",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"cartId\": \"{{cart_id}}\",\r\n\t\"itineraryId\": \"{{itinerary_id}}\",\r\n\t\"inAuthTransactionId\": \"8a3d34be200d\",\r\n\t\"agent\": {\r\n\t\t\"agentId\": \"05801806\",\r\n\t\t\"agentType\": \"IATA\"\r\n\t},\r\n\t\"guestProfile\": {\r\n\t\t\"id\": \"{{customer_id}}\",\r\n\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\"addresses\": [\r\n                {\r\n                    \"preferred\": \"false\",\r\n                    \"street1\": \"123 Main St\",\r\n                    \"street2\": \"\",\r\n                    \"city\": \"Las Vegas\",\r\n                    \"state\": \"NV\",\r\n                    \"country\": \"US\",\r\n                    \"postalCode\": \"\",\r\n                    \"type\": \"Home\"\r\n                }\r\n            ]\r\n\t},\r\n\t\"billings\": [\r\n\t\t\t{\r\n\t\t\t\t\"payment\": {\r\n\t\t\t\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\t\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\t\t\"amount\": 379.28,\r\n\t\t\t\t\t\"maskedNumber\": \"XXXXXXXXXXXX1111\",\r\n\t\t\t\t\t\"cardHolder\": \"{{first_name}} {{last_name}}\",\r\n\t\t\t\t\t\"cvv\": \"123\",\r\n\t\t\t\t\t\"expiry\": \"10/2022\",\r\n\t\t\t\t\t\"type\": \"Visa\",\r\n\t\t\t\t\t\"ccToken\": \"4111110A001DQXFHY79D9XCZ1111\"\r\n\t\t\t\t},\r\n\t\t\t\t\"address\": {\r\n\t\t\t\t\t\"street1\": \"234 W Main St\",\r\n\t\t\t\t\t\"city\": \"Las Vegas\",\r\n\t\t\t\t\t\"postalCode\": \"89129\",\r\n\t\t\t\t\t\"state\": \"NV\",\r\n\t\t\t\t\t\"country\": \"US\"\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"payment\": {\r\n\t\t\t\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\t\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\t\t\"amount\": 23023.38,\r\n\t\t\t\t\t\"maskedNumber\": \"XXXXXXXXXXXX1111\",\r\n\t\t\t\t\t\"cardHolder\": \"{{first_name}} {{last_name}}\",\r\n\t\t\t\t\t\"cvv\": \"123\",\r\n\t\t\t\t\t\"expiry\": \"10/2022\",\r\n\t\t\t\t\t\"type\": \"Visa\",\r\n\t\t\t\t\t\"ccToken\": \"4111110A001DQXFHY79D9XCZ1111\"\r\n\t\t\t\t},\r\n\t\t\t\t\"address\": {\r\n\t\t\t\t\t\"street1\": \"234 W Main St\",\r\n\t\t\t\t\t\"city\": \"Las Vegas\",\r\n\t\t\t\t\t\"postalCode\": \"89129\",\r\n\t\t\t\t\t\"state\": \"NV\",\r\n\t\t\t\t\t\"country\": \"US\"\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t]\r\n\t}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{global.apigee.endpoint}}/{{global.api.version}}/checkout",
+							"protocol": "https",
+							"host": [
+								"{{global.apigee.endpoint}}"
+							],
+							"path": [
+								"{{global.api.version}}",
+								"checkout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Checkout_Missing_State",
+			"item": [
+				{
+					"name": "create-customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-response-body\", function() {\r",
+									"    customer_id = jsonResponse.customer.id;\r",
+									"    pm.environment.set('customer_id', customer_id);\r",
+									"    pm.environment.set('first_name', jsonResponse.customer.profile.firstName);\r",
+									"    pm.environment.set('last_name', jsonResponse.customer.profile.lastName);\r",
+									"    pm.expect(jsonResponse.customer.id).to.not.have.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customer\": {\r\n        \"profile\": {\r\n            \"title\": \"MR\",\r\n            \"firstName\": \"{{$randomFirstName}}\",\r\n            \"lastName\": \"{{$randomLastName}}\",\r\n            \"dateOfBirth\": \"1950-01-11\",\r\n            \"emailAddresses\": [\r\n                {\r\n                    \"email\": \"PTest123@PTest123.com\",\r\n                    \"preferred\": true,\r\n                    \"type\": \"BUSINESS\"\r\n                }\r\n            ],\r\n            \"phoneNumbers\": [\r\n                {\r\n                    \"type\": \"HOME\",\r\n                    \"number\": \"1234567890\",\r\n                    \"preferred\": true\r\n                }\r\n            ],\r\n            \"addresses\": [\r\n                {\r\n                    \"type\": \"HOME\",\r\n                    \"street1\": \"Stephenie St\",\r\n                    \"street2\": \"Summerlin\",\r\n                    \"city\": \"Henderson\",\r\n                    \"state\": \"NV\",\r\n                    \"country\": \"US\",\r\n                    \"zipCode\": \"92606\",\r\n                    \"preferred\": true\r\n                }\r\n            ]\r\n        },\r\n        \"membershipOptin\": true,\r\n        \"memberships\": {\r\n            \"type\": \"MLIFE\",\r\n            \"enrolledAt\": \"mlife\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{create_customer_endpoint}}",
+							"host": [
+								"{{create_customer_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-itinerary",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-response-body\", function() {\r",
+									"    itinerary_id = jsonResponse.itinerary.itineraryId;\r",
+									"    pm.environment.set('itinerary_id', itinerary_id);\r",
+									"    pm.expect(jsonResponse.itinerary.itineraryId).to.not.have.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"value": "{{x_mgm_correlation_id}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"itineraryName\": \"mgmi-sanitytestitinerary_tobedeleted\",\r\n    \"customerId\": \"{{customer_id}}\",\r\n    \"tripParams\": {\r\n        \"numAdults\": 1,\r\n        \"numChildren\": 1,\r\n        \"departureDate\": \"{{checkout_date}}\",\r\n        \"arrivalDate\": \"{{checkin_date}}\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{itinerary_endpoint}}",
+							"host": [
+								"{{itinerary_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "room-availability",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    let jsonResponse = pm.response.json();\r",
+									"    let availabilityLen = jsonResponse.availability.length; \r",
+									"    pm.environment.set('room_type_id_1', \"\");\r",
+									"    pm.environment.set('room_type_id_2', \"\");\r",
+									"    for (var i = 0;i<availabilityLen;i++) {\r",
+									"        if (jsonResponse.availability[i].roomTypeId && !pm.environment.get('room_type_id_1')) {\r",
+									"            pm.environment.set('room_type_id_1', jsonResponse.availability[i].roomTypeId);\r",
+									"            pm.environment.set('program_id_1', jsonResponse.availability[i].price.itemized[0].programId);\r",
+									"        } else if (jsonResponse.availability[i].roomTypeId && !pm.environment.get('room_type_id_2')) {\r",
+									"            pm.environment.set('room_type_id_2', jsonResponse.availability[i].roomTypeId);\r",
+									"            pm.environment.set('program_id_2', jsonResponse.availability[i].price.itemized[0].programId);\r",
+									"        }\r",
+									"\r",
+									"        if(pm.environment.get('room_type_id_1') && pm.environment.get('room_type_id_2')) {\r",
+									"            break;\r",
+									"        } \r",
+									"        \r",
+									"    }\r",
+									"    if(i == availabilityLen && !pm.environment.get('room_type_id_2')) {\r",
+									"            pm.environment.set('room_type_id_2', pm.environment.get('room_type_id_1'));\r",
+									"            pm.environment.set('program_id_2', pm.environment.get('program_id_1'));\r",
+									"    }\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-mgm-source",
+								"type": "text",
+								"value": "ice"
+							},
+							{
+								"key": "x-mgm-channel",
+								"type": "text",
+								"value": "ice"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{oauth_access_token}}"
+							},
+							{
+								"key": "x-mgm-transaction-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							}
+						],
+						"url": {
+							"raw": "{{room_availability_endpoint}}?checkInDate={{checkin_date}}&checkOutDate={{checkout_date}}&numAdults=2&propertyId={{property_id}}",
+							"host": [
+								"{{room_availability_endpoint}}"
+							],
+							"query": [
+								{
+									"key": "checkInDate",
+									"value": "{{checkin_date}}"
+								},
+								{
+									"key": "checkOutDate",
+									"value": "{{checkout_date}}"
+								},
+								{
+									"key": "numAdults",
+									"value": "2"
+								},
+								{
+									"key": "propertyId",
+									"value": "{{property_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add-product-to-empty-cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-response-body\", function() {\r",
+									"    cart_id = jsonResponse.cart.cartId;\r",
+									"    pm.environment.set('cart_id', cart_id);\r",
+									"    pm.expect(jsonResponse.cart.cartId).to.not.have.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-channel",
+								"value": "ice",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-source",
+								"value": "ice",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product\": {\r\n        \"data\": {\r\n            \"checkInDate\": \"{{checkin_date}}\",\r\n            \"checkOutDate\": \"{{checkout_date}}\",\r\n            \"numberOfAdults\": \"1\",\r\n            \"numberOfChildren\": \"1\",\r\n            \"numberOfRooms\":1,\r\n            \"propertyId\": \"{{property_id}}\",\r\n            \"roomTypeId\": \"{{room_type_id_1}}\",\r\n            \"programId\": \"{{program_id_1}}\",\r\n            \"checkPrice\": \"100.5\"\r\n        },\r\n        \"type\": \"ROOM\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{add_product_cart_endpoint}}",
+							"host": [
+								"{{add_product_cart_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "checkout-missing-state",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"pm.test(\"checkout-missing-state-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"checkout-missing-state-valid-response-body\", function() {\r",
+									"    pm.expect(jsonResponse.order.orderLineItems[0].messages[0].sourceSystemError.sourceSystemCode).to.equal('632-1-137');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-channel",
+								"value": "ice",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-source",
+								"value": "ice",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"cartId\": \"{{cart_id}}\",\r\n\t\"itineraryId\": \"{{itinerary_id}}\",\r\n\t\"inAuthTransactionId\": \"8a3d34be200d\",\r\n\t\"agent\": {\r\n\t\t\"agentId\": \"05801806\",\r\n\t\t\"agentType\": \"IATA\"\r\n\t},\r\n\t\"guestProfile\": {\r\n\t\t\"id\": \"{{customer_id}}\",\r\n\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\"addresses\": [\r\n                {\r\n                    \"preferred\": \"false\",\r\n                    \"street1\": \"123 Main St\",\r\n                    \"street2\": \"\",\r\n                    \"city\": \"Las Vegas\",\r\n                    \"state\": \"\",\r\n                    \"country\": \"US\",\r\n                    \"postalCode\": \"89118\",\r\n                    \"type\": \"Home\"\r\n                }\r\n            ]\r\n\t},\r\n\t\"billings\": [\r\n\t\t\t{\r\n\t\t\t\t\"payment\": {\r\n\t\t\t\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\t\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\t\t\"amount\": 379.28,\r\n\t\t\t\t\t\"maskedNumber\": \"XXXXXXXXXXXX1111\",\r\n\t\t\t\t\t\"cardHolder\": \"{{first_name}} {{last_name}}\",\r\n\t\t\t\t\t\"cvv\": \"123\",\r\n\t\t\t\t\t\"expiry\": \"10/2022\",\r\n\t\t\t\t\t\"type\": \"Visa\",\r\n\t\t\t\t\t\"ccToken\": \"4111110A001DQXFHY79D9XCZ1111\"\r\n\t\t\t\t},\r\n\t\t\t\t\"address\": {\r\n\t\t\t\t\t\"street1\": \"234 W Main St\",\r\n\t\t\t\t\t\"city\": \"Las Vegas\",\r\n\t\t\t\t\t\"postalCode\": \"89129\",\r\n\t\t\t\t\t\"state\": \"NV\",\r\n\t\t\t\t\t\"country\": \"US\"\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"payment\": {\r\n\t\t\t\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\t\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\t\t\"amount\": 23023.38,\r\n\t\t\t\t\t\"maskedNumber\": \"XXXXXXXXXXXX1111\",\r\n\t\t\t\t\t\"cardHolder\": \"{{first_name}} {{last_name}}\",\r\n\t\t\t\t\t\"cvv\": \"123\",\r\n\t\t\t\t\t\"expiry\": \"10/2022\",\r\n\t\t\t\t\t\"type\": \"Visa\",\r\n\t\t\t\t\t\"ccToken\": \"4111110A001DQXFHY79D9XCZ1111\"\r\n\t\t\t\t},\r\n\t\t\t\t\"address\": {\r\n\t\t\t\t\t\"street1\": \"234 W Main St\",\r\n\t\t\t\t\t\"city\": \"Las Vegas\",\r\n\t\t\t\t\t\"postalCode\": \"89129\",\r\n\t\t\t\t\t\"state\": \"NV\",\r\n\t\t\t\t\t\"country\": \"US\"\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t]\r\n\t}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{global.apigee.endpoint}}/{{global.api.version}}/checkout",
+							"protocol": "https",
+							"host": [
+								"{{global.apigee.endpoint}}"
+							],
+							"path": [
+								"{{global.api.version}}",
+								"checkout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Checkout_Invalid_Name",
+			"item": [
+				{
+					"name": "create-customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-response-body\", function() {\r",
+									"    customer_id = jsonResponse.customer.id;\r",
+									"    pm.environment.set('customer_id', customer_id);\r",
+									"    pm.environment.set('first_name', jsonResponse.customer.profile.firstName);\r",
+									"    pm.environment.set('last_name', jsonResponse.customer.profile.lastName);\r",
+									"    pm.expect(jsonResponse.customer.id).to.not.have.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customer\": {\r\n        \"profile\": {\r\n            \"title\": \"MR\",\r\n            \"firstName\": \"{{$randomFirstName}}\",\r\n            \"lastName\": \"{{$randomLastName}}\",\r\n            \"dateOfBirth\": \"1950-01-11\",\r\n            \"emailAddresses\": [\r\n                {\r\n                    \"email\": \"PTest123@PTest123.com\",\r\n                    \"preferred\": true,\r\n                    \"type\": \"BUSINESS\"\r\n                }\r\n            ],\r\n            \"phoneNumbers\": [\r\n                {\r\n                    \"type\": \"HOME\",\r\n                    \"number\": \"1234567890\",\r\n                    \"preferred\": true\r\n                }\r\n            ],\r\n            \"addresses\": [\r\n                {\r\n                    \"type\": \"HOME\",\r\n                    \"street1\": \"Stephenie St\",\r\n                    \"street2\": \"Summerlin\",\r\n                    \"city\": \"Henderson\",\r\n                    \"state\": \"NV\",\r\n                    \"country\": \"US\",\r\n                    \"zipCode\": \"92606\",\r\n                    \"preferred\": true\r\n                }\r\n            ]\r\n        },\r\n        \"membershipOptin\": true,\r\n        \"memberships\": {\r\n            \"type\": \"MLIFE\",\r\n            \"enrolledAt\": \"mlife\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{create_customer_endpoint}}",
+							"host": [
+								"{{create_customer_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-itinerary",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-response-body\", function() {\r",
+									"    itinerary_id = jsonResponse.itinerary.itineraryId;\r",
+									"    pm.environment.set('itinerary_id', itinerary_id);\r",
+									"    pm.expect(jsonResponse.itinerary.itineraryId).to.not.have.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"value": "{{x_mgm_correlation_id}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"itineraryName\": \"mgmi-sanitytestitinerary_tobedeleted\",\r\n    \"customerId\": \"{{customer_id}}\",\r\n    \"tripParams\": {\r\n        \"numAdults\": 1,\r\n        \"numChildren\": 1,\r\n        \"departureDate\": \"{{checkout_date}}\",\r\n        \"arrivalDate\": \"{{checkin_date}}\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{itinerary_endpoint}}",
+							"host": [
+								"{{itinerary_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "room-availability",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    let jsonResponse = pm.response.json();\r",
+									"    let availabilityLen = jsonResponse.availability.length; \r",
+									"    pm.environment.set('room_type_id_1', \"\");\r",
+									"    pm.environment.set('room_type_id_2', \"\");\r",
+									"    for (var i = 0;i<availabilityLen;i++) {\r",
+									"        if (jsonResponse.availability[i].roomTypeId && !pm.environment.get('room_type_id_1')) {\r",
+									"            pm.environment.set('room_type_id_1', jsonResponse.availability[i].roomTypeId);\r",
+									"            pm.environment.set('program_id_1', jsonResponse.availability[i].price.itemized[0].programId);\r",
+									"        } else if (jsonResponse.availability[i].roomTypeId && !pm.environment.get('room_type_id_2')) {\r",
+									"            pm.environment.set('room_type_id_2', jsonResponse.availability[i].roomTypeId);\r",
+									"            pm.environment.set('program_id_2', jsonResponse.availability[i].price.itemized[0].programId);\r",
+									"        }\r",
+									"\r",
+									"        if(pm.environment.get('room_type_id_1') && pm.environment.get('room_type_id_2')) {\r",
+									"            break;\r",
+									"        } \r",
+									"        \r",
+									"    }\r",
+									"    if(i == availabilityLen && !pm.environment.get('room_type_id_2')) {\r",
+									"            pm.environment.set('room_type_id_2', pm.environment.get('room_type_id_1'));\r",
+									"            pm.environment.set('program_id_2', pm.environment.get('program_id_1'));\r",
+									"    }\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-mgm-source",
+								"type": "text",
+								"value": "ice"
+							},
+							{
+								"key": "x-mgm-channel",
+								"type": "text",
+								"value": "ice"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{oauth_access_token}}"
+							},
+							{
+								"key": "x-mgm-transaction-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							}
+						],
+						"url": {
+							"raw": "{{room_availability_endpoint}}?checkInDate={{checkin_date}}&checkOutDate={{checkout_date}}&numAdults=2&propertyId={{property_id}}",
+							"host": [
+								"{{room_availability_endpoint}}"
+							],
+							"query": [
+								{
+									"key": "checkInDate",
+									"value": "{{checkin_date}}"
+								},
+								{
+									"key": "checkOutDate",
+									"value": "{{checkout_date}}"
+								},
+								{
+									"key": "numAdults",
+									"value": "2"
+								},
+								{
+									"key": "propertyId",
+									"value": "{{property_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add-product-to-empty-cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-response-body\", function() {\r",
+									"    cart_id = jsonResponse.cart.cartId;\r",
+									"    pm.environment.set('cart_id', cart_id);\r",
+									"    pm.expect(jsonResponse.cart.cartId).to.not.have.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-channel",
+								"value": "ice",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-source",
+								"value": "ice",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product\": {\r\n        \"data\": {\r\n            \"checkInDate\": \"{{checkin_date}}\",\r\n            \"checkOutDate\": \"{{checkout_date}}\",\r\n            \"numberOfAdults\": \"1\",\r\n            \"numberOfChildren\": \"1\",\r\n            \"numberOfRooms\":1,\r\n            \"propertyId\": \"{{property_id}}\",\r\n            \"roomTypeId\": \"{{room_type_id_1}}\",\r\n            \"programId\": \"{{program_id_1}}\",\r\n            \"checkPrice\": \"100.5\"\r\n        },\r\n        \"type\": \"ROOM\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{add_product_cart_endpoint}}",
+							"host": [
+								"{{add_product_cart_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "checkout-invalid-name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"pm.test(\"checkout-invalid-name-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"checkout-invalid-name-valid-response-body\", function() {\r",
+									"    pm.expect(jsonResponse.header.status.messages[0].code).to.equal('124-2-3003');\r",
+									"    pm.expect(jsonResponse.header.status.messages[0].text).to.contain('First name and last name are required fields in the guest profile');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+								"key": "Authorization",
+								"value": "Bearer {{oauth_access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"cartId\": \"{{cart_id}}\",\r\n\t\"itineraryId\": \"{{itinerary_id}}\",\r\n\t\"inAuthTransactionId\": \"8a3d34be200d\",\r\n\t\"agent\": {\r\n\t\t\"agentId\": \"05801806\",\r\n\t\t\"agentType\": \"IATA\"\r\n\t},\r\n\t\"guestProfile\": {\r\n\t\t\"id\": \"{{customer_id}}\",\r\n\t\t\t\"addresses\": [\r\n                {\r\n                    \"preferred\": \"false\",\r\n                    \"street1\": \"123 Main St\",\r\n                    \"street2\": \"\",\r\n                    \"city\": \"Las Vegas\",\r\n                    \"state\": \"NV\",\r\n                    \"country\": \"US\",\r\n                    \"postalCode\": \"89118\",\r\n                    \"type\": \"Home\"\r\n                }\r\n            ]\r\n\t},\r\n\t\"billings\": [\r\n\t\t\t{\r\n\t\t\t\t\"payment\": {\r\n\t\t\t\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\t\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\t\t\"amount\": 379.28,\r\n\t\t\t\t\t\"maskedNumber\": \"XXXXXXXXXXXX1111\",\r\n\t\t\t\t\t\"cardHolder\": \"{{first_name}} {{last_name}}\",\r\n\t\t\t\t\t\"cvv\": \"123\",\r\n\t\t\t\t\t\"expiry\": \"10/2022\",\r\n\t\t\t\t\t\"type\": \"Visa\",\r\n\t\t\t\t\t\"ccToken\": \"4111110A001DQXFHY79D9XCZ1111\"\r\n\t\t\t\t},\r\n\t\t\t\t\"address\": {\r\n\t\t\t\t\t\"street1\": \"234 W Main St\",\r\n\t\t\t\t\t\"city\": \"Las Vegas\",\r\n\t\t\t\t\t\"postalCode\": \"89129\",\r\n\t\t\t\t\t\"state\": \"NV\",\r\n\t\t\t\t\t\"country\": \"US\"\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"payment\": {\r\n\t\t\t\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\t\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\t\t\"amount\": 23023.38,\r\n\t\t\t\t\t\"maskedNumber\": \"XXXXXXXXXXXX1111\",\r\n\t\t\t\t\t\"cardHolder\": \"{{first_name}} {{last_name}}\",\r\n\t\t\t\t\t\"cvv\": \"123\",\r\n\t\t\t\t\t\"expiry\": \"10/2022\",\r\n\t\t\t\t\t\"type\": \"Visa\",\r\n\t\t\t\t\t\"ccToken\": \"4111110A001DQXFHY79D9XCZ1111\"\r\n\t\t\t\t},\r\n\t\t\t\t\"address\": {\r\n\t\t\t\t\t\"street1\": \"234 W Main St\",\r\n\t\t\t\t\t\"city\": \"Las Vegas\",\r\n\t\t\t\t\t\"postalCode\": \"89129\",\r\n\t\t\t\t\t\"state\": \"NV\",\r\n\t\t\t\t\t\"country\": \"US\"\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t]\r\n\t}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{global.apigee.endpoint}}/{{global.api.version}}/checkout",
+							"protocol": "https",
+							"host": [
+								"{{global.apigee.endpoint}}"
+							],
+							"path": [
+								"{{global.api.version}}",
+								"checkout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

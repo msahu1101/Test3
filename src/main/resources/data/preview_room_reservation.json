@@ -1,0 +1,16 @@
+{
+	"paymentSessionId": "c74024c1-4ae9-46ae-a4ff-79a3862aacd1",
+	"reservationType": "ROOM",
+	"previewRoomReservationRequest": {
+		"confirmationNumber": "M083DDB61",
+		"firstName": "Ratanchood",
+		"lastName": "Ranchod",
+		"tripDetails": {
+			"checkInDate": "2024-02-13",
+			"checkOutDate": "2024-02-14"
+		},
+		"roomRequests": [
+			"af9e8b4c-ee7c-4d28-8e20-994da8511004"
+		]
+	}
+}

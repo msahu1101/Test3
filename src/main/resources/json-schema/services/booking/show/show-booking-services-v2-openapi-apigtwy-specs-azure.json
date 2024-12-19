@@ -1,0 +1,3279 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Show Booking Services",
+    "description": "Services for show booking flow"
+  },
+  "servers": [
+    {
+      "url": "https://dev-api.apigee.devtest.vegas/booking/show",
+      "description": "dev"
+    },
+    {
+      "url": "https://qa2-api.apigee.devtest.vegas/booking/show",
+      "description": "qa"
+    },
+    {
+      "url": "https://qa4-api.apigee.devtest.vegas/booking/show",
+      "description": "qa4"
+    },
+    {
+      "url": "https://preprod-api.apigee.devtest.vegas/booking/show",
+      "description": "preprod"
+    },
+    {
+      "url": "https://mgm-nonprod-green.apigee.net/booking/show",
+      "description": "green"
+    },
+    {
+      "url": "https://api.apigee.mgmresorts.com/booking/show",
+      "description": "prod"
+    }
+  ],
+  "paths": {
+    "/v2/seats/hold": {
+      "post": {
+        "security": [
+          {
+            "oauth2": [
+              "shows.seats:hold"
+            ]
+          },
+          {
+            "mgm-roles": [
+              "service"
+            ]
+          },
+          {
+            "service-role": [
+              "write"
+            ]
+          }
+        ],
+        "summary": "Hold the selected seats or best available seats and calculate charges",
+        "description": "Hold the selected seats for a seat selection show or best available seats. \"tickets\" object in request should include priceCode, numTickets and numAdaTickets for holding best available seats. To hold specific seats, \"tickets\" object should include section, row and seat.",
+        "tags": [
+          "Hold & Release"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Authorization"
+          },
+          {
+            "$ref": "#/components/parameters/source"
+          },
+          {
+            "$ref": "#/components/parameters/channel"
+          },
+          {
+            "$ref": "#/components/parameters/transactionId"
+          },
+          {
+            "$ref": "#/components/parameters/correlationId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HoldSeatsRequest"
+              },
+              "examples": {
+                "HoldBestSeatsRequest": {
+                  "$ref": "#/components/examples/HoldBestSeatsRequest"
+                },
+                "HoldBestSeatsRequestWithMultiplePriceCodes": {
+                  "$ref": "#/components/examples/HoldBestSeatsRequestWithMultiplePriceCodes"
+                },
+                "HoldSpecificSeatsRequest": {
+                  "$ref": "#/components/examples/HoldSpecificSeatsRequest"
+                },
+                "HoldBestSeatsRequestWithRedemptionCode": {
+                  "$ref": "#/components/examples/HoldBestSeatsRequestWithRedemptionCode"
+                },
+                "HoldSpecificSeatsRequestWithRedemptionCode": {
+                  "$ref": "#/components/examples/HoldSpecificSeatsRequestWithRedemptionCode"
+                },
+                "HoldSpecificSeatsRequestWithHoldId": {
+                  "$ref": "#/components/examples/HoldSpecificSeatsRequestWithHoldId"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShowChargesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400 response.",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/seats/release": {
+      "post": {
+        "deprecated": true,
+        "security": [
+          {
+            "oauth2": [
+              "shows.seats:release"
+            ]
+          },
+          {
+            "mgm-roles": [
+              "service"
+            ]
+          },
+          {
+            "service-role": [
+              "write"
+            ]
+          }
+        ],
+        "summary": "Release the seats based on the hold ids passed in the request",
+        "description": "Release the seats based on the hold ids passed in the request",
+        "tags": [
+          "Hold & Release"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Authorization"
+          },
+          {
+            "$ref": "#/components/parameters/source"
+          },
+          {
+            "$ref": "#/components/parameters/channel"
+          },
+          {
+            "$ref": "#/components/parameters/transactionId"
+          },
+          {
+            "$ref": "#/components/parameters/correlationId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReleaseSeatsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenericResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400 response.",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/seats/release": {
+      "post": {
+        "security": [
+          {
+            "oauth2": [
+              "shows.seats:release"
+            ]
+          },
+          {
+            "mgm-roles": [
+              "service"
+            ]
+          },
+          {
+            "service-role": [
+              "write"
+            ]
+          }
+        ],
+        "summary": "Release the seats based on the hold id passed in the request",
+        "description": "Release the seats based on the hold id along with showEventId passed in the request and new parameter showEventId is added along with holdId to Release Request needed for invoking Inventory Release API",
+        "tags": [
+          "Hold & Release"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Authorization"
+          },
+          {
+            "$ref": "#/components/parameters/source"
+          },
+          {
+            "$ref": "#/components/parameters/channel"
+          },
+          {
+            "$ref": "#/components/parameters/transactionId"
+          },
+          {
+            "$ref": "#/components/parameters/correlationId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReleaseSeatsInventoryRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenericResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400 response.",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/reservation": {
+      "post": {
+        "security": [
+          {
+            "oauth2": [
+              "shows.reservation:create"
+            ]
+          },
+          {
+            "mgm-roles": [
+              "service"
+            ]
+          },
+          {
+            "service-role": [
+              "write"
+            ]
+          }
+        ],
+        "summary": "Creates the show reservation in the source system",
+        "description": "Creates the show reservation in the source system",
+        "tags": [
+          "Reservation"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Authorization"
+          },
+          {
+            "$ref": "#/components/parameters/source"
+          },
+          {
+            "$ref": "#/components/parameters/channel"
+          },
+          {
+            "$ref": "#/components/parameters/transactionId"
+          },
+          {
+            "$ref": "#/components/parameters/correlationId"
+          },
+          {
+            "$ref": "#/components/parameters/sessionId"
+          },
+          {
+            "$ref": "#/components/parameters/ipAddress"
+          },
+          {
+            "$ref": "#/components/parameters/x-forwarded-for"
+          },
+          {
+            "$ref": "#/components/parameters/fraud-agent-token"
+          },
+          {
+            "$ref": "#/components/parameters/user-agent"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShowReservationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              },
+              "sessionId": {
+                "$ref": "#/components/headers/sessionId"
+              },
+              "ipAddress": {
+                "$ref": "#/components/headers/ipAddress"
+              },
+              "x-forwarded-for": {
+                "$ref": "#/components/headers/x-forwarded-for"
+              },
+              "fraud-agent-token": {
+                "$ref": "#/components/parameters/fraud-agent-token"
+              },
+              "user-agent": {
+                "$ref": "#/components/parameters/user-agent"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShowReservationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400 response.",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              },
+              "sessionId": {
+                "$ref": "#/components/headers/sessionId"
+              },
+              "ipAddress": {
+                "$ref": "#/components/headers/ipAddress"
+              },
+              "x-forwarded-for": {
+                "$ref": "#/components/headers/x-forwarded-for"
+              },
+              "fraud-agent-token": {
+                "$ref": "#/components/parameters/fraud-agent-token"
+              },
+              "user-agent": {
+                "$ref": "#/components/parameters/user-agent"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              },
+              "sessionId": {
+                "$ref": "#/components/headers/sessionId"
+              },
+              "ipAddress": {
+                "$ref": "#/components/headers/ipAddress"
+              },
+              "x-forwarded-for": {
+                "$ref": "#/components/headers/x-forwarded-for"
+              },
+              "fraud-agent-token": {
+                "$ref": "#/components/parameters/fraud-agent-token"
+              },
+              "user-agent": {
+                "$ref": "#/components/parameters/user-agent"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "oauth2": [
+              "shows.reservation:create"
+            ]
+          },
+          {
+            "mgm-roles": [
+              "service"
+            ]
+          },
+          {
+            "service-role": [
+              "write"
+            ]
+          }
+        ],
+        "summary": "Updates the show reservation in the source system",
+        "description": "Updates the show reservation in the source system.",
+        "tags": [
+          "Reservation"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Authorization"
+          },
+          {
+            "$ref": "#/components/parameters/source"
+          },
+          {
+            "$ref": "#/components/parameters/channel"
+          },
+          {
+            "$ref": "#/components/parameters/transactionId"
+          },
+          {
+            "$ref": "#/components/parameters/correlationId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateReservationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenericResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400 response.",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "oauth2": [
+              "shows.reservation:read",
+              "booking.room.resv:search"
+            ]
+          },
+          {
+            "mgm-roles": [
+              "guest",
+              "anon",
+              "service"
+            ]
+          },
+          {
+            "service-role": [
+              "read"
+            ]
+          }
+        ],
+        "summary": "Find reservation for the given confirmation number",
+        "description": "Find reservation for the given confirmation number",
+        "tags": [
+          "Reservation"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Authorization"
+          },
+          {
+            "$ref": "#/components/parameters/source"
+          },
+          {
+            "$ref": "#/components/parameters/channel"
+          },
+          {
+            "$ref": "#/components/parameters/transactionId"
+          },
+          {
+            "$ref": "#/components/parameters/correlationId"
+          },
+          {
+            "name": "confirmationNumber",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The confirmation number of the reservation to find"
+          },
+          {
+            "name": "firstName",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Customer's first name given at the time of booking. Required parameter if guest token is not provided in Auth header"
+          },
+          {
+            "name": "lastName",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Customer's last name given at the time of booking. Required parameter if guest token is not provided in Auth header"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShowReservationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400 response.",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/search": {
+      "get": {
+        "security": [
+          {
+            "oauth2": [
+              "shows.reservation:read"
+            ]
+          },
+          {
+            "mgm-roles": [
+              "service"
+            ]
+          },
+          {
+            "service-role": [
+              "read"
+            ]
+          }
+        ],
+        "summary": "Search for all reservations with a matching mlifeNo or archticsId",
+        "description": "Search for all reservations with a matching mlifeNo or archticsId - the request must contain one of these values and if both are supplied, archticsId will be used. Note that currently this API will only search the reservations cache and not the Archtics database.",
+        "tags": [
+          "Reservation"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Authorization"
+          },
+          {
+            "$ref": "#/components/parameters/source"
+          },
+          {
+            "$ref": "#/components/parameters/channel"
+          },
+          {
+            "$ref": "#/components/parameters/transactionId"
+          },
+          {
+            "$ref": "#/components/parameters/correlationId"
+          },
+          {
+            "name": "mlifeNo",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guest's M Life number used to query the reservations database."
+          },
+          {
+            "name": "archticsId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guest's Archtics identifier used to query the reservations database."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchReservationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400 response.",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/reservation/associate": {
+      "put": {
+        "security": [
+          {
+            "oauth2": [
+              "shows.reservation:read",
+              "booking.room.resv:update"
+            ]
+          },
+          {
+            "mgm-roles": [
+              "guest",
+              "service"
+            ]
+          },
+          {
+            "service-role": [
+              "write"
+            ]
+          }
+        ],
+        "summary": "Associate reservation to the profile",
+        "description": "Associate reservation to the profile. Pre-requisite- auth token should be with logged in user.",
+        "tags": [
+          "Reservation"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Authorization"
+          },
+          {
+            "$ref": "#/components/parameters/source"
+          },
+          {
+            "$ref": "#/components/parameters/channel"
+          },
+          {
+            "$ref": "#/components/parameters/transactionId"
+          },
+          {
+            "$ref": "#/components/parameters/correlationId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssociateReservationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShowReservationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400 response.",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/tickets/resend": {
+      "get": {
+        "security": [
+          {
+            "oauth2": [
+              "shows.reservation:read"
+            ]
+          },
+          {
+            "mgm-roles": [
+              "guest",
+              "anon",
+              "service"
+            ]
+          },
+          {
+            "service-role": [
+              "write"
+            ]
+          }
+        ],
+        "summary": "Resend show tickets for the given confirmation number",
+        "description": "Resend show tickets for the given confirmation number",
+        "tags": [
+          "Reservation"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Authorization"
+          },
+          {
+            "$ref": "#/components/parameters/source"
+          },
+          {
+            "$ref": "#/components/parameters/channel"
+          },
+          {
+            "$ref": "#/components/parameters/transactionId"
+          },
+          {
+            "$ref": "#/components/parameters/correlationId"
+          },
+          {
+            "name": "confirmationNumber",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The confirmation number of the reservation to find"
+          },
+          {
+            "name": "firstName",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Customer's first name given at the time of booking. Required parameter if guest token is not provided in Auth header"
+          },
+          {
+            "name": "lastName",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Customer's last name given at the time of booking. Required parameter if guest token is not provided in Auth header"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenericResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400 response.",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/health": {
+      "get": {
+        "summary": "Health check api to validate Show-Booking uptime",
+        "description": "Health check api to validate Show-Booking uptime",
+        "tags": [
+          "Health check"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response"
+          }
+        }
+      },
+      "head": {
+        "summary": "Health check api for Health Probe checking",
+        "description": "Health check api for Health Probe checking",
+        "tags": [
+          "Health check"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response"
+          }
+        }
+      }
+    },
+    "/v2/composer": {
+      "post": {
+        "security": [
+          {
+            "mgm-roles": [
+              "service"
+            ]
+          },
+          {
+            "service-role": [
+              "write"
+            ]
+          }
+        ],
+        "summary": "On Demand Request API to process either Journal or Ticket or both types.",
+        "description": "On Demand Request API to process either Journal or Ticket or both types",
+        "tags": [
+          "On Demand Request"
+        ],
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Type could be either \"journal\" for Journal Transactions, \"ticket\" for Ticket Transactions or \"both\" to trigger both transactions"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response"
+          }
+        }
+      }
+    },
+    "/v2/charges": {
+      "post": {
+        "security": [
+          {
+            "oauth2": [
+              "shows.seats:hold"
+            ]
+          },
+          {
+            "mgm-roles": [
+              "service"
+            ]
+          },
+          {
+            "service-role": [
+              "write"
+            ]
+          }
+        ],
+        "summary": "Recalc the hold response and present in ICE expected format",
+        "description": "Recalculate the hold response and present in ICE expected format.",
+        "tags": [
+          "Recalculate Hold Charges"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Authorization"
+          },
+          {
+            "$ref": "#/components/parameters/source"
+          },
+          {
+            "$ref": "#/components/parameters/channel"
+          },
+          {
+            "$ref": "#/components/parameters/transactionId"
+          },
+          {
+            "$ref": "#/components/parameters/correlationId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecalcShowChargesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecalcShowChargesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400 response.",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "headers": {
+              "x-mgm-source": {
+                "$ref": "#/components/headers/x-mgm-source"
+              },
+              "x-mgm-channel": {
+                "$ref": "#/components/headers/x-mgm-channel"
+              },
+              "x-mgm-correlation-id": {
+                "$ref": "#/components/headers/x-mgm-correlation-id"
+              },
+              "x-mgm-transaction-id": {
+                "$ref": "#/components/headers/x-mgm-transaction-id"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "oauth2": {
+        "type": "oauth2",
+        "flows": {
+          "password": {
+            "tokenUrl": "https://mgm-nonprod-stage.apigee.net/identity/authorization/v1/mgmsvc/token",
+            "scopes": {
+              "shows.seats:hold": "Hold seats",
+              "shows.seats:release": "Release seats",
+              "shows.reservation:create": "Create reservation",
+              "shows.reservation:read": "Read/Find reservation"
+            }
+          },
+          "clientCredentials": {
+            "tokenUrl": "https://mgm-nonprod-stage.apigee.net/identity/authorization/v1/mgmsvc/token",
+            "scopes": {
+              "shows.seats:hold": "Hold seats",
+              "shows.seats:release": "Release seats",
+              "shows.reservation:create": "Create reservation",
+              "shows.reservation:read": "Read/Find reservation"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "example": "632-1-101"
+              },
+              "message": {
+                "type": "string",
+                "example": "Transaction id is missing in the request header"
+              }
+            }
+          }
+        }
+      },
+      "HoldSeatsRequest": {
+        "type": "object",
+        "properties": {
+          "showEventId": {
+            "type": "string",
+            "description": "the show event id",
+            "example": "fdbfdc52-455d-4605-9c86-d8c2bfeea40f"
+          },
+          "programId": {
+            "type": "string",
+            "description": "optional program id. Property id is mandatory with program id"
+          },
+          "propertyId": {
+            "type": "string",
+            "description": "the property id. Property id is mandatory with program id"
+          },
+          "redemptionCode": {
+            "type": "string",
+            "description": "the redemption code"
+          },
+          "holdId": {
+            "type": "integer",
+            "description": "Optional holdId, for releasing held seats in the hold specific seat api",
+            "example": 97450263
+          },
+          "mlifeNo": {
+            "type": "string",
+            "description": "Mlife number of the logged-in user; used to check eligibility for program supplied"
+          },
+          "showPaymentChargedTo": {
+            "type": "string",
+            "description": "it denotes if payment is Independent or associated with a room",
+            "example": "ROOM_ONLY",
+            "enum": [
+              "ROOM_ONLY",
+              "INDEPENDENT"
+            ]
+          },
+          "tickets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ShowTicketRequest"
+            }
+          }
+        },
+        "required": [
+          "showEventId",
+          "tickets"
+        ]
+      },
+      "AssociateReservationRequest": {
+        "type": "object",
+        "properties": {
+          "confirmationNumber": {
+            "type": "string",
+            "description": "the reservation confirmation number",
+            "example": "97450630"
+          }
+        },
+        "required": [
+          "confirmationNumber"
+        ]
+      },
+      "ReleaseSeatsRequest": {
+        "type": "object",
+        "properties": {
+          "holdIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              98430818
+            ]
+          }
+        },
+        "required": [
+          "holdIds"
+        ]
+      },
+      "ReleaseSeatsInventoryRequest": {
+        "type": "object",
+        "properties": {
+          "holdId": {
+            "type": "integer",
+            "example": "98430818"
+          },
+          "showEventId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "holdId",
+          "showEventId"
+        ]
+      },
+      "ShowTicketRequest": {
+        "type": "object",
+        "description": "Object should include priceCode, ticketTypeCode, numTickets and numAdaTickets for holding best available seats. To hold specific seats, \"tickets\" object should include priceCode, ticketTypeCode, holdClass, row, seat and section.",
+        "properties": {
+          "priceCode": {
+            "type": "string",
+            "description": "the price code for the ticket to hold best seats",
+            "example": "AN"
+          },
+          "ticketTypeCode": {
+            "type": "string",
+            "description": "Ticket type code for the ticket to hold best seats",
+            "example": "_A"
+          },
+          "numTickets": {
+            "type": "integer",
+            "description": "number of regular seats to hold best seats",
+            "example": 1
+          },
+          "numAdaTickets": {
+            "type": "integer",
+            "description": "number of accessible seats to hold best seats",
+            "example": 0
+          },
+          "section": {
+            "type": "string",
+            "description": "the section for the ticket to hold specific seats",
+            "example": "102"
+          },
+          "row": {
+            "type": "string",
+            "description": "the row for the ticket to hold specific seats",
+            "example": "A"
+          },
+          "seat": {
+            "type": "string",
+            "description": "the seat for the ticket to hold specific seats",
+            "example": "4"
+          },
+          "holdClass": {
+            "type": "string",
+            "description": "Hold Class",
+            "example": "OPEN"
+          }
+        }
+      },
+      "Rates": {
+        "type": "object",
+        "properties": {
+          "discountedSubtotal": {
+            "type": "number",
+            "format": "double",
+            "description": "the discountedSubtotal amount",
+            "example": 138.24
+          },
+          "showSubtotal": {
+            "type": "number",
+            "format": "double",
+            "description": "the showSubtotal amount, i.e. sum of baseprices.",
+            "example": 138.24
+          },
+          "let": {
+            "type": "number",
+            "format": "double",
+            "description": "the live entertainment tax amount",
+            "example": 12.44
+          },
+          "deliveryFee": {
+            "type": "number",
+            "format": "double",
+            "description": "the delivery fee",
+            "example": 0.0
+          },
+          "gratuity": {
+            "type": "number",
+            "format": "double",
+            "description": "the gratuity fee",
+            "example": 4.0
+          },
+          "reservationTotal": {
+            "type": "number",
+            "format": "double",
+            "description": "the reservation total",
+            "example": 172.58
+          },
+          "serviceCharge": {
+            "$ref": "#/components/schemas/CostDetails"
+          },
+          "transactionFee": {
+            "$ref": "#/components/schemas/CostDetails"
+          }
+        },
+        "required": [
+          "discountedSubtotal",
+          "showSubtotal",
+          "let",
+          "deliveryFee",
+          "gratuity",
+          "reservationTotal"
+        ]
+      },
+      "CostDetails": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "format": "double",
+            "description": "the total amount",
+            "example": 0.0
+          },
+          "itemized": {
+            "$ref": "#/components/schemas/Itemized"
+          }
+        },
+        "required": [
+          "amount"
+        ]
+      },
+      "Itemized": {
+        "type": "object",
+        "properties": {
+          "charge": {
+            "type": "number",
+            "format": "double",
+            "description": "the charge amount",
+            "example": 0.0
+          },
+          "tax": {
+            "type": "number",
+            "format": "double",
+            "description": "the tax amount",
+            "example": 0.0
+          }
+        },
+        "required": [
+          "charge",
+          "tax"
+        ]
+      },
+      "BillingInfo": {
+        "type": "object",
+        "properties": {
+          "payment": {
+            "type": "object",
+            "properties": {
+              "firstName": {
+                "type": "string",
+                "example": "John"
+              },
+              "lastName": {
+                "type": "string",
+                "example": "Doe"
+              },
+              "cvv": {
+                "type": "string",
+                "example": 123
+              },
+              "expiry": {
+                "type": "string",
+                "format": "MMYY",
+                "example": 1022
+              },
+              "type": {
+                "type": "string",
+                "example": "Visa, MasterCard, Discover, American Express, Diners Club, JCB"
+              },
+              "paymentToken": {
+                "type": "string",
+                "example": 123
+              },
+              "authId": {
+                "type": "string",
+                "example": 123
+              },
+              "paymentId": {
+                "type": "string",
+                "example": 123
+              }
+            },
+            "required": [
+              "firstName",
+              "lastName",
+              "cvv",
+              "expiry",
+              "type",
+              "paymentToken"
+            ]
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "street1": {
+                "type": "string",
+                "example": "234 W Main St"
+              },
+              "street2": {
+                "type": "string",
+                "example": "Unit 415"
+              },
+              "city": {
+                "type": "string",
+                "example": "Las Vegas"
+              },
+              "state": {
+                "type": "string",
+                "example": "NV",
+                "description": "State code for US/Canada and free form for other countries. Mandatory for US/Canada"
+              },
+              "postalCode": {
+                "type": "string",
+                "example": 12345,
+                "description": "US -> ^\\d{5}(-\\d{4})?$, Canada -> ^[ABCEGHJKLMNPRSTVXY]{1}\\d{1}[A-Z]{1} *\\d{1}[A-Z]{1}\\d{1}$, optional for other countries"
+              },
+              "country": {
+                "type": "string",
+                "example": "US",
+                "description": "Country code"
+              }
+            },
+            "required": [
+              "city",
+              "postalCode",
+              "state",
+              "country",
+              "street1"
+            ]
+          }
+        }
+      },
+      "ReservationProfile": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "example": "John",
+            "description": "Should be <32 chars and match *^[ A-Za-z0-9.\\-\\/+=_ !$\\\\*?@#,']*$*"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Doe",
+            "description": "Should be <32 chars and match *^[ A-Za-z0-9.\\-\\/+=_ !$\\\\*?@#,']*$*"
+          },
+          "archticsId": {
+            "type": "string",
+            "description": "the archtics account id",
+            "example": "1234"
+          },
+          "phoneNumbers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "Home",
+                    "Business",
+                    "Fax",
+                    "Pager",
+                    "Mobile",
+                    "Other"
+                  ]
+                },
+                "number": {
+                  "type": "string",
+                  "example": "7023777108"
+                }
+              }
+            }
+          },
+          "emailAddress1": {
+            "type": "string",
+            "example": "johndoe@nomail.com",
+            "description": "Should be <=100 chars and match regex ^((([\\\\w]|[!#$'\\\\*\\\\+\\\\-/\\\\?_\\\\\\\\]|[\\\\u00A0-\\\\uD7FF\\\\uF900-\\\\uFDCF\\\\uFDF0-\\\\uFFEF])+(\\\\.([\\\\w]|[!#\\\\$'\\\\*\\\\+\\\\-\\\\/=\\\\?\\\\_\\\\\\\\]|[\\\\u00A0-\\\\uD7FF\\\\uF900-\\\\uFDCF\\\\uFDF0-\\\\uFFEF])+)*)|((\\\\x22)((((\\\\x20|\\\\x09)*(\\\\x0d\\\\x0a))?(\\\\x20|\\\\x09)+)?(([\\\\x01-\\\\x08\\\\x0b\\\\x0c\\\\x0e-\\\\x1f\\\\x7f]|\\\\x21|[\\\\x23-\\\\x5b]|[\\\\x5d-\\\\x7e]|[\\\\u00A0-\\\\uD7FF\\\\uF900-\\\\uFDCF\\\\uFDF0-\\\\uFFEF])|(\\\\\\\\([\\\\x01-\\\\x09\\\\x0b\\\\x0c\\\\x0d-\\\\x7f]|[\\\\u00A0-\\\\uD7FF\\\\uF900-\\\\uFDCF\\\\uFDF0-\\\\uFFEF]))))*(((\\\\x20|\\\\x09)*(\\\\x0d\\\\x0a))?(\\\\x20|\\\\x09)+)?(\\\\x22)))@((([\\\\w]|[\\\\u00A0-\\\\uD7FF\\\\uF900-\\\\uFDCF\\\\uFDF0-\\\\uFFEF])|(([\\\\w]|[\\\\u00A0-\\\\uD7FF\\\\uF900-\\\\uFDCF\\\\uFDF0-\\\\uFFEF])([\\\\w]|-|\\\\.|_|~|[\\\\u00A0-\\\\uD7FF\\\\uF900-\\\\uFDCF\\\\uFDF0-\\\\uFFEF])*([\\\\w]|[\\\\u00A0-\\\\uD7FF\\\\uF900-\\\\uFDCF\\\\uFDF0-\\\\uFFEF])))\\\\.)+(([a-zA-Z]|[\\\\u00A0-\\\\uD7FF\\\\uF900-\\\\uFDCF\\\\uFDF0-\\\\uFFEF])|(([a-zA-Z]|[\\\\u00A0-\\\\uD7FF\\\\uF900-\\\\uFDCF\\\\uFDF0-\\\\uFFEF])([\\\\w]|-|\\\\.|_|~|[\\\\u00A0-\\\\uD7FF\\\\uF900-\\\\uFDCF\\\\uFDF0-\\\\uFFEF])*([a-zA-Z]|[\\\\u00A0-\\\\uD7FF\\\\uF900-\\\\uFDCF\\\\uFDF0-\\\\uFFEF])))\\\\.?$"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "example": "1995-12-31",
+            "description": "Should match yyyy-MM-dd"
+          },
+          "mlifeNo": {
+            "type": "string"
+          },
+          "addresses": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "Home",
+                    "Business",
+                    "Alternate",
+                    "Other"
+                  ]
+                },
+                "preferred": {
+                  "type": "boolean"
+                },
+                "street1": {
+                  "type": "string",
+                  "example": "2715 W P R",
+                  "description": "Should be <40 chars and match *^[ A-Za-z0-9.\\-\\/+=_ !$\\\\*?@#,']*$*"
+                },
+                "street2": {
+                  "type": "string",
+                  "example": "2715 W P R",
+                  "description": "Optional, Should be <40 chars if present and match *^[ A-Za-z0-9.\\-\\/+=_ !$\\\\*?@#,']*$*"
+                },
+                "city": {
+                  "type": "string",
+                  "example": "LV",
+                  "description": "Should be <20 chars and match *^[ A-Za-z0-9.\\-\\/+=_ !$\\\\*?@#,']*$*"
+                },
+                "state": {
+                  "type": "string",
+                  "example": "NV",
+                  "description": "Should be <2 chars and match *^[ A-Za-z0-9.\\-\\/+=_ !$\\\\*?@#,']*$*"
+                },
+                "country": {
+                  "type": "string",
+                  "example": "US",
+                  "description": "Should be <8 chars and match *^[ A-Za-z0-9.\\-\\/+=_ !$\\\\*?@#,']*$*"
+                },
+                "postalCode": {
+                  "type": "string",
+                  "example": "19087-4526",
+                  "description": "Should be <10 chars and match *^[0-9.\\-\\/+=_ !$\\\\*?@#,']*$*"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "firstName",
+          "lastName",
+          "phoneNumbers",
+          "emailAddress1",
+          "addresses"
+        ]
+      },
+      "ShowTicket": {
+        "type": "object",
+        "properties": {
+          "priceCode": {
+            "type": "string",
+            "description": "the price code for the ticket",
+            "example": "BN"
+          },
+          "priceCodeDescription": {
+            "type": "string",
+            "example": "1 Movie Package"
+          },
+          "holdClass": {
+            "type": "string",
+            "description": "Hold class",
+            "example": "OPEN"
+          },
+          "adaCompanion": {
+            "type": "boolean",
+            "description": "whether this is an ADA Companion ticket"
+          },
+          "basePrice": {
+            "type": "number",
+            "description": "the base price for the ticket",
+            "example": 69.12
+          },
+          "discountedPrice": {
+            "type": "number",
+            "description": "the discounted price for the ticket",
+            "example": 69.12
+          },
+          "holdId": {
+            "type": "string",
+            "description": "the hold id for the ticket",
+            "example": "98430703"
+          },
+          "holdDuration": {
+            "type": "number",
+            "description": "the hold duration for the ticket",
+            "example": 1629808501701
+          },
+          "description": {
+            "type": "string",
+            "description": "the description for the ticket"
+          },
+          "state": {
+            "type": "string",
+            "example": "HELD"
+          },
+          "showEventId": {
+            "type": "string",
+            "example": "93eae2bb-b15d-4b8e-91ac-307d9c38da18"
+          },
+          "ticketTypeCode": {
+            "type": "string",
+            "example": "_A"
+          },
+          "ticketTypeCodeDescription": {
+            "type": "string",
+            "example": "M life Offer 1"
+          },
+          "accessible": {
+            "type": "boolean",
+            "description": "Set to true for accessible tickets"
+          },
+          "seat": {
+            "$ref": "#/components/schemas/Seat"
+          }
+        }
+      },
+      "ReservationShowTicketDetail": {
+        "type": "object",
+        "properties": {
+          "priceCode": {
+            "type": "string",
+            "description": "the price code for the ticket",
+            "example": "BN"
+          },
+          "priceCodeDescription": {
+            "type": "string",
+            "example": "1 Movie Package"
+          },
+          "holdClass": {
+            "type": "string",
+            "description": "Hold class",
+            "example": "OPEN"
+          },
+          "basePrice": {
+            "type": "number",
+            "description": "the base price for the ticket",
+            "example": 69.2
+          },
+          "barCode": {
+            "type": "string",
+            "example": "858843014450"
+          },
+          "discountedPrice": {
+            "type": "number",
+            "description": "the discounted price for the ticket",
+            "example": 0.0
+          },
+          "description": {
+            "type": "string",
+            "description": "the description for the ticket",
+            "example": "Some ticket description"
+          },
+          "showEventId": {
+            "type": "string",
+            "example": "93eae2bb-b15d-4b8e-91ac-307d9c38da18"
+          },
+          "showEventCode": {
+            "type": "string",
+            "example": "PTC0416E"
+          },
+          "ticketTypeCode": {
+            "type": "string",
+            "example": "_A"
+          },
+          "ticketTypeCodeDescription": {
+            "type": "string",
+            "example": "M life Offer 1"
+          },
+          "accessible": {
+            "type": "boolean",
+            "description": "Set to true for accessible tickets"
+          },
+          "adaCompanion": {
+            "type": "boolean",
+            "description": "whether this is an ADA Companion ticket"
+          },
+          "seat": {
+            "$ref": "#/components/schemas/Seat"
+          }
+        }
+      },
+      "ShowTicketWithDM": {
+        "type": "object",
+        "properties": {
+          "priceCode": {
+            "type": "string",
+            "description": "the price code for the ticket",
+            "example": "AN"
+          },
+          "priceCodeDescription": {
+            "type": "string",
+            "description": "the price code description for the ticket",
+            "example": "Category A"
+          },
+          "holdClass": {
+            "type": "string",
+            "description": "Hold class",
+            "example": "OPEN"
+          },
+          "adaCompanion": {
+            "type": "boolean",
+            "description": "whether this is an ADA Companion ticket"
+          },
+          "basePrice": {
+            "type": "number",
+            "description": "the base price for the ticket",
+            "example": 74.32
+          },
+          "discountedPrice": {
+            "type": "number",
+            "description": "the discounted price for the ticket",
+            "example": 0.0
+          },
+          "let": {
+            "type": "number",
+            "description": "the let on the ticket",
+            "example": 0.0
+          },
+          "gratuity": {
+            "type": "number",
+            "description": "the gratuity on the ticket",
+            "example": 0.0
+          },
+          "holdId": {
+            "type": "string",
+            "description": "the hold id for the ticket",
+            "example": "98431286"
+          },
+          "holdLineItemId": {
+            "type": "number",
+            "description": "the line item id for the hold",
+            "example": "1"
+          },
+          "holdDuration": {
+            "type": "number",
+            "description": "the hold duration for the ticket",
+            "example": 1631644122807
+          },
+          "description": {
+            "type": "string",
+            "description": "the description for the ticket",
+            "example": "Some description"
+          },
+          "state": {
+            "type": "string",
+            "example": "HELD"
+          },
+          "showEventId": {
+            "type": "string",
+            "example": "49c259a1-b4ff-4368-b50e-fe405e731d85"
+          },
+          "ticketTypeCode": {
+            "type": "string",
+            "example": "_A"
+          },
+          "ticketTypeCodeDescription": {
+            "type": "string",
+            "example": "M life Offer 1"
+          },
+          "accessible": {
+            "type": "boolean",
+            "description": "Set to true for accessible tickets"
+          },
+          "seat": {
+            "$ref": "#/components/schemas/Seat"
+          }
+        }
+      },
+      "ShowChargesResponse": {
+        "type": "object",
+        "properties": {
+          "eventDate": {
+            "type": "string",
+            "example": "2021-10-01"
+          },
+          "eventTime": {
+            "type": "string",
+            "example": "9:00 PM"
+          },
+          "eventTz": {
+            "type": "string",
+            "example": "2021-10-13T03:00Z"
+          },
+          "seasonId": {
+            "type": "string",
+            "example": "7095c5b1-d871-4fbd-9bef-2aeb3a622bce"
+          },
+          "showEventId": {
+            "type": "string",
+            "example": "49c259a1-b4ff-4368-b50e-fe405e731d85"
+          },
+          "programId": {
+            "type": "string",
+            "description": "optional program id",
+            "example": "291a5dfa-bc95-498b-b4f5-2220baf9f8ec"
+          },
+          "propertyId": {
+            "type": "string",
+            "description": "the property id",
+            "example": "f8d6a944-7816-412f-a39a-9a63aad26833"
+          },
+          "redemptionCode": {
+            "type": "string",
+            "description": "the redemption code",
+            "example": "TQR83S"
+          },
+          "comp": {
+            "type": "boolean",
+            "description": "the flag indicating if the charges are for MYVEGAS COMP"
+          },
+          "hdePackage": {
+            "type": "boolean",
+            "description": "the flag indicating if the charges are for HDE Packages"
+          },
+          "paymentRequired": {
+            "type": "boolean",
+            "description": "the flag indicating if the payment is required"
+          },
+          "discounted": {
+            "type": "boolean",
+            "description": "Flag to indicate if this price is discounted i.e. 'true' when dicountedPrice < basePrice"
+          },
+          "permissibleDeliveryMethods": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeliveryMethod"
+            }
+          },
+          "tickets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ShowTicketWithDM"
+            }
+          },
+          "charges": {
+            "$ref": "#/components/schemas/Rates"
+          }
+        }
+      },
+      "UpdateReservationRequest": {
+        "type": "object",
+        "properties": {
+          "showEventId": {
+            "type": "string",
+            "example": "93eae2bb-b15d-4b8e-91ac-307d9c38da18"
+          },
+          "archticsAccountId": {
+            "type": "string",
+            "description": "the archtics account id",
+            "example": "1234"
+          },
+          "sectionName": {
+            "type": "string",
+            "description": "the section name",
+            "example": "SEC1"
+          },
+          "rowName": {
+            "type": "string",
+            "description": "the row name",
+            "example": "ROW1"
+          },
+          "seat": {
+            "type": "integer",
+            "description": "the seat number",
+            "example": 1
+          },
+          "operaConfirmationNumber": {
+            "type": "string",
+            "description": "the Opera confirmation number, if the reservation is part of HDE package",
+            "example": "M03D61661"
+          },
+          "hotelCode": {
+            "type": "string",
+            "description": "the hotel code, if the reservation is part of HDE package",
+            "example": "001"
+          }
+        },
+        "required": [
+          "showEventId",
+          "archticsAccountId",
+          "sectionName",
+          "rowName",
+          "seat",
+          "operaConfirmationNumber",
+          "hotelCode"
+        ]
+      },
+      "ShowReservationRequest": {
+        "type": "object",
+        "properties": {
+          "eventDate": {
+            "type": "string",
+            "example": "2021-09-09"
+          },
+          "eventTime": {
+            "type": "string",
+            "example": "8:00 PM"
+          },
+          "reservationStatus": {
+            "type": "string",
+            "example": "Reserved"
+          },
+          "orderId": {
+            "type": "string",
+            "example": "100516269"
+          },
+          "orderLineItemId": {
+            "type": "string",
+            "example": "1"
+          },
+          "seasonId": {
+            "type": "string",
+            "example": "61cbe066-b83a-4447-a8b4-9019a457f6f5"
+          },
+          "showEventId": {
+            "type": "string",
+            "example": "93eae2bb-b15d-4b8e-91ac-307d9c38da18"
+          },
+          "programId": {
+            "type": "string",
+            "description": "optional program id",
+            "example": "291a5dfa-bc95-498b-b4f5-2220baf9f8ec"
+          },
+          "propertyId": {
+            "type": "string",
+            "description": "the property id",
+            "example": "f8d6a944-7816-412f-a39a-9a63aad26833"
+          },
+          "redemptionCode": {
+            "type": "string",
+            "description": "the redemption code",
+            "example": "TQR83S"
+          },
+          "mlifeNo": {
+            "type": "string",
+            "description": "the customer's mlife number",
+            "example": "80881051"
+          },
+          "comp": {
+            "type": "boolean",
+            "description": "the flag indicating if the charges are for MYVEGAS COMP"
+          },
+          "hdePackage": {
+            "type": "boolean",
+            "description": "the flag indicating if the charges are for HDE Packages"
+          },
+          "synchronous": {
+            "type": "boolean",
+            "default": true,
+            "description": "Flag when set to false will process the reservation asynchrously and callers should listen to show reservation events for success or failure."
+          },
+          "skipFraudCheck": {
+            "type": "boolean",
+            "default": false,
+            "description": "AFS validate and confirm call invocation would depend on this flag, dependent systems must call SBS with this flag set to true if they want to skip AFS calls from within the SBS service."
+          },
+          "skipPaymentProcess": {
+            "type": "boolean",
+            "default": false,
+            "description": "skipPaymentProcess flag is coming from carts team to check if we need to process payment or skip it."
+          },
+          "deliveryMethodCode": {
+            "type": "string",
+            "description": "the selected delivery method",
+            "example": "TF"
+          },
+          "operaConfirmationNumber": {
+            "type": "string",
+            "description": "the Opera confirmation number, if the reservation is part of HDE package",
+            "example": "M03D61661"
+          },
+          "hotelCode": {
+            "type": "string",
+            "description": "the hotel code, if the reservation is part of HDE package",
+            "example": "001"
+          },
+          "showPaymentChargedTo": {
+            "type": "string",
+            "description": "it denote if payment is Independent or associated with a room",
+            "example": "ROOM_ONLY",
+            "enum": [
+              "ROOM_ONLY",
+              "INDEPENDENT"
+            ]
+          },
+          "tickets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ShowTicket"
+            }
+          },
+          "charges": {
+            "$ref": "#/components/schemas/Rates"
+          },
+          "profile": {
+            "$ref": "#/components/schemas/ReservationProfile"
+          },
+          "billing": {
+            "$ref": "#/components/schemas/BillingInfo"
+          },
+          "packageMetadata": {
+            "type": "object",
+            "properties": {
+              "roomConfirmationNumber": {
+                "type": "string",
+                "description": "the room confirmation number, if the reservation is part of HDE package",
+                "example": "M03D61661"
+              },
+              "roomHotelCode": {
+                "type": "string",
+                "description": "the hotel code, if the reservation is part of HDE package",
+                "example": "001"
+              }
+            }
+          },
+          "inAuthTransactionId": {
+            "type": "string",
+            "description": "the inauthTransactionId passed to show reservation service",
+            "example": "tx-123"
+          },
+          "comments": {
+            "type": "string",
+            "description": "the comments passed to SBS to be saved in cache",
+            "example": "the comments"
+          },
+          "itineraryInfo": {
+            "$ref": "#/components/schemas/ItineraryInfo"
+          },
+          "skipEmailNotification": {
+            "type": "boolean",
+            "default": false,
+            "description": "skipEmailNotification flag is coming from carts team to check if we need to send email notification or skip it."
+          }
+        },
+        "required": [
+          "eventDate",
+          "showEventId",
+          "deliveryMethodCode",
+          "tickets",
+          "profile",
+          "charges",
+          "billing"
+        ]
+      },
+      "ShowReservationResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "the confirmation number used for cosmos entry",
+            "example": "98431135"
+          },
+          "orderId": {
+            "type": "string",
+            "example": "100516269"
+          },
+          "orderLineItemId": {
+            "type": "string",
+            "example": "1"
+          },
+          "bookDate": {
+            "type": "string",
+            "example": "2021-08-26"
+          },
+          "confirmationNumber": {
+            "type": "string",
+            "example": "98431135"
+          },
+          "programId": {
+            "type": "string",
+            "description": "the program id",
+            "example": "48014f94-add9-4326-a47d-5ed720b534ce"
+          },
+          "propertyId": {
+            "type": "string",
+            "description": "the property id",
+            "example": "f8d6a944-7816-412f-a39a-9a63aad26833"
+          },
+          "comp": {
+            "type": "boolean",
+            "description": "the flag indicating if the charges are for MYVEGAS COMP"
+          },
+          "hdePackage": {
+            "type": "boolean",
+            "description": "the flag indicating if the charges are for HDE Packages"
+          },
+          "resendEmailAllowed": {
+            "type": "boolean",
+            "description": "the flag indicating if the resend email is allowed for this reservation"
+          },
+          "deliveryMethodCode": {
+            "type": "string",
+            "example": "TF"
+          },
+          "eventDate": {
+            "type": "string",
+            "example": "2021-08-26"
+          },
+          "eventTime": {
+            "type": "string",
+            "example": "9:00 PM"
+          },
+          "reservationStatus": {
+            "type": "string",
+            "example": "Reserved"
+          },
+          "cancellable": {
+            "type": "boolean",
+            "example": false,
+            "description": "Flag to inform the frontend whether reservation is cancellable or not."
+          },
+          "seasonId": {
+            "type": "string",
+            "example": "61cbe066-b83a-4447-a8b4-9019a457f6f5"
+          },
+          "showEventId": {
+            "type": "string",
+            "example": "7e0df6b0-d21f-4db1-95c2-35ceb1435424"
+          },
+          "showEventCode": {
+            "type": "string",
+            "example": "PTC0416E"
+          },
+          "tickets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReservationShowTicketDetail"
+            }
+          },
+          "charges": {
+            "$ref": "#/components/schemas/Rates"
+          },
+          "profile": {
+            "$ref": "#/components/schemas/ReservationProfile"
+          },
+          "billing": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BillingInfo"
+              }
+            ],
+            "description": "Billing info is available only in regular reservations, and not in HDE or MyVegas ones. Only payment -> type and paymentToken will be present.",
+            "default": {
+              "payment": {
+                "type": "Visa, MasterCard, Discover, American Express, Diners Club, JCB",
+                "paymentToken": "123"
+              }
+            }
+          },
+          "comments": {
+            "type": "string",
+            "description": "the comments passed to SBS to be saved in cache",
+            "example": "the comments"
+          },
+          "itineraryInfo": {
+            "$ref": "#/components/schemas/ItineraryInfo"
+          }
+        }
+      },
+      "SearchReservationResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "orderNumber": {
+              "type": "string",
+              "description": "The order number used as an identifier for a show order.",
+              "example": "100516269"
+            },
+            "eventDate": {
+              "type": "string",
+              "example": "2021-08-26"
+            },
+            "eventTime": {
+              "type": "string",
+              "example": "9:00 PM"
+            },
+            "reservationStatus": {
+              "type": "string",
+              "example": "Reserved"
+            },
+            "mlifeNo": {
+              "type": "string",
+              "example": "79538791"
+            },
+            "seasonId": {
+              "type": "string",
+              "example": "61cbe066-b83a-4447-a8b4-9019a457f6f5"
+            },
+            "showEventId": {
+              "type": "string",
+              "example": "7e0df6b0-d21f-4db1-95c2-35ceb1435424"
+            },
+            "showEventCode": {
+              "type": "string",
+              "example": "PTC0416E"
+            },
+            "archticsId": {
+              "type": "string",
+              "example": "249558459"
+            }
+          }
+        }
+      },
+      "DeliveryMethod": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "TF"
+          },
+          "amount": {
+            "type": "number",
+            "example": 0.0
+          },
+          "description": {
+            "type": "string",
+            "example": "Ticket Fast"
+          },
+          "default": {
+            "type": "boolean"
+          },
+          "ePrinting": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string",
+            "example": "Ticket Fast"
+          },
+          "active": {
+            "type": "boolean",
+            "example": true
+          },
+          "id": {
+            "type": "string",
+            "example": "5ccce20e-4cab-4f9c-aa0d-4ef30627e40e"
+          }
+        }
+      },
+      "GenericResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "ShowReservationEventRequest": {
+        "type": "object",
+        "properties": {
+          "reservationResponse": {
+            "$ref": "#/components/schemas/ShowReservationResponse"
+          },
+          "notifyClient": {
+            "type": "boolean",
+            "example": true
+          },
+          "rtcEnabled": {
+            "type": "boolean",
+            "example": true
+          },
+          "ratesFormat": {
+            "type": "string",
+            "default": "0.00#"
+          },
+          "allDayEvent": {
+            "type": "boolean",
+            "description": "Flag to inform whether the show is allDayEvent",
+            "example": true
+          },
+          "showOpeningTime": {
+            "type": "string",
+            "description": "Show OpeningTime for all Day Event show",
+            "example": "10:00 AM"
+          },
+          "showClosingTime": {
+            "type": "string",
+            "description": "Show ClosingTime for all Day Event show",
+            "example": "08:00 PM"
+          }
+        }
+      },
+      "Seat": {
+        "type": "object",
+        "properties": {
+          "seatNumber": {
+            "type": "integer",
+            "example": 1
+          },
+          "sectionName": {
+            "type": "string",
+            "example": "TBL11"
+          },
+          "rowName": {
+            "type": "string",
+            "example": "TBL"
+          }
+        }
+      },
+      "RecalcShowChargesRequest": {
+        "type": "object",
+        "properties": {
+          "holdChargesResponse": {
+            "$ref": "#/components/schemas/ShowChargesResponse"
+          }
+        }
+      },
+      "RecalcShowChargesResponse": {
+        "type": "object",
+        "properties": {
+          "charges": {
+            "$ref": "#/components/schemas/ShowReservationCharges"
+          }
+        }
+      },
+      "ShowReservationCharges": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "number",
+            "example": 0.0
+          },
+          "serviceChargesComputed": {
+            "type": "boolean",
+            "example": false
+          },
+          "deliveryChargesComputed": {
+            "type": "boolean",
+            "example": false
+          },
+          "gratuityChargesComputed": {
+            "type": "boolean",
+            "example": false
+          },
+          "permissibleDeliveryMethods": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeliveryMethod"
+            }
+          },
+          "ticketCharges": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TicketCharge"
+            }
+          },
+          "serviceCharges": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServiceCharge"
+            }
+          }
+        }
+      },
+      "TicketCharge": {
+        "type": "object",
+        "properties": {
+          "price": {
+            "type": "number",
+            "example": 0.0
+          },
+          "holdDuration": {
+            "type": "number",
+            "description": "the hold duration for the ticket",
+            "example": 1629808501701
+          },
+          "state": {
+            "type": "string",
+            "example": "HELD"
+          },
+          "showEventId": {
+            "type": "string",
+            "example": "7e0df6b0-d21f-4db1-95c2-35ceb1435424"
+          },
+          "priceCode": {
+            "type": "string",
+            "description": "the price code for the ticket",
+            "example": "AN"
+          },
+          "ticketTypeCode": {
+            "type": "string",
+            "example": "_A"
+          },
+          "holdClass": {
+            "type": "string",
+            "description": "Hold class",
+            "example": "OPEN"
+          },
+          "barCode": {
+            "type": "string",
+            "example": "858843014450"
+          },
+          "holdId": {
+            "type": "string",
+            "description": "the hold id for the ticket",
+            "example": "98431286"
+          },
+          "basePrice": {
+            "type": "number",
+            "example": 0.0
+          },
+          "letAmount": {
+            "type": "number",
+            "example": 0.0
+          },
+          "gratuityAmount": {
+            "type": "number",
+            "example": 0.0
+          },
+          "description": {
+            "type": "string",
+            "example": "Description"
+          },
+          "seat": {
+            "$ref": "#/components/schemas/Seat"
+          }
+        }
+      },
+      "ServiceCharge": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "example": 0.0
+          },
+          "basePrice": {
+            "type": "number",
+            "example": 0.0
+          },
+          "serviceTaxAmount": {
+            "type": "number",
+            "example": 0.0
+          },
+          "description": {
+            "type": "string",
+            "example": "Description"
+          }
+        }
+      },
+      "ItineraryInfo": {
+        "type": "object",
+        "properties": {
+          "itineraryId": {
+            "type": "string"
+          },
+          "itineraryName": {
+            "type": "string"
+          },
+          "tripsArrivalDate": {
+            "type": "string"
+          },
+          "tripsDepartureDate": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "headers": {
+      "x-mgm-channel": {
+        "schema": {
+          "type": "string"
+        },
+        "description": "Returns the value as received in the request headers.",
+        "required": true
+      },
+      "x-mgm-source": {
+        "schema": {
+          "type": "string"
+        },
+        "description": "Returns the value as received in the request headers."
+      },
+      "x-mgm-correlation-id": {
+        "schema": {
+          "type": "string"
+        },
+        "description": "If present in the request headers, returns the same value or the one created in the API."
+      },
+      "x-mgm-transaction-id": {
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Returns the value as received in the request headers."
+      },
+      "sessionId": {
+        "in": "header",
+        "name": "sessionId",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "This field represents the sessionId."
+      },
+      "ipAddress": {
+        "in": "header",
+        "name": "ipAddress",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "This field represents the ipAddress."
+      },
+      "x-forwarded-for": {
+        "in": "header",
+        "name": "x-forwarded-for",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "This field represents the user IP sent from the client"
+      },
+      "fraud-agent-token": {
+        "in": "header",
+        "name": "fraud-agent-token",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "This field represents the Fraud token generated by client."
+      },
+      "user-agent": {
+        "in": "header",
+        "name": "user-agent",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "This field represents the user agent of the client."
+      }
+    },
+    "parameters": {
+      "Authorization": {
+        "in": "header",
+        "name": "Authorization",
+        "schema": {
+          "type": "string"
+        },
+        "description": "JWT authorization token",
+        "required": true
+      },
+      "x-api-key": {
+        "in": "header",
+        "name": "x-api-key",
+        "schema": {
+          "type": "string"
+        },
+        "description": "Access Key from API Gateway",
+        "required": true
+      },
+      "x-state-token": {
+        "in": "header",
+        "name": "x-state-token",
+        "schema": {
+          "type": "string"
+        },
+        "description": "Token to maintain state as mentioned in intro section",
+        "required": true
+      },
+      "channel": {
+        "in": "header",
+        "name": "x-mgm-channel",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "web",
+            "services",
+            "mobile"
+          ]
+        },
+        "description": "Channel from where the request has originated",
+        "required": true
+      },
+      "Origin": {
+        "in": "header",
+        "name": "Origin",
+        "schema": {
+          "type": "string"
+        },
+        "description": "Origin header for CORS support",
+        "required": false
+      },
+      "source": {
+        "in": "header",
+        "name": "x-mgm-source",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "app",
+            "mgmri",
+            "cabanas",
+            "66964e2b-2550-4476-84c3-1a4c0c5c067f",
+            "a689885f-cba2-48e8-b8e0-1dff096b8835",
+            "44e610ab-c209-4232-8bb4-51f7b9b13a75",
+            "e0f70eb3-7e27-4c33-8bcd-f30bf3b1103a",
+            "1f3ed672-3f8f-44d8-9215-81da3c845d83",
+            "6c5cff3f-f01a-4f9b-87ab-8395ae8108db",
+            "8bf670c2-3e89-412b-9372-6c87a215e442",
+            "dc00e77f-d6bb-4dd7-a8ea-dc33ee9675ad",
+            "607c07e7-3e31-4e4c-a4e1-f55dca66fea2",
+            "f8d6a944-7816-412f-a39a-9a63aad26833",
+            "2159252c-60d3-47db-bbae-b1db6bb15072",
+            "e2704b04-d515-45b0-8afd-4fa1424ff0a8",
+            "0990fdce-7fc8-41b1-b8b6-9a25dce3db55",
+            "4a65a92a-962b-433e-841c-37e18dc5d68d",
+            "13b178b0-8beb-43d5-af25-1738b7267e63",
+            "b35733d1-e027-4311-a350-965e535fb90a",
+            "bee81f88-286d-43dd-91b5-3917d9d62a68",
+            "40b61feb-750a-45df-ae68-e23e6272b16b"
+          ]
+        },
+        "description": "Source invoking the API. GSE uses concept of channel to different various channels/sources for reporting/diagnosis. Service will identify channel to use based on source value."
+      },
+      "correlationId": {
+        "in": "header",
+        "name": "x-mgm-correlation-id",
+        "schema": {
+          "type": "string"
+        },
+        "description": "Correlation Id is used to trace end to end transactions. The id is optional and service will create one if not passed by clients, pass it to downstream applications and send it back in the response headers. Clients are encouraged to set this parameter if the correlation between different APIs needs to be tracked."
+      },
+      "transactionId": {
+        "in": "header",
+        "name": "x-mgm-transaction-id",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "This field represents the transaction id. Clients are required to generate this unique identifier and pass it in the request, the same will be passed in the response headers."
+      },
+      "sessionId": {
+        "in": "header",
+        "name": "sessionId",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "This field represents the sessionId."
+      },
+      "ipAddress": {
+        "in": "header",
+        "name": "ipAddress",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "This field represents the ipAddress."
+      },
+      "x-forwarded-for": {
+        "in": "header",
+        "name": "x-forwarded-for",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "This field represents the user IP sent from the client"
+      },
+      "fraud-agent-token": {
+        "in": "header",
+        "name": "fraud-agent-token",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "This field represents the Fraud token generated by client."
+      },
+      "user-agent": {
+        "in": "header",
+        "name": "user-agent",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "This field represents the user agent of the client."
+      },
+      "accept-encoding": {
+        "name": "accept-encoding",
+        "in": "header",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "mlifeNo": {
+        "name": "mlifeNumber",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Mlife number for logged-in member (If user is logged-in)."
+      },
+      "mlifeNumber": {
+        "name": "mlifeNumber",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "deprecated": true,
+        "description": "Deprecated, use mlifeNo instead."
+      },
+      "customerId": {
+        "name": "customerId",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Aurora Customer ID for logged-in user. Customer ID takes precedence when both customerId and mlifeNumber is passed."
+      },
+      "propertyId": {
+        "name": "propertyId",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Property GUID"
+      },
+      "promoCode": {
+        "name": "promoCode",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Room Promo Code"
+      },
+      "programId": {
+        "name": "programId",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Show Program GUID"
+      },
+      "seasonId": {
+        "name": "seasonId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "GUID for a specific season of a show"
+      },
+      "showEventId": {
+        "name": "showEventId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "GUID for a specific event/performance of a show"
+      }
+    },
+    "examples": {
+      "HoldBestSeatsRequest": {
+        "value": {
+          "showEventId": "7e0df6b0-d21f-4db1-95c2-35ceb1435424",
+          "tickets": [
+            {
+              "priceCode": "A",
+              "ticketTypeCode": "_A",
+              "numTickets": 1,
+              "numAdaTickets": 0
+            }
+          ]
+        }
+      },
+      "HoldBestSeatsRequestWithMultiplePriceCodes": {
+        "value": {
+          "showEventId": "7e0df6b0-d21f-4db1-95c2-35ceb1435424",
+          "tickets": [
+            {
+              "priceCode": "A",
+              "numTickets": 1,
+              "numAdaTickets": 0
+            },
+            {
+              "priceCode": "B",
+              "numTickets": 1,
+              "numAdaTickets": 0
+            }
+          ]
+        }
+      },
+      "HoldSpecificSeatsRequest": {
+        "value": {
+          "showEventId": "7e0df6b0-d21f-4db1-95c2-35ceb1435424",
+          "tickets": [
+            {
+              "section": "GA1",
+              "row": "GA0",
+              "seat": 0
+            }
+          ]
+        }
+      },
+      "HoldBestSeatsRequestWithRedemptionCode": {
+        "value": {
+          "showEventId": "7e0df6b0-d21f-4db1-95c2-35ceb1435424",
+          "redemptionCode": "TQR83S",
+          "propertyId": "f8d6a944-7816-412f-a39a-9a63aad26833",
+          "programId": "291a5dfa-bc95-498b-b4f5-2220baf9f8ec",
+          "tickets": [
+            {
+              "priceCode": "A",
+              "numTickets": 1,
+              "numAdaTickets": 0
+            }
+          ]
+        }
+      },
+      "HoldSpecificSeatsRequestWithRedemptionCode": {
+        "value": {
+          "showEventId": "7e0df6b0-d21f-4db1-95c2-35ceb1435424",
+          "redemptionCode": "TQR83S",
+          "propertyId": "f8d6a944-7816-412f-a39a-9a63aad26833",
+          "programId": "291a5dfa-bc95-498b-b4f5-2220baf9f8ec",
+          "tickets": [
+            {
+              "section": "GA1",
+              "row": "GA0",
+              "seat": 0
+            }
+          ]
+        }
+      },
+      "HoldSpecificSeatsRequestWithHoldId": {
+        "value": {
+          "showEventId": "7e0df6b0-d21f-4db1-95c2-35ceb1435424",
+          "holdId": 98432512,
+          "deliveryMethodCode": "WC",
+          "tickets": [
+            {
+              "section": "GA1",
+              "row": "GA0",
+              "seat": 0
+            }
+          ]
+        }
+      }
+    }
+  }
+}

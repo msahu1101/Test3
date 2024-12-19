@@ -1,0 +1,147 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2019-08-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"team": {
+			"type": "string",
+			"value": "Order Services"
+		},
+		"environment": {
+			"type": "string",
+			"value": "$(TARGET_APP_SERVICE_ENVIRONMENT)"
+		},
+		"account-name": {
+			"type": "string",
+			"value": "mgmshoppingcartorder-$(TARGET_APP_SERVICE_LOCATION)-cdb-$(TARGET_APP_SERVICE_ENVIRONMENT)"
+		},
+		"keyvault-encryption-key": {
+			"type": "string",
+			"value": "https://shoppingcartprv-uw-kv-d.vault.azure.net/keys/cosmos-offline-security-key"
+		},
+		"location": {
+			"type": "string",
+			"value": "West US"
+		},
+		"default-consistency-level": {
+			"type": "string",
+			"value": "Session"
+		},
+		"multiple-write-locations": {
+			"type": "bool",
+			"value": false
+		},
+		"automatic-failover": {
+			"type": "bool",
+			"value": false
+		},
+		"database-name": {
+			"type": "string",
+			"value": "order-management"
+		},
+		"database-throughput": {
+			"type": "int",
+			"value": 12000
+		},
+		"manual-containers": {
+			"value": [
+			]
+		},
+		"autoscale-containers": {
+			"value": [
+				{
+					"name": "order",
+					"partitionKey": "/id",
+					"ttl": 31536000,
+					"includedPaths": [
+						{
+							"path": "/mgmId/?"
+						},
+						{
+							"path": "/cartId/?"
+						},
+						{
+							"path": "/newCartId/?"
+						},
+						{
+							"path": "/customerId/?"
+						},
+						{
+							"path": "/orderLineItems/[]/confirmationNumber/?"
+						}
+					],
+					"excludedPaths": [
+						{
+							"path": "/*"
+						}
+					],
+					"maxContainerThroughput": 4000
+				},
+				{
+					"name": "order-lock",
+					"partitionKey": "/id",
+					"ttl": 5,
+					"includedPaths": [
+						{
+							"path": "/mgmId/?"
+						},
+						{
+							"path": "/confirmationNumber/?"
+						},
+						{
+							"path": "/priceExpiresAt/?"
+						}
+					],
+					"excludedPaths": [
+						{
+							"path": "/*"
+						}
+					],
+					"maxContainerThroughput": 4000
+				},
+				{
+					"name": "order-conf-mapping",
+					"partitionKey": "/confirmationNumber",
+					"ttl": 31536000,
+					"includedPaths": [
+						{
+							"path": "/confirmationNumber/?"
+						}
+					],
+					"excludedPaths": [
+						{
+							"path": "/*"
+						}
+					],
+					"maxContainerThroughput": 4000
+				}
+			]
+		},
+		"primary-region": {
+			"type": "string",
+			"value": "West US"
+		},
+		"max-staleness-prefix": {
+			"type": "int",
+			"value": 100000
+		},
+		"max-interval-in-seconds": {
+			"type": "int",
+			"value": 300
+		},
+		"vnet-resource-group-name": {
+			"type": "string",
+			"value": "shoppingcartvnet-$(TARGET_APP_SERVICE_LOCATION)-rg-$(TARGET_NETWORK_ENVIRONMENT)"
+		},
+		"vnet-name": {
+			"type": "string",
+			"value": "shoppingcart-$(TARGET_APP_SERVICE_LOCATION)-vnet-$(TARGET_NETWORK_ENVIRONMENT)"
+		},
+		"subnet-name": {
+			"type": "string",
+			"value": "orderservicecore-$(TARGET_APP_SERVICE_LOCATION)-sn-$(TARGET_APP_SERVICE_ENVIRONMENT)",
+			"_comment": "this is for the preprod environment"
+		}
+	},
+	"resources": [
+	]
+}

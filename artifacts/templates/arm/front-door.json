@@ -1,0 +1,300 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"frontdoor_name": {
+			"type": "string",
+			"metadata": {
+				"description": "The name for the Front Door Name."
+			}
+		},
+		"frontdoor-certificate-subject-name-validation": {
+			"type": "string",
+			"defaultValue": "Enabled",
+			"metadata": {
+				"description": "Validate the request's host header matches the hostname in the certificate provided by the backend instance. This setting only applies for HTTPS requests."
+			}
+		},
+		"frontdoor-send-receive-timeout": {
+			"type": "int",
+			"defaultValue": 30,
+			"metadata": {
+				"description": "Number of seconds before a forwarded send or receive request times out. When a timeout occurs the request fails and the connection terminates."
+			}
+		},
+		"frontdoor-enabled-status": {
+			"type": "string",
+			"defaultValue": "Enabled",
+			"metadata": {
+				"description": "The front door status."
+			}
+		},
+		"frontdoor-resource-group-name": {
+			"type": "string",
+			"metadata": {
+				"description": "The name for the Resource Group Name."
+			}
+		},
+		"frontdoor-waf-policy-name": {
+			"type": "string",
+			"metadata": {
+				"description": "The name for the front door waf rule."
+			}
+		},
+		"frontdoor-backend-pools-name": {
+			"type": "string",
+			"metadata": {
+				"description": "The name for the backend pool name."
+			}
+		},
+		"frontdoor-routing-rules-name": {
+			"type": "string",
+			"metadata": {
+				"description": "The name for the routing rule name."
+			}
+		},
+		"function-app-1": {
+			"type": "string",
+			"metadata": {
+				"description": "The function app 1 backend hostname."
+			}
+		},
+		"function-app-1-priority": {
+			"type": "int",
+			"defaultValue": 1,
+			"metadata": {
+				"description": "The priority for function app 1."
+			}
+		},
+		"function-app-1-weight": {
+			"type": "int",
+			"defaultValue": 50,
+			"metadata": {
+				"description": "The weight for function app 1 in percent."
+			}
+		},
+		"function-app-1-enabled-status": {
+			"type": "string",
+			"defaultValue": "Enabled",
+			"metadata": {
+				"description": "The status for function app 1."
+			}
+		},
+		"function-app-2": {
+			"type": "string",
+			"metadata": {
+				"description": "The function app 2 backend hostname."
+			}
+		},
+		"function-app-2-priority": {
+			"type": "int",
+			"defaultValue": 1,
+			"metadata": {
+				"description": "The priority for function app 2."
+			}
+		},
+		"function-app-2-weight": {
+			"type": "int",
+			"defaultValue": 50,
+			"metadata": {
+				"description": "The weight for function app 2 in percent."
+			}
+		},
+		"function-app-2-enabled-status": {
+			"type": "string",
+			"defaultValue": "Enabled",
+			"metadata": {
+				"description": "The status for function app 2."
+			}
+		},
+		"frontdoor-backendpool-1-health-probe-interval": {
+			"type": "int",
+			"defaultValue": 30,
+			"metadata": {
+				"description": "The frontdoor health probe interval in seconds."
+			}
+		},
+		"frontdoor-backendpool-1-health-probe-path": {
+			"type": "string",
+			"defaultValue": "/api/control/health",
+			"metadata": {
+				"description": "The frontdoor health probe path."
+			}
+		},
+		"frontdoor-backendpool-1-health-probe-enabled-status": {
+			"type": "string",
+			"defaultValue": "Enabled",
+			"metadata": {
+				"description": "The frontdoor health probe status."
+			}
+		},
+		"frontdoor-backendpool-1-health-probe-method": {
+			"type": "string",
+			"defaultValue": "Head",
+			"metadata": {
+				"description": "The frontdoor health probe method."
+			}
+		},
+		"frontdoor-backendpool-1-load-balance-latency-interval": {
+			"type": "int",
+			"defaultValue": 100,
+			"metadata": {
+				"description": "The latency sensitivity for identifying backends with least latencies in milliseconds."
+			}
+		},
+		"frontdoor-backendpool-1-load-balance-sample-size": {
+			"type": "int",
+			"defaultValue": 4,
+			"metadata": {
+				"description": "The sample set to assess backend availability."
+			}
+		},
+		"frontdoor-backendpool-1-load-balance-sample-size-successful-required": {
+			"type": "int",
+			"defaultValue": 2,
+			"metadata": {
+				"description": "The sample set to declare the backend healthy."
+			}
+		},
+		"frontdoor-routing-rules-1-accepted-protocol": {
+			"type": "string",
+			"defaultValue": "Https",
+			"metadata": {
+				"description": "The frontdoor routing rules accepted protocol."
+			}
+		},
+		"frontdoor-routing-rules-1-patterns-to-match": {
+			"type": "string",
+			"defaultValue": "/*",
+			"metadata": {
+				"description": "The frontdoor routing rules patterns to match."
+			}
+		},
+		"frontdoor-routing-rules-1-enabled-status": {
+			"type": "string",
+			"defaultValue": "Enabled",
+			"metadata": {
+				"description": "The frontdoor routing rules status."
+			}
+		}
+	},
+	"variables": {
+		"frontdoorwebapplicationfirewallpolicies_WAFRule_externalid": "[concat('/subscriptions/', subscription().subscriptionid, '/resourceGroups/', parameters('frontdoor-resource-group-name'), '/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/', parameters('frontdoor-waf-policy-name'))]"
+	},
+	"resources": [
+		{
+			"type": "Microsoft.Network/frontdoors",
+			"apiVersion": "2020-05-01",
+			"name": "[parameters('frontdoor_name')]",
+			"location": "Global",
+			"properties": {
+				"resourceState": "Enabled",
+				"enabledState": "[parameters('frontdoor-enabled-status')]",
+				"friendlyName": "[parameters('frontdoor_name')]",
+				"backendPools": [
+					{
+						"name": "[parameters('frontdoor-backend-pools-name')]",
+						"properties": {
+							"resourceState": "Enabled",
+							"backends": [
+								{
+									"address": "[parameters('function-app-1')]",
+									"httpPort": 80,
+									"httpsPort": 443,
+									"priority": "[parameters('function-app-1-priority')]",
+									"weight": "[parameters('function-app-1-weight')]",
+									"backendHostHeader": "[parameters('function-app-1')]",
+									"enabledState": "[parameters('function-app-1-enabled-status')]"
+								},
+								{
+									"address": "[parameters('function-app-2')]",
+									"httpPort": 80,
+									"httpsPort": 443,
+									"priority": "[parameters('function-app-2-priority')]",
+									"weight": "[parameters('function-app-2-weight')]",
+									"backendHostHeader": "[parameters('function-app-2')]",
+									"enabledState": "[parameters('function-app-2-enabled-status')]"
+								}
+							],
+							"healthProbeSettings": {
+								"id": "[resourceId('Microsoft.Network/frontDoors/healthProbeSettings', parameters('frontdoor_name'), 'healthProbeSettings1')]"
+							},
+							"loadBalancingSettings": {
+								"id": "[resourceId('Microsoft.Network/frontDoors/loadBalancingSettings', parameters('frontdoor_name'), 'loadBalancingSettings1')]"
+							}
+						}
+					}
+				],
+				"healthProbeSettings": [
+					{
+						"name": "healthProbeSettings1",
+						"properties": {
+							"intervalInSeconds": "[parameters('frontdoor-backendpool-1-health-probe-interval')]",
+							"path": "[parameters('frontdoor-backendpool-1-health-probe-path')]",
+							"protocol": "Https",
+							"resourceState": "Enabled",
+							"enabledState": "[parameters('frontdoor-backendpool-1-health-probe-enabled-status')]",
+							"healthProbeMethod": "[parameters('frontdoor-backendpool-1-health-probe-method')]"
+						}
+					}
+				],
+				"frontendEndpoints": [
+					{
+						"name": "[concat(parameters('frontdoor_name'), '-azurefd-net')]",
+						"properties": {
+							"hostName": "[concat(parameters('frontdoor_name'), '.azurefd.net')]",
+							"sessionAffinityEnabledState": "Disabled",
+							"sessionAffinityTtlSeconds": 0,
+							"resourceState": "Enabled",
+							"webApplicationFirewallPolicyLink": {
+								"id": "[variables('frontdoorwebapplicationfirewallpolicies_WAFRule_externalid')]"
+							}
+						}
+					}
+				],
+				"loadBalancingSettings": [
+					{
+						"name": "loadBalancingSettings1",
+						"properties": {
+							"additionalLatencyMilliseconds": "[parameters('frontdoor-backendpool-1-load-balance-latency-interval')]",
+							"sampleSize": "[parameters('frontdoor-backendpool-1-load-balance-sample-size')]",
+							"successfulSamplesRequired": "[parameters('frontdoor-backendpool-1-load-balance-sample-size-successful-required')]",
+							"resourceState": "Enabled"
+						}
+					}
+				],
+				"routingRules": [
+					{
+						"name": "[parameters('frontdoor-routing-rules-name')]",
+						"properties": {
+							"acceptedProtocols": [
+								"[parameters('frontdoor-routing-rules-1-accepted-protocol')]"
+							],
+							"patternsToMatch": [
+								"[parameters('frontdoor-routing-rules-1-patterns-to-match')]"
+							],
+							"enabledState": "[parameters('frontdoor-routing-rules-1-enabled-status')]",
+							"resourceState": "Enabled",
+							"frontendEndpoints": [
+								{
+									"id": "[resourceId('Microsoft.Network/frontDoors/frontendEndpoints', parameters('frontdoor_name'), concat(parameters('frontdoor_name'), '-azurefd-net'))]"
+								}
+							],
+							"routeConfiguration": {
+								"forwardingProtocol": "HttpsOnly",
+								"@odata.type": "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration",
+								"backendPool": {
+									"id": "[resourceId('Microsoft.Network/frontDoors/backendPools', parameters('frontdoor_name'), parameters('frontdoor-backend-pools-name'))]"
+								}
+							}
+						}
+					}
+				],
+				"backendPoolsSettings": {
+					"enforceCertificateNameCheck": "[parameters('frontdoor-certificate-subject-name-validation')]",
+					"sendRecvTimeoutSeconds": "[parameters('frontdoor-send-receive-timeout')]"
+				}
+			}
+		}
+	]
+}

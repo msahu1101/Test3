@@ -1,0 +1,36 @@
+{
+    "statusCode":"200",
+    "statusDesc" : " Success",
+    "results": [
+        {
+            "gatewayResult": {
+                "type" :"AUTHORIZE",
+                "orderId": "123456",
+                "orderReferenceNumber": "123456",
+                "confirmationNumber": "987654321",
+                "mgmId": "555555",
+                "card": {
+                    "maskedCardNumber": "XXXXXXXXXXXX4111",
+                    "mgmToken" : "mgmToken",
+                    "gatewayId": "SHFT"
+                },
+                "transactionStatus" : "SUCCESS",
+                "transactionCode" : "001",
+                "transaction": {
+                    "authorizationCode": "OK253W",
+                    "paymentId": "192029",
+                    "gatewayResponse": {
+                        "reasonCode": "04",
+                        "reasonDescription": "PickUpCard_NoFraud",
+                        "reattemptPermission": "Reattempt"
+                    }
+                },
+                "dateTime": "2022-05-10T06:34:25.049-07:00",
+                "amount": [{
+                    "name": "total",
+                    "value": "121"
+                }]
+            }
+        }
+    ]
+}

@@ -1,0 +1,20 @@
+<policies>
+	<inbound>
+		<base />
+		<set-header name="x-functions-key" exists-action="override">
+			<value>{{function_access_token}}</value>
+		</set-header>
+		<validate-jwt header-name="Authorization" failed-validation-httpcode="401" failed-validation-error-message="Unauthorized. Access token is missing or invalid.">
+			<openid-config url="https://login.microsoftonline.com/{{oauth_server_aad_tenant_id}}/.well-known/openid-configuration" />
+		</validate-jwt>
+	</inbound>
+	<backend>
+		<base />
+	</backend>
+	<outbound>
+		<base />
+	</outbound>
+	<on-error>
+		<base />
+	</on-error>
+</policies>

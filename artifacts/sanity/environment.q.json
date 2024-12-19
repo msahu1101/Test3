@@ -1,0 +1,119 @@
+{
+	"id": "99fd9abd-5de5-49a6-b874-c9293b63d578",
+	"name": "Order-Service",
+	"values": [
+		{
+			"key": "ords_client_id",
+			"value": "mgm_order_service",
+			"enabled": true
+		},
+		{
+			"key": "ords_client_secret",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "oath_token_endpoint",
+			"value": "https://qa2-api.apigee.devtest.vegas/identity/authorization/v1/mgmsvc/token",
+			"enabled": true
+		},
+		{
+			"key": "create_customer_endpoint",
+			"value": "https://qa2-api.apigee.devtest.vegas/profile/core/v2/service",
+			"enabled": true
+		},
+		{
+			"key": "itinerary_endpoint",
+			"value": "https://qa2-api.apigee.devtest.vegas/itinerary/v3/service",
+			"enabled": true
+		},
+		{
+			"key": "room_availability_endpoint",
+			"value": "https://qa2-api.apigee.devtest.vegas/booking/room/v3/availability/trip",
+			"enabled": true
+		},
+		{
+			"key": "add_product_cart_endpoint",
+			"value": "https://qa2-api.apigee.devtest.vegas/shopping/v1/cart/product",
+			"enabled": true
+		},
+		{
+			"key": "get_cart_endpoint",
+			"value": "https://qa2-api.apigee.devtest.vegas/shopping/v1/cart",
+			"enabled": true
+		},
+		{
+			"key": "property_id",
+			"value": "66964e2b-2550-4476-84c3-1a4c0c5c067f",
+			"enabled": true
+		},
+		{
+			"key": "checkin_date",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "checkout_date",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "x_mgm_correlation_id",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "oauth_access_token",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "customer_id",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "first_name",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "last_name",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "itinerary_id",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "room_type_id_1",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "room_type_id_2",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "cart_id",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "program_id_1",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "program_id_2",
+			"value": "",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2021-04-15T17:45:11.201Z",
+	"_postman_exported_using": "Postman/8.2.2"
+}

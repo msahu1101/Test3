@@ -1,0 +1,84 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+		"alertData": {
+          "type": "array"
+        },
+		"environment": {
+            "type": "string",
+            "allowedValues": [
+                "prod",
+                "preprod",
+                "int",
+				"qa",
+                "dev"
+            ],
+			"metadata": {
+                "description": "Alert Message."
+            }
+        },
+		"isEnabled": {
+            "type": "bool",
+            "defaultValue": true,
+            "metadata": {
+                "description": "Specifies whether the alert is enabled"
+            }
+        },
+        "actionGroup": {
+            "type": "object",
+            "metadata": {
+                "description": "It contans all the actions data"
+            }
+        }
+  },
+  "variables": {  
+		"actionGrpPrefix":
+            "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', parameters('actionGroup').resourceGroup, '/providers/microsoft.insights/actiongroups/')]"
+  },
+  "resources": [   
+    {
+      "type": "Microsoft.Insights/activityLogAlerts",
+      "apiVersion": "2017-04-01",
+      "name": "[concat('Sev', parameters('alertData')[copyIndex()].severity, ' | ', parameters('environment'), ' | ',  parameters('alertData')[copyIndex()].name)]",
+	  "location": "Global",
+      "properties": {
+        "enabled": "[parameters('isEnabled')]",
+        "scopes": [
+            "[subscription().id]"
+        ],        
+        "condition": {
+          "allOf": [
+            {
+              "field": "category",
+              "equals": "Administrative"
+            },
+            {
+              "field": "operationName",
+              "equals": "[concat('Microsoft.DocumentDB/databaseAccounts/', parameters('alertData')[copyIndex()].operationName)]"
+            },
+            {
+              "field": "resourceId",
+              "equals": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/', 'Microsoft.DocumentDB/databaseAccounts/', parameters('alertData')[copyIndex()].resource)]"
+            }
+          ]
+        },
+        "actions": {
+          "actionGroups":
+          [
+            {
+              "actionGroupId": "[concat(variables('actionGrpPrefix'), parameters('actionGroup').names[0])]"
+            }
+          ]
+        },
+		"description": "[concat('P', parameters('alertData')[copyIndex()].severity, ' ', parameters('alertData')[copyIndex()].name)]"
+      },
+	  "copy": {
+			"name": "alertLoop",
+			"count": "[length(parameters('alertData'))]",
+			"mode": "serial",
+			"batchSize": 1
+	  }
+    }
+  ]
+}

@@ -1,0 +1,1061 @@
+{
+	"info": {
+		"_postman_id": "588b9abd-6dc9-491e-bdb3-b9649ea400dc",
+		"name": "Order-Service-NonProd-Apigee",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2557524"
+	},
+	"item": [
+		{
+			"name": "Checkout_Success",
+			"item": [
+				{
+					"name": "annon-user-token",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uuid = require('uuid'); \r",
+									"pm.environment.set('x_mgm_correlation_id', uuid.v4());\r",
+									"\r",
+									"const moment = require('moment');\r",
+									"pm.environment.set(\"checkin_date\", moment().add(15, 'day').format(\"YYYY-MM-DD\"));\r",
+									"pm.environment.set(\"checkout_date\", moment().add(15, 'day').add(2, 'day').format(\"YYYY-MM-DD\"));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json(),\r",
+									"newAccessToken = jsonResponse.access_token;\r",
+									"pm.environment.set('oauth_access_token', newAccessToken);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "client_id",
+									"value": "{{ords_client_id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{ords_client_secret}}",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "rooms.reservation:create rooms.reservation:update rooms.reservation:read rooms.reservation:override rooms.reservation.charges:override rooms.reservation.charges:read rooms.availability:read rooms.program:read booking.room.resv:update booking.room.resv:search rcs.rmqs:all rcs.rcs:all rcs.ns:all rcs.dls:all booking.room.resv:batch profile:read profile:create profile:update directory:read:guest directory:search:guest directory:create:guest directory.passcode:issue:guest loyalty:profile:create loyalty:profile:update loyalty:profile:read profile:read loyalty:balances:read loyalty:comments:read loyalty:linkedprofiles:read loyalty:stopcodes:read loyalty:promos:read loyalty:taxinfo:read itinerary:read abandoned:cart:read itinerary:update itinerary:create itinerary:read loyalty:balances:read loyalty:comments:read loyalty:linkedprofiles:read loyalty:promos:read loyalty:stopcodes:read loyalty:taxinfo:read loyalty:profile:create loyalty:profile:read loyalty:profile:update restaurants.notes:read restaurants.reservation:cancel:guest restaurants.reservation:create restaurants.reservations:read:guest restaurants.reservation.cart:create restaurants.reservation:update restaurants.notes:read:guest restaurants.reservation.cart:create:guest restaurants.reservations:read restaurants.reservation:update:guest restaurants.reservation.sheet:read restaurants.reservation:cancel restaurants.reservation.cart:delete:guest restaurants.reservation.cart:delete restaurants.availability:read:guest restaurants.reservation.sheet:read:guest restaurants.availability:read restaurants.reservation:create:guest cart:checkout cart:update cart:delete cart:read cart:create\n",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{oath_token_endpoint}}",
+							"host": [
+								"{{oath_token_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "po-user-token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json(),\r",
+									"newAccessToken = jsonResponse.access_token;\r",
+									"pm.environment.set('po_oauth_access_token', newAccessToken);\r",
+									"pm.environment.set('mgm_id', '00uxb8oa28rUljoKY0h7');"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic MG9hZzVxeHl0cU00SHZKSHUwaDc6RzFHUHQ3Z2t5S3JncGRKN201ajAtZV9wS3AwNW9DOEJNRi1LeUcwbGtHYXl6Sjh3UHY0NWp0dWxna0xvZlRTRA==",
+								"type": "text"
+							},
+							{
+								"key": "Cookie",
+								"value": "JSESSIONID=2B8D0DD63010B9FBEAA404AE0E1AEFD1",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "scope",
+									"value": "booking.room.resv:update booking.room.resv:search rcs.rmqs:all rcs.rcs:all rcs.ns:all rcs.dls:all booking.room.resv:batch profile:read profile:create profile:update directory:read:guest directory:search:guest directory:create:guest directory.passcode:issue:guest loyalty:profile:create loyalty:profile:update loyalty:profile:read profile:read loyalty:balances:read loyalty:comments:read loyalty:linkedprofiles:read loyalty:stopcodes:read loyalty:promos:read loyalty:taxinfo:read itinerary:read abandoned:cart:read cart:read cart:create cart:update cart:delete cart:checkout rooms.availability:read rooms.reservation.charges:read rooms.program:read",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "mgm_booking_rooms_mock_mrduser2@test.mgmresorts.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Md3GC9TTbB7wj#_%Wv-@w*vN",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://mgmdmp.oktapreview.com/oauth2/ausph7ezp3Gkkk8WN0h7/v1/token",
+							"protocol": "https",
+							"host": [
+								"mgmdmp",
+								"oktapreview",
+								"com"
+							],
+							"path": [
+								"oauth2",
+								"ausph7ezp3Gkkk8WN0h7",
+								"v1",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "empty cart",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{po_oauth_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-correlation-id",
+								"value": "{{$guid}}",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-channel",
+								"value": "mgmri",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-source",
+								"value": "web",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{get_cart_endpoint}}/empty/{{mgm_id}}?keyType=mgmId",
+							"host": [
+								"{{get_cart_endpoint}}"
+							],
+							"path": [
+								"empty",
+								"{{mgm_id}}"
+							],
+							"query": [
+								{
+									"key": "keyType",
+									"value": "mgmId"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "room-availability",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"room-availability-validate-valid-response-code\", function() {\r",
+									"    let jsonResponse = pm.response.json();\r",
+									"    let ratePlansLen = jsonResponse.ratePlans.length; \r",
+									"    pm.environment.set('room_type_id_1', \"\");\r",
+									"    pm.environment.set('room_type_id_2', \"\");\r",
+									"    pm.environment.set('program_id_1', \"\");\r",
+									"    pm.environment.set('program_id_2', \"\");\r",
+									"\r",
+									"    for (var i = 0;i<ratePlansLen;i++) {\r",
+									"        if (jsonResponse.ratePlans[i].programId && !pm.environment.get('program_id_1')) {\r",
+									"            pm.environment.set('room_type_id_1', jsonResponse.ratePlans[i].rooms[0].roomTypeId);\r",
+									"            pm.environment.set('program_id_1', jsonResponse.ratePlans[i].programId);\r",
+									"        } else if (jsonResponse.ratePlans[i].programId && !pm.environment.get('program_id_2')) {\r",
+									"            pm.environment.set('room_type_id_2', jsonResponse.ratePlans[i].rooms[0].roomTypeId);\r",
+									"            pm.environment.set('program_id_2', jsonResponse.ratePlans[i].programId);\r",
+									"        }\r",
+									"\r",
+									"        if(pm.environment.get('room_type_id_1') && pm.environment.get('room_type_id_2')) {\r",
+									"            break;\r",
+									"        } \r",
+									"        \r",
+									"    }\r",
+									"    if(i == ratePlansLen && !pm.environment.get('room_type_id_2')) {\r",
+									"            pm.environment.set('room_type_id_2', pm.environment.get('room_type_id_1'));\r",
+									"            pm.environment.set('program_id_2', pm.environment.get('program_id_1'));\r",
+									"    }\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-mgm-source",
+								"type": "text",
+								"value": "mgmri"
+							},
+							{
+								"key": "x-mgm-channel",
+								"type": "text",
+								"value": "web"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{oauth_access_token}}"
+							},
+							{
+								"key": "x-mgm-transaction-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							}
+						],
+						"url": {
+							"raw": "{{room_availability_endpoint}}?checkInDate={{checkin_date}}&checkOutDate={{checkout_date}}&numAdults=2&propertyId={{property_id}}",
+							"host": [
+								"{{room_availability_endpoint}}"
+							],
+							"query": [
+								{
+									"key": "checkInDate",
+									"value": "{{checkin_date}}"
+								},
+								{
+									"key": "checkOutDate",
+									"value": "{{checkout_date}}"
+								},
+								{
+									"key": "numAdults",
+									"value": "2"
+								},
+								{
+									"key": "propertyId",
+									"value": "{{property_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add-product-to-empty-cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"add-product-to-empty-cart-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"add-product-to-empty-cart-valid-response-body\", function() {\r",
+									"    cart_id = jsonResponse.cart.cartId;\r",
+									"    pm.environment.set('cart_id', cart_id);\r",
+									"    pm.expect(jsonResponse.cart.cartId).to.not.have.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{po_oauth_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-source",
+								"value": "mgmri",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-channel",
+								"value": "web",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product\": {\r\n        \"data\": {\r\n            \"checkInDate\": \"{{checkin_date}}\",\r\n            \"checkOutDate\": \"{{checkout_date}}\",\r\n            \"numberOfAdults\": \"1\",\r\n            \"numberOfChildren\": \"1\",\r\n            \"numberOfRooms\":1,\r\n            \"propertyId\": \"{{property_id}}\",\r\n            \"roomTypeId\": \"{{room_type_id_1}}\",\r\n            \"programId\": \"{{program_id_1}}\",\r\n            \"checkPrice\": \"100.5\"\r\n        },\r\n        \"type\": \"ROOM\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{add_product_cart_endpoint}}",
+							"host": [
+								"{{add_product_cart_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-response-body\", function() {\r",
+									"    pm.expect(jsonResponse.cart.cartId).to.not.have.null;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-product-count\", function() {\r",
+									"    pm.expect(jsonResponse.cart.cartLineItems).length.to.greaterThan(0);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"total_price\", jsonResponse.cart.priceDetails.totalPrice);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{po_oauth_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-channel",
+								"value": "web",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-source",
+								"value": "mgmri",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{get_cart_endpoint}}/{{cart_id}}",
+							"host": [
+								"{{get_cart_endpoint}}"
+							],
+							"path": [
+								"{{cart_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "checkout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"pm.test(\"checkout-validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"checkout-validate-valid-response-body\", function() {\r",
+									"    pm.expect(jsonResponse.order.orderLineItems[0].status).to.equal('SUCCESS');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{po_oauth_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-source",
+								"value": "mgmri",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-channel",
+								"value": "web",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"cartId\": \"{{cart_id}}\",\r\n\t\"inAuthTransactionId\": \"8a3d34be200d\",\r\n\t\"guestProfile\": {\r\n\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\"addresses\": [\r\n                {\r\n                    \"preferred\": \"false\",\r\n                    \"street1\": \"123 Main St\",\r\n                    \"street2\": \"\",\r\n                    \"city\": \"Las Vegas\",\r\n                    \"state\": \"NV\",\r\n                    \"country\": \"US\",\r\n                    \"postalCode\": \"89118\",\r\n                    \"type\": \"Home\"\r\n                }\r\n            ]\r\n\t},\r\n\t\"billings\": [ {\r\n\t\t\t\t\"payment\": {\r\n\t\t\t\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\t\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\t\t\"amount\": {{total_price}},\r\n\t\t\t\t\t\"maskedNumber\": \"XXXXXXXXXXXX1111\",\r\n\t\t\t\t\t\"cardHolder\": \"{{first_name}} {{last_name}}\",\r\n\t\t\t\t\t\"cvv\": \"123\",\r\n\t\t\t\t\t\"expiry\": \"10/2027\",\r\n\t\t\t\t\t\"type\": \"Visa\",\r\n\t\t\t\t\t\"ccToken\": \"5555550A001GWUBVAEZW39H14444\"\r\n\t\t\t\t},\r\n\t\t\t\t\"address\": {\r\n\t\t\t\t\t\"street1\": \"234 W Main St\",\r\n\t\t\t\t\t\"city\": \"Las Vegas\",\r\n\t\t\t\t\t\"postalCode\": \"89129\",\r\n\t\t\t\t\t\"state\": \"NV\",\r\n\t\t\t\t\t\"country\": \"US\"\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"payment\": {\r\n\t\t\t\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\t\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\t\t\"amount\": {{total_price}},\r\n\t\t\t\t\t\"maskedNumber\": \"XXXXXXXXXXXX1111\",\r\n\t\t\t\t\t\"cardHolder\": \"{{first_name}} {{last_name}}\",\r\n\t\t\t\t\t\"cvv\": \"123\",\r\n\t\t\t\t\t\"expiry\": \"10/2027\",\r\n\t\t\t\t\t\"type\": \"Visa\",\r\n\t\t\t\t\t\"ccToken\": \"5555550A001GWUBVAEZW39H14444\"\r\n\t\t\t\t},\r\n\t\t\t\t\"address\": {\r\n\t\t\t\t\t\"street1\": \"234 W Main St\",\r\n\t\t\t\t\t\"city\": \"Las Vegas\",\r\n\t\t\t\t\t\"postalCode\": \"89129\",\r\n\t\t\t\t\t\"state\": \"NV\",\r\n\t\t\t\t\t\"country\": \"US\"\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{global.apigee.endpoint}}/{{global.api.version}}/checkout",
+							"protocol": "https",
+							"host": [
+								"{{global.apigee.endpoint}}"
+							],
+							"path": [
+								"{{global.api.version}}",
+								"checkout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Checkout_Payment_Failure",
+			"item": [
+				{
+					"name": "annon-user-token",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uuid = require('uuid'); \r",
+									"pm.environment.set('x_mgm_correlation_id', uuid.v4());\r",
+									"\r",
+									"const moment = require('moment');\r",
+									"pm.environment.set(\"checkin_date\", moment().add(3, 'day').format(\"YYYY-MM-DD\"));\r",
+									"pm.environment.set(\"checkout_date\", moment().add(3, 'day').add(2, 'day').format(\"YYYY-MM-DD\"));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json(),\r",
+									"newAccessToken = jsonResponse.access_token;\r",
+									"pm.environment.set('oauth_access_token', newAccessToken);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "client_id",
+									"value": "{{ords_client_id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{ords_client_secret}}",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "rooms.reservation:create rooms.reservation:update rooms.reservation:read rooms.reservation:override rooms.reservation.charges:override rooms.reservation.charges:read rooms.availability:read rooms.program:read booking.room.resv:update booking.room.resv:search rcs.rmqs:all rcs.rcs:all rcs.ns:all rcs.dls:all booking.room.resv:batch profile:read profile:create profile:update directory:read:guest directory:search:guest directory:create:guest directory.passcode:issue:guest loyalty:profile:create loyalty:profile:update loyalty:profile:read profile:read loyalty:balances:read loyalty:comments:read loyalty:linkedprofiles:read loyalty:stopcodes:read loyalty:promos:read loyalty:taxinfo:read itinerary:read abandoned:cart:read itinerary:update itinerary:create itinerary:read loyalty:balances:read loyalty:comments:read loyalty:linkedprofiles:read loyalty:promos:read loyalty:stopcodes:read loyalty:taxinfo:read loyalty:profile:create loyalty:profile:read loyalty:profile:update restaurants.notes:read restaurants.reservation:cancel:guest restaurants.reservation:create restaurants.reservations:read:guest restaurants.reservation.cart:create restaurants.reservation:update restaurants.notes:read:guest restaurants.reservation.cart:create:guest restaurants.reservations:read restaurants.reservation:update:guest restaurants.reservation.sheet:read restaurants.reservation:cancel restaurants.reservation.cart:delete:guest restaurants.reservation.cart:delete restaurants.availability:read:guest restaurants.reservation.sheet:read:guest restaurants.availability:read restaurants.reservation:create:guest cart:checkout cart:update cart:delete cart:read cart:create\n",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{oath_token_endpoint}}",
+							"host": [
+								"{{oath_token_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "po-user-token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json(),\r",
+									"newAccessToken = jsonResponse.access_token;\r",
+									"pm.environment.set('po_oauth_access_token', newAccessToken);\r",
+									"pm.environment.set('mgm_id', '00uxb8oa28rUljoKY0h7');"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic MG9hZzVxeHl0cU00SHZKSHUwaDc6RzFHUHQ3Z2t5S3JncGRKN201ajAtZV9wS3AwNW9DOEJNRi1LeUcwbGtHYXl6Sjh3UHY0NWp0dWxna0xvZlRTRA==",
+								"type": "text"
+							},
+							{
+								"key": "Cookie",
+								"value": "JSESSIONID=2B8D0DD63010B9FBEAA404AE0E1AEFD1",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "scope",
+									"value": "booking.room.resv:update booking.room.resv:search rcs.rmqs:all rcs.rcs:all rcs.ns:all rcs.dls:all booking.room.resv:batch profile:read profile:create profile:update directory:read:guest directory:search:guest directory:create:guest directory.passcode:issue:guest loyalty:profile:create loyalty:profile:update loyalty:profile:read profile:read loyalty:balances:read loyalty:comments:read loyalty:linkedprofiles:read loyalty:stopcodes:read loyalty:promos:read loyalty:taxinfo:read itinerary:read abandoned:cart:read cart:read cart:create cart:update cart:delete cart:checkout rooms.availability:read rooms.reservation.charges:read rooms.program:read",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "mgm_booking_rooms_mock_mrduser2@test.mgmresorts.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Md3GC9TTbB7wj#_%Wv-@w*vN",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://mgmdmp.oktapreview.com/oauth2/ausph7ezp3Gkkk8WN0h7/v1/token",
+							"protocol": "https",
+							"host": [
+								"mgmdmp",
+								"oktapreview",
+								"com"
+							],
+							"path": [
+								"oauth2",
+								"ausph7ezp3Gkkk8WN0h7",
+								"v1",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "empty cart",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{po_oauth_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-correlation-id",
+								"value": "{{$guid}}",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-channel",
+								"value": "mgmri",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-source",
+								"value": "web",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{get_cart_endpoint}}/empty/{{mgm_id}}?keyType=mgmId",
+							"host": [
+								"{{get_cart_endpoint}}"
+							],
+							"path": [
+								"",
+								"empty",
+								"{{mgm_id}}"
+							],
+							"query": [
+								{
+									"key": "keyType",
+									"value": "mgmId"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "room-availability",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"room-availability-validate-valid-response-code\", function() {\r",
+									"    let jsonResponse = pm.response.json();\r",
+									"    let ratePlansLen = jsonResponse.ratePlans.length; \r",
+									"    pm.environment.set('room_type_id_1', \"\");\r",
+									"    pm.environment.set('room_type_id_2', \"\");\r",
+									"    pm.environment.set('program_id_1', \"\");\r",
+									"    pm.environment.set('program_id_2', \"\");\r",
+									"\r",
+									"    for (var i = 0;i<ratePlansLen;i++) {\r",
+									"        if (jsonResponse.ratePlans[i].programId && !pm.environment.get('program_id_1')) {\r",
+									"            pm.environment.set('room_type_id_1', jsonResponse.ratePlans[i].rooms[0].roomTypeId);\r",
+									"            pm.environment.set('program_id_1', jsonResponse.ratePlans[i].programId);\r",
+									"        } else if (jsonResponse.ratePlans[i].programId && !pm.environment.get('program_id_2')) {\r",
+									"            pm.environment.set('room_type_id_2', jsonResponse.ratePlans[i].rooms[0].roomTypeId);\r",
+									"            pm.environment.set('program_id_2', jsonResponse.ratePlans[i].programId);\r",
+									"        }\r",
+									"\r",
+									"        if(pm.environment.get('room_type_id_1') && pm.environment.get('room_type_id_2')) {\r",
+									"            break;\r",
+									"        } \r",
+									"        \r",
+									"    }\r",
+									"    if(i == ratePlansLen && !pm.environment.get('room_type_id_2')) {\r",
+									"            pm.environment.set('room_type_id_2', pm.environment.get('room_type_id_1'));\r",
+									"            pm.environment.set('program_id_2', pm.environment.get('program_id_1'));\r",
+									"    }\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-mgm-source",
+								"type": "text",
+								"value": "mgmri"
+							},
+							{
+								"key": "x-mgm-channel",
+								"type": "text",
+								"value": "web"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{oauth_access_token}}"
+							},
+							{
+								"key": "x-mgm-transaction-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							}
+						],
+						"url": {
+							"raw": "{{room_availability_endpoint}}?checkInDate={{checkin_date}}&checkOutDate={{checkout_date}}&numAdults=2&propertyId={{property_id}}",
+							"host": [
+								"{{room_availability_endpoint}}"
+							],
+							"query": [
+								{
+									"key": "checkInDate",
+									"value": "{{checkin_date}}"
+								},
+								{
+									"key": "checkOutDate",
+									"value": "{{checkout_date}}"
+								},
+								{
+									"key": "numAdults",
+									"value": "2"
+								},
+								{
+									"key": "propertyId",
+									"value": "{{property_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add-product-to-empty-cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"add-product-to-empty-cart-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"add-product-to-empty-cart-valid-response-body\", function() {\r",
+									"    cart_id = jsonResponse.cart.cartId;\r",
+									"    pm.environment.set('cart_id', cart_id);\r",
+									"    pm.expect(jsonResponse.cart.cartId).to.not.have.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{po_oauth_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-source",
+								"value": "mgmri",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-channel",
+								"value": "web",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product\": {\r\n        \"data\": {\r\n            \"checkInDate\": \"{{checkin_date}}\",\r\n            \"checkOutDate\": \"{{checkout_date}}\",\r\n            \"numberOfAdults\": \"1\",\r\n            \"numberOfChildren\": \"1\",\r\n            \"numberOfRooms\":1,\r\n            \"propertyId\": \"{{property_id}}\",\r\n            \"roomTypeId\": \"{{room_type_id_1}}\",\r\n            \"programId\": \"{{program_id_1}}\",\r\n            \"checkPrice\": \"100.5\"\r\n        },\r\n        \"type\": \"ROOM\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{add_product_cart_endpoint}}",
+							"host": [
+								"{{add_product_cart_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"pm.test(\"validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-response-body\", function() {\r",
+									"    pm.expect(jsonResponse.cart.cartId).to.not.have.null;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"validate-valid-product-count\", function() {\r",
+									"    pm.expect(jsonResponse.cart.cartLineItems).length.to.greaterThan(0);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"total_price\", jsonResponse.cart.priceDetails.totalPrice);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{po_oauth_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-channel",
+								"value": "web",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-source",
+								"value": "mgmri",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{get_cart_endpoint}}/{{cart_id}}",
+							"host": [
+								"{{get_cart_endpoint}}"
+							],
+							"path": [
+								"{{cart_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "checkout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"pm.test(\"checkout-validate-valid-response-code\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"checkout-validate-valid-response-body\", function() {\r",
+									"    pm.expect(jsonResponse.order.orderLineItems[0].status).to.equal('FAILURE');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-mgm-correlation-id",
+								"type": "text",
+								"value": "{{x_mgm_correlation_id}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{po_oauth_access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-source",
+								"value": "mgmri",
+								"type": "text"
+							},
+							{
+								"key": "x-mgm-channel",
+								"value": "web",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"cartId\": \"{{cart_id}}\",\r\n\t\"inAuthTransactionId\": \"8a3d34be200d\",\r\n\t\"guestProfile\": {\r\n\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\"addresses\": [\r\n                {\r\n                    \"preferred\": \"false\",\r\n                    \"street1\": \"123 Main St\",\r\n                    \"street2\": \"\",\r\n                    \"city\": \"Las Vegas\",\r\n                    \"state\": \"NV\",\r\n                    \"country\": \"US\",\r\n                    \"postalCode\": \"89118\",\r\n                    \"type\": \"Home\"\r\n                }\r\n            ]\r\n\t},\r\n\t\"billings\": [ {\r\n\t\t\t\t\"payment\": {\r\n\t\t\t\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\t\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\t\t\"amount\": {{total_price}},\r\n\t\t\t\t\t\"maskedNumber\": \"XXXXXXXXXXXX1111\",\r\n\t\t\t\t\t\"cardHolder\": \"{{first_name}} {{last_name}}\",\r\n\t\t\t\t\t\"cvv\": \"123\",\r\n\t\t\t\t\t\"expiry\": \"10/2027\",\r\n\t\t\t\t\t\"type\": \"Visa\",\r\n\t\t\t\t\t\"ccToken\": \"8888888888\"\r\n\t\t\t\t},\r\n\t\t\t\t\"address\": {\r\n\t\t\t\t\t\"street1\": \"234 W Main St\",\r\n\t\t\t\t\t\"city\": \"Las Vegas\",\r\n\t\t\t\t\t\"postalCode\": \"89129\",\r\n\t\t\t\t\t\"state\": \"NV\",\r\n\t\t\t\t\t\"country\": \"US\"\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"payment\": {\r\n\t\t\t\t\t\"firstName\": \"{{first_name}}\",\r\n\t\t\t\t\t\"lastName\": \"{{last_name}}\",\r\n\t\t\t\t\t\"amount\": {{total_price}},\r\n\t\t\t\t\t\"maskedNumber\": \"XXXXXXXXXXXX1111\",\r\n\t\t\t\t\t\"cardHolder\": \"{{first_name}} {{last_name}}\",\r\n\t\t\t\t\t\"cvv\": \"123\",\r\n\t\t\t\t\t\"expiry\": \"10/2027\",\r\n\t\t\t\t\t\"type\": \"Visa\",\r\n\t\t\t\t\t\"ccToken\": \"99999999\"\r\n\t\t\t\t},\r\n\t\t\t\t\"address\": {\r\n\t\t\t\t\t\"street1\": \"234 W Main St\",\r\n\t\t\t\t\t\"city\": \"Las Vegas\",\r\n\t\t\t\t\t\"postalCode\": \"89129\",\r\n\t\t\t\t\t\"state\": \"NV\",\r\n\t\t\t\t\t\"country\": \"US\"\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{global.apigee.endpoint}}/{{global.api.version}}/checkout",
+							"protocol": "https",
+							"host": [
+								"{{global.apigee.endpoint}}"
+							],
+							"path": [
+								"{{global.api.version}}",
+								"checkout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

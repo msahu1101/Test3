@@ -1,0 +1,67 @@
+<policies>
+    <inbound>
+        <base />
+        <!-- Validate presence of trace-in in request header -->
+        <check-header 
+          name="x-mgm-correlation-id" 
+          failed-check-httpcode="412" 
+          failed-check-error-message="Please pass a valid string header (x-mgm-correlation-id) to trace end-to-end transaction" 
+          ignore-case="true" />
+        <!-- Validate oAuth2 authorization token -->
+        <validate-jwt 
+          header-name="Authorization" 
+          failed-validation-httpcode="401" 
+          require-expiration-time="false" 
+          require-signed-tokens="false"  
+          failed-validation-error-message="Unauthorized. Client is not authorized to access requested resource (1)" 
+          output-token-variable-name="jwt">
+            <openid-config url="${{oauth_wellknown_endpoint}}" />
+            <required-claims>
+                <claim name="scp" match="any">
+                    <!-- This commented block will be added by script for each endpoint -->
+                    <!-- <value>??</value> -->
+                    ${{all_possible_scopes}}
+                </claim>
+            </required-claims>
+        </validate-jwt>
+        <!-- set back-end function default key in the request -->
+        <set-header name="x-functions-key" exists-action="override">
+            <value>${{function_access_default_key}}</value>
+        </set-header>
+        <!-- Pass oAuth scopes to back-end -->
+        <set-header name="x-mgm-scopes" exists-action="override">
+            <value>@(String.Join(" ", ((Jwt)context.Variables["jwt"]).Claims["scp"]))</value>
+        </set-header>
+        <set-header name="x-mgm-client" exists-action="override">
+            <value>@(((Jwt)context.Variables["jwt"]).Subject)</value>
+        </set-header>
+        <set-header name="x-mgm-path" exists-action="override">
+            <value>@(context.Request.OriginalUrl.Path)</value>
+        </set-header>
+        <!-- Validate scope for path -->
+        <choose>
+            <!-- This commented block will be added by script for each endpoint -->
+            <!-- 
+            <when condition="@(context.Request.OriginalUrl.Path.EndsWith("{{0}}"))">
+                     <choose>
+                         <when condition="@(((Jwt)context.Variables["jwt"]).Claims["scp"].Intersect(new [] {{{0}}}).Any())">
+                             <return-response> 
+                                <set-status code="401" reason="Request denied because of invalid scope" />
+                             </return-response>
+                         </when>
+                    </choose>
+            </when>
+            -->
+            ${{path_conditions}}
+        </choose>
+    </inbound>
+    <backend>
+        <base />
+    </backend>
+    <outbound>
+        <base />
+    </outbound>
+    <on-error>
+        <base />
+    </on-error>
+</policies>

@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "type": "object",
+  "javaType": "com.mgmresorts.content.model.Error",
+  "additionalProperties": false,
+  "title": "The root schema",
+  "description": "The root schema comprises the entire JSON document.",
+  "default": {},
+	"properties": {
+	  "messages": {
+	    "type": "array",
+	    "items": {
+	      "type": "object",
+	      "properties": {
+	        "type": {
+	          "type": "string"
+	        },
+	        "code": {
+	          "type": "string"
+	        },
+	        "msg": {
+	          "type": "string"
+	        }
+	      }
+	    }
+	  }
+	}
+}

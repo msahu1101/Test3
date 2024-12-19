@@ -1,0 +1,4 @@
+{
+  "statusCode": 401,
+  "message": "Unauthorized. Client is not authorized to access requested resource (1)"
+}

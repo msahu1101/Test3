@@ -1,0 +1,90 @@
+{
+  "id": "100621794",
+  "bookDate": "2023-05-04",
+  "confirmationNumber": "100621794",
+  "propertyId": "607c07e7-3e31-4e4c-a4e1-f55dca66fea2",
+  "eventDate": "2023-05-09",
+  "eventTime": "8:00 PM",
+  "reservationStatus": "Reserved",
+  "cancellable": false,
+  "mlifeNo": "79664267",
+  "seasonId": "40dfd93b-dc20-43b6-9df4-495ecc6e1c24",
+  "showEventId": "2dd3ef20-7ad8-4d83-a87f-d90f4458e115",
+  "showEventCode": "BLD0509L",
+  "deliveryMethodCode": "TF",
+  "comp": false,
+  "hdePackage": false,
+  "resendEmailAllowed": true,
+  "tickets": [
+    {
+      "priceCode": "AN",
+      "holdClass": "OPEN",
+      "basePrice": 105.55,
+      "discountedPrice": 105.55,
+      "accessible": false,
+      "description": "Standard",
+      "showEventId": "2dd3ef20-7ad8-4d83-a87f-d90f4458e115",
+      "showEventCode": "BLD0509L",
+      "ticketTypeCode": "_A",
+      "seat": {
+        "sectionName": "102",
+        "rowName": "A",
+        "seatNumber": 5
+      },
+      "ticketTypeCodeDescription": "Standard",
+      "priceCodeDescription": "Category A"
+    }
+  ],
+  "charges": {
+    "discountedSubtotal": 105.55,
+    "showSubtotal": 105.55,
+    "let": 9.5,
+    "deliveryFee": 0.0,
+    "gratuity": 0.0,
+    "reservationTotal": 130.0,
+    "serviceCharge": {
+      "amount": 14.95,
+      "itemized": {
+        "charge": 13.72,
+        "tax": 1.23
+      }
+    },
+    "transactionFee": {
+      "amount": 0.0,
+      "itemized": {
+        "charge": 0.0,
+        "tax": 0.0
+      }
+    }
+  },
+  "profile": {
+    "archticsId": "249587226",
+    "firstName": "John",
+    "lastName": "SmithF",
+    "phoneNumbers": [
+      {
+        "type": "Home",
+        "number": "7778889999"
+      }
+    ],
+    "emailAddress1": "fake1@email.com",
+    "mlifeNo": "79664267",
+    "addresses": [
+      {
+        "type": "Home",
+        "preferred": true,
+        "street1": "123 Main St",
+        "city": "Las Vegas",
+        "state": "NV",
+        "country": "US",
+        "postalCode": "89118"
+      }
+    ]
+  },
+  "billing": {
+    "payment": {
+      "type": "Visa",
+      "paymentToken": "1111"
+    }
+  }
+}

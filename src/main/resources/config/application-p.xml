@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<!-- global settings -->
+	
+	<entry key="auth.disabled.global">false</entry>
+	<entry key="auth.disabled.verify.token">false</entry>
+	<entry key="auth.disabled.verify.roles">false</entry>
+	<entry key="auth.check.token.cache">21600000</entry>
+	<entry key="auth.url.jkws">https://api.apigee.mgmresorts.com/identity/authorization/v1/mgmsvc/.well-known/jwks</entry>
+
+	<entry key="keyVault.base.url">https://shoppingcartprv-uw-kv-p.vault.azure.net</entry>
+	<entry key="function.app.system.identity.id"></entry>
+	<entry key="function.app.user.identity.id">64a283f2-66fe-4c4b-807a-3cf7d3b9eede</entry>
+	<entry key="keyVault.ar.tenant">ddb8592f-ed74-4329-bfd2-571b7c34699e</entry>
+	<entry key="keyVault.client.id">761da793-ea91-4d64-9b55-d3c5622e8bd1</entry>
+	<entry key="keyVault.client.key">to be replaced in devops</entry>
+
+	<!-- live site -->
+	<entry key="livesite_event_hub_policy@secure">p-livesite-event-hub-connection</entry>
+	<entry key="livesite.request.mask">service:request</entry>
+	<entry key="livesite.response.mask">service:response</entry>
+	<!-- End -->
+	
+	<!-- cosmos db -->
+	<entry key="datastore.cosmos.url">https://mgmshoppingcartorder-uw-cdb-p.documents.azure.com:443</entry>
+	<entry key="datastore.cosmos.secret">to-be-replaced</entry>
+	<entry key="datastore.cosmos.proxy.enable">false</entry>
+	<entry key="datastore.cosmos.proxy.host">mproxy.mgmresorts.local</entry>
+	<entry key="datastore.cosmos.proxy.port">8080</entry>
+
+	<!-- security -->
+	<entry key="global.onewayhash.salt@secure">p-global-onewayhash-salt</entry>
+	<entry key="global.encryption.key">security-key-alias-1</entry>
+
+	<!-- Identity Authorization Service common endpoint -->
+	<entry key="identity.auth.apigee.endpoint">https://api.apigee.mgmresorts.com/identity/authorization</entry>
+	
+	<!-- Shopping Cart Service common endpoint -->
+	<entry key="shopping.cart.apigee.endpoint">https://api.apigee.mgmresorts.com/shopping</entry>
+	
+	<!-- Itinerary Service common endpoint -->
+	<entry key="itinerary.apigee.endpoint">https://api.apigee.mgmresorts.com/itinerary</entry>
+	
+	<!-- Profile Core Service common endpoint -->
+	<entry key="profile.core.apigee.endpoint">https://api.apigee.mgmresorts.com/profile/core</entry>
+	
+	<!-- Room Booking Service common endpoint -->
+	<entry key="rbs.apigee.endpoint">https://api.apigee.mgmresorts.com/booking/room</entry>
+	
+	<!-- Show Booking Service common endpoints -->
+	<entry key="sbs.apigee.endpoint">https://api.apigee.mgmresorts.com/booking/show</entry>
+	
+	<!--Dining Booking Service common endpoint -->
+	<entry key="dbs.apigee.endpoint">https://api.apigee.mgmresorts.com/booking/restaurant</entry>
+	
+	<!--Legacy Payment Processing Service common endpoint -->
+	<entry key="pps.legacy.apigee.endpoint">https://api.apigee.mgmresorts.com/mpay</entry>
+	
+	<!--Payment Diversity Payment Processing Service common endpoint -->
+	<entry key="pps.apigee.endpoint">https://payments.apigee.mgmresorts.com/payment/processor/api</entry>
+	
+	<!--Payment Diversity Payment Session Management Service common endpoint -->
+	<entry key="psm.apigee.endpoint">https://payments.apigee.mgmresorts.com/payment/session/api</entry>
+	
+	<!-- Content API Service common endpoint -->
+	<entry key="content.api.url">https://content.mgmresorts.com/content-api</entry>
+	
+	<!-- PIM API Service common endpoint -->
+	<entry key="pim.api.url">https://api.apigee.mgmresorts.com/product-catalog-api</entry>
+	
+	<!-- RTC API Service common endpoint -->
+	<entry key="rtc.api.url">https://api.apigee.mgmresorts.com/rtc-api</entry>
+	
+	<entry key="psm.client.id">to be replaced</entry>
+
+	<!-- events -->
+	<entry key="application.event.enabled">false</entry>
+	<entry key="event.topic.default">event-generic</entry>
+	<entry key="event.topic.order">mgmcartevents-uw-egt-p</entry>
+	<entry key="event.eventgrid.endpoint">https://mgmcartevents-uw-egd-p.westus-1.eventgrid.azure.net/api/events</entry>
+	<entry key="event.eventgrid.key@secure">p-event-eventgrid-cart-key</entry>
+	<entry key="eventor-pool.size">50</entry>
+	<entry key="event.payload.masking.groups">event:success:response</entry>
+	<entry key="event.failure.payload.masking.groups">event:failure:response</entry>
+	
+	<!-- Enterprise events -->
+	<entry key="application.enterprise.event.enabled">true</entry>
+	<entry key="application.enterprise.event.encryption.disabled">false</entry>
+	<entry key="enterprise.event.eventgrid.endpoint">https://ei-shopping-cart-uw-egd-p.westus-1.eventgrid.azure.net/api/events</entry>
+	<entry key="enterprise.event.eventgrid.key@secure">p-enterprise-event-eventgrid-cart-key</entry>
+	<entry key="enterprise.event.eventgrid.key.enabled">false</entry>
+	<entry key="enterprise-eventor-pool.size">50</entry>
+	<entry key="enterprise-eventor-pool.timeout">1800000</entry>
+	<entry key="enterprise.event.payload.masking.disabled">false</entry>
+	<entry key="enterprise.event.success.payload.masking.groups">event:success:response</entry>
+	<entry key="enterprise.event.failure.payload.masking.groups">event:failure:response</entry>
+	<entry key="enterprise.event.eventgrid.keyvault.name">ei-shopping-cart-uw-kv-p</entry>
+	<entry key="enterprise.event.eventgrid.encryption.key.name">shopping-cart-encryption-key</entry>
+	<entry key="enterprise.event.eventgrid.encryption.key.expiration.minutes">43200</entry>
+	<entry key="enterprise.event.eventgrid.keyvault.service.principal.enabled">false</entry>
+	<entry key="enterprise.event.cloudevent.specversion">1.0</entry>
+	<entry key="enterprise.event.baseevent.dataversion">1.0</entry>
+	<entry key="enterprise.event.customevent.datacontent.type">application/json</entry>
+	<entry key="Event.Cart.Checkout.pci.enabled">true</entry>
+	<entry key="Event.Cart.Checkout.pii.enabled">true</entry>
+	<!-- End -->
+	
+	<!-- thread pools -->
+	<entry key="order.other.sub.pool.size">400</entry>
+	<entry key="order.other.sub.pool.timeout">1800000</entry>
+	<entry key="thread.pool.single.run.per.group.size">50</entry>
+	<entry key="order.non.package.pool.size">100</entry>
+	<entry key="order.non.package.pool.timeout">1800000</entry>
+	<entry key="order.package.pool.size">100</entry>
+	<entry key="order.package.pool.timeout">1800000</entry>
+	<entry key="order.package.pool.timeout.seconds">25</entry>
+	<entry key="order.common.pool.progressive.timeout.seconds">22</entry>
+	<entry key="order.non.package.pool.timeout.seconds">120</entry>
+
+	<!-- reservation -->
+	<entry key="reservation.pool.size">50</entry>
+	<entry key="reservation.pool.timeout">1800000</entry>
+
+	<!-- Payment Processing Service -->
+	<entry key="pps.client.id">to be replaced</entry>
+	
+   	<!-- Email -->
+	<entry key="application.email.server">V00WI365SMTP01P.MGMMIRAGE.ORG</entry>
+	<entry key="application.email.port">25</entry>
+	<entry key="sbs.reservation.send.email.to">ticketoffice@dolbylivelv.com</entry>
+	<entry key="sbs.reservation.send.email.cc">cartorderservices@mgmresorts.com,sbs-alerts@mgmresorts.com</entry>
+	<entry key="sbs.reservation.send.email.bcc"></entry>
+
+	<entry key="pps.payment.failure.send.email.to">cnp-paymentssupport@mgmresorts.com</entry>
+	<entry key="pps.payment.failure.send.email.cc">cartorderservices@mgmresorts.com</entry>
+	<entry key="pps.payment.failure.send.email.bcc"></entry>
+	
+	<entry key="identity.merge.account.failure.send.email.to">identity_automated_processes@MGMResorts.onmicrosoft.com</entry>
+	<entry key="identity.merge.account.failure.send.email.cc"></entry>
+	<entry key="identity.merge.account.failure.send.email.bcc"></entry>
+
+	<!-- Payment Service -->
+	<entry key="payment.method.validation.enabled">false</entry>
+	<entry key="payment.authorization.merchantid">Bellagio2</entry>
+	
+	<!--Async-->
+	<entry key="async.enabled">false</entry>
+
+	<!-- TCOLV capture/void suppression-->
+	<entry key="tcolv.skip.payment.processing">true</entry>
+	<entry key="tcolv.property.id">e5d3f1c9-833a-83f1-e053-d303fe0ad83c</entry>
+
+</properties>

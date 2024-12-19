@@ -1,0 +1,68 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"team": {
+			"type": "string",
+			"defaultValue": "Cart/Order/Trip/NGL Services"
+		},
+		"environment": {
+			"type": "string"
+		}	,
+		"asp_name": {
+			"type": "String"
+		},
+		"location": {
+			"type": "String"
+		},
+		"sku_name": {
+			"type": "String"
+		},
+		"sku_tier": {
+			"type": "String"
+		},
+		"sku_size": {
+			"type": "String"
+		},
+		"sku_family": {
+			"type": "String"
+		}
+	},
+	"variables": {
+	},
+	"resources": [
+		{
+			"type": "Microsoft.Web/serverfarms",
+			"apiVersion": "2018-02-01",
+			"name": "[parameters('asp_name')]",
+			"location": "[parameters('location')]",
+			"sku": {
+				"name": "[parameters('sku_name')]",
+				"tier": "[parameters('sku_tier')]",
+				"size": "[parameters('sku_size')]",
+				"family": "[parameters('sku_family')]",
+				"capacity": 1
+			},
+			"tags": {
+				"environment": "[parameters('environment')]",
+				"creator": "[concat(parameters('team'), ' Team')]",
+				"application": "[parameters('team')]",
+				"businessSponsor": "Sudhakar Veluru",
+				"appOwner": "Pramod Baswaraju",
+				"lead": "Pramod Baswaraju",
+				"businessCostCenter": "516-800-80182 Digital Engineering"
+			},
+			"kind": "app",
+			"properties": {
+				"perSiteScaling": false,
+				"maximumElasticWorkerCount": 1,
+				"isSpot": false,
+				"reserved": false,
+				"isXenon": false,
+				"hyperV": false,
+				"targetWorkerCount": 0,
+				"targetWorkerSizeId": 0
+			}
+		}
+	]
+}

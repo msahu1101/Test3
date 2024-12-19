@@ -1,0 +1,3676 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "2.0.0",
+    "title": "PIM Product Service API (DRAFT)",
+    "description": "Services for retrieving product data. <h3>API Versions</h3> <ul> <li> This reference document applies only for V1 version of the APIs. </li> </ul>"
+  },
+  "servers": [
+    {
+      "url": "https://pimproductsvc-uw-fa-d.azurewebsites.net/api/v1",
+      "description": "Dev environment API"
+    },
+    {
+      "url": "https://pimproductsvc-uw-fa-q.azurewebsites.net/api/v1",
+      "description": "QA environment API"
+    },
+    {
+      "url": "https://pimproductsvc-uw-fa-p.azurewebsites.net/api/v1",
+      "description": "Prod environment API"
+    },
+    {
+      "url": "https://mgm-nonprod-dev.apigee.net/product-catalog-api/v1/en/",
+      "description": "Dev apigee url"
+    },
+    {
+      "url": "https://mgm-nonprod-qa.apigee.net/product-catalog-api/v1/en/",
+      "description": "QA apigee url"
+    },
+    {
+      "url": "https://mgm-prod-prod.apigee.net/product-catalog-api/v1/en/",
+      "description": "Prod apigee url"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Health check",
+        "security": [
+          {
+            "mgm-roles": [
+              "service",
+              "anon",
+              "guest"
+            ]
+          },
+          {
+            "service-role": [
+              "read"
+            ]
+          }
+        ],
+        "description": "Useful for checking status API",
+        "tags": [
+          "Health check"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "summary": "Find products by criteria",
+        "security": [
+          {
+            "mgm-roles": [
+              "service",
+              "anon",
+              "guest"
+            ]
+          },
+          {
+            "service-role": [
+              "read"
+            ]
+          }
+        ],
+        "description": "at least one parameter should select to fetch the product entity data",
+        "tags": [
+          "Multiple-Item Lookups"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "productType",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "productType value"
+          },
+          {
+            "in": "query",
+            "name": "startDate",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "startDate value"
+          },
+          {
+            "in": "query",
+            "name": "endDate",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "endDate value"
+          },
+          {
+            "in": "query",
+            "name": "region",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "region in which the product takes place"
+          },
+          {
+            "in": "query",
+            "name": "propertyId",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "id of the physical location"
+          },
+          {
+            "in": "query",
+            "name": "view",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "detailed"
+              ]
+            },
+            "description": "select whether to return a simple entity or a more complete one."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ProductArray"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ShowViewArray"
+                    }
+                  ],
+                  "discriminator": {
+                    "propertyName": "type"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/product": {
+      "get": {
+        "summary": "Find product by criteria",
+        "security": [
+          {
+            "mgm-roles": [
+              "service",
+              "anon",
+              "guest"
+            ]
+          },
+          {
+            "service-role": [
+              "read"
+            ]
+          }
+        ],
+        "description": "at least one parameter should select to fetch the product entity data",
+        "tags": [
+          "Multiple-Item Lookups"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "productCatalogId",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "productCatalogId value"
+          },
+          {
+            "in": "query",
+            "name": "seasonId",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "id of a season of the product"
+          },
+          {
+            "in": "query",
+            "name": "eventName",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "name of an event of the product"
+          },
+          {
+            "in": "query",
+            "name": "eventName",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "name of an event of the product"
+          },
+          {
+            "in": "query",
+            "name": "productCode",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "select whether to return a simple entity or a more complete one."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ProductArray"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ShowViewArray"
+                    }
+                  ],
+                  "discriminator": {
+                    "propertyName": "type"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/products/seasons": {
+      "get": {
+        "summary": "Find seasons by criteria",
+        "security": [
+          {
+            "mgm-roles": [
+              "service",
+              "anon",
+              "guest"
+            ]
+          },
+          {
+            "service-role": [
+              "read"
+            ]
+          }
+        ],
+        "description": "Useful for retrieving seasons",
+        "tags": [
+          "Multiple-Item Lookups"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "eventName",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "seasonCatalogId",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ShowSeasonEventArray"
+                    }
+                  ],
+                  "discriminator": {
+                    "propertyName": "type"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/products/seasons/{id}": {
+      "get": {
+        "summary": "Find season by id",
+        "security": [
+          {
+            "mgm-roles": [
+              "service",
+              "anon",
+              "guest"
+            ]
+          },
+          {
+            "service-role": [
+              "read"
+            ]
+          }
+        ],
+        "description": "Useful for retrieving a season by id",
+        "tags": [
+          "Single-Item Lookups"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ShowSeasonEvent"
+                    }
+                  ],
+                  "discriminator": {
+                    "propertyName": "type"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/products/events": {
+      "get": {
+        "summary": "Find events by criteria",
+        "security": [
+          {
+            "mgm-roles": [
+              "service",
+              "anon",
+              "guest"
+            ]
+          },
+          {
+            "service-role": [
+              "read"
+            ]
+          }
+        ],
+        "description": "at least one parameter should select to fetch the Event entity data",
+        "tags": [
+          "Multiple-Item Lookups"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "eventName",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "eventName used to match the event(s)"
+          },
+          {
+            "in": "query",
+            "name": "startDate",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "startDate value"
+          },
+          {
+            "in": "query",
+            "name": "endDate",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "endDate value"
+          },
+          {
+            "in": "query",
+            "name": "productCode",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "productCode value"
+          },
+          {
+            "in": "query",
+            "name": "seasonId",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "id of a season of the product"
+          },
+          {
+            "in": "query",
+            "name": "eventCatalogId",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "eventCatalogId value"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SeasonEventArray"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/products/events/{id}": {
+      "get": {
+        "summary": "Find events by id",
+        "security": [
+          {
+            "mgm-roles": [
+              "service",
+              "anon",
+              "guest"
+            ]
+          },
+          {
+            "service-role": [
+              "read"
+            ]
+          }
+        ],
+        "description": "Useful for retrieving event associated marketing content",
+        "tags": [
+          "Single-Item Lookups"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "id of the desired event"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SeasonEvent"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/locations/venues": {
+      "get": {
+        "summary": "Find venues by criteria",
+        "security": [
+          {
+            "mgm-roles": [
+              "service",
+              "anon",
+              "guest"
+            ]
+          },
+          {
+            "service-role": [
+              "read"
+            ]
+          }
+        ],
+        "description": "Useful for retrieving venue associated marketing content",
+        "tags": [
+          "Multiple-Item Lookups"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "venueType",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "venueType used to match the event(s)"
+          },
+          {
+            "in": "query",
+            "name": "propertyId",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "id of the physical location containing the venues"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VenueEventArray"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/locations/venues/{id}": {
+      "get": {
+        "summary": "Find venue by id",
+        "security": [
+          {
+            "mgm-roles": [
+              "service",
+              "anon",
+              "guest"
+            ]
+          },
+          {
+            "service-role": [
+              "read"
+            ]
+          }
+        ],
+        "description": "Useful for retrieving venue associated marketing content",
+        "tags": [
+          "Single-Item Lookups"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "id of the desired venue"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VenueEvent"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/locations/properties": {
+      "get": {
+        "summary": "Find properties by criteria",
+        "security": [
+          {
+            "mgm-roles": [
+              "service",
+              "anon",
+              "guest"
+            ]
+          },
+          {
+            "service-role": [
+              "read"
+            ]
+          }
+        ],
+        "description": "Useful for retrieving property associated marketing content",
+        "tags": [
+          "Multiple-Item Lookups"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "type",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "propertyCode",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PropertyEventArray"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/locations/properties/{id}": {
+      "get": {
+        "summary": "Find venue by id",
+        "security": [
+          {
+            "mgm-roles": [
+              "service",
+              "anon",
+              "guest"
+            ]
+          },
+          {
+            "service-role": [
+              "read"
+            ]
+          }
+        ],
+        "description": "Useful for retrieving property associated marketing content",
+        "tags": [
+          "Single-Item Lookups"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "id of the desired property"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PropertyEvent"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/locations/seatmaps": {
+      "get": {
+        "summary": "Find seatmaps by criteria",
+        "security": [
+          {
+            "mgm-roles": [
+              "service",
+              "anon",
+              "guest"
+            ]
+          },
+          {
+            "service-role": [
+              "read"
+            ]
+          }
+        ],
+        "description": "Useful for retrieving seatmap associated marketing content",
+        "tags": [
+          "Multiple-Item Lookups"
+        ],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SeatmapEventArray"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/locations/seatmaps/{id}": {
+      "get": {
+        "summary": "Find seatmap by id",
+        "security": [
+          {
+            "mgm-roles": [
+              "service",
+              "anon",
+              "guest"
+            ]
+          },
+          {
+            "service-role": [
+              "read"
+            ]
+          }
+        ],
+        "description": "Useful for retrieving seatmap associated marketing content",
+        "tags": [
+          "Single-Item Lookups"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "id of the desired seatmap"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SeatmapEvent"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/products/deliveryMethods": {
+      "get": {
+        "summary": "Find deliveryMethods by criteria",
+        "security": [
+          {
+            "mgm-roles": [
+              "service",
+              "anon",
+              "guest"
+            ]
+          },
+          {
+            "service-role": [
+              "read"
+            ]
+          }
+        ],
+        "description": "Useful for retrieving deliveryMethod associated marketing content",
+        "tags": [
+          "Multiple-Item Lookups"
+        ],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeliveryMethodArray"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/products/deliveryMethods/{code}": {
+      "get": {
+        "summary": "Find deliveryMethod by code",
+        "security": [
+          {
+            "mgm-roles": [
+              "service",
+              "anon",
+              "guest"
+            ]
+          },
+          {
+            "service-role": [
+              "read"
+            ]
+          }
+        ],
+        "description": "Useful for retrieving deliveryMethod associated marketing content",
+        "tags": [
+          "Single-Item Lookups"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "code",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "code of the desired deliveryMethod"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeliveryMethod"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/offers": {
+      "get": {
+        "summary": "Find offers by criteria",
+        "security": [
+          {
+            "mgm-roles": [
+              "service",
+              "anon",
+              "guest"
+            ]
+          },
+          {
+            "service-role": [
+              "read"
+            ]
+          }
+        ],
+        "description": "Useful for retrieving offer associated marketing content",
+        "tags": [
+          "Multiple-Item Lookups"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offerType",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "offerType value"
+          },
+          {
+            "in": "query",
+            "name": "productId",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "productId value"
+          },
+          {
+            "in": "query",
+            "name": "seasonId",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "seasonId value"
+          },
+          {
+            "in": "query",
+            "name": "propertyId",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "propertyId value"
+          },
+          {
+            "in": "query",
+            "name": "startDate",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "startDate value"
+          },
+          {
+            "in": "query",
+            "name": "endDate",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "endDate value"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OfferEventArray"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/offer/{id}": {
+      "get": {
+        "summary": "Find offer by id",
+        "security": [
+          {
+            "mgm-roles": [
+              "service",
+              "anon",
+              "guest"
+            ]
+          },
+          {
+            "service-role": [
+              "read"
+            ]
+          }
+        ],
+        "description": "Useful for retrieving offer associated marketing content",
+        "tags": [
+          "Single-Item Lookups"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "id of the desired offer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Offer"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/packages": {
+      "get": {
+        "summary": "Find packages by criteria",
+        "security": [
+          {
+            "mgm-roles": [
+              "service",
+              "anon",
+              "guest"
+            ]
+          },
+          {
+            "service-role": [
+              "read"
+            ]
+          }
+        ],
+        "description": "Useful for retrieving package associated marketing content",
+        "tags": [
+          "Multiple-Item Lookups"
+        ],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PackagesEventArray"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/packages/{id}": {
+      "get": {
+        "summary": "Find packages by id",
+        "security": [
+          {
+            "mgm-roles": [
+              "service",
+              "anon",
+              "guest"
+            ]
+          },
+          {
+            "service-role": [
+              "read"
+            ]
+          }
+        ],
+        "description": "Useful for retrieving package associated marketing content",
+        "tags": [
+          "Single-Item Lookups"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "id of the desired package"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PackagesEvent"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/getPimIds": {
+      "get": {
+        "summary": "Find PimIds by gseId",
+        "security": [
+          {
+            "mgm-roles": [
+              "service",
+              "anon",
+              "guest"
+            ]
+          },
+          {
+            "service-role": [
+              "read"
+            ]
+          }
+        ],
+        "description": "Useful for retrieving PimId associated marketing content",
+        "tags": [
+          "Multiple-Item Lookups"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "gseId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "show event gseId value"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PimIdResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RawEvent": {
+        "type": "object",
+        "required": [
+          "type",
+          "id"
+        ],
+        "description": "Work in Progress",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "created": {
+            "type": "number"
+          },
+          "correlationId": {
+            "type": "string"
+          },
+          "transactionId": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "type"
+        }
+      },
+      "Asset": {
+        "type": "object",
+        "properties": {
+          "assetId": {
+            "type": "string"
+          },
+          "assetName": {
+            "type": "string"
+          },
+          "assetType": {
+            "type": "string"
+          },
+          "mimeType": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          }
+        }
+      },
+      "ContactInformation": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "contactName": {
+            "type": "string"
+          },
+          "contactType": {
+            "type": "string"
+          },
+          "contactDescription": {
+            "type": "string"
+          },
+          "contactDefault": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ProductContactInformation": {
+        "type": "object",
+        "properties": {
+          "contactNumber": {
+            "type": "string"
+          },
+          "contactType": {
+            "type": "string"
+          },
+          "contactDescription": {
+            "type": "string"
+          },
+          "contactDefault": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ChannelConfiguration": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "channelCode": {
+            "type": "string"
+          },
+          "viewableOnChannel": {
+            "type": "boolean"
+          },
+          "bookableOnChannel": {
+            "type": "boolean"
+          }
+        }
+      },
+      "DarkDate": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "string"
+          }
+        }
+      },
+      "DarkDay": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "string"
+          },
+          "darkDays": {
+            "type": "string"
+          }
+        }
+      },
+      "DeliveryMethod": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "ePrinting": {
+            "type": "boolean"
+          },
+          "serviceChargeId": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "default": {
+            "type": "boolean"
+          }
+        }
+      },
+      "DeliveryMethodArray": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/DeliveryMethod"
+        }
+      },
+      "GalleryAsset": {
+        "type": "object",
+        "properties": {
+          "asset": {
+            "$ref": "#/components/schemas/Asset"
+          },
+          "sortOrder": {
+            "type": "integer"
+          },
+          "assetReferenceCaption": {
+            "type": "string"
+          }
+        }
+      },
+      "OperatingHour": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "startDay": {
+            "type": "string"
+          },
+          "endDay": {
+            "type": "string"
+          },
+          "startTime": {
+            "type": "string"
+          },
+          "endTime": {
+            "type": "string"
+          }
+        }
+      },
+      "OperatingHoursExtended": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "PerformanceCalendar": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "startDay": {
+            "type": "string"
+          },
+          "endDay": {
+            "type": "string"
+          },
+          "startTimeInfo": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StartTimeInfo"
+            }
+          },
+          "ignoreDarkDays": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Product": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/RawEvent"
+          },
+          {
+            "type": "object"
+          }
+        ],
+        "type": "object",
+        "description": "Previously known as ShowEvent - working progress",
+        "properties": {
+          "productName": {
+            "type": "string"
+          },
+          "productType": {
+            "type": "string"
+          },
+          "productCatalogId": {
+            "type": "string"
+          },
+          "productCode": {
+            "type": "string"
+          },
+          "merchantId": {
+            "type": "string"
+          },
+          "productLongDescription": {
+            "type": "string"
+          },
+          "productShortDescription": {
+            "type": "string"
+          },
+          "productTagLine": {
+            "type": "string"
+          },
+          "productStatus": {
+            "type": "string"
+          },
+          "productMainCategory": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "productSubCategory": {
+            "type": "string"
+          },
+          "productCategory": {
+            "type": "string"
+          },
+          "productSubType": {
+            "type": "string"
+          },
+          "excludeFromSearch": {
+            "type": "boolean"
+          },
+          "productAppCard": {
+            "type": "string"
+          },
+          "productOverview": {
+            "type": "string"
+          },
+          "productionCompany": {
+            "type": "string"
+          },
+          "eventsInfo": {
+            "type": "string"
+          },
+          "contactInformation": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductContactInformation"
+            }
+          },
+          "eCommercePlatform": {
+            "type": "string"
+          },
+          "productExternalWebsite": {
+            "$ref": "#/components/schemas/ProductExternalWebsite"
+          },
+          "showSeasonIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "overViewAsset": {
+            "$ref": "#/components/schemas/Asset"
+          },
+          "tileAsset": {
+            "$ref": "#/components/schemas/Asset"
+          },
+          "logoAsset": {
+            "$ref": "#/components/schemas/Asset"
+          },
+          "venueReferences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VenueReference"
+            }
+          },
+          "channelConfigs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChannelConfiguration"
+            }
+          },
+          "channelPriceCodes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChannelPriceCode"
+            }
+          },
+          "channelHoldClasses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChannelHoldClasses"
+            }
+          },
+          "channelDeliveryMethods": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeliveryMethod"
+            }
+          },
+          "socialMedia": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SocialMedia"
+            }
+          },
+          "accolades": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Accolades"
+            }
+          },
+          "showCutOffTime": {
+            "type": "string"
+          },
+          "lastAdmissionTimeInterval": {
+            "type": "string"
+          },
+          "doorTime": {
+            "type": "string"
+          },
+          "ticketAvailability": {
+            "type": "string"
+          },
+          "bookingDestinationURL": {
+            "type": "string"
+          },
+          "additionalEventDetails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdditionalEventDetail"
+            }
+          },
+          "groupReservations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GroupReservation"
+            }
+          },
+          "propertyId": {
+            "type": "string"
+          },
+          "imageGallery": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImageGallery"
+            }
+          },
+          "videoGallery": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoGallery"
+            }
+          },
+          "bundleComponent": {
+            "$ref": "#/components/schemas/BundleComponent"
+          }
+        }
+      },
+      "ProductExternalWebsite": {
+        "type": "object",
+        "properties": {
+          "display": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      },
+      "ProductArray": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Product"
+        }
+      },
+      "SocialMedia": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      },
+      "Accolades": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "headCopy": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          }
+        }
+      },
+      "AdditionalEventDetail": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "image": {
+            "$ref": "#/components/schemas/Asset"
+          }
+        }
+      },
+      "BundleComponent": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "shortDescription": {
+            "type": "string"
+          },
+          "longDescription": {
+            "type": "string"
+          }
+        }
+      },
+      "ImageGallery": {
+        "type": "object",
+        "properties": {
+          "asset": {
+            "$ref": "#/components/schemas/Asset"
+          },
+          "priority": {
+            "type": "string"
+          },
+          "caption": {
+            "type": "string"
+          }
+        }
+      },
+      "VideoGallery": {
+        "type": "object",
+        "properties": {
+          "asset": {
+            "$ref": "#/components/schemas/Asset"
+          },
+          "priority": {
+            "type": "string"
+          },
+          "caption": {
+            "type": "string"
+          }
+        }
+      },
+      "ProductView": {
+        "type": "object",
+        "description": "Work in Progress",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "productName": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "productType": {
+            "type": "string"
+          },
+          "productCatalogId": {
+            "type": "string"
+          },
+          "productCode": {
+            "type": "string"
+          },
+          "merchantId": {
+            "type": "string"
+          },
+          "productLongDescription": {
+            "type": "string"
+          },
+          "productShortDescription": {
+            "type": "string"
+          },
+          "productTagLine": {
+            "type": "string"
+          },
+          "productStatus": {
+            "type": "string"
+          },
+          "productMainCategory": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "productSubCategory": {
+            "type": "string"
+          },
+          "productCategory": {
+            "type": "string"
+          },
+          "productSubType": {
+            "type": "string"
+          },
+          "productAppCard": {
+            "type": "string"
+          },
+          "productOverview": {
+            "type": "string"
+          },
+          "productionCompany": {
+            "type": "string"
+          },
+          "eventsInfo": {
+            "type": "string"
+          },
+          "eCommercePlatform": {
+            "type": "string"
+          },
+          "excludeFromSearch": {
+            "type": "boolean"
+          },
+          "contactInformation": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductContactInformation"
+            }
+          },
+          "productExternalWebsite": {
+            "$ref": "#/components/schemas/ProductExternalWebsite"
+          },
+          "showSeasonIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "overViewAsset": {
+            "$ref": "#/components/schemas/Asset"
+          },
+          "tileAsset": {
+            "$ref": "#/components/schemas/Asset"
+          },
+          "logoAsset": {
+            "$ref": "#/components/schemas/Asset"
+          },
+          "venueReferences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VenueReference"
+            }
+          },
+          "channelConfigs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChannelConfiguration"
+            }
+          },
+          "channelPriceCodes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChannelPriceCode"
+            }
+          },
+          "channelHoldClasses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChannelHoldClasses"
+            }
+          },
+          "channelDeliveryMethods": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeliveryMethod"
+            }
+          },
+          "socialMedia": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SocialMedia"
+            }
+          },
+          "accolades": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Accolades"
+            }
+          },
+          "showCutOffTime": {
+            "type": "string"
+          },
+          "lastAdmissionTimeInterval": {
+            "type": "string"
+          },
+          "doorTime": {
+            "type": "string"
+          },
+          "ticketAvailability": {
+            "type": "string"
+          },
+          "bookingDestinationURL": {
+            "type": "string"
+          },
+          "additionalEventDetails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdditionalEventDetail"
+            }
+          },
+          "groupReservations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GroupReservation"
+            }
+          },
+          "propertyId": {
+            "type": "string"
+          },
+          "imageGallery": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImageGallery"
+            }
+          },
+          "videoGallery": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoGallery"
+            }
+          },
+          "bundleComponent": {
+            "$ref": "#/components/schemas/BundleComponent"
+          }
+        }
+      },
+      "ShowView": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProductView"
+          },
+          {
+            "type": "object"
+          }
+        ],
+        "type": "object",
+        "properties": {
+          "seasons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SeasonView"
+            }
+          }
+        }
+      },
+      "ShowViewArray": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ShowView"
+        }
+      },
+      "PropertyEvent": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/RawEvent"
+          },
+          {
+            "type": "object"
+          }
+        ],
+        "type": "object",
+        "properties": {
+          "propertyCodeAcrs": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "market": {
+            "type": "string"
+          },
+          "region": {
+            "type": "string"
+          },
+          "hasShows": {
+            "type": "boolean"
+          },
+          "hasRooms": {
+            "type": "boolean"
+          },
+          "excludeFromSearch": {
+            "type": "boolean"
+          },
+          "venueIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "PropertyEventArray": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/PropertyEvent"
+        }
+      },
+      "PropertyView": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "propertyCodeAcrs": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "market": {
+            "type": "string"
+          },
+          "region": {
+            "type": "string"
+          },
+          "hasShows": {
+            "type": "string"
+          },
+          "hasRooms": {
+            "type": "boolean"
+          },
+          "excludeFromSearch": {
+            "type": "boolean"
+          },
+          "venueIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "SeasonEvent": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "showSeasonId": {
+            "type": "string"
+          },
+          "seasonCatalogId": {
+            "type": "string"
+          },
+          "eventCatalogId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "day": {
+            "type": "string"
+          },
+          "time": {
+            "type": "string"
+          },
+          "eventTz": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "approved": {
+            "type": "boolean"
+          },
+          "excludeFromSearch": {
+            "type": "boolean"
+          },
+          "details": {
+            "type": "string"
+          },
+          "propertyId": {
+            "type": "string"
+          },
+          "bookingDestinationURL": {
+            "type": "string"
+          }
+        }
+      },
+      "SeasonEventArray": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/SeasonEvent"
+        }
+      },
+      "SeatmapEvent": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/RawEvent"
+          },
+          {
+            "type": "object"
+          }
+        ],
+        "description": "Work in Progress",
+        "properties": {
+          "venueId": {
+            "type": "string"
+          },
+          "seatmapCoordinateReferenceJson": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Asset"
+            }
+          },
+          "seatmapBackgroundImageJpg": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Asset"
+            }
+          },
+          "seatmapBackgroundImageSvg": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Asset"
+            }
+          },
+          "seatmapCanvasSvgHoverFile": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Asset"
+            }
+          },
+          "propertyId": {
+            "type": "string"
+          }
+        }
+      },
+      "SeatmapEventArray": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/SeatmapEvent"
+        }
+      },
+      "SeatmapView": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "venueId": {
+            "type": "string"
+          },
+          "seatmapCoordinateReferenceJson": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Asset"
+            }
+          },
+          "seatmapBackgroundImageJpg": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Asset"
+            }
+          },
+          "seatmapBackgroundImageSvg": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Asset"
+            }
+          },
+          "seatmapCanvasSvgHoverFile": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Asset"
+            }
+          },
+          "propertyId": {
+            "type": "string"
+          }
+        }
+      },
+      "SeatmapReference": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "ShowSeasonEvent": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/RawEvent"
+          },
+          {
+            "type": "object"
+          }
+        ],
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string"
+          },
+          "productCatalogId": {
+            "type": "string"
+          },
+          "productCode": {
+            "type": "string"
+          },
+          "seasonCatalogId": {
+            "type": "string"
+          },
+          "seasonAgeRequirements": {
+            "type": "string"
+          },
+          "seasonGroupReservations": {
+            "type": "string"
+          },
+          "seasonMinTickets": {
+            "type": "string"
+          },
+          "seasonMaxTickets": {
+            "type": "string"
+          },
+          "seasonRegularStartingPrice": {
+            "type": "string"
+          },
+          "seasonRegularStartingPriceDescription": {
+            "type": "string"
+          },
+          "seasonStatus": {
+            "type": "string"
+          },
+          "seasonTicketPrice": {
+            "type": "string"
+          },
+          "seasonYear": {
+            "type": "string"
+          },
+          "eventNamePrefix": {
+            "type": "string"
+          },
+          "useSeatMap": {
+            "type": "boolean"
+          },
+          "doorTime": {
+            "type": "string"
+          },
+          "manifest": {
+            "type": "string"
+          },
+          "performanceCalendar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PerformanceCalendar"
+            }
+          },
+          "darkDays": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DarkDay"
+            }
+          },
+          "darkDates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DarkDate"
+            }
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SeasonEvent"
+            }
+          },
+          "seatingType": {
+            "type": "string"
+          },
+          "showTermsConditions": {
+            "type": "string"
+          },
+          "eventsInfo": {
+            "type": "string"
+          },
+          "seatmapReferences": {
+            "$ref": "#/components/schemas/SeatmapReference"
+          },
+          "channelConfigs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChannelConfiguration"
+            }
+          },
+          "channelPriceCodes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChannelPriceCode"
+            }
+          },
+          "channelHoldClasses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChannelHoldClasses"
+            }
+          },
+          "channelDeliveryMethods": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeliveryMethod"
+            }
+          },
+          "groupReservations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GroupReservation"
+            }
+          },
+          "propertyId": {
+            "type": "string"
+          },
+          "letApplicable": {
+            "type": "boolean"
+          },
+          "letRate": {
+            "type": "string"
+          },
+          "gratuityApplicable": {
+            "type": "boolean"
+          },
+          "foodCharge": {
+            "type": "boolean"
+          },
+          "foodChargeSaleTax": {
+            "type": "string"
+          },
+          "allDayEvent": {
+            "type": "boolean"
+          },
+          "multipleEventTimes": {
+            "type": "boolean"
+          },
+          "excludeFromSearch": {
+            "type": "boolean"
+          },
+          "eCommercePlatform": {
+            "type": "string"
+          },
+          "gratuitySalesTaxes": {
+            "$ref": "#/components/schemas/GratuitySalesTaxes"
+          }
+        }
+      },
+      "ShowSeasonEventArray": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ShowSeasonEvent"
+        }
+      },
+      "GratuitySalesTaxes": {
+        "type": "object",
+        "properties": {
+          "parentPriceCode": {
+            "type": "string"
+          },
+          "gratuityAmt": {
+            "type": "string"
+          }
+        }
+      },
+      "VenueReferences": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "SeasonView": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "productId": {
+            "type": "string"
+          },
+          "productCatalogId": {
+            "type": "string"
+          },
+          "productCode": {
+            "type": "string"
+          },
+          "seasonCatalogId": {
+            "type": "string"
+          },
+          "seasonAgeRequirements": {
+            "type": "string"
+          },
+          "seasonGroupReservations": {
+            "type": "string"
+          },
+          "seasonMinTickets": {
+            "type": "string"
+          },
+          "seasonMaxTickets": {
+            "type": "string"
+          },
+          "seasonRegularStartingPrice": {
+            "type": "string"
+          },
+          "seasonRegularStartingPriceDescription": {
+            "type": "string"
+          },
+          "seasonStatus": {
+            "type": "string"
+          },
+          "seasonTicketPrice": {
+            "type": "string"
+          },
+          "seasonYear": {
+            "type": "string"
+          },
+          "eventNamePrefix": {
+            "type": "string"
+          },
+          "useSeatMap": {
+            "type": "boolean"
+          },
+          "doorTime": {
+            "type": "string"
+          },
+          "manifest": {
+            "type": "string"
+          },
+          "performanceCalendar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PerformanceCalendar"
+            }
+          },
+          "darkDays": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DarkDay"
+            }
+          },
+          "darkDates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DarkDate"
+            }
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SeasonEvent"
+            }
+          },
+          "seatingType": {
+            "type": "string"
+          },
+          "showTermsConditions": {
+            "type": "string"
+          },
+          "eventsInfo": {
+            "type": "string"
+          },
+          "socialMedia": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SocialMedia"
+            }
+          },
+          "seatmapReferences": {
+            "$ref": "#/components/schemas/SeatmapReference"
+          },
+          "channelConfigs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChannelConfiguration"
+            }
+          },
+          "channelPriceCodes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChannelPriceCode"
+            }
+          },
+          "channelHoldClasses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChannelHoldClasses"
+            }
+          },
+          "channelDeliveryMethods": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeliveryMethod"
+            }
+          },
+          "startDate": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "string"
+          },
+          "property": {
+            "$ref": "#/components/schemas/PropertyView"
+          },
+          "venue": {
+            "$ref": "#/components/schemas/VenueView"
+          },
+          "seatmap": {
+            "$ref": "#/components/schemas/SeatmapView"
+          },
+          "groupReservations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GroupReservation"
+            }
+          },
+          "propertyId": {
+            "type": "string"
+          },
+          "letApplicable": {
+            "type": "boolean"
+          },
+          "letRate": {
+            "type": "string"
+          },
+          "gratuityApplicable": {
+            "type": "boolean"
+          },
+          "foodCharge": {
+            "type": "boolean"
+          },
+          "foodChargeSaleTax": {
+            "type": "string"
+          },
+          "allDayEvent": {
+            "type": "boolean"
+          },
+          "multipleEventTimes": {
+            "type": "boolean"
+          },
+          "eCommercePlatform": {
+            "type": "string"
+          },
+          "gratuitySalesTaxes": {
+            "$ref": "#/components/schemas/GratuitySalesTaxes"
+          }
+        }
+      },
+      "WalkingDirection": {
+        "type": "object",
+        "properties": {
+          "heading": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "icon": {
+            "$ref": "#/components/schemas/Asset"
+          }
+        }
+      },
+      "VenueEvent": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/RawEvent"
+          },
+          {
+            "type": "object"
+          }
+        ],
+        "properties": {
+          "prohibitedItems": {
+            "type": "string"
+          },
+          "walkingDirections": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WalkingDirections"
+            }
+          },
+          "disclaimer": {
+            "type": "string"
+          },
+          "parking": {
+            "type": "string"
+          },
+          "propertyId": {
+            "type": "string"
+          },
+          "tagline": {
+            "type": "string"
+          },
+          "overview": {
+            "type": "string"
+          },
+          "longDescription": {
+            "type": "string"
+          },
+          "shortDescription": {
+            "type": "string"
+          },
+          "bookingDestinationURL": {
+            "type": "string"
+          },
+          "excludeFromSearch": {
+            "type": "boolean"
+          },
+          "seatmapIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "reservations": {
+            "type": "string"
+          },
+          "boxOfficeHours": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "string"
+          },
+          "longitude": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "venueType": {
+            "type": "string"
+          },
+          "map": {
+            "$ref": "#/components/schemas/Asset"
+          },
+          "operatingHours": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OperatingHour"
+            }
+          },
+          "contactInformation": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactInformation"
+            }
+          },
+          "operatingHoursExtended": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OperatingHoursExtended"
+            }
+          },
+          "groupReservations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GroupReservation"
+            }
+          },
+          "socialMedia": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SocialMedia"
+            }
+          },
+          "overviewAsset": {
+            "$ref": "#/components/schemas/Asset"
+          },
+          "tileAsset": {
+            "$ref": "#/components/schemas/Asset"
+          },
+          "logoAsset": {
+            "$ref": "#/components/schemas/Asset"
+          }
+        }
+      },
+      "VenueEventArray": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/VenueEvent"
+        }
+      },
+      "VenueView": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "prohibitedItems": {
+            "type": "string"
+          },
+          "walkingDirections": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WalkingDirections"
+            }
+          },
+          "disclaimer": {
+            "type": "string"
+          },
+          "parking": {
+            "type": "string"
+          },
+          "propertyId": {
+            "type": "string"
+          },
+          "tagline": {
+            "type": "string"
+          },
+          "overview": {
+            "type": "string"
+          },
+          "longDescription": {
+            "type": "string"
+          },
+          "shortDescription": {
+            "type": "string"
+          },
+          "bookingDestinationURL": {
+            "type": "string"
+          },
+          "seatmapIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "name": {
+            "type": "string"
+          },
+          "reservations": {
+            "type": "string"
+          },
+          "boxOfficeHours": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "string"
+          },
+          "longitude": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "venueType": {
+            "type": "string"
+          },
+          "excludeFromSearch": {
+            "type": "boolean"
+          },
+          "map": {
+            "$ref": "#/components/schemas/Asset"
+          },
+          "operatingHours": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OperatingHour"
+            }
+          },
+          "contactInformation": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactInformation"
+            }
+          },
+          "groupReservations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GroupReservation"
+            }
+          },
+          "socialMedia": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SocialMedia"
+            }
+          },
+          "overviewAsset": {
+            "$ref": "#/components/schemas/Asset"
+          },
+          "tileAsset": {
+            "$ref": "#/components/schemas/Asset"
+          },
+          "logoAsset": {
+            "$ref": "#/components/schemas/Asset"
+          }
+        }
+      },
+      "VenueReference": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "WalkingDirections": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "venueOverviewAsset": {
+            "$ref": "#/components/schemas/Asset"
+          },
+          "mapTitle": {
+            "type": "string"
+          },
+          "mapImage": {
+            "$ref": "#/components/schemas/Asset"
+          },
+          "downloadableMap": {
+            "$ref": "#/components/schemas/Asset"
+          },
+          "walkingDirection": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WalkingDirection"
+            }
+          }
+        }
+      },
+      "GroupReservation": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "moreInfo": {
+            "$ref": "#/components/schemas/MoreInfo"
+          }
+        }
+      },
+      "MoreInfo": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      },
+      "StartTimeInfo": {
+        "type": "object",
+        "properties": {
+          "eventNameSuffix": {
+            "type": "string"
+          },
+          "time": {
+            "type": "string"
+          }
+        }
+      },
+      "Offer": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/RawEvent"
+          },
+          {
+            "type": "object"
+          }
+        ],
+        "type": "object",
+        "description": "Offer - Schema",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "offerType": {
+            "type": "string"
+          },
+          "propertyId": {
+            "type": "string"
+          },
+          "propertyCode": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "shortDescription": {
+            "type": "string"
+          },
+          "longDescription": {
+            "type": "string"
+          },
+          "termsAndConditions": {
+            "type": "string"
+          },
+          "archticsPromoCode": {
+            "type": "string"
+          },
+          "bestAvailableRate": {
+            "type": "boolean"
+          },
+          "minTickets": {
+            "type": "integer"
+          },
+          "maxTickets": {
+            "type": "integer"
+          },
+          "multiple": {
+            "type": "integer"
+          },
+          "bookStartDate": {
+            "type": "string"
+          },
+          "bookEndDate": {
+            "type": "string"
+          },
+          "performanceStartDate": {
+            "type": "string"
+          },
+          "performanceEndDate": {
+            "type": "string"
+          },
+          "minimumHoursAfterEnrollment": {
+            "type": "integer"
+          },
+          "tierOption": {
+            "type": "string"
+          },
+          "tier": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "selectPaymentType": {
+            "type": "string"
+          },
+          "paymentTypes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "excludeFromSearch": {
+            "type": "boolean"
+          },
+          "productCode": {
+            "type": "string"
+          },
+          "seasonId": {
+            "type": "string"
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "channelConfigs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChannelConfiguration"
+            }
+          },
+          "channelPriceCodes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChannelPriceCode"
+            }
+          },
+          "channelHoldClasses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChannelHoldClasses"
+            }
+          },
+          "channelDeliveryMethods": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeliveryMethod"
+            }
+          }
+        }
+      },
+      "OfferEventArray": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Offer"
+        }
+      },
+      "PackagesEvent": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/RawEvent"
+          },
+          {
+            "type": "object"
+          }
+        ],
+        "type": "object",
+        "description": "Packages Schema",
+        "properties": {
+          "bookBy": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "onSaleDate": {
+            "type": "string"
+          },
+          "merchantId": {
+            "type": "string"
+          },
+          "duration": {
+            "$ref": "#/components/schemas/Duration"
+          },
+          "channels": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Channel"
+            }
+          },
+          "products": {
+            "$ref": "#/components/schemas/Products"
+          },
+          "configurations": {
+            "$ref": "#/components/schemas/Configurations"
+          }
+        }
+      },
+      "PackagesEventArray": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/PackagesEvent"
+        }
+      },
+      "Duration": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "string"
+          }
+        }
+      },
+      "Channel": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "booking": {
+            "type": "boolean"
+          },
+          "viewable": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Products": {
+        "type": "object",
+        "properties": {
+          "rooms": {
+            "$ref": "#/components/schemas/Room"
+          },
+          "shows": {
+            "$ref": "#/components/schemas/Show"
+          }
+        }
+      },
+      "Room": {
+        "type": "object",
+        "properties": {
+          "participatingProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "offers": {
+            "type": "object",
+            "properties": {
+              "transientOffer": {
+                "$ref": "#/components/schemas/OffersCodeTypeValue"
+              },
+              "memberOffer": {
+                "$ref": "#/components/schemas/OffersCodeTypeValue"
+              }
+            }
+          }
+        }
+      },
+      "Show": {
+        "type": "object",
+        "properties": {
+          "offers": {
+            "$ref": "#/components/schemas/ShowOffers"
+          }
+        }
+      },
+      "ShowOffers": {
+        "type": "object",
+        "properties": {
+          "defaultOffer": {
+            "type": "string"
+          },
+          "transientOffer": {
+            "type": "string"
+          },
+          "memberOffer": {
+            "type": "string"
+          },
+          "segmentOffers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SegmentOffers"
+            }
+          }
+        }
+      },
+      "SegmentOffers": {
+        "type": "object",
+        "properties": {
+          "segmentFrom": {
+            "type": "integer"
+          },
+          "segmentTo": {
+            "type": "integer"
+          },
+          "showOffer": {
+            "type": "string"
+          }
+        }
+      },
+      "OffersCodeTypeValue": {
+        "type": "object",
+        "properties": {
+          "codeType": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "Configurations": {
+        "type": "object",
+        "properties": {
+          "seatSelection": {
+            "type": "string"
+          },
+          "roomPropertyOrder": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "stayLimit": {
+            "$ref": "#/components/schemas/StayLimit"
+          },
+          "pricingDisplay": {
+            "$ref": "#/components/schemas/PricingDisplay"
+          },
+          "roomCapacity": {
+            "$ref": "#/components/schemas/RoomCapacity"
+          },
+          "nonMemberConfiguration": {
+            "$ref": "#/components/schemas/NonMemberConfiguration"
+          },
+          "memberConfigurations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MemberConfigurations"
+            }
+          }
+        }
+      },
+      "StayLimit": {
+        "type": "object",
+        "properties": {
+          "lengthOfStay": {
+            "$ref": "#/components/schemas/LengthOfStay"
+          },
+          "stayDuration": {
+            "$ref": "#/components/schemas/Duration"
+          }
+        }
+      },
+      "LengthOfStay": {
+        "type": "object",
+        "properties": {
+          "min": {
+            "type": "integer"
+          },
+          "max": {
+            "type": "integer"
+          },
+          "default": {
+            "type": "integer"
+          }
+        }
+      },
+      "PricingDisplay": {
+        "type": "object",
+        "properties": {
+          "pricingType": {
+            "type": "string"
+          }
+        }
+      },
+      "RoomCapacity": {
+        "type": "object",
+        "properties": {
+          "independentOfTicketCount": {
+            "type": "boolean"
+          },
+          "upToTicketCount": {
+            "type": "integer"
+          }
+        }
+      },
+      "NonMemberConfiguration": {
+        "type": "object",
+        "properties": {
+          "minPartySize": {
+            "type": "integer"
+          },
+          "maxPartySize": {
+            "type": "integer"
+          },
+          "defaultPartySize": {
+            "type": "integer"
+          },
+          "applyMultipleOfPartySize": {
+            "type": "integer"
+          }
+        }
+      },
+      "MemberConfigurations": {
+        "type": "object",
+        "properties": {
+          "segmentFrom": {
+            "type": "integer"
+          },
+          "segmentTo": {
+            "type": "integer"
+          },
+          "minPartySize": {
+            "type": "integer"
+          },
+          "maxPartySize": {
+            "type": "integer"
+          },
+          "defaultPartySize": {
+            "type": "integer"
+          },
+          "applyMultipleOfPartySize": {
+            "type": "integer"
+          }
+        }
+      },
+      "ChannelPriceCode": {
+        "type": "object",
+        "properties": {
+          "parentPriceCode": {
+            "type": "string"
+          },
+          "priceCode": {
+            "type": "string"
+          },
+          "ticketTypeCode": {
+            "type": "string"
+          },
+          "ticketTypeName": {
+            "type": "string"
+          },
+          "ticketTypeDescription": {
+            "type": "string"
+          },
+          "ticketTypeCategory": {
+            "type": "string"
+          },
+          "channel": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ChannelHoldClasses": {
+        "type": "object",
+        "properties": {
+          "holdClass": {
+            "type": "string"
+          },
+          "channel": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "PimIdResponse": {
+        "type": "object",
+        "description": "pimIdResponse - Schema",
+        "properties": {
+          "pimIds": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/idType"
+            }
+          },
+          "offers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "product": {
+            "type": "object",
+            "properties": {
+              "productCode": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "idType": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "Success."
+      },
+      "201": {
+        "description": "A show has been successfully created."
+      },
+      "400": {
+        "description": "ERROR: unsupported value formats resulting in bad request. Refer 'Error' in Models for schema."
+      },
+      "404": {
+        "description": "ERROR: product with given ID not found (update apis)."
+      },
+      "500": {
+        "description": "ERROR: Unexpected service errors or failure to connect to source systems. Refer 'Error' in Models for schema."
+      }
+    },
+    "headers": {
+      "x-mgm-channel": {
+        "schema": {
+          "type": "string"
+        },
+        "description": "Returns the value as received in the request headers.",
+        "required": false
+      },
+      "x-mgm-source": {
+        "schema": {
+          "type": "string"
+        },
+        "description": "Returns the value as received in the request headers."
+      },
+      "x-mgm-correlation-id": {
+        "schema": {
+          "type": "string"
+        },
+        "description": "If present in the request headers, returns the same value or the one created in the API."
+      },
+      "x-mgm-transaction-id": {
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Returns the value as received in the request headers."
+      }
+    },
+    "parameters": {
+      "channel": {
+        "in": "header",
+        "name": "x-mgm-channel",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "web",
+            "services",
+            "mobile"
+          ]
+        },
+        "description": "Channel from where the request has originated",
+        "required": false
+      },
+      "Origin": {
+        "in": "header",
+        "name": "Origin",
+        "schema": {
+          "type": "string"
+        },
+        "description": "Origin header for CORS support",
+        "required": false
+      },
+      "source": {
+        "in": "header",
+        "name": "x-mgm-source",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "app",
+            "mgmri",
+            "cabanas",
+            "66964e2b-2550-4476-84c3-1a4c0c5c067f",
+            "a689885f-cba2-48e8-b8e0-1dff096b8835",
+            "44e610ab-c209-4232-8bb4-51f7b9b13a75",
+            "e0f70eb3-7e27-4c33-8bcd-f30bf3b1103a",
+            "1f3ed672-3f8f-44d8-9215-81da3c845d83",
+            "6c5cff3f-f01a-4f9b-87ab-8395ae8108db",
+            "8bf670c2-3e89-412b-9372-6c87a215e442",
+            "dc00e77f-d6bb-4dd7-a8ea-dc33ee9675ad",
+            "607c07e7-3e31-4e4c-a4e1-f55dca66fea2",
+            "f8d6a944-7816-412f-a39a-9a63aad26833",
+            "2159252c-60d3-47db-bbae-b1db6bb15072",
+            "e2704b04-d515-45b0-8afd-4fa1424ff0a8",
+            "0990fdce-7fc8-41b1-b8b6-9a25dce3db55",
+            "4a65a92a-962b-433e-841c-37e18dc5d68d",
+            "13b178b0-8beb-43d5-af25-1738b7267e63",
+            "b35733d1-e027-4311-a350-965e535fb90a",
+            "bee81f88-286d-43dd-91b5-3917d9d62a68",
+            "40b61feb-750a-45df-ae68-e23e6272b16b"
+          ]
+        },
+        "description": "Source invoking the API. GSE uses concept of channel to different various channels/sources for reporting/diagnosis. Service will identify channel to use based on source value."
+      },
+      "correlationId": {
+        "in": "header",
+        "name": "x-mgm-correlation-id",
+        "schema": {
+          "type": "string"
+        },
+        "description": "Correlation Id is used to trace end to end transactions. The id is optional and service will create one if not passed by clients, pass it to downstream applications and send it back in the response headers. Clients are encouraged to set this parameter if the correlation between different APIs needs to be tracked."
+      },
+      "transactionId": {
+        "in": "header",
+        "name": "x-mgm-transaction-id",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "This field represents the transaction id. Clients are required to generate this unique identifier and pass it in the request, the same will be passed in the response headers."
+      },
+      "info-type": {
+        "in": "path",
+        "name": "info-type",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "list",
+            "basic",
+            "detail"
+          ]
+        },
+        "description": "Response's level of detail, from a list of matching entities to full content. Possible values are `list`, `basic`, `detail`. For some content types, `basic` and `detail` are equivalent.",
+        "required": true
+      },
+      "destination": {
+        "in": "path",
+        "name": "destination",
+        "schema": {
+          "type": "string"
+        },
+        "description": "Region code or property ID. Region codes: `all`, `all-las-vegas`, `all-mississippi`, `all-detroit`, `all-maryland`. A property ID may be a GUID (e.g. `065be2ce-bc50-49d9-9129-ba0554816554`) or a readable string (e.g. `t-mobile-arena`).",
+        "examples": {
+          "region": {
+            "value": "all-las-vegas",
+            "summary": "Region code"
+          },
+          "property-id": {
+            "value": "66964e2b-2550-4476-84c3-1a4c0c5c067f",
+            "summary": "Property ID"
+          },
+          "property-string": {
+            "value": "t-mobile-arena",
+            "summary": "Non-transactional property ID"
+          }
+        },
+        "required": true
+      },
+      "modifiedSince": {
+        "in": "query",
+        "name": "modifiedSince",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Limit results to items modified since the provided date-time. Provide a value of milliseconds since the Unix epoch (Jan 1, 1970) in UTC."
+      },
+      "search": {
+        "in": "query",
+        "name": "search",
+        "schema": {
+          "type": "string"
+        },
+        "description": "Pass keyword(s) to this parameter to limit the results using a full text search."
+      }
+    }
+  }
+}

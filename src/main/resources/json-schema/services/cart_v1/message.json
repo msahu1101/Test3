@@ -1,0 +1,308 @@
+{
+	"type": "object",
+	"required": false,
+	"javaType": "com.mgmresorts.shopping.cart.dto.services.Wrapper",
+	"additionalProperties": false,
+	"properties": {
+		"cartResponse": {
+			"type": "object",
+			"javaType": "com.mgmresorts.shopping.cart.dto.services.CartResponse",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.OutHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"cart": {
+					"required": true,
+					"description": "Cart structure which will contain all the products with metadata",
+					"$ref": "elements.json#/definitions/cart"
+				}
+			}
+		},
+		"updateCartRequest": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.shopping.cart.dto.services.UpdateCartRequest",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.InHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"cartId": {
+					"required": false,
+					"type": "string",
+					"description": "The cart's id. It is required to have either cart id or mgm id. If both are included, the mgm id will be ignored."
+				},
+				"mgmId": {
+					"required": false,
+					"type": "string",
+					"description": "The customer's mgm id. It is required to have either cart id or mgm id. If both are included, the mgm id will be ignored."
+				},
+				"cartType": {
+					"required": false,
+					"$ref": "elements.json#/definitions/cartType",
+					"description": "Specifies the expected type of the cart. Will be considered when mgmId is passed with it and ignored when cartId is passed."
+				},
+				"cartVersion": {
+					"required": false,
+					"$ref": "elements.json#/definitions/cartVersion",
+					"description": "Specifies the expected version of the cart."
+				},
+				"cart": {
+					"required": true,
+					"description": "Update cart request contract. ",
+					"$ref": "elements.json#/definitions/updateCart"
+				}
+			}
+		},
+		"mergeCartRequest": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.shopping.cart.dto.services.MergeCartRequest",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.InHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"sourceId": {
+					"required": false,
+					"type": "string",
+					"description": "The id of the source cart which will be merged."
+				},
+				"targetKey": {
+					"required": false,
+					"type": "string",
+					"description": "The cart's id or MGM id of the target cart where the source will be merged."
+				},
+				"targetType": {
+					"required": false,
+					"type": "string",
+					"description": "They type of target key, Cart id or MGM id",
+					"enum": [
+						"MGM_ID",
+						"ID"
+					]
+				},
+				"cartType": {
+					"required": false,
+					"$ref": "elements.json#/definitions/cartType",
+					"description": "Specifies the expected type of the cart. Will be considered when mgmId is passed with it and ignored when cartId is passed."
+				},
+				"cartVersion": {
+					"required": false,
+					"$ref": "elements.json#/definitions/cartVersion",
+					"description": "Specifies the expected version of the cart."
+				}
+			}
+		},
+		"cartMetadataResponse": {
+			"type": "object",
+			"javaType": "com.mgmresorts.shopping.cart.dto.services.CartMetadataResponse",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.OutHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"cartMetadata": {
+					"required": true,
+					"description": "Information about the cart, its itineraryIds,confirmation numbers etc.",
+					"$ref": "elements.json#/definitions/cartMetadata"
+				}
+			}
+		},
+		"addProductRequest": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.shopping.cart.dto.services.AddProductRequest",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.InHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"cartId": {
+					"required": false,
+					"type": "string",
+					"description": "The cart's id. It is required to have either cart id or mgm id. If both are included, the mgm id will be ignored."
+				},
+				"mgmId": {
+					"required": false,
+					"type": "string",
+					"description": "The customer's mgm id. It is required to have either cart id or mgm id. If both are included, the mgm id will be ignored."
+				},
+                "cartType": {
+                  "required": false,
+                  "$ref": "elements.json#/definitions/cartType",
+                  "description": "Specifies the expected type of the cart. Will be considered when mgmId is passed with it and ignored when cartId is passed."
+                },
+				"cartVersion": {
+					"required": false,
+					"$ref": "elements.json#/definitions/cartVersion",
+					"description": "Specifies the expected version of the cart."
+				},
+                "packageConfig": {
+                  "required": false,
+                  "$ref": "elements.json#/definitions/packageConfigInput",
+                  "description": "Specifies the package config input details like packageId, packageCategoryId or packageLineItemId when cartType is PACKAGE."
+                },
+				"enableJwb": {
+					"required": false,
+					"type": "boolean",
+					"description": "The customer's join while booking flag (jwb). It is required to be sent to the backend services for the add to cart process to be complete."
+				},
+				"product": {
+					"required": true,
+					"descriptopn": "Add product request contract",
+					"$ref": "elements.json#/definitions/inGenericProduct"
+				}
+			}
+		},
+		"updateProductRequest": {
+			"type": "object",
+			"required": [
+				"cartId",
+				"productId"
+			],
+			"javaType": "com.mgmresorts.shopping.cart.dto.services.UpdateProductRequest",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.InHeaderSupport",
+			"properties": {
+				"cartId": {
+					"required": true,
+					"type": "string",
+					"description": "The cart's id. It is required to have cart Id."
+				},
+				"mgmId": {
+					"required": false,
+					"type": "string",
+					"description": "The customer's mgm id. It is required to have either cart id or mgm id. If both are included, the mgm id will be ignored."
+				},
+                "cartType": {
+                  "required": false,
+                  "$ref": "elements.json#/definitions/cartType",
+                  "description": "Specifies the expected type of the cart. Will be considered when mgmId is passed with it and ignored when cartId is passed."
+                },
+				"cartVersion": {
+					"required": false,
+					"$ref": "elements.json#/definitions/cartVersion",
+					"description": "Specifies the expected version of the cart."
+				},
+				"cartLineItemId": {
+					"required": true,
+					"type": "string",
+					"description": "The Product's Id.It is required to have Product Id."
+				},
+				"room": {
+					"required": true,
+					"description": "Update request for a room item.",
+					"$ref": "elements.json#/definitions/updateRoomInput"
+				},
+				"show": {
+					"required": true,
+					"description": "Update request for a room item.",
+					"$ref": "elements.json#/definitions/updateShowInput"
+				},
+				"dining": {
+					"required": true,
+					"description": "Update request for a dining item",
+					"$ref": "elements.json#/definitions/updateDiningInput"
+				}
+			}
+		},
+		"updateProductStateNonProdRequest": {
+			"type": "object",
+			"required": [
+				"cartId",
+				"productId"
+			],
+			"javaType": "com.mgmresorts.shopping.cart.dto.services.UpdateProductStateNonProdRequest",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.InHeaderSupport",
+			"properties": {
+				"cartId": {
+					"required": true,
+					"type": "string",
+					"description": "The cart's id. It is required to have cart Id."
+				},
+				"cartLineItemId": {
+					"required": true,
+					"type": "string",
+					"description": "The Product's Id.It is required to have Product Id."
+				},
+				"status": {
+					"required": false,
+					"type": "string",
+					"description": "Status of the cart."
+				},
+				"priceExpiresAt": {
+					"required": false,
+					"type": "string",
+					"description": "After this time the cart price will be considered as expired."
+				}
+			}
+		},
+		"handleCheckoutRequest": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.shopping.cart.dto.services.HandleCheckoutRequest",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.InHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"cartId": {
+					"required": true,
+					"type": "string",
+					"description": "The cart's id. It is required to have existing cart id to move item to new cart"
+				},
+				"failedCartLineItemIds": {
+					"description": "list of cartLineItemId that require to move to new cart",
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"enableJwb": {
+					"type": "boolean",
+					"description": "Enable JWB flag"
+				}
+			}
+		},
+		"updateProductContentRequest": {
+			"type": "object",
+			"required": [
+				"cartId",
+				"cartLineItems"
+			],
+			"javaType": "com.mgmresorts.shopping.cart.dto.services.UpdateProductContentRequest",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.InHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"cartId": {
+					"required": false,
+					"type": "string",
+					"description": "The cart's id associated with the cart"
+				},
+				"cartLineItems": {
+					"type": "array",
+					"description": "Products associated with the cart",
+					"items": {
+						"$ref": "elements.json#/definitions/updateCartLineItem"
+					}
+				},
+				"cartType": {
+					"required": false,
+					"$ref": "elements.json#/definitions/cartType",
+					"description": "Specifies the expected type of the cart. Will be considered when mgmId is passed with it and ignored when cartId is passed."
+				},
+				"cartVersion": {
+					"required": false,
+					"$ref": "elements.json#/definitions/cartVersion",
+					"description": "Specifies the expected version of the cart."
+				}
+			}
+		},
+		"manageCartPaymentSessionRequest": {
+			"type": "object",
+			"required": [
+			],
+			"javaType": "com.mgmresorts.shopping.cart.dto.services.ManageCartPaymentSessionRequest",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.InHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"guestProfile": {
+					"required": true,
+					"descriptopn": "Guest profile to be updated in payment session.",
+					"$ref": "elements.json#/definitions/guestProfile"
+				}
+			}
+		}
+	},
+	"definitions": {
+	}
+}

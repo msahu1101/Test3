@@ -1,0 +1,59 @@
+{
+	"id": "8ec10ehb-38c8-4092-8e9c-e8dc0abcc933",
+	"name": "Order-Service",
+	"values": [
+		{
+			"key": "ords_client_id",
+			"value": "mgm_order_service",
+			"enabled": true
+		},
+		{
+			"key": "ords_client_secret",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "oath_token_endpoint",
+			"value": "https://preprod-api.apigee.devtest.vegas/identity/authorization/v1/mgmsvc/token",
+			"enabled": true
+		},
+		{
+			"key": "create_customer_endpoint",
+			"value": "https://preprod-api.apigee.devtest.vegas/profile/core/v2/service",
+			"enabled": true
+		},
+		{
+			"key": "itinerary_endpoint",
+			"value": "https://preprod-api.apigee.devtest.vegas/itinerary/v3/service",
+			"enabled": true
+		},
+		{
+			"key": "room_availability_endpoint",
+			"value": "https://preprod-api.apigee.devtest.vegas/booking/room/v3/availability/trip",
+			"enabled": true
+		},
+		{
+			"key": "add_product_cart_endpoint",
+			"value": "https://preprod-api.apigee.devtest.vegas/shopping/v1/cart/product",
+			"enabled": true
+		},
+		{
+			"key": "get_cart_endpoint",
+			"value": "https://preprod-api.apigee.devtest.vegas/shopping/v1/cart/",
+			"enabled": true
+		},
+		{
+			"key": "property_id",
+			"value": "f8d6a944-7816-412f-a39a-9a63aad26833",
+			"enabled": true
+		},
+		{
+			"key": "del_cart_endpoint",
+			"value": "https://preprod-api.apigee.devtest.vegas/shopping/v1/cart/",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2021-06-25T12:15:17.782Z",
+	"_postman_exported_using": "Postman/8.7.0"
+}

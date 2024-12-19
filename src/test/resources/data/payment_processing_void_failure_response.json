@@ -1,0 +1,9 @@
+{
+    "paymentId": "string",
+    "dateTime": "2024-01-05T00:21:27.867-07:00",
+    "errorCode": "1405",
+    "errorMessage": "string",
+    "developerMessage": "string",
+    "statusCode": 0,
+    "originError": "unexpected error"
+}

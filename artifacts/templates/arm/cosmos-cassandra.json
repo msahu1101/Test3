@@ -1,0 +1,214 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"team": {
+			"type": "string",
+			"defaultValue": "Cart/Order/Trip/NGL Services"
+		},
+		"account-name": {
+			"type": "string",
+			"defaultValue": "[concat('sql-', uniqueString(resourceGroup().id))]",
+			"metadata": {
+				"description": "Cosmos DB account name, max length 44 characters"
+			}
+		},
+		"location": {
+			"type": "string",
+			"defaultValue": "[resourceGroup().location]",
+			"metadata": {
+				"description": "Location for the Cosmos DB account."
+			}
+		},
+		"primary-region": {
+			"type": "string",
+			"metadata": {
+				"description": "The primary replica region for the Cosmos DB account."
+			}
+		},
+		"secondary-region": {
+			"type": "string",
+			"metadata": {
+				"description": "The secondary replica region for the Cosmos DB account."
+			}
+		},
+		"default-consistency-level": {
+			"type": "string",
+			"defaultValue": "Session",
+			"allowedValues": [
+				"Session",
+				"BoundedStaleness",
+				"Strong"
+			],
+			"metadata": {
+				"description": "The default consistency level of the Cosmos DB account."
+			}
+		},
+		"max-staleness-prefix": {
+			"type": "int",
+			"defaultValue": 100000,
+			"minValue": 10,
+			"maxValue": 2147483647,
+			"metadata": {
+				"description": "Max stale requests. Required for BoundedStaleness. Valid ranges, Single Region: 10 to 1000000. Multi Region: 100000 to 1000000."
+			}
+		},
+		"max-interval-in-seconds": {
+			"type": "int",
+			"defaultValue": 300,
+			"minValue": 5,
+			"maxValue": 86400,
+			"metadata": {
+				"description": "Max lag time (seconds). Required for BoundedStaleness. Valid ranges, Single Region: 5 to 84600. Multi Region: 300 to 86400."
+			}
+		},
+		"multiple-write-locations": {
+			"type": "bool",
+			"defaultValue": true,
+			"allowedValues": [
+				true,
+				false
+			],
+			"metadata": {
+				"description": "Enable multi-master to make all regions writable."
+			}
+		},
+		"automatic-failover": {
+			"type": "bool",
+			"defaultValue": true,
+			"allowedValues": [
+				true,
+				false
+			],
+			"metadata": {
+				"description": "Enable automatic failover for regions. Ignored when Multi-Master is enabled"
+			}
+		},
+		"keyspace-name": {
+			"type": "string",
+			"metadata": {
+				"description": "The name for the Cassandra Keyspace"
+			}
+		},
+		"database-name": {
+			"type": "string",
+			"metadata": {
+				"description": "The name for the database"
+			}
+		},
+		"throughput": {
+			"type": "int",
+			"defaultValue": 400,
+			"minValue": 400,
+			"maxValue": 1000000,
+			"metadata": {
+				"description": "The throughput for the Cassandra Keyspace"
+			}
+		},
+		"vnet-resource-group-name": {
+			"type": "string",
+			"metadata": {
+				"description": "The name for the vnet Resource Group Name"
+			}
+		},
+		"vnet-name": {
+			"type": "string",
+			"metadata": {
+				"description": "The name for the vnet-name"
+			}
+		},
+		"subnet-name": {
+			"type": "string",
+			"metadata": {
+				"description": "The name for the subnet-name"
+			}
+		},
+		"environment": {
+			"type": "string",
+			"metadata": {
+				"description": "Application Environment"
+			}
+		}
+	},
+	"variables": {
+		"account-name": "[toLower(parameters('account-name'))]",
+		"virtualNetwork_externalid": "[concat('/subscriptions/', subscription().subscriptionid, '/resourceGroups/', parameters('vnet-resource-group-name'), '/providers/Microsoft.Network/virtualNetworks/', parameters('vnet-name'))]",
+		"consistencyPolicy": {
+			"Session": {
+				"defaultConsistencyLevel": "Session"
+			},
+			"BoundedStaleness": {
+				"defaultConsistencyLevel": "BoundedStaleness",
+				"maxStalenessPrefix": "[parameters('max-staleness-prefix')]",
+				"maxIntervalInSeconds": "[parameters('max-interval-in-seconds')]"
+			},
+			"Strong": {
+				"defaultConsistencyLevel": "Strong"
+			}
+		},
+		"locations": [
+			{
+				"locationName": "[parameters('primary-region')]",
+				"failoverPriority": 0
+			},
+			{
+				"locationName": "[parameters('secondary-region')]",
+				"failoverPriority": 1
+			}
+		]
+	},
+	"resources": [
+		{
+			"type": "Microsoft.DocumentDB/databaseAccounts",
+			"name": "[variables('account-name')]",
+			"apiVersion": "2019-08-01",
+			"location": "[parameters('location')]",
+			"tags": {
+				"environment": "[parameters('environment')]",
+				"creator": "[concat(parameters('team'), ' Team')]",
+				"application": "[parameters('team')]",
+				"businessSponsor": "Sudhakar Veluru",
+				"appOwner": "Pramod Baswaraju",
+				"lead": "Pramod Baswaraju",
+				"businessCostCenter": "516-800-80182 Digital Engineering"
+			},
+			"kind": "GlobalDocumentDB",
+			"properties": {
+				"capabilities": [
+					{
+						"name": "EnableCassandra"
+					}
+				],
+				"ipRangeFilter": "69.162.0.0/24,69.162.1.0/24,69.162.2.0/24,69.162.16.0/24,104.42.195.92,40.76.54.131,52.176.6.30,52.169.50.45,52.187.184.26,0.0.0.0",
+				"consistencyPolicy": "[variables('consistencyPolicy')[parameters('default-consistency-level')]]",
+				"locations": "[variables('locations')]",
+				"databaseAccountOfferType": "Standard",
+				"enableAutomaticFailover": "[parameters('automatic-failover')]",
+				"enableMultipleWriteLocations": "[parameters('multiple-write-locations')]",
+				"isVirtualNetworkFilterEnabled": true,
+				"virtualNetworkRules": [
+					{
+						"id": "[concat(variables('virtualNetwork_externalid'), '/subnets/', parameters('subnet-name'))]",
+						"ignoreMissingVNetServiceEndpoint": false
+					}
+				]
+			}
+		},
+		{
+			"type": "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces",
+			"name": "[concat(variables('account-name'), '/', parameters('keyspace-name'))]",
+			"apiVersion": "2019-08-01",
+			"dependsOn": [
+				"[resourceId('Microsoft.DocumentDB/databaseAccounts/', variables('account-name'))]"
+			],
+			"properties": {
+				"resource": {
+					"id": "[parameters('keyspace-name')]"
+				},
+				"options": {
+					"throughput": "[parameters('throughput')]"
+				}
+			}
+		}
+	]
+}

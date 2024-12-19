@@ -1,0 +1,133 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"team": {
+			"type": "string",
+			"defaultValue": "Cart/Order/Trip/NGL Services"
+		},
+		"redis_cache_name": {
+			"type": "string",
+			"metadata": {
+				"description": "The name of the Azure Redis Cache to create."
+			}
+		},
+		"redis_shard_count": {
+			"type": "int",
+			"metadata": {
+				"description": "Number of highly available shards to create in the cluster. Requires Premium SKU."
+			}
+		},
+		"redis_cache_capacity": {
+			"type": "int",
+			"allowedValues": [
+				1,
+				2,
+				3,
+				4
+			],
+			"defaultValue": 1,
+			"metadata": {
+				"description": "The size of the new Azure Redis Cache instance. Valid family and capacity combinations are (C0..C6, P1..P4)."
+			}
+		},
+		"storage_account_name": {
+			"type": "string",
+			"metadata": {
+				"description": "Name of an existing storage account for diagnostics. Must be in the same subscription."
+			}
+		},
+		"enable_non_ssl_port": {
+			"type": "bool",
+			"defaultValue": false,
+			"metadata": {
+				"description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
+			}
+		},
+		"vnet_resource_group_name": {
+			"type": "string",
+			"defaultValue": "[resourceGroup().name]",
+			"metadata": {
+				"description": "The resource group of the existing Virtual Network."
+			}
+		},
+		"vnet_name": {
+			"type": "string",
+			"metadata": {
+				"description": "The name of the existing Virtual Network."
+			}
+		},
+		"cache_subnet_name": {
+			"type": "string",
+			"metadata": {
+				"description": "The name of the existing subnet."
+			}
+		},
+		"environment": {
+			"type": "string",
+			"metadata": {
+				"description": "Application Environment"
+			}
+		}
+	},
+	"variables": {
+		"storageAccountid": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', parameters('storage_account_name'))]",
+		"subnetId": "[resourceId(parameters('vnet_resource_group_name') ,'Microsoft.Network/virtualNetworks/subnets',parameters('vnet_name'),parameters('cache_subnet_name'))]"
+	},
+	"resources": [
+		{
+			"apiVersion": "2017-10-01",
+			"name": "[parameters('redis_cache_name')]",
+			"type": "Microsoft.Cache/Redis",
+			"location": "[resourceGroup().location]",
+			"properties": {
+				"redisConfiguration": {
+					"rdb-backup-enabled": "true",
+					"rdb-backup-frequency": "60",
+					"rdb-storage-connection-string": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storage_account_name'),';AccountKey=',listKeys(variables('storageAccountid'),providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value)]"
+				},
+				"enableNonSslPort": "[parameters('enable_non_ssl_port')]",
+				"shardCount": "[parameters('redis_shard_count')]",
+				"sku": {
+					"capacity": "[parameters('redis_cache_capacity')]",
+					"family": "P",
+					"name": "Premium"
+				},
+				"subnetId": "[variables('subnetId')]",
+				"tags": {
+					"environment": "[parameters('environment')]",
+					"creator": "[concat(parameters('team'), ' Team')]",
+					"application": "[parameters('team')]",
+					"businessSponsor": "Sudhakar Veluru",
+					"appOwner": "Pramod Baswaraju",
+					"lead": "Pramod Baswaraju",
+					"businessCostCenter": "516-800-80182 Digital Engineering"
+				}
+			},
+			"resources": [
+				{
+					"apiVersion": "2016-09-01",
+					"name": "[concat(parameters('redis_cache_name'), '/Microsoft.Insights/service')]",
+					"type": "Microsoft.Cache/redis/providers/diagnosticsettings",
+					"location": "[resourceGroup().location]",
+					"dependsOn": [
+						"[concat('Microsoft.Cache/Redis/', parameters('redis_cache_name'))]"
+					],
+					"properties": {
+						"status": "ON",
+						"storageAccountName": "[parameters('storage_account_name')]"
+					},
+					"tags": {
+						"environment": "[parameters('environment')]",
+						"creator": "[concat(parameters('team'), ' Team')]",
+						"application": "[parameters('team')]",
+						"businessSponsor": "Sudhakar Veluru",
+						"appOwner": "Pramod Baswaraju",
+						"lead": "Pramod Baswaraju",
+						"businessCostCenter": "516-800-80182 Digital Engineering"
+					}
+				}
+			]
+		}
+	]
+}

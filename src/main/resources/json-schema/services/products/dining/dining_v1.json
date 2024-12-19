@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "required": false,
+  "javaType": "com.mgmresorts.cart.dto.product.dining.v1.services.Wrapper",
+  "additionalProperties": false,
+  "properties": {
+    "dining": {
+      "type": "object",
+      "javaType": "com.mgmresorts.cart.dto.product.dining.v1.Dining",
+      "additionalProperties": false,
+      "properties": {
+        "restaurantId": {
+          "required": true,
+          "type": "string",
+          "description": "Restaurant id"
+        },
+        "reservationDateTime": {
+          "required": true,
+          "type": "string",
+          "description": "Selected date and time"
+        },
+        "partySize": {
+          "required": true,
+          "type": "integer",
+          "description": "Number of guests for the reservation"
+        },
+        "accessPersistentId": {
+          "required": true,
+          "type": "string",
+          "description": "accessPersistentId returned from dining availability call"
+        },
+        "shiftPersistentId": {
+          "required": true,
+          "type": "string",
+          "description": "shiftPersistentId returned from dining availability call"
+        }
+      }
+    }
+  }
+}

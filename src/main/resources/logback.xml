@@ -1,0 +1,28 @@
+<configuration>
+	<appender name="PlainText" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+			<layout class="com.mgmresorts.common.logging.LogLayout" />
+		</encoder>
+	</appender>
+	<appender name="MaskedText" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+			<layout class="com.mgmresorts.common.logging.MaskLayout">
+				<expressions>(password: )([^ ]*)</expressions>
+				<pattern>something not needed</pattern>
+			</layout>
+
+		</encoder>
+	</appender>
+	<root level="ERROR">
+		<appender-ref ref="PlainText" />
+	</root>
+	<logger name="com.mgmresorts" level="TRACE" additivity="false">
+		<appender-ref ref="MaskedText" />
+	</logger>
+	<logger name="com.mgmresorts.common.logging.LiveSiteLogger" level="INFO" additivity="false">
+		<appender-ref ref="MaskedText" />
+	</logger>
+	<logger name="com.mgmresorts.common.event.enterprise.task.EnterpriseEventGrid" level="INFO" additivity="false">
+		<appender-ref ref="MaskedText" />
+	</logger>
+</configuration>

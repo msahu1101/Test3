@@ -1,0 +1,197 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "appservice_site_name": {
+            "type": "String"
+        },
+        "app_service_resource_group_name": {
+            "type": "String"
+        },
+        "app_service_plan_name": {
+            "type": "String"
+        },
+        "network_resource_group_name": {
+            "type": "String"
+        },
+        "network_vnet_name": {
+            "type": "String"
+        },
+        "network_subnet_name": {
+            "type": "String"
+        },
+        "environment": {
+            "type": "String"
+        },
+        "storage_account_name": {
+            "type": "string"
+        },
+        "application_version": {
+            "type": "string",
+            "metadata": {
+                "description": "The code version of the application"
+            }
+        },
+        "application_runtime_environment": {
+            "type": "string",
+            "metadata": {
+                "description": "Environment where the code is running"
+            }
+        }
+    },
+    "variables": {
+        "appservice_plan_id": "[resourceId(parameters('app_service_resource_group_name') ,'Microsoft.Web/serverfarms',parameters('app_service_plan_name'))]",
+        "network_subnet_id": "[resourceId(parameters('network_resource_group_name') ,'Microsoft.Network/virtualNetworks/subnets', parameters('network_vnet_name'),parameters('network_subnet_name'))]",
+        "storage_id": "[resourceId(parameters('app_service_resource_group_name') ,'Microsoft.Storage/storageAccounts',parameters('storage_account_name'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2018-11-01",
+            "name": "[parameters('appservice_site_name')]",
+            "location": "West US",
+            "kind": "app",
+            "properties": {
+                "enabled": true,
+                "hostNameSslStates": [
+                    {
+                        "name": "[concat(parameters('appservice_site_name'), '.azurewebsites.net')]",
+                        "sslState": "Disabled",
+                        "hostType": "Standard"
+                    },
+                    {
+                        "name": "[concat(parameters('appservice_site_name'), '.scm.azurewebsites.net')]",
+                        "sslState": "Disabled",
+                        "hostType": "Repository"
+                    }
+                ],
+                "serverFarmId": "[variables('appservice_plan_id')]",
+                "reserved": false,
+                "isXenon": false,
+                "hyperV": false,
+                "scmSiteAlsoStopped": false,
+                "clientAffinityEnabled": true,
+                "clientCertEnabled": false,
+                "hostNamesDisabled": false,
+                "containerSize": 0,
+                "dailyMemoryTimeQuota": 0,
+                "httpsOnly": false,
+                "redundancyMode": "None"
+            },
+            "resources": [
+                {
+                    "type": "config",
+                    "apiVersion": "2018-02-01",
+                    "name": "virtualNetwork",
+                    "location": "[resourceGroup().location]",
+                    "dependsOn": [
+                        "[concat('Microsoft.Web/sites/', parameters('appservice_site_name'))]"
+                    ],
+                    "properties": {
+                        "subnetResourceId": "[variables('network_subnet_id')]",
+                        "swiftSupported": true
+                    }
+                },
+                {
+                    "name": "appsettings",
+                    "type": "config",
+                    "apiVersion": "2015-08-01",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Web/sites', parameters('appservice_site_name'))]"
+                    ],
+                    "tags": {
+                        "displayName": "appsettings"
+                    },
+                    "properties": {
+                        "spring.profiles.active": "[parameters('environment')]",
+                        "itinerary.diningevent.storage.checkpoint": "[listKeys(variables('storage_id'), '2019-04-01').keys[0].value]",
+                        "runtime.application.version": "[parameters('application_version')]",
+                        "runtime.environment": "[parameters('application_runtime_environment')]"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/config",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('appservice_site_name'), '/web')]",
+            "location": "West US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('appservice_site_name'))]"
+            ],
+            "properties": {
+                "numberOfWorkers": 1,
+                "defaultDocuments": [
+                    "index.html",
+                    "hostingstart.html"
+                ],
+                "netFrameworkVersion": "v4.0",
+                "phpVersion": "5.6",
+                "requestTracingEnabled": false,
+                "remoteDebuggingEnabled": false,
+                "remoteDebuggingVersion": "VS2019",
+                "httpLoggingEnabled": false,
+                "logsDirectorySizeLimit": 35,
+                "detailedErrorLoggingEnabled": false,
+                "scmType": "None",
+                "use32BitWorkerProcess": false,
+                "webSocketsEnabled": false,
+                "alwaysOn": true,
+                "javaVersion": "1.8",
+                "javaContainer": "TOMCAT",
+                "javaContainerVersion": "8.5",
+                "managedPipelineMode": "Integrated",
+                "virtualApplications": [
+                    {
+                        "virtualPath": "/",
+                        "physicalPath": "site\\wwwroot",
+                        "preloadEnabled": true
+                    }
+                ],
+                "loadBalancing": "LeastRequests",
+                "experiments": {
+                    "rampUpRules": [
+                    ]
+                },
+                "autoHealEnabled": false,
+                "localMySqlEnabled": false,
+                "ipSecurityRestrictions": [
+                    {
+                        "ipAddress": "Any",
+                        "action": "Allow",
+                        "priority": 1,
+                        "name": "Allow all",
+                        "description": "Allow all access"
+                    }
+                ],
+                "scmIpSecurityRestrictions": [
+                    {
+                        "ipAddress": "Any",
+                        "action": "Allow",
+                        "priority": 1,
+                        "name": "Allow all",
+                        "description": "Allow all access"
+                    }
+                ],
+                "scmIpSecurityRestrictionsUseMain": false,
+                "http20Enabled": true,
+                "minTlsVersion": "1.2",
+                "ftpsState": "AllAllowed",
+                "reservedInstanceCount": 0
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/hostNameBindings",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('appservice_site_name'), '/', parameters('appservice_site_name'), '.azurewebsites.net')]",
+            "location": "West US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('appservice_site_name'))]"
+            ],
+            "properties": {
+                "siteName": "[parameters('appservice_site_name')]",
+                "hostNameType": "Verified"
+            }
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+  "header": {
+    "origin": "API",
+    "mgmCorerelationId": "421f0f47-f336-4850-8b36-499f01b24387",
+    "apiVersion": "2.24",
+    "mgmTransactionId": "783b2d20-99ef-4c3f-84a6-19b1c3d1dba1",
+    "executionId": "2bbf483c-f205-4c0b-8f44-ab7369ccdf6d",
+    "status": {
+      "code": "FAILURE",
+      "messages": [
+        {
+          "text": "Unable to complete backend call",
+          "type": "ERROR",
+          "code": "102-0-1004"
+        }
+      ]
+    }
+  }
+}

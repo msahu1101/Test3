@@ -1,0 +1,351 @@
+{
+  "sessionId": "c0ee79f5-26ab-4cbe-9128-8e5fdc47a2a3",
+  "sessionType": "Payment",
+  "sessionStatus": "New",
+  "sessionExpiresOn": "2024-01-09T15:15:23.945578300",
+  "transaction": {
+    "transactionId": "string",
+    "checkoutTime": "string",
+    "cartType": "GLOBAL",
+    "transactionType": "Online",
+    "salesChannel": "mgmri",
+    "orderStatus": "PENDING",
+    "sessionType": "Payment",
+    "timeToLive": 25,
+    "sessionId": "string"
+  },
+  "guestDetails": {
+    "mgmId": "string",
+    "firstName": "Test",
+    "middleName": "string",
+    "lastName": "User",
+    "phoneNumber": "702",
+    "loggedIn": true,
+    "email": "string",
+    "created": "Timestamp",
+    "lastModifiedDate": "yyyy-mm-dd HH:mm:ss",
+    "address": {
+      "address": "string",
+      "address2": "string",
+      "city": "Las Vegas",
+      "state": "NV",
+      "zip": "string",
+      "country": "string"
+    }
+  },
+  "cardDetails": {
+    "mgmToken": "string",
+    "gatewayId": "SHFT",
+    "creditCardHolderName": "Test User",
+    "tenderType": "Credit Card",
+    "issuerType": "Visa",
+    "tenderDisplay": "XXXXXXXXXXXX4111",
+    "expiryMonth": "02",
+    "expiryYear": "17",
+    "billingAddress": {
+      "address": "string",
+      "address2": "string",
+      "state": "NV",
+      "city": "Henderson",
+      "postalCode": "string",
+      "country": "US",
+      "phoneNumber": "string",
+      "email": "string"
+    }
+  },
+  "orderItems": {
+    "orderReferenceNumber": "86495f06-d98a-4934-b014-b59ed8f9e5ca",
+    "itemAuthGroups": [
+      {
+        "groupId": "string",
+        "clientId": "23232",
+        "itemsGroupTotal": [
+          {
+            "name": "authAmount",
+            "value": 250.00
+          },
+          {
+            "name": "taxTotal",
+            "value": 85.87
+          }
+        ],
+        "paymentAuthResults": [
+          {
+            "type": "Authorize",
+            "authorizedAmount": 0.00,
+            "decision": "FAILURE",
+            "responseCode": "responseCode",
+            "paymentId": "GT8756Y",
+            "authorizationCode": "HDB456H",
+            "authorizedDateTime": "authorizedDateTime",
+            "avsCode": "avsCode",
+            "cvCode": "cvCode",
+            "reconciliationId": "reconciliationId",
+            "remainingAuthAmount": 0.0,
+            "status": "FAILURE",
+            "errorCode": "00041-0001-0-0101",
+            "errorDescription": "Auth Failure"
+          }
+        ],
+        "paymentFraudResults": {
+          "recommendationCode": "recommendationCode",
+          "fraudAgent": "Forter",
+          "decision": "approved",
+          "reasonCode": "no fraud",
+          "status": "approved",
+          "errorCode": "",
+          "errorDescription": ""
+        },
+        "items": [
+          {
+            "id": "71e7412c-9692-42d5-9582-3e9bba473db9",
+            "confirmationNumber": "string",
+            "itemId": "string",
+            "itemType": "string",
+            "itemName": "string",
+            "seasonId": "string",
+            "propertyId": "string",
+            "propertyName": "string",
+            "description": "string",
+            "quantity": 2,
+            "numberOfGuests": 5,
+            "seat": [
+              {
+                "row": "String",
+                "section": "String",
+                "seatNumber": "String",
+                "price": 0.0
+              }
+            ],
+            "delivery": {
+              "type": "string",
+              "method": "string",
+              "amount": 89.06
+            },
+            "duration": {
+              "startDate": "yyyy-mm-dd",
+              "startTime": "string",
+              "endDate": "yyyy-mm-dd",
+              "endTime": "string"
+            },
+            "locationAddress": {
+              "address": "string",
+              "address2": "string",
+              "city": "string",
+              "state": "string",
+              "zip": "string",
+              "country": "string"
+            },
+            "amount": {
+              "totalAmount": [
+                {
+                  "name": "authAmount",
+                  "value": 425.0
+                },
+                {
+                  "name": "taxTotal",
+                  "value": 85.87
+                }
+              ],
+              "itemizedCharges": [
+                {
+                  "name": "roomTotal",
+                  "value": 374.85
+                },
+                {
+                  "name": "depositDue",
+                  "value": 425.0
+                },
+                {
+                  "name": "totalRoomCharges",
+                  "value": 999.0
+                },
+                {
+                  "name": "additionalCharges",
+                  "value": 0.0
+                }
+              ],
+              "taxesAndFees": [
+                {
+                  "type": "FEE",
+                  "code": "roomCharge",
+                  "amount": 88.44
+                },
+                {
+                  "type": "TAX",
+                  "code": "resorttaxes",
+                  "amount": 113.61
+                }
+              ],
+              "discounts": [
+                {
+                  "type": "offer",
+                  "code": "d5d8ce02-f64a-46bb-b8e5-711852bfd840",
+                  "amount": 8.97
+                }
+              ]
+            },
+            "additionalFraudParams": [
+              {
+                "name": "someName",
+                "value": 12.5
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "groupId": "string",
+        "clientId": "23232",
+        "itemsGroupTotal": [
+          {
+            "name": "authAmount",
+            "value":  255.67
+          },
+          {
+            "name": "taxTotal",
+            "value": 85.87
+          }
+        ],
+        "paymentAuthResults": [
+          {
+            "type": "Authorize",
+            "authorizedAmount": 255.67,
+            "decision": "SUCCESS",
+            "responseCode": "responseCode",
+            "paymentId": "6875GT",
+            "authorizationCode": "3268TY",
+            "authorizedDateTime": "authorizedDateTime",
+            "avsCode": "avsCode",
+            "cvCode": "cvCode",
+            "reconciliationId": "reconciliationId",
+            "remainingAuthAmount": 0.0,
+            "status": "SUCCESS",
+            "errorCode": "",
+            "errorDescription": ""
+          }
+        ],
+        "paymentFraudResults": {
+          "recommendationCode": "recommendationCode",
+          "fraudAgent": "Forter",
+          "decision": "approved",
+          "reasonCode": "no fraud",
+          "status": "approved",
+          "errorCode": "",
+          "errorDescription": ""
+        },
+        "items": [
+          {
+            "id": "81e7412c-9692-42d5-9582-3e9bba473db9",
+            "confirmationNumber": "string",
+            "itemId": "string",
+            "itemType": "string",
+            "itemName": "string",
+            "seasonId": "string",
+            "propertyId": "string",
+            "propertyName": "string",
+            "description": "string",
+            "quantity": 2,
+            "numberOfGuests": 5,
+            "seat": [
+              {
+                "row": "String",
+                "section": "String",
+                "seatNumber": "String",
+                "price": 0.0
+              }
+            ],
+            "delivery": {
+              "type": "string",
+              "method": "string",
+              "amount": 89.06
+            },
+            "duration": {
+              "startDate": "yyyy-mm-dd",
+              "startTime": "string",
+              "endDate": "yyyy-mm-dd",
+              "endTime": "string"
+            },
+            "locationAddress": {
+              "address": "string",
+              "address2": "string",
+              "city": "string",
+              "state": "string",
+              "zip": "string",
+              "country": "string"
+            },
+            "amount": {
+              "totalAmount": [
+                {
+                  "name": "authAmount",
+                  "value": 425.0
+                },
+                {
+                  "name": "taxTotal",
+                  "value": 85.87
+                }
+              ],
+              "itemizedCharges": [
+                {
+                  "name": "roomTotal",
+                  "value": 374.85
+                },
+                {
+                  "name": "depositDue",
+                  "value": 425.0
+                },
+                {
+                  "name": "totalRoomCharges",
+                  "value": 999.0
+                },
+                {
+                  "name": "additionalCharges",
+                  "value": 0.0
+                }
+              ],
+              "taxesAndFees": [
+                {
+                  "type": "FEE",
+                  "code": "roomCharge",
+                  "amount": 88.44
+                },
+                {
+                  "type": "TAX",
+                  "code": "resorttaxes",
+                  "amount": 113.61
+                }
+              ],
+              "discounts": [
+                {
+                  "type": "offer",
+                  "code": "d5d8ce02-f64a-46bb-b8e5-711852bfd840",
+                  "amount": 8.97
+                }
+              ]
+            },
+            "additionalFraudParams": [
+              {
+                "name": "someName",
+                "value": 12.5
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "additionalAttributes": [
+    {
+      "name": "customerReference",
+      "value": "Can be any type, define as Object"
+    },
+    {
+      "name": "productDescriptors",
+      "value": "Room, Event"
+    },
+    {
+      "name": "additionalOrderId",
+      "value": "32323"
+    }
+  ]
+}

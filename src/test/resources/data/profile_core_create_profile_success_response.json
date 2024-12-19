@@ -1,0 +1,25 @@
+{
+  "customer": {
+    "profile": {
+      "phoneNumbers": [],
+      "customerIdentifications": [],
+      "firstName": "Cart",
+      "lastName": "Sanchez",
+      "emailAddresses": [],
+      "addresses": [
+        {
+          "type": "HOME",
+          "preferred": false,
+          "state": "NV",
+          "city": "Las Vegas",
+          "country": "US",
+          "street1": "6700 Edmond Street",
+          "street2": "",
+          "zipCode": "89118"
+        }
+      ]
+    },
+    "membershipOptin": false,
+    "forgetMyInfo": false
+  }
+}

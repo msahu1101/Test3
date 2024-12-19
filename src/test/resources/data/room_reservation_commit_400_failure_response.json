@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": "632-1-101",
+    "message": "Transaction id is missing in the request header"
+  }
+}

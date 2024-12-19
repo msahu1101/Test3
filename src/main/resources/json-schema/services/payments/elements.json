@@ -1,0 +1,467 @@
+{
+	"definitions": {
+		"workflowArgs": {
+			"type": "object",
+			"javaType": "com.mgmresorts.payments.model.WorkflowArgs",
+			"properties": {
+				"order": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"default": [
+						"AFSAuthorize",
+						"PPSAuthorize"
+					]
+				}
+			}
+		},
+		"workflowDefs": {
+			"type": "object",
+			"javaType": "com.mgmresorts.payments.model.WorkflowDefs",
+			"properties": {
+				"functionName": {
+					"type": "string"
+				},
+				"body": {
+					"type": "object",
+					"javaType": "com.mgmresorts.payments.model.WorkflowRequestBody",
+					"properties": {
+						"transaction": {
+							"type": "object",
+							"javaType": "com.mgmresorts.payments.model.AFSAuthTransactionDetails",
+							"properties": {
+								"transactionId": {
+									"type": "string"
+								},
+								"inauthTransactionId": {
+									"type": "string"
+								},
+								"sessionId": {
+									"type": "string"
+								},
+								"confirmationNumbers": {
+									"type": "string"
+								},
+								"bookingType": {
+									"type": "string",
+									"description": "Booking Type",
+									"enum": [
+										"ROOM",
+										"SHOW",
+										"ROOM_SHOW",
+										"CABANA"
+									]
+								},
+								"paymentFailuresCount": {
+									"type": "integer"
+								},
+								"businessFailuresCount": {
+									"type": "integer"
+								},
+								"transactionType": {
+									"type": "string",
+									"description": "Transaction Type",
+									"enum": [
+										"ONLINE",
+										"MOBILE",
+										"CALL_CENTER",
+										"FACE_TO_FACE"
+									]
+								},
+								"transactionDateTime": {
+									"type": "string"
+								},
+								"transactionTotalAmount": {
+									"type": "number"
+								},
+								"salesChannel": {
+									"type": "string"
+								},
+								"ipAddress": {
+									"type": "string"
+								},
+								"guest": {
+									"type": "object",
+									"javaType": "com.mgmresorts.payments.model.GuestDetails",
+									"properties": {
+										"loggedIn": {
+											"type": "boolean"
+										},
+										"memberId": {
+											"type": "string"
+										},
+										"firstName": {
+											"type": "string"
+										},
+										"lastName": {
+											"type": "string"
+										},
+										"emailAddress": {
+											"type": "string"
+										},
+										"phone": {
+											"type": "string"
+										},
+										"createdDate": {
+											"type": "string"
+										},
+										"lastModifiedDate": {
+											"type": "string"
+										},
+										"address1": {
+											"type": "string"
+										},
+										"address2": {
+											"type": "string"
+										},
+										"city": {
+											"type": "string"
+										},
+										"state": {
+											"type": "string"
+										},
+										"postalCode": {
+											"type": "String"
+										},
+										"country": {
+											"type": "string"
+										}
+									}
+								},
+								"billing": {
+									"type": "object",
+									"javaType": "com.mgmresorts.payments.model.BillingDetails",
+									"properties": {
+										"paymentMethods": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"javaType": "com.mgmresorts.payments.model.AFSAuthPaymentMethods",
+												"properties": {
+													"paymentType": {
+														"type": "string"
+													},
+													"cardHolderName": {
+														"type": "string"
+													},
+													"billingAddress1": {
+														"type": "string"
+													},
+													"billingAddress2": {
+														"type": "string"
+													},
+													"billingCity": {
+														"type": "string"
+													},
+													"billingState": {
+														"type": "string"
+													},
+													"billingPostalCode": {
+														"type": "String"
+													},
+													"billingCountry": {
+														"type": "string"
+													},
+													"creditCardType": {
+														"type": "string"
+													},
+													"creditCardNumber": {
+														"type": "string"
+													},
+													"paymentToken": {
+														"type": "string"
+													},
+													"creditCardExpireMonth": {
+														"type": "string"
+													},
+													"creditCardExpireYear": {
+														"type": "string"
+													},
+													"currencyCode": {
+														"type": "string"
+													},
+													"transactionChargeAmount": {
+														"type": "number"
+													}
+												}
+											}
+										}
+									}
+								},
+								"products": {
+									"type": "object",
+									"javaType": "com.mgmresorts.payments.model.Products",
+									"properties": {
+										"rooms": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"javaType": "com.mgmresorts.payments.model.RoomDetail",
+												"properties": {
+													"confirmationNumber": {
+														"type": "string"
+													},
+													"guestName": {
+														"type": "string"
+													},
+													"hotelName": {
+														"type": "string"
+													},
+													"roomName": {
+														"type": "string"
+													},
+													"roomId": {
+														"type": "string"
+													},
+													"checkInDate": {
+														"type": "string"
+													},
+													"checkOutDate": {
+														"type": "string"
+													},
+													"guests": {
+														"type": "integer"
+													},
+													"offerId": {
+														"type": "string"
+													},
+													"offerName": {
+														"type": "string"
+													},
+													"roomTotal": {
+														"type": "number"
+													},
+													"depositDue": {
+														"type": "number"
+													},
+													"totalRoomCharges": {
+														"type": "number"
+													},
+													"taxes": {
+														"type": "integer"
+													},
+													"resortFeeAndTaxes": {
+														"type": "integer"
+													},
+													"additionalCharges": {
+														"type": "integer"
+													}
+												}
+											}
+										},
+										"event": {
+											"type": "object",
+											"javaType": "com.mgmresorts.payments.model.EventDetail",
+											"properties": {
+												"confirmationNumber": {
+													"type": "string"
+												},
+												"eventId": {
+													"type": "string"
+												},
+												"eventDate": {
+													"type": "string"
+												},
+												"eventTime": {
+													"type": "integer"
+												},
+												"seasonId": {
+													"type": "string"
+												},
+												"showName": {
+													"type": "string"
+												},
+												"deliveryMethod": {
+													"type": "string"
+												},
+												"eventTotal": {
+													"type": "number"
+												},
+												"let": {
+													"type": "number"
+												},
+												"serviceChargeAndTaxes": {
+													"type": "number"
+												},
+												"deliveryFee": {
+													"type": "integer"
+												},
+												"seats": {
+													"type": "array",
+													"items": {
+														"type": "object",
+														"javaType": "com.mgmresorts.payments.model.SeatDetail",
+														"properties": {
+															"row": {
+																"type": "string"
+															},
+															"section": {
+																"type": "string"
+															},
+															"seatNumber": {
+																"type": "string"
+															},
+															"price": {
+																"type": "number"
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						},
+						"merchantID": {
+							"type": "string"
+						},
+						"transactionRefCode": {
+							"type": "string"
+						},
+						"billTo": {
+							"type": "object",
+							"javaType": "com.mgmresorts.payments.model.BillTo",
+							"properties": {
+								"firstName": {
+									"type": "string"
+								},
+								"lastName": {
+									"type": "string"
+								},
+								"street1": {
+									"type": "string"
+								},
+								"city": {
+									"type": "string"
+								},
+								"state": {
+									"type": "string"
+								},
+								"postalCode": {
+									"type": "string"
+								}
+							}
+						},
+						"paymentMethods": {
+							"type": "object",
+							"javaType": "com.mgmresorts.payments.model.PPSAuthPaymentMethods",
+							"properties": {
+								"card": {
+									"type": "object",
+									"javaType": "com.mgmresorts.payments.model.Card",
+									"properties": {
+										"paymentToken": {
+											"type": "string"
+										},
+										"cvv": {
+											"type": "string"
+										},
+										"expirationMonth": {
+											"type": "string"
+										},
+										"expirationYear": {
+											"type": "string"
+										},
+										"nameOnCard": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						},
+						"amount": {
+							"type": "number"
+						}
+					}
+				},
+				"headers": {
+					"type": "object",
+					"javaType": "com.mgmresorts.payments.model.Headers",
+					"properties": {
+						"x-api-version": {
+							"type": "string"
+						},
+						"source": {
+							"type": "string"
+						},
+						"x-mgm-correlation-id": {
+							"type": "string"
+						}
+					}
+				},
+				"queryParams": {
+					"type": "object",
+					"javaType": "com.mgmresorts.payments.model.QueryParams"
+				}
+			}
+		},
+		"workflowResponse": {
+			"type": "object",
+			"javaType": "com.mgmresorts.payments.model.WorkflowResponse",
+			"properties": {
+				"functionName": {
+					"type": "string"
+				},
+				"statusCode": {
+					"type": "integer"
+				},
+				"statusDesc": {
+					"type": "string"
+				},
+				"body": {
+					"type": "object",
+					"javaType": "com.mgmresorts.payments.model.WorkflowResponseBody",
+					"properties": {
+						"authorized": {
+							"type": "boolean"
+						},
+						"transactionId": {
+							"type": "string"
+						},
+						"reference": {
+							"type": "string"
+						},
+						"authorizationRemarks": {
+							"type": "string"
+						},
+						"recommendationCode": {
+							"type": "string"
+						},
+						"statusMessage": {
+							"type": "string"
+						},
+						"decision": {
+							"type": "string"
+						},
+						"amount": {
+							"type": "string"
+						},
+						"authRequestId": {
+							"type": "string"
+						},
+						"reasonCode": {
+							"type": "string"
+						},
+						"message": {
+							"type": "string"
+						},
+						"type": {
+							"type": "string"
+						},
+						"code": {
+							"type": "string"
+						},
+						"msg": {
+							"type": "string"
+						}
+					}
+				},
+				"message": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,12 @@
+{
+    "module": "${project.artifactId}",
+    "path": "/api/",
+    "tos": "https://www.mgmresorts.com/en/terms-of-use.html",
+    "email": "memberservices@mgmresorts.com",
+    "url": "https://www.mgmresorts.com/en.html",
+    "name": "MGM Resorts International",
+    "licenseName": "COPYRIGHT © 2018 MGM RESORTS INTERNATIONAL. ALL RIGHTS RESERVED",
+    "licenseUrl": "https://www.mgmresorts.com/en/privacy-policy.html",
+    "tag": "Endpoints for ${project.artifactId}",
+    "description": "This is the API specification docs for order service application"
+}

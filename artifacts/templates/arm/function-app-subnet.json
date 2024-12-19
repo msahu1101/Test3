@@ -1,0 +1,629 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"function_app_name": {
+			"type": "string",
+			"metadata": {
+				"description": "The name of the function app that you wish to create."
+			}
+		},
+		"apim_vnet_resource_group_name": {
+			"type": "string",
+			"metadata": {
+				"description": "Resource group where api management is running"
+			}
+		},
+		"apim_vnet_name": {
+			"type": "string",
+			"metadata": {
+				"description": "Api management vnet"
+			}
+		},
+		"apim_subnet_name": {
+			"type": "string",
+			"metadata": {
+				"description": "Api management subnet"
+			}
+		}
+	},
+	"variables": {
+		"appManagementId": "[resourceId('a07a1ed6-22e4-4781-b58e-aa1685bc93b2', parameters('apim_vnet_resource_group_name'),'Microsoft.Network/virtualNetworks/subnets',parameters('apim_vnet_name'), parameters('apim_subnet_name'))]"
+	},
+	"resources": [
+		{
+			"type": "Microsoft.Web/sites",
+			"apiVersion": "2018-11-01",
+			"name": "[parameters('function_app_name')]",
+			"location": "[resourceGroup().location]",
+			"kind": "functionapp",
+			"properties": {
+				"siteConfig": {
+					"ipSecurityRestrictions": [
+						{
+							"vnetSubnetResourceId": "[variables('appManagementId')]",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 100,
+							"name": "Apim Subnet"
+						},
+						{
+							"vnetSubnetResourceId": "/subscriptions/a07a1ed6-22e4-4781-b58e-aa1685bc93b2/resourceGroups/digengsharedservicesvnets-uw-rg-p/providers/Microsoft.Network/virtualNetworks/digengsharedservices-uw-vnet-p/subnets/vmsprivate-uw-sn-p",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 101,
+							"name": "Common service VM"
+						},
+						{
+							"vnetSubnetResourceId": "/subscriptions/9b965026-1420-458b-8a26-0046b7039f0a/resourceGroups/sharedservicesspokevnets-uw-rg-p/providers/Microsoft.Network/virtualNetworks/sharedservicesspoke-uw-vnet-p/subnets/vmsprivate-uw-sn-p",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 102,
+							"name": "Apim Subnet"
+						},
+						{
+							"ipAddress": "40.91.82.48/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 110,
+							"name": "Azure USWEST Datacenter 1"
+						},
+						{
+							"ipAddress": "40.91.82.64/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 111,
+							"name": "Azure USWEST Datacenter 2"
+						},
+						{
+							"ipAddress": "40.91.82.80/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 112,
+							"name": "Azure USWEST Datacenter 3"
+						},
+						{
+							"ipAddress": "40.91.82.96/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 113,
+							"name": "Azure USWEST Datacenter 4"
+						},
+						{
+							"ipAddress": "40.91.82.112/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 114,
+							"name": "Azure USWEST Datacenter 5"
+						},
+						{
+							"ipAddress": "40.91.82.128/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 115,
+							"name": "Azure USWEST Datacenter 6"
+						},
+						{
+							"ipAddress": "13.86.97.224/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 116,
+							"name": "Azure Central US Datacenter 1"
+						},
+						{
+							"ipAddress": "13.86.97.240/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 117,
+							"name": "Azure Central US Datacenter 2"
+						},
+						{
+							"ipAddress": "13.86.98.48/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 118,
+							"name": "Azure Central US Datacenter 3"
+						},
+						{
+							"ipAddress": "13.86.98.0/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 119,
+							"name": "Azure Central US Datacenter 4"
+						},
+						{
+							"ipAddress": "13.86.98.16/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 120,
+							"name": "Azure Central US Datacenter 5"
+						},
+						{
+							"ipAddress": "13.86.98.64/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 121,
+							"name": "Azure Central US Datacenter 6"
+						},
+						{
+							"ipAddress": "20.42.35.32/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 122,
+							"name": "Azure East US Datacenter 1"
+						},
+						{
+							"ipAddress": "20.42.35.64/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 123,
+							"name": "Azure East US Datacenter 2"
+						},
+						{
+							"ipAddress": "20.42.35.80/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 124,
+							"name": "Azure East US Datacenter 3"
+						},
+						{
+							"ipAddress": "20.42.35.96/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 125,
+							"name": "Azure East US Datacenter 4"
+						},
+						{
+							"ipAddress": "20.42.35.112/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 126,
+							"name": "Azure East US Datacenter 5"
+						},
+						{
+							"ipAddress": "20.42.35.128/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 127,
+							"name": "Azure East US Datacenter 6"
+						},
+						{
+							"ipAddress": "52.229.216.48/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 128,
+							"name": "Azure East Asia Datacenter 1"
+						},
+						{
+							"ipAddress": "52.229.216.64/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 129,
+							"name": "Azure East Asia Datacenter 2"
+						},
+						{
+							"ipAddress": "52.229.216.80/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 130,
+							"name": "Azure East Asia Datacenter 3"
+						},
+						{
+							"ipAddress": "51.144.56.96/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 131,
+							"name": "Azure West Europe Datacenter 1"
+						},
+						{
+							"ipAddress": "51.144.56.112/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 132,
+							"name": "Azure West Europe Datacenter 2"
+						},
+						{
+							"ipAddress": "51.144.56.128/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 133,
+							"name": "Azure West Europe Datacenter 3"
+						},
+						{
+							"ipAddress": "51.144.56.144/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 134,
+							"name": "Azure West Europe Datacenter 4"
+						},
+						{
+							"ipAddress": "51.144.56.160/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 135,
+							"name": "Azure West Europe Datacenter 5"
+						},
+						{
+							"ipAddress": "51.144.56.176/28",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 136,
+							"name": "Azure West Europe Datacenter 6"
+						},
+						{
+							"ipAddress": "69.162.0.0/24",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 137,
+							"name": "MGM VPN 1"
+						},
+						{
+							"ipAddress": "69.162.1.0/24",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 138,
+							"name": "MGM VPN 1"
+						},
+						{
+							"ipAddress": "69.162.2.0/24",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 139,
+							"name": "MGM VPN 1"
+						},
+						{
+							"ipAddress": "69.162.16.0/24",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 140,
+							"name": "MGM VPN 1"
+						},
+						{
+							"ipAddress": "69.162.8.0/24",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 141,
+							"name": "MGM VPN 2"
+						},
+						{
+							"ipAddress": "69.162.9.0/24",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 142,
+							"name": "MGM VPN 3"
+						},
+						{
+							"ipAddress": "69.162.11.0/24",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 143,
+							"name": "MGM VPN 4"
+						},
+						{
+							"ipAddress": "13.52.159.171/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 144,
+							"name": "MGM VPN 5"
+						},
+						{
+							"ipAddress": "34.99.112.25/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 145,
+							"name": "MGM VPN 6"
+						},
+						{
+							"ipAddress": "34.100.68.25/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 146,
+							"name": "MGM VPN 7"
+						},
+						{
+							"ipAddress": "34.183.193.155/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 147,
+							"name": "MGM VPN 8"
+						},
+						{
+							"ipAddress": "34.98.200.25/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 148,
+							"name": "MGM VPN 9"
+						},
+						{
+							"ipAddress": "34.99.112.26/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 149,
+							"name": "MGM VPN 10"
+						},
+						{
+							"ipAddress": "34.99.80.25/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 150,
+							"name": "MGM VPN 11"
+						},
+						{
+							"ipAddress": "34.99.80.26/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 151,
+							"name": "MGM VPN 12"
+						},
+						{
+							"ipAddress": "168.149.245.80/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 152,
+							"name": "MGM VPN 13"
+						},
+						{
+							"ipAddress": "168.149.245.80/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 153,
+							"name": "MGM VPN 14"
+						},
+						{
+							"ipAddress": "34.100.88.25/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 154,
+							"name": "MGM VPN 15"
+						},
+						{
+							"ipAddress": "34.100.88.26/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 155,
+							"name": "MGM VPN 16"
+						},
+						{
+							"ipAddress": "13.234.105.95/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 156,
+							"name": "MGM VPN 17"
+						},
+						{
+							"ipAddress": "34.98.204.26/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 157,
+							"name": "MGM VPN 18"
+						},
+						{
+							"ipAddress": "13.234.104.5/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 158,
+							"name": "MGM VPN 19"
+						},
+						{
+							"ipAddress": "34.98.204.25/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 159,
+							"name": "MGM VPN 20"
+						},
+						{
+							"ipAddress": "34.99.84.26/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 160,
+							"name": "MGM VPN 21"
+						},
+						{
+							"ipAddress": "35.183.192.156/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 161,
+							"name": "MGM VPN 22"
+						},
+						{
+							"ipAddress": "34.99.84.25/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 162,
+							"name": "MGM VPN 23"
+						},
+						{
+							"ipAddress": "34.100.68.26/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 163,
+							"name": "MGM VPN 24"
+						},
+						{
+							"ipAddress": "34.100.68.25/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 164,
+							"name": "MGM VPN 25"
+						},
+						{
+							"ipAddress": "13.52.158.5/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 165,
+							"name": "MGM VPN 26"
+						},
+						{
+							"ipAddress": "34.100.76.25/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 166,
+							"name": "MGM VPN 27"
+						},
+						{
+							"ipAddress": "34.100.76.26/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 167,
+							"name": "MGM VPN 28"
+						},
+						{
+							"ipAddress": "13.52.159.172/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 168,
+							"name": "MGM VPN 29"
+						},
+						{
+							"ipAddress": "34.99.92.26/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 169,
+							"name": "MGM VPN 30"
+						},
+						{
+							"ipAddress": "34.98.200.26/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 170,
+							"name": "MGM VPN 31"
+						},
+						{
+							"ipAddress": "34.100.64.26/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 171,
+							"name": "MGM VPN 32"
+						},
+						{
+							"ipAddress": "34.100.64.25/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 172,
+							"name": "MGM VPN 33"
+						},
+						{
+							"ipAddress": "168.149.241.213/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 173,
+							"name": "MGM VPN 34"
+						},
+						{
+							"ipAddress": "168.149.241.215/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 174,
+							"name": "MGM VPN 35"
+						},
+						{
+							"ipAddress": "139.180.244.246/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 175,
+							"name": "MGM VPN 36"
+						},
+						{
+							"ipAddress": "34.100.80.25/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 176,
+							"name": "MGM VPN 37"
+						},
+						{
+							"ipAddress": "34.100.80.26/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 177,
+							"name": "MGM VPN 38"
+						},
+						{
+							"ipAddress": "34.100.72.26/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 178,
+							"name": "MGM VPN 39"
+						},
+						{
+							"ipAddress": "34.100.72.25/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 179,
+							"name": "MGM VPN 40"
+						},
+						{
+							"ipAddress": "34.99.88.26/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 180,
+							"name": "MGM VPN 41"
+						},
+						{
+							"ipAddress": "139.180.246.157/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 181,
+							"name": "MGM VPN 42"
+						},
+						{
+							"ipAddress": "168.149.243.80/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 182,
+							"name": "MGM VPN 43"
+						},
+						{
+							"ipAddress": "13.52.158.5/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 183,
+							"name": "MGM VPN 44"
+						},
+						{
+							"ipAddress": "35.237.211.44/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 184,
+							"name": "APIGEE 1"
+						},
+						{
+							"ipAddress": "35.190.186.218/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 185,
+							"name": "APIGEE 2"
+						},
+						{
+							"ipAddress": "35.233.217.232/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 186,
+							"name": "APIGEE 3"
+						},
+						{
+							"ipAddress": "34.83.84.50/32",
+							"action": "Allow",
+							"tag": "Default",
+							"priority": 187,
+							"name": "APIGEE 4"
+						},
+						{
+							"ipAddress": "AzureFrontDoor.Backend",
+							"action": "Allow",
+							"tag": "ServiceTag",
+							"priority": 188,
+							"name": "FrontDoor"
+						},
+						{
+							"ipAddress": "AzureEventGrid",
+							"action": "Allow",
+							"tag": "ServiceTag",
+							"priority": 189,
+							"name": "EventGrid"
+						}
+					]
+				}
+			}
+		}
+	]
+}

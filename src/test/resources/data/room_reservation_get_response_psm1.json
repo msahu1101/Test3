@@ -1,0 +1,297 @@
+{
+  "roomReservation": {
+    "amountDue": 46.49,
+    "billing": [
+      {
+        "address": {
+          "city": "***",
+          "country": "***",
+          "postalCode": "***",
+          "state": "***",
+          "street1": "***",
+          "street2": "***"
+        },
+        "payment": {
+          "amount": 46.49,
+          "cardHolder": "***",
+          "ccToken": "***",
+          "encryptedccToken": "***",
+          "expiry": "***",
+          "firstName": "***",
+          "lastName": "***",
+          "maskedNumber": "***",
+          "type": "***"
+        }
+      }
+    ],
+    "bookDate": "2024-01-02",
+    "bookingChannel": "web",
+    "bookings": [
+      {
+        "basePrice": 41.0,
+        "customerPrice": 0.0,
+        "date": "2024-05-16",
+        "isComp": false,
+        "overridePrice": -1.0,
+        "overrideProgramIdIsRateTable": false,
+        "price": 41.0,
+        "pricingRuleId": "99e29daa-47da-4392-83ca-de9480a3bd16",
+        "programId": "8bea8ac7-0372-4410-bc94-fd63482778f9",
+        "programIdIsRateTable": false,
+        "resortFee": 35.0,
+        "resortFeeIsSpecified": false
+      },
+      {
+        "basePrice": 245.0,
+        "customerPrice": 0.0,
+        "date": "2024-05-17",
+        "isComp": false,
+        "overridePrice": -1.0,
+        "overrideProgramIdIsRateTable": false,
+        "price": 245.0,
+        "pricingRuleId": "99e29daa-47da-4392-83ca-de9480a3bd16",
+        "programId": "8bea8ac7-0372-4410-bc94-fd63482778f9",
+        "programIdIsRateTable": false,
+        "resortFee": 35.0,
+        "resortFeeIsSpecified": false
+      }
+    ],
+    "bookingSource": "mgmri",
+    "chargesAndTaxes": {
+      "charges": [
+        {
+          "amount": 76.0,
+          "date": "2024-05-16",
+          "itemized": [
+            {
+              "amount": 41.0,
+              "item": "Room Charge",
+              "itemType": "RoomCharge"
+            },
+            {
+              "amount": 0.0,
+              "item": "Extra Guest Charge",
+              "itemType": "ExtraGuestCharge"
+            },
+            {
+              "amount": 35.0,
+              "item": "Resort Fee",
+              "itemType": "ResortFee"
+            }
+          ]
+        },
+        {
+          "amount": 280.0,
+          "date": "2024-05-17",
+          "itemized": [
+            {
+              "amount": 245.0,
+              "item": "Room Charge",
+              "itemType": "RoomCharge"
+            },
+            {
+              "amount": 0.0,
+              "item": "Extra Guest Charge",
+              "itemType": "ExtraGuestCharge"
+            },
+            {
+              "amount": 35.0,
+              "item": "Resort Fee",
+              "itemType": "ResortFee"
+            }
+          ]
+        }
+      ],
+      "taxesAndFees": [
+        {
+          "amount": 10.17,
+          "date": "2024-05-16",
+          "itemized": [
+            {
+              "amount": 5.49,
+              "item": "Room Tax",
+              "itemType": "RoomChargeTax"
+            },
+            {
+              "amount": 0.0,
+              "item": "Extra Guest Tax",
+              "itemType": "ExtraGuestChargeTax"
+            },
+            {
+              "amount": 4.68,
+              "item": "Resort Fee Tax",
+              "itemType": "ResortFeeTax"
+            }
+          ]
+        },
+        {
+          "amount": 37.46,
+          "date": "2024-05-17",
+          "itemized": [
+            {
+              "amount": 32.78,
+              "item": "Room Tax",
+              "itemType": "RoomChargeTax"
+            },
+            {
+              "amount": 0.0,
+              "item": "Extra Guest Tax",
+              "itemType": "ExtraGuestChargeTax"
+            },
+            {
+              "amount": 4.68,
+              "item": "Resort Fee Tax",
+              "itemType": "ResortFeeTax"
+            }
+          ]
+        }
+      ]
+    },
+    "confirmationNumber": "M08D74AB3",
+    "customerId": 1205175975939,
+    "customerRank": 0,
+    "customerSegment": 0,
+    "depositDetails": {
+      "amount": 46.49,
+      "amountPolicy": "Nights",
+      "cancellationRuleCode": "48H",
+      "depositRuleCode": "1NT",
+      "dueDate": "2024-01-02",
+      "forfeitAmount": 46.49,
+      "forfeitDate": "2024-05-14",
+      "itemized": [
+        {
+          "amount": 41.0,
+          "item": "Room Charge",
+          "itemType": "RoomCharge"
+        },
+        {
+          "amount": 5.49,
+          "item": "Room Tax",
+          "itemType": "RoomChargeTax"
+        }
+      ],
+      "overrideAmount": -1.0
+    },
+    "depositForfeit": false,
+    "depositPolicy": {
+      "creditCardRequired": true,
+      "depositRequired": true
+    },
+    "f1Package": false,
+    "guaranteeCode": "CC",
+    "hdePackage": false,
+    "id": "43391616-3461-4738-9fe5-4cb174ee715a",
+    "instance": 1,
+    "isCancellable": true,
+    "isCreditCardExpired": false,
+    "isGroupCode": false,
+    "isStayDateModifiable": true,
+    "itineraryId": "16795036163",
+    "markets": [
+      {
+        "date": "2024-05-16",
+        "marketCode": "TFIT",
+        "sourceCode": "TFITIWB"
+      },
+      {
+        "date": "2024-05-17",
+        "marketCode": "TFIT",
+        "sourceCode": "TFITIWB"
+      }
+    ],
+    "nrgStatus": false,
+    "operaHotelCode": "285",
+    "payments": [
+      {
+        "chargeAmount": 46.49,
+        "chargeCardExpiry": "***",
+        "chargeCardHolder": "***",
+        "chargeCardMaskedNumber": "***",
+        "chargeCardNumber": "***",
+        "chargeCardType": "***",
+        "chargeCurrencyCode": "USD",
+        "fxAcceptMessage": "Approved",
+        "fxAmount": 0.0,
+        "fxAuthApprovalCode": "002948",
+        "fxChecked": true,
+        "fxCurrencyCode": "USD",
+        "fxEligible": false,
+        "fxRate": 0.0,
+        "fxSettleAmount": 46.49,
+        "fxTransDate": "2024-01-02",
+        "isDeposit": true,
+        "isExternal": false,
+        "reservationInstance": 1,
+        "status": "Settled"
+      }
+    ],
+    "perpetualPricing": false,
+    "postingState": "Queued",
+    "profile": {
+      "addresses": [
+        {
+          "city": "***",
+          "country": "***",
+          "postalCode": "***",
+          "preferred": true,
+          "state": "***",
+          "street1": "***",
+          "street2": "***",
+          "type": "***"
+        }
+      ],
+      "dateOfBirth": "***",
+      "emailAddress1": "***",
+      "firstName": "***",
+      "id": 1205175975939,
+      "lastName": "***",
+      "mlifeNo": 104027285,
+      "phoneNumbers": [
+        {
+          "number": "***",
+          "type": "***"
+        }
+      ]
+    },
+    "programId": "8bea8ac7-0372-4410-bc94-fd63482778f9",
+    "propertyId": "f8d6a944-7816-412f-a39a-9a63aad26833",
+    "purchasedComponents": [
+    ],
+    "ratesSummary": {
+      "adjustedRoomSubtotal": 286.0,
+      "balanceUponCheckIn": 357.14,
+      "casinoSurcharge": 0.0,
+      "casinoSurchargeAndTax": 0.0,
+      "depositDue": 46.49,
+      "discountedAveragePrice": 143.0,
+      "discountedSubtotal": 286.0,
+      "occupancyFee": 0.0,
+      "programDiscount": 0.0,
+      "reservationTotal": 403.63,
+      "resortFee": 70.0,
+      "resortFeeAndTax": 79.36,
+      "resortFeePerNight": 35.0,
+      "roomChargeTax": 38.27,
+      "roomRequestsTotal": 0.0,
+      "roomSubtotal": 286.0,
+      "tourismFee": 0.0,
+      "tourismFeeAndTax": 0.0,
+      "tripSubtotal": 356.0
+    },
+    "roomTypeId": "34232c32-b53a-49a9-bae7-c74adfae5df8",
+    "routingInstructions": [
+    ],
+    "specialRequests": [
+    ],
+    "state": "Booked",
+    "thirdParty": false,
+    "tripDetails": {
+      "checkInDate": "2024-05-16",
+      "checkOutDate": "2024-05-18",
+      "numAdults": 2,
+      "numChildren": 0,
+      "numRooms": 1
+    }
+  }
+}

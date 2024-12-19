@@ -1,0 +1,94 @@
+{
+  "billing": {
+    "payment": {
+      "paymentToken": "***",
+      "type": "***"
+    }
+  },
+  "bookDate": "2024-01-04 12:06:33.780",
+  "cancellable": false,
+  "charges": {
+    "deliveryFee": 0.0,
+    "discountedSubtotal": 32.0,
+    "gratuity": 0.0,
+    "let": 0.0,
+    "reservationTotal": 35.0,
+    "serviceCharge": {
+      "amount": 3.0,
+      "itemized": {
+        "charge": 3.0,
+        "tax": 0.0
+      }
+    },
+    "showSubtotal": 32.0,
+    "transactionFee": {
+      "amount": 0.0,
+      "itemized": {
+        "charge": 0.0,
+        "tax": 0.0
+      }
+    }
+  },
+  "comp": false,
+  "confirmationNumber": "114540507",
+  "deliveryMethodCode": "TF",
+  "eventDate": "2024-01-04",
+  "eventTime": "7:00 PM",
+  "hdePackage": false,
+  "id": "114540507",
+  "inventorySeasonId": "Titanic the Exhibition 2024",
+  "profile": {
+    "addresses": [
+      {
+        "city": "***",
+        "country": "***",
+        "postalCode": "***",
+        "preferred": false,
+        "state": "***",
+        "street1": "***",
+        "street2": "***",
+        "type": "***"
+      }
+    ],
+    "archticsId": "290240968",
+    "emailAddress1": "***",
+    "firstName": "***",
+    "lastName": "***",
+    "phoneNumbers": [
+      {
+        "number": "***",
+        "type": "***"
+      }
+    ]
+  },
+  "propertyId": "607c07e7-3e31-4e4c-a4e1-f55dca66fea2",
+  "resendEmailAllowed": true,
+  "reservationStatus": "Reserved",
+  "seasonId": "af6c526b-7830-4584-a661-9a888c9ac26a",
+  "sendReservationsAsyncToTM": false,
+  "showEventCode": "TIE0104E",
+  "showEventId": "313f2e51-0098-4654-a389-f353070d1003",
+  "showId": "titanic-the-artifact-exhibition",
+  "tickets": [
+    {
+      "accessible": false,
+      "adaCompanion": false,
+      "barCode": "554136641935",
+      "basePrice": 32.0,
+      "description": "Standard",
+      "discountedPrice": 32.0,
+      "holdClass": "OPEN",
+      "priceCode": "A",
+      "priceCodeDescription": "Admission",
+      "seat": {
+        "rowName": "3",
+        "seatNumber": 50,
+        "sectionName": "GA1"
+      },
+      "showEventCode": "TIE0104E",
+      "showEventId": "313f2e51-0098-4654-a389-f353070d1003",
+      "ticketTypeCode": "_A",
+      "ticketTypeCodeDescription": "Standard"
+    }
+  ]
+}

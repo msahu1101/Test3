@@ -1,0 +1,96 @@
+{
+  "billing": {
+    "payment": {
+      "paymentToken": "123",
+      "type": "Visa, MasterCard, Discover, American Express, Diners Club, JCB"
+    }
+  },
+  "bookDate": "2021-08-26",
+  "cancellable": false,
+  "charges": {
+    "deliveryFee": 0,
+    "discountedSubtotal": 138.24,
+    "gratuity": 4,
+    "let": 12.44,
+    "reservationTotal": 172.58,
+    "serviceCharge": {
+      "amount": 0,
+      "itemized": {
+        "charge": 0,
+        "tax": 0
+      }
+    },
+    "showSubtotal": 138.24,
+    "transactionFee": {
+      "amount": 0,
+      "itemized": {
+        "charge": 0,
+        "tax": 0
+      }
+    }
+  },
+  "comp": true,
+  "confirmationNumber": "98431135",
+  "deliveryMethodCode": "TF",
+  "eventDate": "2021-08-26",
+  "eventTime": "9:00 PM",
+  "hdePackage": true,
+  "id": "98431135",
+  "orderId": "100516269",
+  "orderLineItemId": "1",
+  "profile": {
+    "addresses": [
+      {
+        "city": "LV",
+        "country": "US",
+        "postalCode": "19087-4526",
+        "preferred": true,
+        "state": "NV",
+        "street1": "2715 W P R",
+        "street2": "2715 W P R",
+        "type": "Home"
+      }
+    ],
+    "archticsId": "1234",
+    "dateOfBirth": "1995-12-31",
+    "emailAddress1": "johndoe@nomail.com",
+    "firstName": "John",
+    "lastName": "Doe",
+    "mlifeNo": "string",
+    "phoneNumbers": [
+      {
+        "number": "7023777108",
+        "type": "Home"
+      }
+    ]
+  },
+  "programId": "48014f94-add9-4326-a47d-5ed720b534ce",
+  "propertyId": "f8d6a944-7816-412f-a39a-9a63aad26833",
+  "resendEmailAllowed": true,
+  "reservationStatus": "Reserved",
+  "seasonId": "61cbe066-b83a-4447-a8b4-9019a457f6f5",
+  "showEventCode": "PTC0416E",
+  "showEventId": "7e0df6b0-d21f-4db1-95c2-35ceb1435424",
+  "tickets": [
+    {
+      "accessible": true,
+      "adaCompanion": true,
+      "barCode": "858843014450",
+      "basePrice": 69.2,
+      "description": "Some ticket description",
+      "discountedPrice": 0,
+      "holdClass": "OPEN",
+      "priceCode": "BN",
+      "priceCodeDescription": "1 Movie Package",
+      "seat": {
+        "rowName": "TBL",
+        "seatNumber": 1,
+        "sectionName": "TBL11"
+      },
+      "showEventCode": "PTC0416E",
+      "showEventId": "93eae2bb-b15d-4b8e-91ac-307d9c38da18",
+      "ticketTypeCode": "_A",
+      "ticketTypeCodeDescription": "M life Offer 1"
+    }
+  ]
+}

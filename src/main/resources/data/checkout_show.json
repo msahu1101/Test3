@@ -1,0 +1,48 @@
+{
+  "cartId": "4fa4c7bc-eb07-4d21-8053-810c57a294d5",
+  "guestProfile": {
+    "firstName": "Mike",
+    "lastName": "Hedden",
+    "emailAddress1": "cartsandorder3@gmail.com",
+    "addresses": [
+      {
+        "preferred": "false",
+        "street1": "123 Main St",
+        "street2": "",
+        "city": "Las Vegas",
+        "state": "NV",
+        "country": "US",
+        "postalCode": "89118",
+        "type": "Home"
+      }
+    ],
+    "phoneNumbers":[
+      {
+        "type": "Home",
+        "number": "7026929138"
+      }
+    ]
+  },
+  "billings": [
+    {
+      "payment": {
+        "firstName": "firstfirst",
+        "lastName": "last",
+        "amount": 379930.28,
+        "maskedNumber": "XXXXXXXXXXXX1111",
+        "cardHolder": "first last",
+        "cvv": "123",
+        "expiry": "10/2022",
+        "type": "Visa",
+        "ccToken": "4111110A001DQXFHY79D9XCZ1111"
+      },
+      "address": {
+        "street1": "234 W Main St",
+        "city": "Las Vegas",
+        "postalCode": "89129",
+        "state": "NV",
+        "country": "US"
+      }
+    }
+  ]
+}

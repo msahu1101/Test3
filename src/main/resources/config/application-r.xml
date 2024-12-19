@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<!-- global settings -->
+	
+	<entry key="function.app.user.identity.id">9b7abf85-2896-4e4c-9748-a41141267c94</entry>
+	
+	<!-- cosmos db -->
+	<entry key="datastore.cosmos.url">https://mgmshoppingcartorder-uw-cdb-r.documents.azure.com:443</entry>
+	<entry key="datastore.cosmos.secret">to-be-replaced</entry>
+	<entry key="datastore.cosmos.proxy.enable">false</entry>
+	<entry key="datastore.cosmos.proxy.host">mproxy.mgmresorts.local</entry>
+	<entry key="datastore.cosmos.proxy.port">8080</entry>
+
+	<!-- Identity Authorization Service common endpoint -->
+	<entry key="identity.auth.apigee.endpoint">https://preprod-api.apigee.devtest.vegas/identity/authorization</entry>
+	
+	<!-- Shopping Cart Service common endpoint -->
+	<entry key="shopping.cart.apigee.endpoint">https://preprod-api.apigee.devtest.vegas/shopping</entry>
+	
+	<!-- Itinerary Service common endpoint -->
+	<entry key="itinerary.apigee.endpoint">https://preprod-api.apigee.devtest.vegas/itinerary</entry>
+	
+	<!-- Profile Core Service common endpoint -->
+	<entry key="profile.core.apigee.endpoint">https://preprod-api.apigee.devtest.vegas/profile/core</entry>
+	
+	<!-- Room Booking Service common endpoint -->
+	<entry key="rbs.apigee.endpoint">https://preprod-api.apigee.devtest.vegas/booking/room</entry>
+	
+	<!-- Show Booking Service common endpoints -->
+	<entry key="sbs.apigee.endpoint">https://preprod-api.apigee.devtest.vegas/booking/show</entry>
+	
+	<!--Dining Booking Service common endpoint -->
+	<entry key="dbs.apigee.endpoint">https://preprod-api.apigee.devtest.vegas/booking/restaurant</entry>
+	
+	<!--Legacy Payment Processing Service common endpoint -->
+	<entry key="pps.legacy.apigee.endpoint">https://preprod-api.apigee.devtest.vegas/mpay</entry>
+	
+	<!--Payment Diversity Payment Processing Service common endpoint -->
+	<entry key="pps.apigee.endpoint">https://preprod-api.apigee.devtest.vegas/payment/processor/api</entry>
+	
+	<!--Payment Diversity Payment Session Management Service common endpoint -->
+	<entry key="psm.apigee.endpoint">https://preprod-api.apigee.devtest.vegas/payment/session/api</entry>
+	
+	<!-- Content API Service common endpoint -->
+	<entry key="content.api.url">https://preprod-content.devtest.vegas/content-api</entry>
+	
+	<!-- PIM API Service common endpoint -->
+	<entry key="pim.api.url">https://preprod-api.apigee.devtest.vegas/product-catalog-api</entry>
+	
+	<!-- RTC API Service common endpoint -->
+	<entry key="rtc.api.url">https://preprod-api.apigee.devtest.vegas/rtc-api</entry>
+
+	<!--http pool config-->
+	<entry key="http.connection.pool.config.apigee">https,preprod-api.apigee.devtest.vegas,443,200</entry>
+	
+	<!-- events -->
+	<entry key="application.event.enabled">false</entry>
+	<entry key="event.topic.default">event-generic</entry>
+	<entry key="event.topic.order">mgmcartevents-uw-egt-r</entry>
+	<entry key="event.eventgrid.endpoint">https://mgmcartevents-uw-egd-r.westus-1.eventgrid.azure.net/api/events</entry>
+	<entry key="event.eventgrid.key@secure">r-event-eventgrid-cart-key</entry>
+	<entry key="eventor-pool.size">50</entry>
+	<entry key="event.payload.masking.groups">event:success:response</entry>
+	<entry key="event.failure.payload.masking.groups">event:failure:response</entry>
+	
+	<!-- Enterprise events -->
+	<entry key="application.enterprise.event.enabled">true</entry>
+	<entry key="application.enterprise.event.encryption.disabled">false</entry>
+	<entry key="enterprise.event.eventgrid.endpoint">https://ei-shopping-cart-uw-egd-ra.westus-1.eventgrid.azure.net/api/events</entry>
+	<entry key="enterprise.event.eventgrid.key@secure">r-enterprise-event-eventgrid-cart-key</entry>
+	<entry key="enterprise.event.eventgrid.key.enabled">false</entry>
+	<entry key="enterprise.event.eventgrid.keyvault.name">ei-shopping-cart-uw-kv-r</entry>
+	<entry key="enterprise.event.eventgrid.keyvault.service.principal.enabled">false</entry>
+	<!-- End -->
+	
+	<!--Async-->
+	<entry key="async.enabled">false</entry>
+
+</properties>

@@ -1,0 +1,1730 @@
+{
+	"definitions": {
+		"address": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.customer.Address",
+			"properties": {
+				"type": {
+					"type": "string",
+					"required": false,
+					"enum": [
+						"HOME",
+						"BUSINESS",
+						"ALTERNATE",
+						"BILLING",
+						"OTHER"
+					]
+				},
+				"street1": {
+					"type": "string",
+					"required": true,
+					"additionalProperties": false
+				},
+				"street2": {
+					"type": "string",
+					"required": true,
+					"additionalProperties": false
+				},
+				"city": {
+					"type": "string",
+					"required": true,
+					"additionalProperties": false
+				},
+				"state": {
+					"type": "string",
+					"required": true,
+					"additionalProperties": false
+				},
+				"country": {
+					"type": "string",
+					"required": true,
+					"additionalProperties": false
+				},
+				"zipCode": {
+					"type": "string",
+					"required": true,
+					"additionalProperties": false
+				},
+				"preferred": {
+					"type": "boolean",
+					"required": true,
+					"additionalProperties": false
+				}
+			}
+		},
+		"customerPhoneNo": {
+			"javaType": "com.mgmresorts.itineraries.dto.client.customer.CustomerPhoneNo",
+			"type": "object",
+			"required": true,
+			"additionalProperties": false,
+			"properties": {
+				"type": {
+					"type": "string",
+					"required": false,
+					"enum": [
+						"HOME",
+						"BUSINESS",
+						"FAX",
+						"PAGER",
+						"MOBILE",
+						"OTHER",
+						"XDNC1",
+						"XDNC2",
+						"XDNC3",
+						"XDNC4",
+						"XDNC5"
+					]
+				},
+				"number": {
+					"type": "string",
+					"required": true,
+					"additionalProperties": false
+				}
+			}
+		},
+		"customerIdentification": {
+			"javaType": "com.mgmresorts.itineraries.dto.client.customer.CustomerIdentification",
+			"type": "object",
+			"required": true,
+			"additionalProperties": false,
+			"properties": {
+				"type": {
+					"type": "string"
+				},
+				"idNumber": {
+					"type": "string"
+				},
+				"expirationDate": {
+					"type": "string",
+					"format": "date"
+				},
+				"verificationDate": {
+					"type": "string",
+					"format": "date"
+				},
+				"country": {
+					"type": "string"
+				},
+				"stateProvince": {
+					"type": "string"
+				},
+				"primary": {
+					"type": "string"
+				}
+			}
+		},
+		"customerValue": {
+			"javaType": "com.mgmresorts.itineraries.dto.client.customer.CustomerValue",
+			"type": "object",
+			"required": true,
+			"additionalProperties": false,
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"operaPropertyCode": {
+					"type": "string"
+				},
+				"refreshedAt": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"mlifeTier": {
+					"type": "string"
+				},
+				"value": {
+					"properties": {
+						"customerGrade": {
+							"type": "object",
+							"properties": {
+								"powerValue": {
+									"type": "string"
+								},
+								"powerRank": {
+									"type": "integer"
+								},
+								"segment": {
+									"type": "integer"
+								},
+								"dominantPlay": {
+									"type": "string",
+									"required": false,
+									"enum": [
+										"SLOT",
+										"TABLE",
+										"POKER",
+										"GENERAL"
+									]
+								}
+							}
+						},
+						"customerOffer": {
+							"type": "object",
+							"properties": {
+								"roomAllowance": {
+									"type": "object",
+									"properties": {
+										"amount": {
+											"type": "number"
+										}
+									}
+								},
+								"freePlay": {
+									"type": "object",
+									"properties": {
+										"amount": {
+											"type": "number"
+										}
+									}
+								},
+								"resortCredit": {
+									"type": "object",
+									"properties": {
+										"amount": {
+											"type": "number"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"marketAuthorizer": {
+			"javaType": "com.mgmresorts.itineraries.dto.client.customer.MarketAuthorizer",
+			"type": "object",
+			"required": true,
+			"additionalProperties": false,
+			"properties": {
+				"siteId": {
+					"type": "string"
+				},
+				"userId": {
+					"type": "integer"
+				},
+				"loginName": {
+					"type": "string"
+				},
+				"firstName": {
+					"type": "string"
+				},
+				"lastName": {
+					"type": "string"
+				}
+			}
+		},
+		"customerPartnerInterest": {
+			"javaType": "com.mgmresorts.itineraries.dto.client.customer.CustomerPartnerInterest",
+			"type": "object",
+			"required": true,
+			"additionalProperties": false,
+			"properties": {
+				"patronSiteId": {
+					"type": "string"
+				},
+				"interestCode": {
+					"type": "integer"
+				}
+			}
+		},
+		"customerProfile": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.customer.CustomerProfile",
+			"properties": {
+				"patronType": {
+					"type": "string",
+					"enum": [
+						"MLIFE",
+						"SOUTHWEST",
+						"HAYATT_GOLD_PASSPORT"
+					]
+				},
+				"hgpNo": {
+					"type": "string"
+				},
+				"swrrNo": {
+					"type": "string"
+				},
+				"archticsId": {
+					"type": "string"
+				},
+				"operaId": {
+					"type": "string"
+				},
+				"openTableId": {
+					"type": "string"
+				},
+				"tier": {
+					"type": "string"
+				},
+				"hgpTier": {
+					"type": "string"
+				},
+				"title": {
+					"type": "string",
+					"enum": [
+						"MR",
+						"MRS",
+						"MS",
+						"DR",
+						"MADAM",
+						"MISS"
+					]
+				},
+				"firstName": {
+					"type": "string",
+					"description": "The customer's first name."
+				},
+				"lastName": {
+					"type": "string",
+					"description": "The customer's last name."
+				},
+				"id": {
+					"type": "string",
+					"description": "The customer's identification number."
+				},
+				"mlifeNo": {
+					"type": "string",
+					"description": "The customer's M life number."
+				},
+				"addresses": {
+					"type": "array",
+					"description": "The customer's addresses.",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/address"
+					}
+				},
+				"modifiable": {
+					"type": "boolean"
+				},
+				"createdAt": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"updatedAt": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"refreshedAt": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"stale": {
+					"type": "boolean"
+				},
+				"externalSyncAt": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"identifications": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/customerIdentification"
+					}
+				},
+				"caslOptin": {
+					"type": "boolean"
+				},
+				"emailAddress1": {
+					"type": "string",
+					"description": "The customer's primary email addresses"
+				},
+				"emailAddress2": {
+					"type": "string",
+					"description": "The customer's secondary email addresses"
+				},
+				"dateOfBirth": {
+					"type": "string",
+					"format": "date"
+				},
+				"dateOfEnrollment": {
+					"type": "string",
+					"format": "date"
+				},
+				"phoneNumbers": {
+					"type": "array",
+					"description": "The customer's phone numbers.",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/customerPhoneNo"
+					}
+				},
+				"customerValues": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/customerValue"
+					}
+				},
+				"partnerInterests": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/customerPartnerInterest"
+					}
+				},
+				"linkedAccountMlifes": {
+					"type": "array",
+					"items": {
+						"type": "integer"
+					}
+				},
+				"marketAuthorizers": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/marketAuthorizer"
+					}
+				}
+			}
+		},
+		"roomReservation": {
+			"type": "object",
+			"required": true,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.itinerary.RoomReservation",
+			"extendsJavaClass": "com.mgmresorts.itineraries.dto.client.itinerary.RoomReservationBasic",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"instance": {
+					"type": "integer"
+				},
+				"userId": {
+					"type": "string"
+				},
+				"itineraryId": {
+					"type": "string"
+				},
+				"programId": {
+					"type": "string"
+				},
+				"bookDate": {
+					"type": "string",
+					"format": "date"
+				},
+				"guaranteeCode": {
+					"type": "string"
+				},
+				"guaranteeCreditCard": {
+					"type": "object",
+					"$ref": "#/definitions/guaranteeCreditCard"
+				},
+				"comments": {
+					"type": "string"
+				},
+				"additionalComments": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"profile": {
+					"type": "object",
+					"$ref": "#/definitions/customerProfile"
+				},
+				"specialRequests": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"routingInstructions": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/routingInstruction"
+					}
+				},
+				"bookings": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/roomBooking"
+					}
+				},
+				"markets": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/roomMarket"
+					}
+				},
+				"alerts": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/roomReservationAlert"
+					}
+				},
+				"traces": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/roomReservationTrace"
+					}
+				},
+				"chargesAndTaxesCalc": {
+					"type": "object",
+					"$ref": "#/definitions/roomChargesAndTaxes"
+				},
+				"chargesAndTaxesApplied": {
+					"type": "object",
+					"$ref": "#/definitions/roomChargesAndTaxes"
+				},
+				"depositPolicyCalc": {
+					"type": "object",
+					"$ref": "#/definitions/roomDepositPolicy"
+				},
+				"depositCalc": {
+					"type": "object",
+					"$ref": "#/definitions/roomDeposit"
+				},
+				"depositApplied": {
+					"type": "object",
+					"$ref": "#/definitions/roomDeposit"
+				},
+				"billingType": {
+					"type": "string",
+					"required": true,
+					"additionalProperties": false,
+					"enum": [
+						"CUSTOMERCREDITCARD",
+						"SINGLEUSECREDITCARD",
+						"DIRECTBILLING"
+					]
+				},
+				"creditCardCharges": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/creditCardCharge"
+					}
+				},
+				"agentInfo": {
+					"type": "object",
+					"$ref": "#/definitions/bookingAgentInfo"
+				},
+				"rrUpSell": {
+					"type": "string"
+				},
+				"marketCode": {
+					"type": "string"
+				},
+				"sourceCode": {
+					"type": "string"
+				},
+				"upgradeRoomTypeId": {
+					"type": "string"
+				},
+				"cancellationReason": {
+					"type": "string"
+				},
+				"postingFlow": {
+					"type": "string",
+					"description": "The reservation posting flow.",
+					"title": "Reservation posting flow",
+					"enum": [
+						"MAKE",
+						"MODIFY",
+						"CANCEL",
+						"MODIFYPROFILE"
+					]
+				},
+				"postingState": {
+					"type": "string",
+					"description": "The reservation posting state.",
+					"title": "Reservation posting state",
+					"enum": [
+						"QUEUED",
+						"POSTINGRESERVATION",
+						"POSTEDRESERVATION",
+						"POSTINGCOMP",
+						"POSTEDCOMP",
+						"POSTINGFINANCIALS",
+						"POSTEDFINANCIALS",
+						"POSTINGROUTINGS",
+						"POSTEDROUTINGS",
+						"UPDATINGPATRONPROMOSTATUS",
+						"UPDATEDPATRONPROMOSTATUS",
+						"MODIFIEDPROFILE",
+						"SUCCESS",
+						"FAILED"
+					]
+				},
+				"postingStartedAt": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"postingEndedAt": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"roomNumber": {
+					"type": "string"
+				},
+				"channelId": {
+					"type": "string"
+				},
+				"origin": {
+					"type": "string"
+				},
+				"source": {
+					"type": "string"
+				},
+				"shareWiths": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"cancellationPolicyInfo": {
+					"type": "string"
+				},
+				"cancellationNumber": {
+					"type": "string"
+				},
+				"payments": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/payment"
+					}
+				},
+				"amountDue": {
+					"type": "number"
+				},
+				"createdAt": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"updatedAt": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"updatedInOperaAt": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"syncFromOperaAt": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"pointCharges": {
+					"type": "number"
+				},
+				"pointPayments": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/pointPayment"
+					}
+				},
+				"partyConfirmationNumber": {
+					"type": "string"
+				},
+				"customerDominantPlay": {
+					"type": "string",
+					"enum": [
+						"SLOT",
+						"TABLE",
+						"POKER",
+						"GENERAL"
+					]
+				},
+				"primarySharerConfirmationNumber": {
+					"type": "string"
+				},
+				"shareWithType": {
+					"type": "string",
+					"enum": [
+						"FULL",
+						"ENTIRE",
+						"SPLIT"
+					]
+				},
+				"customerRank": {
+					"type": "integer"
+				},
+				"customerSegment": {
+					"type": "integer"
+				}
+			}
+		},
+		"showReservation": {
+			"type": "object",
+			"required": true,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.itinerary.ShowReservation",
+			"extendsJavaClass": "com.mgmresorts.itineraries.dto.client.itinerary.ShowReservationBasic",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "Show Reservation Id",
+					"title": "Show Reservation Id"
+				},
+				"otaConfirmationNumber": {
+					"type": "string"
+				},
+				"userId": {
+					"type": "string"
+				},
+				"itineraryId": {
+					"type": "string"
+				},
+				"bookDate": {
+					"type": "string",
+					"format": "date"
+				},
+				"holdClass": {
+					"type": "string"
+				},
+				"priceCode": {
+					"type": "string"
+				},
+				"comments": {
+					"type": "string"
+				},
+				"tickets": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/showTicket"
+					}
+				},
+				"charges": {
+					"type": "object",
+					"$ref": "#/definitions/showCharges"
+				},
+				"creditCardCharges": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/creditCardCharge"
+					}
+				},
+				"profile": {
+					"type": "object",
+					"$ref": "#/definitions/customerProfile"
+				},
+				"agentInfo": {
+					"type": "object",
+					"$ref": "#/definitions/bookingAgentInfo"
+				},
+				"channelId": {
+					"type": "string"
+				},
+				"origin": {
+					"type": "string"
+				},
+				"source": {
+					"type": "string"
+				},
+				"createdAt": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"updatedAt": {
+					"type": "string",
+					"format": "date-time"
+				}
+			}
+		},
+		"diningReservation": {
+			"type": "object",
+			"required": true,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.itinerary.DiningReservation",
+			"extendsJavaClass": "com.mgmresorts.itineraries.dto.client.itinerary.DiningReservationBasic",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "Dining Reservation Id",
+					"title": "Dining Reservation Id"
+				},
+				"itineraryId": {
+					"type": "string"
+				},
+				"bookDate": {
+					"type": "string",
+					"format": "date"
+				},
+				"diningArea": {
+					"type": "string"
+				},
+				"comments": {
+					"type": "string"
+				},
+				"customerId": {
+					"type": "string"
+				},
+				"profile": {
+					"type": "object",
+					"$ref": "#/definitions/customerProfile"
+				},
+				"agentInfo": {
+					"type": "object",
+					"$ref": "#/definitions/bookingAgentInfo"
+				},
+				"channel": {
+					"type": "string"
+				},
+				"propertyId": {
+					"type": "string"
+				},
+				"origin": {
+					"type": "string"
+				},
+				"createdAt": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"updatedAt": {
+					"type": "string",
+					"format": "date-time"
+				}
+			}
+		},
+		"bookingAgentInfo": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.itinerary.BookingAgentInfo",
+			"properties": {
+				"agentType": {
+					"type": "string",
+					"description": "Agent Type"
+				},
+				"agentId": {
+					"type": "string",
+					"description": "Agent Id"
+				}
+			}
+		},
+		"showSeat": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.shows.ShowSeat",
+			"properties": {
+				"sectionName": {
+					"type": "string"
+				},
+				"rowName": {
+					"type": "string"
+				},
+				"seatNumber": {
+					"type": "integer"
+				}
+			}
+		},
+		"showTicket": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.shows.ShowTicket",
+			"properties": {
+				"showEventId": {
+					"type": "string"
+				},
+				"priceCode": {
+					"type": "string"
+				},
+				"ticketTypeCode": {
+					"type": "string"
+				},
+				"seat": {
+					"type": "object",
+					"$ref": "#/definitions/showSeat"
+				},
+				"price": {
+					"type": "number"
+				},
+				"holdClass": {
+					"type": "string"
+				},
+				"barcode": {
+					"type": "string"
+				},
+				"permissibleDeliveryMethodIds": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"deliveryMethodId": {
+					"type": "string"
+				},
+				"holdId": {
+					"type": "string"
+				},
+				"holdExpiry": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"holdLineItemId": {
+					"type": "integer"
+				},
+				"showTicketState": {
+					"type": "string",
+					"description": "The show ticket state.",
+					"title": "Show Ticket State",
+					"enum": [
+						"SAVED",
+						"HELD",
+						"BOOKED"
+					]
+				}
+			}
+		},
+		"showTicketChargeItem": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.shows.ShowTicketChargeItem",
+			"properties": {
+				"description": {
+					"type": "string"
+				},
+				"seat": {
+					"type": "object",
+					"$ref": "#/definitions/showSeat"
+				},
+				"amount": {
+					"type": "number"
+				},
+				"basePrice": {
+					"type": "number"
+				},
+				"letAmount": {
+					"type": "number"
+				},
+				"gratuityAmount": {
+					"type": "number"
+				}
+			}
+		},
+		"showServiceChargeItem": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.shows.ShowServiceChargeItem",
+			"properties": {
+				"description": {
+					"type": "string"
+				},
+				"chargeId": {
+					"type": "integer"
+				},
+				"amount": {
+					"type": "number"
+				},
+				"basePrice": {
+					"type": "number"
+				},
+				"serviceTaxAmount": {
+					"type": "number"
+				}
+			}
+		},
+		"showDeliveryChargeItem": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.shows.ShowDeliveryChargeItem",
+			"properties": {
+				"description": {
+					"type": "string"
+				},
+				"chargeId": {
+					"type": "integer"
+				},
+				"dmCode": {
+					"type": "string"
+				},
+				"amount": {
+					"type": "number"
+				},
+				"basePrice": {
+					"type": "number"
+				},
+				"deliveryTaxAmount": {
+					"type": "number"
+				}
+			}
+		},
+		"showCharges": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.shows.ShowCharges",
+			"properties": {
+				"total": {
+					"type": "number"
+				},
+				"ticketCharges": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/showTicketChargeItem"
+					}
+				},
+				"serviceChargesComputed": {
+					"type": "boolean"
+				},
+				"serviceCharges": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/showServiceChargeItem"
+					}
+				},
+				"deliveryChargesComputed": {
+					"type": "boolean"
+				},
+				"deliveryCharges": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/showDeliveryChargeItem"
+					}
+				},
+				"gratuityChargesComputed": {
+					"type": "boolean"
+				}
+			}
+		},
+		"creditCardCharge": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.payments.CreditCardCharge",
+			"properties": {
+				"holder": {
+					"type": "string"
+				},
+				"number": {
+					"type": "string"
+				},
+				"maskedNumber": {
+					"type": "string"
+				},
+				"cvv": {
+					"type": "string"
+				},
+				"type": {
+					"type": "string"
+				},
+				"expiry": {
+					"type": "string",
+					"format": "date"
+				},
+				"amount": {
+					"type": "number"
+				},
+				"currencyCode": {
+					"type": "string"
+				},
+				"authCode": {
+					"type": "string"
+				},
+				"holderProfile": {
+					"type": "object",
+					"$ref": "#/definitions/creditCardHolderProfile"
+				}
+			}
+		},
+		"creditCardHolderProfile": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.customer.CreditCardHolderProfile",
+			"properties": {
+				"firstName": {
+					"type": "string"
+				},
+				"lastName": {
+					"type": "string"
+				},
+				"address": {
+					"type": "object",
+					"$ref": "#/definitions/address"
+				}
+			}
+		},
+		"guaranteeCreditCard": {
+			"type": "object",
+			"required": true,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.payments.GuaranteeCreditCard",
+			"properties": {
+				"holder": {
+					"type": "string"
+				},
+				"number": {
+					"type": "string"
+				},
+				"maskedNumber": {
+					"type": "string"
+				},
+				"cvv": {
+					"type": "string"
+				},
+				"type": {
+					"type": "string"
+				},
+				"expiry": {
+					"type": "string",
+					"format": "date"
+				}
+			}
+		},
+		"routingInstruction": {
+			"type": "object",
+			"required": true,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.rooms.RoutingInstruction",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				},
+				"source": {
+					"type": "string",
+					"enum": [
+						"CLIENT",
+						"PROGRAM",
+						"OPERA",
+						"BILLINGTYPE"
+					]
+				},
+				"startDate": {
+					"type": "string",
+					"format": "date"
+				},
+				"endDate": {
+					"type": "string",
+					"format": "date"
+				},
+				"membershipNumber": {
+					"type": "string"
+				},
+				"authorizerId": {
+					"type": "string"
+				},
+				"routingCodes": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"window": {
+					"type": "integer"
+				},
+				"limitType": {
+					"type": "string",
+					"enum": [
+						"VALUE",
+						"PERCENT",
+						"COVERS"
+					]
+				},
+				"limit": {
+					"type": "number"
+				},
+				"dailyYN": {
+					"type": "boolean"
+				},
+				"applicableSunday": {
+					"type": "boolean"
+				},
+				"applicableMonday": {
+					"type": "boolean"
+				},
+				"applicableTuesday": {
+					"type": "boolean"
+				},
+				"applicableWednesday": {
+					"type": "boolean"
+				},
+				"applicableThursday": {
+					"type": "boolean"
+				},
+				"applicableFriday": {
+					"type": "boolean"
+				},
+				"applicableSaturday": {
+					"type": "boolean"
+				},
+				"comments": {
+					"type": "string"
+				},
+				"isSystemRouting": {
+					"type": "boolean"
+				}
+			}
+		},
+		"roomBooking": {
+			"type": "object",
+			"required": true,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.rooms.RoomBooking",
+			"properties": {
+				"date": {
+					"type": "string",
+					"format": "date"
+				},
+				"basePrice": {
+					"type": "number"
+				},
+				"customerPrice": {
+					"type": "number"
+				},
+				"price": {
+					"type": "number"
+				},
+				"programId": {
+					"type": "string"
+				},
+				"pricingRuleId": {
+					"type": "string"
+				},
+				"programIdIsRateTable": {
+					"type": "boolean"
+				},
+				"overridePrice": {
+					"type": "number"
+				},
+				"overrideProgramId": {
+					"type": "string"
+				},
+				"overridePricingRuleId": {
+					"type": "string"
+				},
+				"overrideProgramIdIsRateTable": {
+					"type": "boolean"
+				},
+				"isComp": {
+					"type": "boolean"
+				},
+				"resortFeeIsSpecified": {
+					"type": "boolean"
+				},
+				"resortFee": {
+					"type": "number"
+				}
+			}
+		},
+		"roomMarket": {
+			"type": "object",
+			"required": true,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.rooms.RoomMarket",
+			"properties": {
+				"date": {
+					"type": "string",
+					"format": "date"
+				},
+				"marketCode": {
+					"type": "string"
+				},
+				"sourceCode": {
+					"type": "string"
+				}
+			}
+		},
+		"roomReservationAlert": {
+			"type": "object",
+			"required": true,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.rooms.RoomReservationAlert",
+			"properties": {
+				"alertCodeId": {
+					"type": "string"
+				},
+				"description": {
+					"type": "string"
+				},
+				"alertAreaId": {
+					"type": "string"
+				}
+			}
+		},
+		"roomReservationTrace": {
+			"type": "object",
+			"required": true,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.rooms.RoomReservationTrace",
+			"properties": {
+				"date": {
+					"type": "string",
+					"format": "date"
+				},
+				"departmentId": {
+					"type": "string"
+				},
+				"text": {
+					"type": "string"
+				},
+				"resolvedDate": {
+					"type": "string",
+					"format": "date"
+				},
+				"resolvedUser": {
+					"type": "string"
+				}
+			}
+		},
+		"roomChargesAndTaxes": {
+			"type": "object",
+			"required": true,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.rooms.RoomChargesAndTaxes",
+			"properties": {
+				"charges": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/roomCharge"
+					}
+				},
+				"taxesAndFees": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/roomCharge"
+					}
+				}
+			}
+		},
+		"roomCharge": {
+			"type": "object",
+			"required": true,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.rooms.RoomCharge",
+			"properties": {
+				"date": {
+					"type": "string",
+					"format": "date"
+				},
+				"amount": {
+					"type": "number"
+				},
+				"itemized": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/roomChargeItem"
+					}
+				},
+				"pointsUsed": {
+					"type": "number"
+				}
+			}
+		},
+		"roomChargeItem": {
+			"type": "object",
+			"required": true,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.rooms.RoomChargeItem",
+			"properties": {
+				"itemType": {
+					"type": "string",
+					"description": "The room charge item type.",
+					"title": "The room charge item type",
+					"enum": [
+						"ROOMCHARGE",
+						"ROOMCHARGETAX",
+						"EXTRAGUESTCHARGE",
+						"EXTRAGUESTCHARGETAX",
+						"RESORTFEE",
+						"RESORTFEETAX",
+						"COMPONENTCHARGE",
+						"COMPONENTCHARGETAX"
+					]
+				},
+				"item": {
+					"type": "string"
+				},
+				"amount": {
+					"type": "number"
+				},
+				"pointsUsed": {
+					"type": "number"
+				}
+			}
+		},
+		"roomDepositPolicy": {
+			"type": "object",
+			"required": true,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.rooms.RoomDepositPolicy",
+			"properties": {
+				"depositRequired": {
+					"type": "boolean"
+				},
+				"creditCardRequired": {
+					"type": "boolean"
+				}
+			}
+		},
+		"roomDeposit": {
+			"type": "object",
+			"required": true,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.rooms.RoomDeposit",
+			"properties": {
+				"dueDate": {
+					"type": "string",
+					"format": "date"
+				},
+				"depositRuleCode": {
+					"type": "string"
+				},
+				"cancellationRuleCode": {
+					"type": "string"
+				},
+				"amountPolicy": {
+					"type": "string",
+					"enum": [
+						"NOTREQUIRED",
+						"FLATAMOUNT",
+						"PERCENTAMOUNT",
+						"NIGHTS",
+						"PERCENTNIGHTS"
+					]
+				},
+				"amount": {
+					"type": "number"
+				},
+				"forfeitDate": {
+					"type": "string",
+					"format": "date"
+				},
+				"forfeitAmount": {
+					"type": "number"
+				},
+				"overrideAmount": {
+					"type": "number"
+				},
+				"itemized": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"$ref": "#/definitions/roomChargeItem"
+					}
+				},
+				"pointAmount": {
+					"type": "object",
+					"$ref": "#/definitions/pointDeposit"
+				}
+			}
+		},
+		"pointDeposit": {
+			"type": "object",
+			"required": true,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.rooms.PointDeposit",
+			"properties": {
+				"dollarValue": {
+					"type": "number"
+				},
+				"pointValue": {
+					"type": "number"
+				}
+			}
+		},
+		"pointPayment": {
+			"type": "object",
+			"required": true,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.rooms.PointPayment",
+			"properties": {
+				"reservationInstance": {
+					"type": "integer"
+				},
+				"chargePoints": {
+					"type": "number"
+				},
+				"transactionDate": {
+					"type": "string",
+					"format": "date"
+				},
+				"status": {
+					"type": "string",
+					"enum": [
+						"ISSUED",
+						"REDEEMED",
+						"VOID",
+						"INPROCESS"
+					]
+				},
+				"pointType": {
+					"type": "string"
+				},
+				"isDeposit": {
+					"type": "boolean"
+				},
+				"bookingDate": {
+					"type": "string",
+					"format": "date"
+				},
+				"lastUpdatedAt": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"compId": {
+					"type": "string"
+				},
+				"createdAt": {
+					"type": "string",
+					"format": "date-time"
+				}
+			}
+		},
+		"payment": {
+			"type": "object",
+			"required": true,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.payments.Payment",
+			"properties": {
+				"reservationInstance": {
+					"type": "integer"
+				},
+				"chargeCardHolder": {
+					"type": "string"
+				},
+				"chargeAmount": {
+					"type": "number"
+				},
+				"chargeCurrencyCode": {
+					"type": "string"
+				},
+				"chargeCardType": {
+					"type": "string"
+				},
+				"chargeCardMaskedNumber": {
+					"type": "string"
+				},
+				"chargeCardNumber": {
+					"type": "string"
+				},
+				"chargeCardExpiry": {
+					"type": "string",
+					"format": "date"
+				},
+				"dccChecked": {
+					"type": "boolean"
+				},
+				"dccEligible": {
+					"type": "boolean"
+				},
+				"dccTransDate": {
+					"type": "string",
+					"format": "date"
+				},
+				"dccAmount": {
+					"type": "number"
+				},
+				"dccCurrencyCode": {
+					"type": "string"
+				},
+				"dccRate": {
+					"type": "number"
+				},
+				"dccAcceptMessage": {
+					"type": "string"
+				},
+				"dccAuthApprovalCode": {
+					"type": "string"
+				},
+				"dccSettleAmount": {
+					"type": "number"
+				},
+				"dccSettleReference": {
+					"type": "string"
+				},
+				"status": {
+					"type": "string",
+					"enum": [
+						"DCCCHECKED",
+						"AUTHORIZED",
+						"SETTLED"
+					]
+				},
+				"isDeposit": {
+					"type": "boolean"
+				},
+				"isExternal": {
+					"type": "boolean"
+				},
+				"transType": {
+					"type": "string",
+					"enum": [
+						"DEPOSIT",
+						"BILLING",
+						"CHECKIN",
+						"OTHER"
+					]
+				},
+				"externalReferenceId": {
+					"type": "string"
+				}
+			}
+		},
+		"errorContext": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.itineraries.dto.client.itinerary.ErrorContext",
+			"properties": {
+				"type": {
+					"type": "string",
+					"enum": [
+						"SYSTEM",
+						"FUNCTIONAL"
+					]
+				},
+				"code": {
+					"type": "string",
+					"enum": [
+						"NOERROR",
+						"SYSTEMERROR",
+						"UNKNOWNERROR",
+						"BACKENDERROR",
+						"BACKENDSTATUSERROR",
+						"BACKENDTECHNICALERROR",
+						"BACKENDSYSTEMERROR",
+						"BACKENDRESPONSEPARSEERROR",
+						"BACKENDUNKNOWNERROR",
+						"INTERNALERROR",
+						"ACCOUNTNOTFOUND",
+						"INVALIDCREDENTIALS",
+						"ACCOUNTNOTACTIVE",
+						"ACCOUNTCREATIONFAILED",
+						"INVALIDSECRETANSWERATTEMPTSEXCEEDED",
+						"ACCOUNTALREADYEXISTS",
+						"INVALIDMLIFENUMBER",
+						"SEARCHTOOBROAD",
+						"CUSTOMERNOTMLIFEMEMBER",
+						"CUSTOMERDOESNOTHAVESECRETQUESTIONS",
+						"SECRETQUESTIONUPDATEFAILED",
+						"WEBEMAILUPDATEFAILED",
+						"INVALIDSECRETANSWER",
+						"INVALIDCUSTOMERID",
+						"INVALIDROOMTYPEID",
+						"INVALIDPROGRAMID",
+						"INVALIDCOMPONENTID",
+						"INVALIDREQUESTMESSAGESTRUCTURE",
+						"INVALIDREQUESTMESSAGEVALUES",
+						"INVALIDPROPERTYID",
+						"INVALIDRESTAURANTID",
+						"INVALIDSHOWID",
+						"INVALIDSHOWEVENTID",
+						"INVALIDSHOWHOLDCLASS",
+						"INVALIDSHOWPRICECODE",
+						"INVALIDSHOWTICKETTYPECODE",
+						"INVALIDITINERARYID",
+						"INVALIDRESERVATIONID",
+						"INVALIDRESERVATIONSTATE",
+						"INVALIDRATETABLENAME",
+						"INVALIDCREDITCARD",
+						"INVALIDCREDITCARDEXPIRATION",
+						"CUSTOMERNOTTRANSIENT",
+						"CUSTOMERNOTPATRON",
+						"CHARGEAMOUNTMISMATCH",
+						"BOOKINGFAILED",
+						"BOOKINGPARTIALLYFAILED",
+						"NOPATRONASSOCIATEDWITHWEBACCOUNT",
+						"BACKENDREJECTEDPRODUCTCODE",
+						"BACKENDREJECTEDROOMCATEGORY",
+						"BACKENDREJECTEDRATECODE",
+						"BOOKINGNOTFOUND",
+						"NOTPERMITTEDFORREQUESTEDSHOWHOLDCLASS",
+						"REQUESTEDSHOWEVENTNOTONSALE",
+						"NOTPERMITTEDTOBUYSHOWSEATS",
+						"SHOWSCUSTOMERACCOUNTLOCKED",
+						"SHOWSCUSTOMERPINNOTFOUND",
+						"SHOWSCUSTOMERPINMISMATCH",
+						"SHOWSCUSTOMERACCOUNTNOTFOUND",
+						"NOMORESHOWCUSTOMERACCOUNTSAVAILABLE",
+						"SHOWCUSTOMERWITHEMAILALREADYEXISTS",
+						"BADCHARACTERSINNEWCUSTOMERPIN",
+						"BADNEWCUSTOMEREMAILADDRESS",
+						"INVALIDAUTHMODE",
+						"BACKENDNOTACCEPTINGPAYMENTS",
+						"RESERVATIONNOTSUPPORTED",
+						"INVALIDROUTINGAUTHORIZERID",
+						"UNSUPPORTEDROUTINGLIMITTYPE",
+						"INVALIDGUARANTEECODE",
+						"INVALIDROOMPRICINGRULEID",
+						"CREDITCARDREQUIRED",
+						"NOAVAILABLEHOLDCLASSES",
+						"NOAVAILABLETICKETTYPES",
+						"INVALIDBLOCKCODE",
+						"PAYMENTAUTHORIZATIONFAILED",
+						"CREDITCARDCURRENCYCHECKFAILED",
+						"INVALIDCREDITCARDCURRENCY",
+						"INVALIDPATRONPROMOID",
+						"INVALIDTRAVELAGENTID",
+						"INVALIDSHOWPROGRAMID",
+						"INVALIDARCHTICSPROMOCODE",
+						"INVALIDSHOWTICKETSTATE",
+						"SHOWTICKETDELIVERYMETHODNOTPERMITTED",
+						"INVALIDSHOWTICKETDELIVERYMETHOD",
+						"INVALIDOPERAPROMOCODE",
+						"INVALIDARCHTICSACCOUNTID",
+						"BLACKLISTRESERVATION",
+						"BOOKINGALREADYEXISTS",
+						"NOROOMINVENTORY",
+						"INVALIDHGPNUMBER",
+						"INVALIDBRIDGEPROPERTYMAPPING",
+						"NOTENOUGHPOINTS",
+						"BUSINESSRULEVIOLATION",
+						"NRGRESERVATION",
+						"UNABLETOPRICETRIP",
+						"NODATAFOUND",
+						"INVALIDCONTENTTYPE",
+						"REQUESTTIMEDOUT",
+						"UNSUPPORTEDOPERATION",
+						"INVALIDSESSION",
+						"COMMUNICATIONERROR",
+						"NOTCONNECTED",
+						"CONCURRENTMODIFICATION",
+						"INVALIDPARTITION",
+						"MALFORMEDREFERENCEDATA",
+						"MALFORMEDDTO",
+						"MALFORMEDBACKENDDTO",
+						"TYPECONSTRAINTVIOLATION",
+						"CUSTOMERCACHEREPOSITORYMISMATCH",
+						"INVALIDORIGIN",
+						"INVALIDCHANNELID",
+						"SERVERUNAVAILABLE",
+						"SOURCESYSTEMUNAVAILABLE",
+						"UNAUTHORIZED",
+						"REQUESTEXPIREDINCACHE"
+					]
+				},
+				"sourceServiceCode": {
+					"type": "string"
+				},
+				"faultOrigin": {
+					"type": "string"
+				},
+				"description": {
+					"type": "string"
+				},
+				"extInfo": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}

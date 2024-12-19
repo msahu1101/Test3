@@ -1,0 +1,1 @@
+mvn deploy:deploy-file -DgroupId="com.mgmresorts" -DartifactId="mgm-aurora-client" -Dversion="3.19.7" -Dpackaging=jar -Dfile="mgm-aurora-client-3.19.5.jar" -DrepositoryId=MGMResorts_Maven -DgeneratePom=false -Durl="https://pkgs.dev.azure.com/MGMResortsDigitalEngineering/603b3f0b-17d4-41bb-9016-252b8db20ea5/_packaging/MGMResorts_Maven/maven/v1" -s settings.xml

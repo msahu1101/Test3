@@ -1,0 +1,18 @@
+{
+  "header": {
+    "origin": "API",
+    "mgmCorrelationId": "da669831-8c15-4857-bf62-91ea3eae96b8",
+    "apiVersion": "3.26",
+    "executionId": "8d37b8d8-5651-4471-b2f3-0cc2e831ee35",
+    "status": {
+      "code": "FAILURE",
+      "messages": [
+        {
+          "text": "Customer not found : No profile found with id: 1156619436034",
+          "type": "ERROR",
+          "code": "120-2-3004"
+        }
+      ]
+    }
+  }
+}

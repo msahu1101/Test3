@@ -1,0 +1,36 @@
+{
+    "cartId": null,
+    "mgmId": "00uxjcess3fjcSDtV0h7",
+    "billings": [{
+            "payment": {
+                "cardHolder": "Test",
+                "firstName": "Amol",
+                "lastName": "Joshi",
+                "ccToken": "5555550A001GWUBVAEZW39H14444",
+                "maskedNumber": "555555xxxxxx4444",
+                "cvv": "123",
+                "type": "Mastercard",
+                "expiry": "12/2029",
+                "amount": 122.45
+            },
+            "address": {
+                "street1": "Main Streat",
+                "street2": "",
+                "city": "New York",
+                "state": "CA",
+                "postalCode": "43523",
+                "country": "US"
+            }
+        }
+    ],
+    "guestProfile": {
+        "firstName": "Amol",
+        "lastName": "Joshi",
+        "emailAddress1": "amol@mailinator.com",
+        "phoneNumbers": [{
+                "type": "Home",
+                "number": "4637265463"
+            }
+        ]
+    }
+}

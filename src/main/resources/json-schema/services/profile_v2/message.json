@@ -1,0 +1,199 @@
+{
+	"type": "object",
+	"required": false,
+	"javaType": "com.mgmresorts.profile.dto.services.Wrapper",
+	"additionalProperties": false,
+	"properties": {
+		"createRequest": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.profile.dto.services.CreateRequest",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.InHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"customer": {
+					"required": true,
+					"$ref": "elements.json#/definitions/inCustomer"
+				}
+			}
+		},
+		"createResponse": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.profile.dto.services.CreateResponse",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.OutHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"customer": {
+					"required": true,
+					"$ref": "elements.json#/definitions/customer"
+				}
+			}
+		},
+		"lookupResponse": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.profile.dto.services.LookupResponse",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.OutHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"customer": {
+					"required": true,
+					"$ref": "elements.json#/definitions/customer"
+				}
+			}
+		},
+		"updateRequest": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.profile.dto.services.UpdateRequest",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.InHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"customer": {
+					"required": true,
+					"$ref": "elements.json#/definitions/inCustomer"
+				}
+			}
+		},
+		"updateResponse": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.profile.dto.services.UpdateResponse",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.OutHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"customer": {
+					"required": true,
+					"$ref": "elements.json#/definitions/customer"
+				}
+			}
+		},
+		"replayEventRequest": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.profile.dto.services.ReplayEventRequest",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.InHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"periodStart": {
+					"type": "string",
+					"format": "date-time",
+					"customDateTimePattern": "yyyy-MM-dd'T'HH:mmz",
+					"customTimezone": "UTC"
+				},
+				"periodEnd": {
+					"type": "string",
+					"format": "date-time",
+					"customDateTimePattern": "yyyy-MM-dd'T'HH:mmz",
+					"customTimezone": "UTC"
+				},
+				"patronId": {
+					"type": "string"
+				},
+				"topic": {
+					"type": "string"
+				},
+				"eventType": {
+					"type": "string",
+					"required": true,
+					"enum": [
+						"CREATED",
+						"UPDATED",
+						"DELETED"
+					]
+				}
+			}
+		},
+		"replayEventResponse": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.profile.dto.services.ReplayEventResponse",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.OutHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"totalRecords": {
+					"type": "integer"
+				},
+				"results": {
+					"type": "array",
+					"required": false,
+					"description": "Results",
+					"items": {
+						"type": "object",
+						"required": false,
+						"additionalProperties": false,
+						"properties": {
+							"patronId": {
+								"type": "string",
+								"required": false
+							},
+							"customerId": {
+								"type": "string",
+								"required": false
+							},
+							"eventType": {
+								"type": "string",
+								"required": false,
+								"enum": [
+									"CREATED",
+									"UPDATED",
+									"DELETED"
+								]
+							},
+							"eventTime": {
+								"type": "string",
+								"format": "date-time"
+							}
+						}
+					}
+				}
+			}
+		},
+		"commPreferencesRequest": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.profile.dto.services.CustomerPreferencesRequest",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.InHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"communicationPreferences": {
+					"required": true,
+					"$ref": "elements.json#/definitions/communicationPreferences"
+				}
+			}
+		},
+		"commPreferencesResponse": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.profile.dto.services.CustomerPreferencesResponse",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.OutHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"communicationPreferences": {
+					"required": true,
+					"$ref": "elements.json#/definitions/communicationPreferences"
+				}
+			}
+		},
+		"reservationProfileResponse": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.profile.dto.services.ReservationProfileResponse",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.OutHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"reservationProfile": {
+					"required": true,
+					"type": "array",
+					"items": {
+						"required": true,
+						"$ref": "elements.json#/definitions/reservationProfile"
+					}
+				}
+			}
+		}
+	},
+	"definitions": {
+	}
+}

@@ -1,0 +1,1302 @@
+{
+	"$ref": "#/definitions/orderEvent",
+	"definitions": {
+		"orderEvent": {
+			"type": "object",
+			"javaType": "com.mgmresorts.order.event.dto.OrderEvent",
+			"required": [
+				"orderEventId"
+			],
+			"properties": {
+				"eventOccurrenceTime": {
+					"type": "string",
+					"description": "Time when the event occurred. For orders created, this is after checkout.",
+					"format": "date-time"
+				},
+				"orderEventId": {
+					"type": "string",
+					"description": "A unique guid generated for the event."
+				},
+				"eventTriggerTime": {
+					"type": "string",
+					"description": "Time when the event was triggered. It is possible for the event processing to be triggered a short time after the actual event occurence.",
+					"format": "date-time"
+				},
+				"eventName": {
+					"type": "string",
+					"description": "A short representation of event reason. i.e. Order Created Event. Future use questionable (if we have event specific topics instead.)"
+				},
+				"triggeringOrderLineItemIds": {
+					"type": "array",
+					"description": "A list of line items ids that triggered this event",
+					"items": {
+						"type": "string"
+					}
+				},
+				"order": {
+					"description": "The client visible order data.",
+					"$ref": "#/definitions/order"
+				},
+				"orderInitiatedAt": {
+					"type": "string",
+					"description": "Time when the order was initiated prior to any processing.",
+					"format": "date-time"
+				},
+				"orderUpdatedAt": {
+					"type": "string",
+					"description": "Time when the order was updated.",
+					"format": "date-time"
+				}
+			}
+		},
+		"order": {
+			"type": "object",
+			"javaType": "com.mgmresorts.order.event.dto.Order",
+			"required": [
+				"orderId",
+				"cartId"
+			],
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "Customer friendly order number"
+				},
+				"cartId": {
+					"type": "string",
+					"description": "Cart id which was checked out"
+				},
+				"type": {
+					"description": "The type of the cart. Can be Global or Package.",
+					"$ref": "#/definitions/type"
+				},
+				"version": {
+					"description": "The version of the cart. Can be V1 or V2.",
+					"$ref": "#/definitions/version"
+				},
+				"bookingChannel": {
+					"description": "Channel that checked out the items",
+					"type": "string"
+				},
+				"bookingSource": {
+					"description": "Source that checked out the items",
+					"type": "string"
+				},
+				"totalItemCount": {
+					"type": "integer",
+					"description": "total number of order line items"
+				},
+				"totalSuccessfulItemCount": {
+					"type": "integer",
+					"description": "total number of successfully checked out order line items"
+				},
+				"totalCharge": {
+					"type": "number",
+					"description": "Total charges of all successfully checked out products"
+				},
+				"totalTax": {
+					"type": "number",
+					"description": "Total taxes of all successfully checked out products"
+				},
+				"totalPrice": {
+					"type": "number",
+					"description": "Total price of all successfully checked out products"
+				},
+				"totalStrikethroughPrice": {
+					"type": "number",
+					"description": "Total price of all successfully checked out products before applying program discount"
+				},
+				"totalDeposit": {
+					"type": "number",
+					"description": "Total deposit of all successfully checked out products"
+				},
+				"totalDiscount": {
+					"type": "number",
+					"description": "Total discount for all successfully checked out products"
+				},
+				"totalBalance": {
+					"type": "number",
+					"description": "Total balance for all successfully checked out products"
+				},
+				"paymentMethods": {
+					"type": "object",
+					"javaType": "com.mgmresorts.order.event.dto.PaymentMethods",
+					"properties": {
+						"firstName": {
+							"type": "string"
+						},
+						"lastName": {
+							"type": "string"
+						},
+						"cardHolder": {
+							"type": "string"
+						},
+						"ccToken": {
+							"type": "string"
+						},
+						"maskNumber": {
+							"type": "string"
+						},
+						"expiry": {
+							"type": "string"
+						},
+						"billingAddress": {
+							"$ref": "#/definitions/address"
+						}
+					}
+				},
+				"paymentTransaction": {
+					"type": "object",
+					"javaType": "com.mgmresorts.order.event.dto.PaymentTransactions",
+					"properties": {
+						"transactionAmount": {
+							"type": "number",
+							"description": "The amount paid in the transaction"
+						},
+						"transactionDate": {
+							"type": "string",
+							"description": "The date in which the transaction occurred"
+						}
+					}
+				},
+				"customerProfile": {
+					"type": "object",
+					"additionalProperties": false,
+					"javaType": "com.mgmresorts.order.event.dto.CustomerProfile",
+					"properties": {
+						"customerId": {
+							"type": "string",
+							"description": "Customer id"
+						},
+						"mgmId": {
+							"type": "string",
+							"description": "Mgm id"
+						},
+						"firstName": {
+							"type": "string",
+							"description": "Customer first name"
+						},
+						"lastName": {
+							"type": "string",
+							"description": "Customer last name"
+						},
+						"mLifeId": {
+							"type": "string",
+							"description": "Customer mLifeId"
+						},
+						"email": {
+							"type": "string",
+							"description": "Customer email"
+						},
+						"perpetualOfferEligible": {
+							"type": "boolean",
+							"description": "Customer perpetual eligibility"
+						},
+						"phoneNumber": {
+							"$ref": "#/definitions/phoneNumber"
+						},
+						"address": {
+							"$ref": "#/definitions/address"
+						}
+					}
+				},
+				"failOverCartId": {
+					"type": "string",
+					"description": "New Cart id for the checkout failed item in current cart"
+				},
+				"orderStatus": {
+					"type": "string",
+					"required": true,
+					"description": "Service exception status",
+					"enum": [
+						"SUCCESS",
+						"FAILURE",
+						"PAYMENT_FAILURE",
+						"PARTIAL",
+						"PENDING",
+						"CANCELLED"
+					]
+				},
+				"orderLineItems": {
+					"type": "array",
+					"description": "line items associated with the order",
+					"items": {
+						"$ref": "#/definitions/orderLineItem"
+					}
+				},
+				"cartCreatedAt": {
+					"type": "string",
+					"description": "Time of cart creation",
+					"format": "date-time"
+				},
+				"isTimerExtended": {
+					"type": "boolean",
+					"description": "Marks whether the cart timer has been extended."
+				},
+				"priceExpiresAt": {
+					"type": "string",
+					"description": "Time when the cart expires",
+					"format": "date-time"
+				},
+				"f1Package": {
+					"type": "boolean",
+					"description": "States whether there is any f1Package item in order or not."
+				},
+				"jwbFlow": {
+					"type": "boolean",
+					"description": "Flag to indicate if this cart was checked out as part of JWB flow."
+				},
+				"packageConfigDetails": {
+					"description": "Package 2.0 order level details and pricing",
+					"$ref": "#/definitions/packageConfigDetails"
+				}
+			}
+		},
+		"orderLineItem": {
+			"type": "object",
+			"javaType": "com.mgmresorts.order.event.dto.OrderLineItem",
+			"required": [
+				"cartLineItemId",
+				"orderLineItemId",
+				"name",
+				"type",
+				"status",
+				"confirmationNumber"
+			],
+			"properties": {
+				"propertyId": {
+					"description": "PropertyId at Product level.",
+					"type": "string"
+				},
+				"propertyName": {
+					"type": "string",
+					"description": "PropertyName at Product level."
+				},
+				"productId": {
+					"description": "The id of the product. For rooms it is room type.",
+					"type": "string"
+				},
+				"createdAt": {
+					"type": "string",
+					"description": "Time when the product was added in the cart",
+					"format": "date-time"
+				},
+				"cartLineItemId": {
+					"type": "string",
+					"description": "cart line item id, autogenerated by the system"
+				},
+				"orderLineItemId": {
+					"type": "string",
+					"required": true,
+					"description": "Order Line Item id, autogenerated by the system"
+				},
+				"status": {
+					"type": "string",
+					"required": true,
+					"description": "Service exception status"
+				},
+				"productType": {
+					"type": "string",
+					"description": "Type of the product from the enum",
+					"enum": [
+						"ROOM",
+						"SHOW",
+						"DINING",
+						"AIR",
+						"LIMO",
+						"SPA",
+						"OTHER"
+					]
+				},
+				"lineItemCharge": {
+					"type": "number",
+					"description": "lineItem charges of the product including component charges within the order"
+				},
+				"lineItemTax": {
+					"type": "number",
+					"description": "lineItem taxes of the product within the Order"
+				},
+				"lineItemPrice": {
+					"type": "number",
+					"description": "lineItem price of the product within the cart inclusive of all charges lineItem and taxes lineItem"
+				},
+				"lineItemStrikethroughPrice": {
+					"type": "number",
+					"description": "lineItem price of the product within the cart inclusive of all charges lineItem and taxes lineItem before applying program discount"
+				},
+				"lineItemDeposit": {
+					"type": "number",
+					"description": "lineItem deposit due of the product within the order"
+				},
+				"lineItemDiscount": {
+					"type": "number",
+					"description": "lineItem discount for the product within the order"
+				},
+				"lineItemBalance": {
+					"type": "number",
+					"description": "lineItem balance at check in for the product within the order"
+				},
+				"startsAt": {
+					"type": "string",
+					"description": "Product start date if applicable",
+					"format": "date"
+				},
+				"endsAt": {
+					"type": "string",
+					"description": "Product end date if applicable",
+					"format": "date"
+				},
+				"numberOfGuests": {
+					"description": "The number of guests that will stay in the room(s).",
+					"type": "number"
+				},
+				"itemSelectionDetails": {
+					"description": "Fields that are specific to the type of the line item.",
+					"$ref": "#/definitions/itemSelectionDetails"
+				},
+				"itineraryId": {
+					"type": "string",
+					"description": "The itinerary created for this line item."
+				},
+				"confirmationNumber": {
+					"type": "string",
+					"required": true,
+					"description": "The confirmation number for the corresponding ordered product for this line item."
+				},
+				"contentVersion": {
+					"type": "string",
+					"description": "Product data content version, this will help client to unmarshal the payload with specific schema"
+				},
+				"reservationId": {
+					"type": "integer",
+					"description": "Reservation number"
+				},
+				"operaConfirmationNumber": {
+					"type": "string",
+					"required": true,
+					"description": "The Opera confirmation number for the corresponding ordered product for this line item."
+				},
+				"operaHotelCode": {
+					"type": "string",
+					"required": true,
+					"description": "The Opera hotel code for the corresponding ordered product for this line item."
+				},
+				"content": {
+					"type": "string",
+					"description": "Product data as json/xml"
+				},
+				"productName": {
+					"type": "string",
+					"description": "Product name"
+				},
+				"packageId": {
+					"type": "string",
+					"description": "The identifier for the package configuration. It is used to pull the package configuration content data."
+				},
+				"numberOfNights": {
+					"description": "The number of guests that will stay in the room(s).",
+					"type": "integer"
+				},
+				"upsellPriceDifference": {
+					"type": "number",
+					"description": "Room rate difference between the originally selected item and the upsell item."
+				},
+				"upsellGrossRevenueDifference": {
+					"type": "number",
+					"description": "Total reservation difference between the originally selected item and the upsell item."
+				},
+				"upgraded": {
+					"description": "Indicates if the item is upgraded or not",
+					"type": "boolean"
+				},
+				"upsellAvailable": {
+					"description": "Defines if the item is an upsell eligible item",
+					"type": "boolean"
+				},
+				"upsellLineItem": {
+					"description": "Stores the upsell line item info for upgrade and downgrade operations.",
+					"$ref": "#/definitions/orderLineItem"
+				},
+				"addOnsPrice": {
+					"type": "number",
+					"description": "LineItem amount for selected add on price"
+				},
+				"addOnsTax": {
+					"type": "number",
+					"description": "LineItem amount for selected add on tax"
+				}
+			}
+		},
+		"itemSelectionDetails": {
+			"type": "object",
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.order.event.dto.ItemSelectionDetails",
+			"properties": {
+				"roomSelectionDetails": {
+					"description": "Fields that are specific to room line items.",
+					"$ref": "#/definitions/roomSelectionDetails"
+				},
+				"showSelectionDetails": {
+					"description": "Fields that are specific to show line items.",
+					"$ref": "#/definitions/showSelectionDetails"
+				},
+				"diningSelectionDetails": {
+					"description": "Fields that are specific to dining line items.",
+					"$ref": "#/definitions/diningSelectionDetails"
+				}
+			}
+		},
+		"diningSelectionDetails": {
+			"type": "object",
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.order.event.dto.DiningSelectionDetails",
+			"properties": {
+				"reservationDate": {
+					"type": "string",
+					"format": "date",
+					"description": "Selected date"
+				},
+				"reservationTime": {
+					"type": "string",
+					"description": "Selected time"
+				},
+				"partySize": {
+					"type": "integer",
+					"description": "Number of guests for the reservation"
+				}
+			}
+		},
+		"roomSelectionDetails": {
+			"type": "object",
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.order.event.dto.RoomSelectionDetails",
+			"properties": {
+				"programId": {
+					"description": "The id of the room program used.",
+					"type": "string"
+				},
+				"programName": {
+					"description": "The name of the room program used.",
+					"type": "string"
+				},
+				"programType": {
+					"description": "The type of the room program used.",
+					"type": "string"
+				},
+				"operaPromoCode": {
+					"description": "The opera promo code used for the room program.",
+					"type": "string"
+				},
+				"checkInDate": {
+					"type": "string",
+					"description": "The check-in date selected by the customer."
+				},
+				"checkOutDate": {
+					"type": "string",
+					"description": "The check-in date selected by the customer."
+				},
+				"numberOfAdults": {
+					"description": "The number of adults that will stay in the room(s).",
+					"type": "number"
+				},
+				"numberOfChildren": {
+					"description": "The number of children that will stay in the room(s).",
+					"type": "number"
+				},
+				"numberOfRooms": {
+					"description": "The number of rooms.",
+					"type": "number"
+				},
+				"f1Package": {
+					"description": "The flag indicating if the program belongs to f1 Package.",
+					"type": "boolean"
+				},
+				"specialRequests": {
+					"type": "array",
+					"description": "Customer Special Requests (text only.)",
+					"items": {
+						"type": "string"
+					}
+				},
+				"addOnComponents": {
+					"type": "array",
+					"description": "Available add ons to the room.",
+					"items": {
+						"$ref": "#/definitions/addOnComponent"
+					}
+				},
+				"bookings": {
+					"type": "array",
+					"description": "Room booking details.",
+					"items": {
+						"$ref": "#/definitions/booking"
+					}
+				},
+				"ratesSummary": {
+					"description": "Room Rates Summary.",
+					"$ref": "#/definitions/ratesSummary"
+				},
+				"ratePlanTags": {
+					"type": "string",
+					"description": "Grandstand tag for F1 package."
+				}
+			}
+		},
+		"addOnComponent": {
+			"type": "object",
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.order.event.dto.AddOnComponent",
+			"properties": {
+				"id": {
+					"description": "The id of the room component.",
+					"type": "string"
+				},
+				"code": {
+					"description": "A code for the room component.",
+					"type": "string"
+				},
+				"shortDescription": {
+					"description": "A short description of the add on.",
+					"type": "string"
+				},
+				"longDescription": {
+					"description": "A long description of the add on.",
+					"type": "string"
+				},
+				"active": {
+					"description": "Whether the add on is active at this time.",
+					"type": "boolean"
+				},
+				"nonEditable": {
+					"description": "Whether the add on is editable.",
+					"type": "boolean"
+				},
+				"selected": {
+					"description": "Whether the add on has been selected.",
+					"type": "boolean"
+				},
+				"pricingApplied": {
+					"description": "example: Nightly/Checkin/Checkout/Perstay",
+					"type": "string",
+					"enum": [
+						"NIGHTLY",
+						"CHECKIN",
+						"CHECKOUT",
+						"PERSTAY"
+					]
+				},
+				"tripPrice": {
+					"description": "The total cost of the add on for all nights (if applicable.)",
+					"type": "number"
+				},
+				"tripTax": {
+					"description": "The total tax for the add on for all nights (if applicable.)",
+					"type": "number"
+				},
+				"price": {
+					"type": "number",
+					"description": "The price for the unit irrespecive of."
+				},
+				"depositAmount": {
+					"type": "number",
+					"description": "The upfront deposit amount for the component."
+				},
+				"prices": {
+					"type": "array",
+					"description": "The nightly price breakdown for the add on.",
+					"items": {
+						"$ref": "#/definitions/addOnComponentPrice"
+					}
+				}
+			}
+		},
+		"booking": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"description": "Room bookings.",
+			"properties": {
+				"date": {
+					"type": "string",
+					"example": "2020-08-15"
+				},
+				"basePrice": {
+					"type": "number"
+				},
+				"customerPrice": {
+					"type": "number"
+				},
+				"price": {
+					"type": "number"
+				},
+				"discounted": {
+					"type": "boolean",
+					"description": "This attribute will be true if the price is less than basePrice."
+				},
+				"programIdIsRateTable": {
+					"type": "boolean"
+				},
+				"overridePrice": {
+					"type": "number"
+				},
+				"overrideProgramIdIsRateTable": {
+					"type": "boolean"
+				},
+				"comp": {
+					"type": "boolean"
+				},
+				"resortFeeIsSpecified": {
+					"type": "boolean"
+				},
+				"resortFee": {
+					"type": "number"
+				},
+				"programId": {
+					"type": "string"
+				},
+				"pricingRuleId": {
+					"type": "string"
+				},
+				"overrideProgramId": {
+					"type": "string"
+				},
+				"overridePricingRuleId": {
+					"type": "string"
+				}
+			}
+		},
+		"addOnComponentPrice": {
+			"type": "object",
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.order.event.dto.AddOnComponentPrice",
+			"properties": {
+				"date": {
+					"type": "string",
+					"description": "The night this price object refers to."
+				},
+				"amount": {
+					"description": "The price of the add on for the given date.",
+					"type": "number"
+				},
+				"tax": {
+					"description": "The tax of the add on for the given date.",
+					"type": "number"
+				}
+			}
+		},
+		"showSelectionDetails": {
+			"type": "object",
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.order.event.dto.ShowSelectionDetails",
+			"properties": {
+				"offerType": {
+					"type": "string",
+					"description": "Offer Type of the line item.",
+					"enum": [
+						"MY_VEGAS",
+						"PACKAGE",
+						"OTHER"
+					]
+				},
+				"eventDate": {
+					"type": "string",
+					"format": "date",
+					"description": "The event date.",
+					"required": true
+				},
+				"eventTime": {
+					"description": "The event time.",
+					"type": "string"
+				},
+				"seasonId": {
+					"description": "The season id.",
+					"type": "string"
+				},
+				"programId": {
+					"description": "ProgramId at Product level.",
+					"type": "string"
+				},
+				"programName": {
+					"description": "ProgramName at Product level.",
+					"type": "string"
+				},
+				"myVegasCode": {
+					"description": "Stores value of myVegas redeem code.",
+					"type": "string"
+				},
+				"myVegasComp": {
+					"description": "The flag indicating if the charges are for MYVEGAS COMP.",
+					"type": "boolean"
+				},
+				"hdePackage": {
+					"description": "The flag indicating if the charges are for HDE Package.",
+					"type": "boolean"
+				},
+				"ratesSummary": {
+					"description": "The rates summary.",
+					"$ref": "#/definitions/showRatesSummary"
+				},
+				"numberOfTickets": {
+					"type": "integer",
+					"description": "Total number of tickets."
+				},
+				"selectedDeliveryMethod": {
+					"$ref": "#/definitions/deliveryMethod",
+					"description": "Selected Delivery Method for the product within the order"
+				},
+				"showTickets": {
+					"type": "array",
+					"description": "All show ticket details booked for the associated event",
+					"items": {
+						"$ref": "#/definitions/showTicket"
+					}
+				},
+				"inventorySource": {
+					"type": "string",
+					"description": "The inventory source for the show."
+				}
+			}
+		},
+		"showTicket": {
+			"type": "object",
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.order.event.dto.ShowTicket",
+			"properties": {
+				"priceCode": {
+					"description": "The price code associated with the ticket.",
+					"type": "string"
+				},
+				"priceCodeDescription": {
+					"description": "The price code description associated with the ticket",
+					"type": "string"
+				},
+				"ticketTypeCode": {
+					"description": "The ticket type code associated with the ticket.",
+					"type": "string"
+				},
+				"holdClass": {
+					"description": "The hold class associated with the ticket.",
+					"type": "string"
+				},
+				"basePrice": {
+					"type": "number",
+					"description": "The base price for the ticket."
+				},
+				"discountedPrice": {
+					"type": "number",
+					"description": "The discounted price for the ticket."
+				},
+				"seat": {
+					"description": "The nightly price breakdown for the add on.",
+					"$ref": "#/definitions/showSeat"
+				}
+			}
+		},
+		"showSeat": {
+			"type": "object",
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.order.event.dto.ShowSeat",
+			"properties": {
+				"sectionName": {
+					"type": "string",
+					"description": "The sction name."
+				},
+				"rowName": {
+					"description": "The row name.",
+					"type": "string"
+				},
+				"seatNumber": {
+					"description": "The seat number.",
+					"type": "integer"
+				}
+			}
+		},
+		"showRatesSummary": {
+			"type": "object",
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.order.event.dto.ShowRatesSummary",
+			"properties": {
+				"deliveryFee": {
+					"type": "number",
+					"description": "This is the delivery method fee."
+				},
+				"gratuity": {
+					"type": "number",
+					"description": "This is the gratuity fee."
+				},
+				"let": {
+					"type": "number",
+					"description": "This is the let(live entertainment tax)."
+				},
+				"serviceChargeFee": {
+					"type": "number",
+					"description": "This is the service charge fee."
+				},
+				"serviceChargeTax": {
+					"type": "number",
+					"description": "This is the service charge tax."
+				},
+				"transactionFee": {
+					"type": "number",
+					"description": "This is the transaction fee."
+				},
+				"transactionTax": {
+					"type": "number",
+					"description": "This is the transaction tax."
+				},
+				"showSubtotal": {
+					"type": "number",
+					"description": "This is the show reservation subtotal."
+				},
+				"discountedSubtotal": {
+					"type": "number",
+					"description": "This is the show reservation discounted subtotal."
+				},
+				"reservationTotal": {
+					"type": "number",
+					"description": "This is the show reservation total."
+				}
+			}
+		},
+		"deliveryMethod": {
+			"type": "object",
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.order.event.dto.DeliveryMethod",
+			"properties": {
+				"selected": {
+					"description": "Whether the delivery method has been selected.",
+					"type": "boolean"
+				},
+				"id": {
+					"description": "The id of the delivery method.",
+					"type": "string"
+				},
+				"code": {
+					"description": "A code for the delivery method.",
+					"type": "string"
+				},
+				"name": {
+					"description": "A name of the delivery method.",
+					"type": "string"
+				},
+				"description": {
+					"description": "A description of the delivery method.",
+					"type": "string"
+				},
+				"active": {
+					"description": "Whether the delivery method is active at this time.",
+					"type": "boolean"
+				},
+				"defaultDeliveryMethod": {
+					"description": "Whether the delivery method is the default delivery method.",
+					"type": "boolean"
+				},
+				"amount": {
+					"type": "number",
+					"description": "The price for the delivery method."
+				}
+			}
+		},
+		"type": {
+			"required": true,
+			"additionalProperties": false,
+			"type": "string",
+			"description": "Type of the cart, global, or specialized.",
+			"javaType": "com.mgmresorts.order.dto.services.Type",
+			"enum": [
+				"GLOBAL",
+				"PACKAGE"
+			]
+		},
+		"version": {
+			"required": true,
+			"additionalProperties": false,
+			"type": "string",
+			"description": "Version of the cart",
+			"javaType": "com.mgmresorts.order.dto.services.Version",
+			"enum": [
+				"V1",
+				"V2"
+			],
+			"javaEnums": [
+				{ "name" : "V1" },
+				{ "name" : "V2" }
+			]
+		},
+		"ratesSummary": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"description": "Room Rates Summary.",
+			"javaType": "com.mgmresorts.order.event.dto.RatesSummary",
+			"properties": {
+				"roomSubtotal": {
+					"type": "number",
+					"format": "double",
+					"example": 518,
+					"description": "Total of nightly base prices before discount"
+				},
+				"programDiscount": {
+					"type": "number",
+					"format": "double",
+					"example": 100,
+					"description": "Amount of discount provided by the program. This could be zero when there's no discount and it could be negative if program raises prices as part of value-add."
+				},
+				"discountedSubtotal": {
+					"type": "number",
+					"format": "double",
+					"example": 418,
+					"description": "Value = roomSubtotal - programDiscount"
+				},
+				"discountedAveragePrice": {
+					"type": "number",
+					"format": "double",
+					"example": 209,
+					"description": "Average of all discounted prices across all nights in the trip"
+				},
+				"roomRequestsTotal": {
+					"type": "number",
+					"format": "double",
+					"example": 0,
+					"description": "Total price for all room requests selected by the user"
+				},
+				"adjustedRoomSubtotal": {
+					"type": "number",
+					"format": "double",
+					"example": 418,
+					"description": "Value = roomSubtotal - programDiscount + roomRequestsTotal"
+				},
+				"resortFee": {
+					"type": "number",
+					"format": "double",
+					"example": 75,
+					"description": "Resort fee without tax amount for the trip selected"
+				},
+				"resortFeePerNight": {
+					"type": "number",
+					"format": "double",
+					"example": 60.44,
+					"description": "Average resort fee per night without tax amount"
+				},
+				"tripSubtotal": {
+					"type": "number",
+					"format": "double",
+					"example": 493,
+					"description": "Value = discountedSubtotal + resortFee"
+				},
+				"resortFeeAndTax": {
+					"type": "number",
+					"format": "double",
+					"example": 88.44,
+					"description": "Resort fee and tax amount for the trip selected"
+				},
+				"roomChargeTax": {
+					"type": "number",
+					"format": "double",
+					"example": 55.93,
+					"description": "Amount of tax on room charges"
+				},
+				"occupancyFee": {
+					"type": "number",
+					"format": "double",
+					"example": 3,
+					"description": "Occupancy fee. Applicable only for borgata"
+				},
+				"tourismFee": {
+					"type": "number",
+					"format": "double",
+					"example": 2,
+					"description": "Tourism fee. Applicable only for borgata"
+				},
+				"tourismFeeAndTax": {
+					"type": "number",
+					"format": "double",
+					"example": 6.82,
+					"description": "Tourism fee with tax included. Applicable only for borgata"
+				},
+				"casinoSurcharge": {
+					"type": "number",
+					"format": "double",
+					"example": 2,
+					"description": "Casino Surcharge. Applicable only for borgata"
+				},
+				"casinoSurchargeAndTax": {
+					"type": "number",
+					"format": "double",
+					"example": 6.82,
+					"description": "Casino Surcharge with tax included. Applicable only for borgata"
+				},
+				"reservationTotal": {
+					"type": "number",
+					"format": "double",
+					"example": 562.36,
+					"description": "Overall total for the reservation"
+				},
+				"depositDue": {
+					"type": "number",
+					"format": "double",
+					"example": 236.96,
+					"description": "Deposit amount to be paid to book the reservation"
+				},
+				"previousDeposit": {
+					"type": "number",
+					"format": "double",
+					"example": 218,
+					"description": "Deposit paid during the reservation. This is applicable only for /v2/reservation/preview api."
+				},
+				"changeInDeposit": {
+					"type": "number",
+					"format": "double",
+					"example": 18.96,
+					"description": "Change in deposit amount from previous deposit. Negative value means it's refund. This is applicable only for /v2/reservation/preview api."
+				},
+				"balanceUponCheckIn": {
+					"type": "number",
+					"format": "double",
+					"example": 325.4,
+					"description": "Balance amount to be paid during check-in"
+				},
+				"averagePricePerNight":{
+					"type": "number",
+					"format": "double",
+					"example": 325.4,
+					"description": "Average price per night."
+				}
+			}
+		},
+		"phoneNumber": {
+			"type": "object",
+			"javaType": "com.mgmresorts.order.event.dto.PhoneNumber",
+			"properties": {
+				"type": {
+					"type": "string",
+					"description": "The phone type.",
+					"title": "phone type",
+					"enum": [
+						"Home",
+						"Business",
+						"Fax",
+						"Pager",
+						"Mobile",
+						"Other"
+					]
+				},
+				"number": {
+					"type": "string"
+				}
+			}
+		},
+		"address": {
+			"type": "object",
+			"javaType": "com.mgmresorts.order.event.dto.Address",
+			"properties": {
+				"type": {
+					"type": "string",
+					"description": "The Address type.",
+					"title": "address type",
+					"enum": [
+						"Home",
+						"Business",
+						"Alternate",
+						"Other"
+					]
+				},
+				"street1": {
+					"type": "string"
+				},
+				"street2": {
+					"type": "string"
+				},
+				"city": {
+					"type": "string"
+				},
+				"state": {
+					"type": "string"
+				},
+				"country": {
+					"type": "string"
+				},
+				"postalCode": {
+					"type": "string"
+				}
+			}
+		},
+		"packageConfigDetails": {
+			"type": "object",
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.order.event.dto.PackageConfigDetails",
+			"properties": {
+				"packageCategoryId": {
+					"type": "string",
+					"description": "The identifier for the package category being used in Package 2.0 flow"
+				},
+				"packagePriceBreakdown": {
+					"type": "string",
+					"description": "PackagePriceBreakdown specifies build-as-you-go or transparent"
+				},
+				"packagePricingDetails": {
+					"description": "PackagePricingDetails summarizes package pricing details",
+					"$ref": "#/definitions/packagePricingDetails"
+				}
+			}
+		},
+		"packagePricingDetails": {
+			"type": "object",
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.order.event.dto.PackagePricingDetails",
+			"properties": {
+				"packageBaseTotal": {
+					"type": "number",
+					"description": "The starting price of the package. Read only field."
+				},
+				"packageStartingPrice": {
+					"type": "number",
+					"description": "The starting price of the package"
+				},
+				"packageTotal": {
+					"type": "number",
+					"description": "The total price of the package"
+				},
+				"roomModification": {
+					"type": "number",
+					"description": "The room modification price of the package"
+				},
+				"showModification": {
+					"type": "number",
+					"description": "The show modification price of the package"
+				},
+				"roomTotal": {
+					"type": "number",
+					"description": "The room total price of the package"
+				},
+				"showTotal": {
+					"type": "number",
+					"description": "The show total price of the package"
+				},"packageInclusions": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/packageCategoryInclusion"
+					},
+					"description": "The package inclusions for the selected package"
+				},
+				"isMultiDayEvent": {
+					"type": "boolean",
+					"description": "Indicates if the show event in the package is a multi day event"
+				},
+				"eventEndDate": {
+					"type": "string",
+					"description": "The show event end date is specified only for multi-date events"
+				},
+				"eventStartDate": {
+					"type": "string",
+					"description": "The show event start date is specified only for multi-date events"
+				}
+			}
+		},
+		"packageCategoryInclusion": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.order.event.dto.PackageCategoryInclusion",
+			"additionalProperties": false,
+			"properties": {
+				"name": {
+					"type": "string"
+				},
+				"description": {
+					"type": "string"
+				},
+				"enabled": {
+					"type": "boolean"
+				},
+				"displayInCarouselGrid": {
+					"type": "boolean"
+				},
+				"carouselGridDisplayText": {
+					"type": "string"
+				},
+				"detailText": {
+					"type": "string"
+				},
+				"bookingDestinationUrl": {
+					"type": "string"
+				},
+				"inclusionMultiplierType": {
+					"type": "string",
+					"description": "Inclusion multiplier",
+					"enum": [
+						"PER_PACKAGE",
+						"PER_PERSON"
+					]
+				},
+				"rateComponents": {
+					"description": "Offer Components array",
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/offerComponent"
+					}
+				},
+				"asset": {
+					"$ref": "#/definitions/asset"
+				}
+			}
+		},
+		"propertyComponent": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.order.event.dto.PropertyComponent",
+			"additionalProperties": false,
+			"properties": {
+				"property": {
+					"type": "string"
+				},
+				"componentId": {
+					"type": "string"
+				}
+			}
+		},
+		"offerComponent": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.order.event.dto.OfferComponent",
+			"additionalProperties": false,
+			"properties": {
+				"componentCode": {
+					"description": "Component Code",
+					"type": "string"
+				},
+				"propertyComponents": {
+					"description": "Property Components array",
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/propertyComponent"
+					}
+				}
+			}
+		},
+		"asset": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.order.event.dto.Asset",
+			"additionalProperties": false,
+			"properties": {
+				"assetId": {
+					"type": "string"
+				},
+				"assetName": {
+					"type": "string"
+				},
+				"assetType": {
+					"type": "string"
+				},
+				"mimeType": {
+					"type": "string"
+				},
+				"transformBaseUrl": {
+					"type": "string"
+				},
+				"description": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}

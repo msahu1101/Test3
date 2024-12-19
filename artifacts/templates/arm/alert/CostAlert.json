@@ -1,0 +1,82 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "alertData": {
+          "type": "array"
+        },
+		"contactGroups": {
+                       "type": "array",
+	                    "defaultValue": [],
+                        "metadata": {
+                        "description": "The list of action groups to send the budget notification to when the threshold is exceeded. It accepts array of strings."
+                        }
+                      },
+    "meterCategoryFilterValues": {
+      "type": "array",
+	   "defaultValue": [],
+      "metadata": {
+        "description": "The set of values for the second filter"
+      }
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "type": "Microsoft.Consumption/budgets",
+      "apiVersion": "2019-10-01",
+      "name": "[parameters('alertData')[copyIndex()].budgetName]",
+      "properties": {
+        "timePeriod": {
+          "startDate": "[parameters('alertData')[copyIndex()].startDate]",
+          "endDate": "[parameters('alertData')[copyIndex()].endDate]"
+        },
+        "timeGrain": "[parameters('alertData')[copyIndex()].timeGrain]",
+        "amount": "[parameters('alertData')[copyIndex()].amount]",
+        "category": "Cost",
+        "notifications": {
+          "NotificationForExceededBudget1": {
+            "enabled": "[parameters('alertData')[copyIndex()].isEnabled_firstThreshold]",
+            "operator": "GreaterThan",
+            "threshold": "[parameters('alertData')[copyIndex()].firstThreshold]",
+            "contactEmails": "[parameters('alertData')[copyIndex()].contactEmails]",
+            "contactRoles": "[parameters('alertData')[copyIndex()].contactRoles]",
+            "contactGroups": "[parameters('contactGroups')]"
+          },
+          "NotificationForExceededBudget2": {
+            "enabled": "[parameters('alertData')[copyIndex()].isEnabled_secondThreshold]",
+            "operator": "GreaterThan",
+            "threshold": "[parameters('alertData')[copyIndex()].secondThreshold]",
+             "contactEmails": "[parameters('alertData')[copyIndex()].contactEmails]",
+            "contactRoles": "[parameters('alertData')[copyIndex()].contactRoles]",
+            "contactGroups": "[parameters('contactGroups')]"
+          }
+        },
+        "filter": {
+          "and": [
+            {
+              "dimensions": {
+                "name": "ResourceGroupName",
+                "operator": "In",
+                "values": "[parameters('alertData')[copyIndex()].ResourceGroupName[0]]"
+              }
+            },
+            {
+              "dimensions": {
+                "name": "MeterCategory",
+                "operator": "In",
+                "values": "[parameters('meterCategoryFilterValues')]"
+              }
+            }
+          ]
+        }
+      },
+	  "copy": {
+				"name": "alertLoop",
+				"count": "[length(parameters('alertData'))]",
+				"mode": "serial",
+				"batchSize": 1
+			}
+    }
+  ]
+}

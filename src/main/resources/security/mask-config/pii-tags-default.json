@@ -1,0 +1,18 @@
+{
+    "customer.reponse": [
+        "customer.profile.lastName",
+        "customer.profile.emailAddresses.email",
+        "customer.profile.phoneNumbers.number"
+    ],
+    "patron:fetchprofileresponse": [
+        "envelope.body.fetchprofileresponse.profiledetails.customer.personname.lastname",
+        "envelope.body.fetchprofileresponse.profiledetails.creditcards.namecreditcard.cardcode",
+        "envelope.body.fetchprofileresponse.profiledetails.creditcards.namecreditcard.cardholdername",
+        "envelope.body.fetchprofileresponse.profiledetails.creditcards.namecreditcard.cardnumber",
+        "envelope.body.fetchprofileresponse.profiledetails.creditcards.namecreditcard.expirationdate",
+        "envelope.body.fetchprofileresponse.profiledetails.addresses.nameaddress.cityname",
+        "envelope.body.fetchprofileresponse.profiledetails.addresses.nameaddress.stateprov",
+        "envelope.body.fetchprofileresponse.profiledetails.addresses.nameaddress.countrycode",
+        "envelope.body.fetchprofileresponse.profiledetails.phones.namephone.phonenumber"
+    ]
+}

@@ -1,0 +1,32 @@
+{
+    "type": "object",
+    "required": false,
+    "javaType": "com.mgmresorts.itineraries.dto.client.services.Wrapper",
+    "additionalProperties": false,
+    "properties": {
+        "createItineraryRequest": {
+            "type": "object",
+            "required": false,
+            "additionalProperties": false,
+            "properties": {
+                "itinerary": {
+                    "type": "object",
+                    "required": false,
+                    "$ref": "itinerary.json#/definitions/inItinerary"
+                }
+            }
+        },
+        "itineraryResponse": {
+            "type": "object",
+            "required": false,
+            "additionalProperties": false,
+            "properties": {
+                "itinerary": {
+                    "type": "object",
+                    "required": true,
+                    "$ref": "itinerary.json#/definitions/itineraryData"
+                }
+            }
+        }
+    }
+}

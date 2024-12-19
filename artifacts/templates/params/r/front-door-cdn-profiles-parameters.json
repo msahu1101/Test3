@@ -1,0 +1,140 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+      "frontdoor_name": {
+        "type": "string",
+        "value": "orderservice-gb-fd-cdn-$(TARGET_APP_SERVICE_ENVIRONMENT)"
+      },
+      "origin_group_name": {
+        "type": "string",
+        "value": "orderservice-origin-group"
+      },
+      "function_app_1": {
+        "type": "string",
+        "value": "$(TARGET_APP_SERVICE_NAME1)"
+      },
+      "function_app_1_http_port": {
+        "type": "int",
+        "value": 80
+      },
+      "function_app_1_https_port": {
+        "type": "int",
+        "value": 443
+      },
+      "function_app_1_priority": {
+        "type": "int",
+        "value": 1
+      },
+      "function_app_1_weight": {
+        "type": "int",
+        "value": 70
+      },
+      "function_app_1_enabled_state": {
+        "type": "string",
+        "value": "Enabled"
+      },
+      "function_app_1_enforce_cert_name_check": {
+        "type": "bool",
+        "value": false
+      },
+      "function_app_2": {
+        "type": "string",
+        "value": "$(TARGET_APP_SERVICE_NAME2)"
+      },
+      "function_app_2_http_port": {
+        "type": "int",
+        "value": 80
+      },
+      "function_app_2_https_port": {
+        "type": "int",
+        "value": 443
+      },
+      "function_app_2_priority": {
+        "type": "int",
+        "value": 1
+      },
+      "function_app_2_weight": {
+        "type": "int",
+        "value": 30
+      },
+      "function_app_2_enabled_state": {
+        "type": "string",
+        "value": "Enabled"
+      },
+      "function_app_2_enforce_cert_name_check": {
+        "type": "bool",
+        "value": false
+      },
+      "frontdoor_waf_name": {
+        "type": "string",
+        "value": "OrderServiceWhitelistWAFRulesStandard"
+      },
+      "origin_response_timeout": {
+        "type": "int",
+        "value": 60
+      },
+      "endpoint_enabled_state": {
+        "type": "string",
+        "value": "Enabled"
+      },
+      "load_balancing_sample_size": {
+        "type": "int",
+        "value": 4
+      },
+      "load_balancing_successful_sample_required": {
+        "type": "int",
+        "value": 2
+      },
+      "load_balancing_latency": {
+        "type": "int",
+        "value": 500
+      },
+      "health_probe_path": {
+        "type": "string",
+        "value": "/api/control/health"
+      },
+      "health_probe_request_type": {
+        "type": "string",
+        "value": "HEAD"
+      },
+      "health_probe_protocol": {
+        "type": "string",
+        "value": "Https"
+      },
+      "health_probe_interval": {
+        "type": "int",
+        "value": 120
+      },
+      "session_affinity_enabled_state": {
+        "type": "string",
+        "value": "Disabled"
+      },
+      "security_policy_name": {
+        "type": "string",
+        "value": "OrderServiceWhitelistStandardPolicy"
+      },
+      "routing_rule_name": {
+        "type": "string",
+        "value": "orderservice-routing-rule"
+      },
+      "routing_rule_forwarding_protocol": {
+        "type": "string",
+        "value": "HttpsOnly"
+      },
+      "routing_rule_link_to_default_domain_enabled_state": {
+        "type": "string",
+        "value": "Enabled"
+      },
+      "routing_rule_https_redirect_enabled_state": {
+        "type": "string",
+        "value": "Enabled"
+      },
+      "routing_rule_enabled_state": {
+        "type": "string",
+        "value": "Enabled"
+      }
+	},
+	"resources": [
+	]
+}

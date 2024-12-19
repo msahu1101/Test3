@@ -1,0 +1,52 @@
+{
+	"mgmId": "00uxa97o33twlFmqb0h7",
+	"cartId": "0b57b071-f3b9-432d-87a9-506ece3c8c4a",
+	"cartType": "PACKAGE",
+	"inAuthTransactionId": "8a3d34be200d",
+	"guestProfile": {
+		"firstName": "Riddhi",
+		"lastName": "Deshmukh",
+		"emailAddress1": "riddhi@mgmresorts.com",
+			"addresses": [
+                {
+                    "preferred": "false",
+                    "street1": "1234 S Main St",
+                    "street2": "Unit 2012",
+                    "city": "Las Vegas",
+                    "state": "NV",
+                    "country": "US",
+                    "postalCode": "89113",
+                    "type": "Other"
+                }
+            ],
+            "phoneNumbers":[
+            	{
+            		"type": "Home",
+            		"number": "17023593248"
+            	}
+            ]
+	},
+	"billings": [
+		{
+				"payment": {
+					"firstName": "Riddhi",
+					"lastName": "Deshmukh",
+					"amount": 2267.61,
+					"maskedNumber": "411111xxxxxx1128",
+					"cardHolder": "John Doe",
+					"cvv": "123",
+					"expiry": "4/2023",
+					"type": "Visa",
+					"ccToken": "4111110A001DQXFHY79D9XCZ1128"
+				},
+				"address": {
+					"street1": "1234 S Main St",
+					"street2": "Unit 2012",
+					"city": "Las Vegas",
+					"postalCode": "89113",
+					"state": "NV",
+					"country": "US"
+				}
+			}
+	]
+}

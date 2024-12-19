@@ -1,0 +1,43 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"required": false,
+	"javaType": "com.mgmresorts.payments.model.Wrapper",
+	"additionalProperties": false,
+	"properties": {
+		"paymentsOrchestrationWorkFlowResquest": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.payments.model.PaymentsOrchestrationWorkFlowResquest",
+			"additionalProperties": false,
+			"properties": {
+				"arguments": {
+					"$ref": "elements.json#/definitions/workflowArgs"
+				},
+				"definitions": {
+					"type": "array",
+					"items": {
+						"$ref": "elements.json#/definitions/workflowDefs"
+					}
+				}
+			}
+		},
+		"paymentsOrchestrationWorkFlowResponse": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.payments.model.PaymentsOrchestrationWorkFlowResponse",
+			"additionalProperties": false,
+			"properties": {
+				"workflowResponse": {
+					"type": "array",
+					"items": {
+						"$ref": "elements.json#/definitions/workflowResponse"
+					}
+				}
+			}
+		}
+	},
+	"definitions": {
+		
+	}
+}

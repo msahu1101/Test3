@@ -1,0 +1,104 @@
+{
+  "id": "100812688",
+  "bookDate": "2023-12-19 11:28:46.277",
+  "confirmationNumber": "100812688",
+  "propertyId": "607c07e7-3e31-4e4c-a4e1-f55dca66fea2",
+  "eventDate": "2023-12-20",
+  "eventTime": "8:30 PM",
+  "reservationStatus": "Reserved",
+  "cancellable": false,
+  "seasonId": "4b503874-009a-4127-871a-7b2e00dbf79a",
+  "showEventId": "ATD1220L",
+  "showEventCode": "ATD1220L",
+  "deliveryMethodCode": "TF",
+  "comp": false,
+  "hdePackage": false,
+  "resendEmailAllowed": true,
+  "tickets": [
+    {
+      "priceCode": "DN",
+      "holdClass": "OPEN",
+      "basePrice": 62.79,
+      "discountedPrice": 62.79,
+      "accessible": false,
+      "adaCompanion": false,
+      "description": "Standard",
+      "showEventId": "ATD1220L",
+      "showEventCode": "ATD1220L",
+      "barCode": "484728682430",
+      "ticketTypeCode": "_A",
+      "seat": {
+        "sectionName": "204",
+        "rowName": "BB",
+        "seatNumber": 5
+      },
+      "ticketTypeCodeDescription": "Standard"
+    },
+    {
+      "priceCode": "DN",
+      "holdClass": "OPEN",
+      "basePrice": 62.79,
+      "discountedPrice": 62.79,
+      "accessible": false,
+      "adaCompanion": false,
+      "description": "Standard",
+      "showEventId": "ATD1220L",
+      "showEventCode": "ATD1220L",
+      "barCode": "759354930110",
+      "ticketTypeCode": "_A",
+      "seat": {
+        "sectionName": "204",
+        "rowName": "BB",
+        "seatNumber": 6
+      },
+      "ticketTypeCodeDescription": "Standard"
+    }
+  ],
+  "charges": {
+    "discountedSubtotal": 138.0,
+    "showSubtotal": 138.0,
+    "let": 12.42,
+    "deliveryFee": 0.0,
+    "gratuity": 0.0,
+    "reservationTotal": 180.32,
+    "serviceCharge": {
+      "amount": 29.9,
+      "itemized": {
+        "charge": 27.43,
+        "tax": 2.47
+      }
+    },
+    "transactionFee": {
+      "amount": 0.0,
+      "itemized": {
+        "charge": 0.0,
+        "tax": 0.0
+      }
+    }
+  },
+  "profile": {
+    "archticsId": "251052254",
+    "firstName": "Adithya",
+    "lastName": "In",
+    "phoneNumbers": [
+      {
+        "type": "Home",
+        "number": "2488478890"
+      }
+    ],
+    "emailAddress1": "AINUGURTHI@MGMRESORTS.COM",
+    "addresses": [
+      {
+        "type": "Home",
+        "preferred": true,
+        "street1": "18812",
+        "street2": "AP dr",
+        "city": "troy",
+        "state": "MI",
+        "country": "US",
+        "postalCode": "48084"
+      }
+    ]
+  },
+  "sendReservationsAsyncToTM": false
+}

@@ -1,0 +1,88 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"team": {
+			"type": "string",
+			"value": "Order Services"
+		},
+		"environment": {
+			"type": "string",
+			"value": "$(TARGET_APP_SERVICE_ENVIRONMENT)"
+		},
+		"storage_account_name": {
+			"type": "string",
+			"value": "mgmos$(TARGET_APP_SERVICE_VERSION)$(TARGET_APP_SERVICE_LOCATION)$(TARGET_APP_SERVICE_ENVIRONMENT)"
+		},
+		"account_type": {
+			"type": "string",
+			"value": "Standard_RAGRS"
+		},
+		"account_kind": {
+			"type": "string",
+			"value": "StorageV2"
+		},
+		"network_acls": {
+			"type": "string",
+			"value": "AzureServices"
+		},
+		"vnet_resource_group_name": {
+			"type": "string",
+			"value": "shoppingcartvnet-$(TARGET_APP_SERVICE_LOCATION)-rg-$(TARGET_NETWORK_ENVIRONMENT)"
+		},
+		"vnet_name": {
+			"type": "string",
+			"value": "shoppingcart-$(TARGET_APP_SERVICE_LOCATION)-vnet-$(TARGET_NETWORK_ENVIRONMENT)"
+		},
+		"subnet_name": {
+			"type": "string",
+			"value": "orderservicecoreqa4-$(TARGET_APP_SERVICE_LOCATION)-sn-q"
+		},
+		"encryption_key_source": {
+			"type": "string",
+			"value": "Microsoft.Keyvault"
+		},
+		"encryption_keyvault_key_name": {
+			"type": "string",
+			"value": "storage-account-encryption-key"
+		},
+		"encryption_keyvault_url": {
+			"type": "string",
+			"value": "https://shoppingcartprv-uw-kv-d.vault.azure.net"
+		},
+		"encryption_identity_type": {
+			"type": "string",
+			"value": "UserAssignedManagedIdentity"
+		},
+		"encryption_identity_keyvault_properties_details": {
+			"type": "string",
+			"value": "UserAssignedManagedIdentity"
+		},
+		"resource_identity_user_assigned_managed_identity_name": {
+			"type": "string",
+			"value": "mgmshoppingcart-$(TARGET_APP_SERVICE_LOCATION)-umi-$(TARGET_APP_SERVICE_ENVIRONMENT)"
+		},
+		"resource_identity_user_assigned_managed_identity_rg_name": {
+			"type": "string",
+			"value": "shoppingcart-$(TARGET_APP_SERVICE_LOCATION)-rg-$(TARGET_APP_SERVICE_ENVIRONMENT)"
+		},
+		"resource_identity_type": {
+			"type": "string",
+			"value": "UserAssignedManagedIdentity"
+		},
+		"blob_delete_retention_policy_enabled": {
+			"type": "bool",
+			"value": true
+		},
+		"blob_delete_retention_policy_days": {
+			"type": "int",
+			"value": 7
+		},
+		"blob_delete_retention_policy_allow_permanent_delete": {
+			"type": "bool",
+			"value": false
+		}
+	},
+	"resources": [
+	]
+}

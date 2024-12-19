@@ -1,0 +1,112 @@
+{
+	"type": "object",
+	"required": true,
+	"javaType": "com.mgmresorts.graphql.dto.show.services.Wrapper",
+	"additionalProperties": false,
+	"properties": {
+		"getShowEventResponse": {
+			"type": "object",
+			"required": true,
+			"javaType": "com.mgmresorts.graphql.dto.show.services.GetShowEventResponse",
+			"additionalProperties": false,
+			"properties": {
+				"data": {
+					"required": true,
+					"description": "Actual response data.",
+					"$ref": "#/definitions/data"
+				},
+				"errors": {
+					"type": "array",
+					"description": "Error details.",
+					"items": {
+						"$ref": "../graphqlcommonschema.json#/definitions/graphQLError"
+					}
+				}
+			}
+		}
+	},
+	"definitions": {
+		"data": {
+			"type": "object",
+			"required": true,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.graphql.dto.show.services.Data",
+			"properties": {
+				"getShowEvent": {
+					"required": true,
+					"description": "Get show event object which has all the event information.",
+					"$ref": "#/definitions/showEvent"
+				}
+			}
+		},
+		"showEvent": {
+			"type": "object",
+			"required": true,
+			"javaType": "com.mgmresorts.graphql.dto.show.services.ShowEvent",
+			"additionalProperties": false,
+			"properties": {
+				"eventDate": {
+					"type": "string"
+				},
+				"eventTime": {
+					"type": "string"
+				},
+				"eventTz": {
+					"type": "string"
+				},
+				"propertyId": {
+					"type": "string"
+				},
+				"showId": {
+					"type": "string"
+				},
+				"seasonId": {
+					"type": "string"
+				},
+				"eventCode": {
+					"type": "string"
+				},
+				"eventId": {
+					"type": "string"
+				},
+				"active": {
+					"type": "boolean"
+				},
+				"id": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				},
+				"allDayEventShowTimeDetails": {
+					"required": true,
+					"description": "Show times range for this event only in case of all day events, calculated from show content.",
+					"$ref": "#/definitions/allDayEventShowTimeDetails"
+				}
+			}
+		},
+		"allDayEventShowTimeDetails": {
+			"type": "object",
+			"required": true,
+			"javaType": "com.mgmresorts.graphql.dto.show.services.AllDayEventShowTimeDetails",
+			"additionalProperties": false,
+			"properties": {
+				"lastAdmissionTime": {
+					"type": "string"
+				},
+				"openingTime": {
+					"type": "string"
+				},
+				"closingTime": {
+					"type": "string"
+				},
+				"allDayEvent": {
+					"type": "boolean"
+				},
+				"hoursType": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}

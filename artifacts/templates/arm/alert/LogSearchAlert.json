@@ -1,0 +1,102 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+		"appInsight": {
+            "type": "string",
+            "metadata": {
+                "description": "App Insight Name."
+            }
+        },
+		"environment": {
+            "type": "string",
+            "allowedValues": [
+                "prod",
+                "preprod",
+                "int",
+				"qa",
+                "dev"
+            ],
+			"metadata": {
+                "description": "Alert Environment."
+            }
+        },
+		"actionGroup": {
+            "type": "object",
+            "metadata": {
+                "description": "It contans all the actions data"
+            }
+        },
+		"alertData": {
+          "type": "array"
+        }
+		
+    },
+    "variables": {
+        "alertLocation": "westus",
+        "alertStatus": "true",
+        "alertSource":{
+            "SourceId": 
+			"[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/microsoft.insights/components/', parameters('appInsight'))]",
+		    "Type":"ResultCount"
+        },
+        "alertSchedule":{
+            "Frequency": 5,
+            "Time": 10
+        },
+        "actionGrpPrefix":
+            "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', parameters('actionGroup').resourceGroup, '/providers/microsoft.insights/actiongroups/')]",
+		
+		"copy": [
+            {
+                "name": "alertName",
+                "count": "[length(parameters('alertData'))]",
+                "input": "[concat(parameters('alertData')[copyIndex('alertName')].name, ' ', parameters('alertData')[copyIndex('alertName')].threshold)]"
+            }
+        ]	
+		
+    },
+    "resources":[ {
+        "name":"[concat('Sev', parameters('alertData')[copyIndex()].severity, ' | ', parameters('environment'),' | ', variables('alertName')[copyIndex()])]",
+        "type":"Microsoft.Insights/scheduledQueryRules",
+        "apiVersion": "2018-04-16",
+        "location": "[variables('alertLocation')]",
+        "properties":{
+            "description": "[concat('P', parameters('alertData')[copyIndex()].severity, ' ', variables('alertName')[copyIndex()])]",
+            "enabled": "[variables('alertStatus')]",
+            "source": {
+                "query": "[parameters('alertData')[copyIndex()].query]",
+                "dataSourceId": "[variables('alertSource').SourceId]",
+                "queryType":"[variables('alertSource').Type]"
+            },
+            "schedule":{
+                "frequencyInMinutes": "[variables('alertSchedule').Frequency]",
+                "timeWindowInMinutes": "[variables('alertSchedule').Time]"
+            },
+            "action":{
+                "odata.type": "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.Microsoft.AppInsights.Nexus.DataContracts.Resources.ScheduledQueryRules.AlertingAction",
+                "severity":"[parameters('alertData')[copyIndex()].severity]",
+                "aznsAction":{
+                    "actionGroup":[
+						"[concat(variables('actionGrpPrefix'), parameters('actionGroup').names[0])]"
+					],
+                    "emailSubject":"[concat('Sev', parameters('alertData')[copyIndex()].severity, ' | ', parameters('environment'),' | ', variables('alertName')[copyIndex()])]",
+                    "customWebhookPayload": null
+                },
+                "trigger":{
+                    "thresholdOperator":"[parameters('alertData')[copyIndex()].operator]",
+                    "threshold":"[parameters('alertData')[copyIndex()].threshold]"
+                }
+            }
+        },
+		"copy": {
+				"name": "alertLoop",
+				"count": "[length(parameters('alertData'))]",
+				"mode": "serial",
+				"batchSize": 1
+		}
+	
+	} 
+	
+	]
+}

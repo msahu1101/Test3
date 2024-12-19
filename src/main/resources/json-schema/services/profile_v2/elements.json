@@ -1,0 +1,774 @@
+{
+	"definitions": {
+		"emailAddress": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.profile.dto.common.Email",
+			"properties": {
+				"email": {
+					"type": "string",
+					"required": false,
+					"additionalProperties": false
+				},
+				"preferred": {
+					"type": "boolean",
+					"default": false,
+					"required": false
+				},
+				"type": {
+					"type": "string",
+					"required": false,
+					"enum": [
+						"PERSONAL",
+						"BUSINESS",
+						"OTHER"
+					]
+				},
+				"typeAsRaw": {
+					"type": "string",
+					"required": false
+				}
+			}
+		},
+		"phoneNumber": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.profile.dto.common.Phone",
+			"properties": {
+				"type": {
+					"type": "string",
+					"required": false,
+					"enum": [
+						"HOME",
+						"BUSINESS",
+						"FAX",
+						"MOBILE",
+						"OTHER"
+					]
+				},
+				"number": {
+					"type": "string",
+					"required": false,
+					"additionalProperties": false
+				},
+				"preferred": {
+					"type": "boolean",
+					"default": false,
+					"required": false
+				},
+				"typeAsRaw": {
+					"type": "string",
+					"required": false
+				}
+			}
+		},
+		"address": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.profile.dto.common.Address",
+			"properties": {
+				"type": {
+					"type": "string",
+					"required": false,
+					"enum": [
+						"HOME",
+						"BUSINESS",
+						"BILLING",
+						"ALTERNATE",
+						"OTHER"
+					]
+				},
+				"typeAsRaw": {
+					"type": "string",
+					"required": false
+				},
+				"street1": {
+					"type": "string",
+					"required": false,
+					"additionalProperties": false
+				},
+				"street2": {
+					"type": "string",
+					"required": false,
+					"additionalProperties": false
+				},
+				"city": {
+					"type": "string",
+					"required": false,
+					"additionalProperties": false
+				},
+				"state": {
+					"type": "string",
+					"required": false,
+					"additionalProperties": false
+				},
+				"country": {
+					"type": "string",
+					"required": true,
+					"additionalProperties": false,
+					"description": "country name should in the ISO-3166-alpha2 format ex:US"
+				},
+				"zipCode": {
+					"type": "string",
+					"required": true,
+					"additionalProperties": false
+				},
+				"preferred": {
+					"type": "boolean",
+					"required": true,
+					"default": false,
+					"additionalProperties": false
+				}
+			}
+		},
+		"inCustomer": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.profile.dto.customer.InCustomer",
+			"additionalProperties": false,
+			"properties": {
+				"forgetMyInfo": {
+					"type": "boolean",
+					"required": false,
+					"default": false,
+					"description": "Compliance optin flag when set will mask/strip the customer profile info and will not return the unmasked object"
+				},
+				"profile": {
+					"type": "object",
+					"required": true,
+					"$ref": "#/definitions/customerProfile"
+				},
+				"externalId": {
+					"type": "object",
+					"required": true,
+					"$ref": "#/definitions/inExternalId"
+				},
+				"membershipOptin": {
+					"type": "boolean",
+					"required": false,
+					"default": false,
+					"description": "enroll customer into membership program(s)"
+				},
+				"memberships": {
+					"type": "object",
+					"required": true,
+					"$ref": "#/definitions/inMembership"
+				}
+			}
+		},
+		"customer": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.profile.dto.customer.Customer",
+			"additionalProperties": false,
+			"properties": {
+				"id": {
+					"type": "string",
+					"required": true,
+					"description": "customer id created in gse, a long value (later this will be replaced with GUID)"
+				},
+				"profileId": {
+					"type": "string",
+					"required": true,
+					"description": "Unique id generated during entry into datastore, client is not required to send this id; this is a GUID"
+				},
+				"externalId": {
+					"type": "object",
+					"required": true,
+					"$ref": "#/definitions/externalId"
+				},
+				"forgetMyInfo": {
+					"type": "boolean",
+					"required": false,
+					"description": "Compliance optin flag when set will mask/strip the customer profile info and will not return the unmasked object"
+				},
+				"profile": {
+					"type": "object",
+					"required": true,
+					"$ref": "#/definitions/customerProfile"
+				},
+				"memberships": {
+					"type": "object",
+					"required": true,
+					"$ref": "#/definitions/membership"
+				},
+				"metadata": {
+					"type": "object",
+					"required": true,
+					"$ref": "#/definitions/metadata"
+				}
+			}
+		},
+		"inMembership": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.profile.dto.customer.InMembership",
+			"properties": {
+				"type": {
+					"type": "string",
+					"required": true,
+					"description": "type of customer",
+					"enum": [
+						"MLIFE",
+						"SOUTHWEST",
+						"HAYATT_GOLD_PASSPORT"
+					]
+				},
+				"enrolledAt": {
+					"type": "string",
+					"required": true,
+					"description": "originator/Source of mlife enrollment"
+				},
+				"partnerInterests": {
+					"type": "array",
+					"items": {
+						"required": false,
+						"$ref": "#/definitions/partnerInterest"
+					}
+				}
+			}
+		},
+		"membership": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.profile.dto.customer.Membership",
+			"properties": {
+				"id": {
+					"type": "string",
+					"required": true,
+					"description": "Membership id, like loyalty id"
+				},
+				"referenceId": {
+					"type": "string",
+					"required": true,
+					"description": "source system profile id like mlife#"
+				},
+				"type": {
+					"type": "string",
+					"required": true,
+					"description": "type of customer",
+					"enum": [
+						"MLIFE",
+						"SOUTHWEST",
+						"HYATT_GOLD_PASSPORT"
+					]
+				},
+				"tier": {
+					"type": "string",
+					"required": true,
+					"description": "mlife customer tier value",
+					"enum": [
+						"SAPPHIRE",
+						"PEARL",
+						"GOLD",
+						"PLATINUM",
+						"NOIR"
+					]
+				},
+				"enrolledAt": {
+					"type": "string",
+					"required": true,
+					"description": "originator/Source of mlife enrollment"
+				},
+				"dateOfEnrollment": {
+					"type": "string",
+					"required": true,
+					"format": "date",
+					"description": "customer's mlife enrollment date"
+				},
+				"isActive": {
+					"type": "boolean",
+					"required": true,
+					"description": "Status of the loyalty profile"
+				},
+				"isPrimary": {
+					"type": "boolean",
+					"required": true,
+					"description": "Is this profile master profile when merged"
+				},
+				"creditAccount": {
+					"type": "boolean",
+					"required": true,
+					"description": "flag to check whether account modifiable or not"
+				},
+				"partnerInterests": {
+					"type": "array",
+					"items": {
+						"required": true,
+						"$ref": "#/definitions/partnerInterest"
+					}
+				},
+				"loyaltyProgram": {
+					"required": false,
+					"$ref": "#/definitions/loyaltyProgram"
+				},
+				"customerIdentifications": {
+					"type": "array",
+					"items": {
+						"required": false,
+						"$ref": "#/definitions/customerIdentification"
+					}
+				},
+				"marketAuthorizers": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"required": false,
+						"$ref": "#/definitions/marketAuthorizer"
+					}
+				}
+			}
+		},
+		"partnerInterest": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.profile.dto.customer.loyalty.PartnerInterest",
+			"properties": {
+				"patronSiteId": {
+					"type": "string",
+					"required": true,
+					"description": "MGM Property id "
+				},
+				"interestCode": {
+					"type": "integer",
+					"required": true,
+					"description": "Customer's interests like Golf,Cigars etc."
+				}
+			}
+		},
+		"customerIdentification": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.profile.dto.customer.Identification",
+			"properties": {
+				"type": {
+					"type": "string",
+					"required": false,
+					"description": "Customer's identification type."
+				},
+				"id": {
+					"type": "string",
+					"required": false,
+					"description": "Customer's identification id."
+				},
+				"expirationDate": {
+					"type": "string",
+					"required": false,
+					"format": "date",
+					"description": "Customer's identification document expiry date."
+				},
+				"verificationDate": {
+					"type": "string",
+					"required": false,
+					"format": "date",
+					"description": "When the Customer's identification was verified by MGM system/employee."
+				},
+				"stateProvince": {
+					"type": "string",
+					"required": false,
+					"description": "Customer's state/province per identification doc ."
+				},
+				"country": {
+					"type": "string",
+					"required": false,
+					"description": "Customer's Country per identification doc ."
+				},
+				"primary": {
+					"type": "string",
+					"required": false,
+					"description": "Is this identification, Customer's primary identification doc."
+				}
+			}
+		},
+		"marketAuthorizer": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.profile.dto.customer.loyalty.MarketAuthorizers",
+			"properties": {
+				"siteId": {
+					"type": "string",
+					"required": false
+				},
+				"userId": {
+					"type": "string",
+					"required": false
+				},
+				"loginName": {
+					"type": "string",
+					"required": false
+				},
+				"firstName": {
+					"type": "string",
+					"required": false
+				},
+				"lastName": {
+					"type": "string",
+					"required": false
+				}
+			}
+		},
+		"loyaltyProgram": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.profile.dto.customer.loyalty.LoyaltyPrograms",
+			"properties": {
+				"loyaltyPrograms": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"required": false,
+						"$ref": "#/definitions/lProgram",
+						"description": "array of loyalty programs"
+					}
+				},
+				"externalMemberships": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"required": false,
+						"$ref": "#/definitions/externalMembership",
+						"description": "array of external memberships"
+					}
+				}
+			}
+		},
+		"lProgram": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.profile.dto.customer.loyalty.LoyaltyProgram",
+			"properties": {
+				"loyaltyProgramId": {
+					"type": "string",
+					"required": false
+				},
+				"loyaltyProgramDesription": {
+					"type": "string",
+					"required": false
+				}
+			}
+		},
+		"externalMembership": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.profile.dto.customer.loyalty.ExternalMemberships",
+			"properties": {
+				"memberId": {
+					"type": "string",
+					"required": false
+				},
+				"externalProgram": {
+					"required": false,
+					"$ref": "#/definitions/extProgram"
+				}
+			}
+		},
+		"extProgram": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.profile.dto.customer.membership.extMembership.ExtProgram",
+			"properties": {
+				"name": {
+					"type": "string",
+					"required": false
+				},
+				"owner": {
+					"type": "string",
+					"required": false
+				},
+				"programCode": {
+					"type": "string",
+					"required": false
+				}
+			}
+		},
+		"inExternalId": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.profile.dto.customer.InExternalId",
+			"properties": {
+				"mgmId": {
+					"type": "string",
+					"required": false
+				},
+				"swrrNo": {
+					"type": "string",
+					"required": false
+				},
+				"hgpNo": {
+					"type": "string",
+					"required": false
+				}
+			}
+		},
+		"externalId": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.profile.dto.customer.ExternalId",
+			"properties": {
+				"mgmId": {
+					"type": "string",
+					"required": false
+				},
+				"mgmLoyaltyId": {
+					"type": "string",
+					"required": false
+				},
+				"swrrNo": {
+					"type": "string",
+					"required": false
+				},
+				"archticsId": {
+					"type": "string",
+					"required": false
+				},
+				"operaId": {
+					"type": "string",
+					"required": false
+				},
+				"hgpNo": {
+					"type": "string",
+					"required": false
+				},
+				"sevenRoomsId": {
+					"type": "string",
+					"required": false
+				},
+				"patronId": {
+					"type": "string",
+					"required": false
+				},
+				"gseCustomerId": {
+					"type": "string",
+					"required": false
+				}
+			}
+		},
+		"customerProfile": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.profile.dto.customer.Profile",
+			"properties": {
+				"title": {
+					"type": "string",
+					"required": false,
+					"enum": [
+						"MR",
+						"MRS",
+						"MS",
+						"DR",
+						"MADAM",
+						"MISS"
+					]
+				},
+				"firstName": {
+					"type": "string",
+					"required": false
+				},
+				"lastName": {
+					"type": "string",
+					"required": false
+				},
+				"gender": {
+					"type": "string",
+					"required": false
+				},
+				"dateOfBirth": {
+					"type": "string",
+					"required": false,
+					"format": "date"
+				},
+				"emailAddresses": {
+					"type": "array",
+					"items": {
+						"required": false,
+						"$ref": "#/definitions/emailAddress"
+					}
+				},
+				"phoneNumbers": {
+					"type": "array",
+					"items": {
+						"required": false,
+						"$ref": "#/definitions/phoneNumber"
+					}
+				},
+				"addresses": {
+					"type": "array",
+					"items": {
+						"required": false,
+						"$ref": "#/definitions/address"
+					}
+				},
+				"caslOptin": {
+					"type": "boolean",
+					"required": false
+				},
+				"hgpTier": {
+					"type": "string",
+					"required": false
+				},
+				"customerIdentifications": {
+					"type": "array",
+					"items": {
+						"required": false,
+						"$ref": "#/definitions/customerIdentification"
+					}
+				}
+			}
+		},
+		"communicationPreferences": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.profile.dto.commpref.CommunicationPreferences",
+			"additionalProperties": false,
+			"properties": {
+				"mgmId": {
+					"type": "string",
+					"required": false,
+					"description": "unique mgm identity id"
+				},
+				"externalId": {
+					"type": "string",
+					"required": false,
+					"description": "any external source system id, like opera etc"
+				},
+				"externalIdType": {
+					"type": "string",
+					"required": true,
+					"enum": [
+						"opera",
+						"sevenRooms",
+						"archtics",
+						"openTable"
+					]
+				},
+				"preferences": {
+					"required": true,
+					"$ref": "#/definitions/preferences"
+				},
+				"metadata": {
+					"type": "object",
+					"required": true,
+					"$ref": "#/definitions/metadata"
+				}
+			}
+		},
+		"preferences": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"required": true,
+				"$ref": "#/definitions/preference"
+			}
+		},
+		"preference": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.profile.dto.commpref.Preference",
+			"properties": {
+				"preferenceType": {
+					"type": "string",
+					"required": true,
+					"enum": [
+						"Phone",
+						"Email",
+						"Text",
+						"PushNotification"
+					]
+				},
+				"preferenceValue": {
+					"type": "string",
+					"required": true
+				},
+				"transactionPreference": {
+					"type": "string",
+					"required": true,
+					"enum": [
+						"yes",
+						"no",
+						"null"
+					]
+				},
+				"marketingPreference": {
+					"type": "string",
+					"required": true,
+					"enum": [
+						"yes",
+						"no",
+						"null"
+					]
+				}
+			}
+		},
+		"reservationProfile": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.profile.dto.ReservationProfile",
+			"properties": {
+				"firstName": {
+					"type": "string",
+					"required": false
+				},
+				"lastName": {
+					"type": "string",
+					"required": false
+				},
+				"operaConfirmationNo": {
+					"type": "string",
+					"required": false
+				}
+			}
+		},
+		"metadata": {
+			"javaType": "com.mgmresorts.common.dto.Metadata",
+			"type": "object",
+			"required": true,
+			"additionalProperties": false,
+			"properties": {
+				"createdAt": {
+					"type": "string",
+					"description": "Created time of the resource",
+					"format": "date-time",
+					"required": true
+				},
+				"createdBy": {
+					"type": "string",
+					"description": "Name of the client id which created the resource",
+					"required": true
+				},
+				"modifiedAt": {
+					"type": "string",
+					"description": "Last modified time of the resource",
+					"format": "date-time",
+					"required": false
+				},
+				"modifiedBy": {
+					"type": "string",
+					"description": "Name of the client id which modified the resource last",
+					"required": false
+				},
+				"version": {
+					"type": "integer",
+					"description": "Version of the resource. Typically this shows number of updates happened on a resource",
+					"required": true
+				}
+			}
+		}
+	}
+}

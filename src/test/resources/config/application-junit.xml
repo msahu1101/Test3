@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="application.backend.canned-mode">true</entry>
+	<entry key="cache.disabled.global">true</entry>
+	<entry key="security.disabled.global">true</entry>
+	<entry key="test.config">test.config.value.test</entry>
+	<entry key="test.config.int">1234</entry>
+	<entry key="test.config.replace">{test.config}/test2</entry>
+	<entry key="test.config.replace2">{test.config.invalid}/test2</entry>
+	<entry key="apim.auth.url">https://azdeapi-dev.mgmresorts.com/int/identity/authorization/v1/mgmsvc/.well-known/oauth-authorization-server</entry>
+	<entry key="eventor-pool.size">100</entry>
+	<entry key="global.onewayhash.salt@secure">test</entry>
+	<entry key="keyVault.base.url">https://google.net</entry>
+	<entry key="keyVault.ar.tenant">tenant</entry>
+	<entry key="keyVault.client.id">client.id</entry>
+	<entry key="keyVault.client.key">client.key</entry>
+	<entry key="datastore.cosmos.proxy.enable">false</entry>
+	<entry key="payment.method.validation.enabled">true</entry>
+	<entry key="async.enabled">true</entry>
+	<entry key="tcolv.skip.payment.processing">true</entry>
+	<entry key="tcolv.property.id">e5d3f1c9-833a-83f1-e053-d303fe0ad83c</entry>
+</properties>

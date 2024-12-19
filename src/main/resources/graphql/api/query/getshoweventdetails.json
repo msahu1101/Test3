@@ -1,0 +1,22 @@
+query GetShowEvent($getShowEventId: String) {
+  getShowEvent(id: $getShowEventId) {
+    active
+    eventCode
+    eventDate
+    eventId
+    eventTz
+    id
+    seasonId
+    showId
+    eventTime
+    name
+    propertyId
+    allDayEventShowTimeDetails {
+        lastAdmissionTime
+        openingTime
+        closingTime
+        allDayEvent
+        hoursType
+    }
+  }
+}

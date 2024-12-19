@@ -1,0 +1,117 @@
+trigger:
+- feature*
+- develop
+- stage
+- integration
+- qa
+- preprod
+- main
+- hotfix*
+
+pool:
+     name: VMSS-DESelfHosted
+
+steps:
+-   task: DownloadSecureFile@1
+    displayName: 00 | download maven settings file
+    name: settingsxml
+    inputs:
+      secureFile: 'settings.xml'
+
+-   task: FuncToolsInstaller@0
+    displayName: 01 | install latest azure function core
+    inputs:
+      version: 'latest'
+         
+-   task: PowerShell@2
+    displayName: 02 | configure maven settings
+    inputs:
+      targetType: 'inline'
+      script: |
+        New-Item -Type Directory -Force "${HOME}/.m2"
+        Copy-Item -Force "$(settingsxml.secureFilePath)" "${HOME}/.m2/settings.xml"
+
+
+-     task: PowerShell@2
+      displayName: 1 || check for infra chage
+      inputs:
+           targetType: 'inline'
+           script: |
+                $files=$(git diff HEAD HEAD~ --name-only)
+                $temp=$files -split ' '
+                $count=$temp.Length
+                echo "Total changed $count files"
+                For ($i=0; $i -lt $temp.Length; $i++)
+                {
+                  $name=$temp[$i]
+                  echo "this is $name file"
+                  if ($name -like "artifacts/templates/*" -OR $name -contains "pom.xml")
+                    {
+                      Write-Host "##vso[task.setvariable variable=infrastructure_changed]True"
+                      New-Item -Path 'infrastructure_changed.txt' -ItemType File -Force
+                      Get-ChildItem -Recurse infrastructure_changed.txt | Format-Table FullName 
+                     }
+                    if ($name -like "artifacts/templates/*/cosmos-custom-managed-key.json" -OR $name -like "artifacts/templates/*/cosmos-custom-managed-key-single-region.json" -OR $name -like "artifacts/templates/*/*/cosmos-sql-parameters-cust-managed-key.json" -OR $name -like "artifacts/templates/*/*/cosmos-sql-parameters-cust-managed-key-multi-vnet.json")
+                    {
+                      Write-Host "##vso[task.setvariable variable=cosmos_infra_changed]True"
+                      New-Item -Path 'cosmos_infra_changed.txt' -ItemType File -Force
+                      Get-ChildItem -Recurse cosmos_infra_changed.txt | Format-Table FullName
+                     }
+                    if ($name -like "artifacts/templates/*/app-service-plan.json" -OR $name -like "artifacts/templates/*/*/app-service-plan-parameters.json")
+                    {
+                      Write-Host "##vso[task.setvariable variable=asp_infra_changed]True"
+                      New-Item -Path 'asp_infra_changed.txt' -ItemType File -Force
+                      Get-ChildItem -Recurse asp_infra_changed.txt | Format-Table FullName
+                     }
+                }
+
+-    task: Maven@3
+     displayName: 2 || build code 
+     inputs:
+          mavenPomFile: pom.xml
+          mavenOptions: -Xmx3072m
+          javaHomeOption: JDKVersion
+          jdkVersionOption: '1.11'
+          jdkArchitectureOption: x64
+          publishJUnitResults: true
+          testResultsFiles: '**/surefire-reports/TEST-*.xml'
+          codeCoverageToolOption: None
+          checkStyleRunAnalysis: true
+          pmdRunAnalysis: true
+          findBugsRunAnalysis: false
+          goals: clean package -U
+
+-    task: PublishCodeCoverageResults@1
+     displayName: 3 || publish code coverage
+     inputs:
+          codeCoverageTool: JaCoCo
+          summaryFileLocation: $(System.DefaultWorkingDirectory)/target/site/jacoco/jacoco.xml
+          reportDirectory: $(System.DefaultWorkingDirectory)/target/site/jacoco
+          pathToSources: $(System.DefaultWorkingDirectory)/src/main/java/
+          additionalCodeCoverageFiles: $(System.DefaultWorkingDirectory)/target/jacoco.exec
+
+-    task: WhiteSource Bolt@19
+     displayName: 4 || run security scan
+     inputs:
+          cmd: https://github.com/MGMResorts/order-service
+     enabled: false
+     
+-   task: CopyFiles@2
+    displayName: 5 || copy all artifacts
+    inputs:
+      SourceFolder: $(system.defaultworkingdirectory)
+      Contents: |
+        **/artifacts/**
+        **/distribution/**
+        **/azure-functions/**
+        infrastructure_changed.txt
+        cosmos_infra_changed.txt
+        asp_infra_changed.txt
+        pom.xml
+      TargetFolder: $(Build.ArtifactStagingDirectory)
+      OverWrite: true
+
+-    task: PublishBuildArtifacts@1
+     displayName: 6 || publish artifacts
+     inputs:
+          PathtoPublish: $(Build.ArtifactStagingDirectory)

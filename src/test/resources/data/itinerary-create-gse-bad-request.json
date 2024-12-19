@@ -1,0 +1,18 @@
+{
+  "header": {
+    "origin": "API",
+    "mgmCorrelationId": "3f68d227-1e9b-4048-bc1b-86040f085002",
+    "apiVersion": "3.26",
+    "executionId": "3ed8fee0-c4ed-41d2-93f7-70cad0356776",
+    "status": {
+      "code": "FAILURE",
+      "messages": [
+        {
+          "text": "Bad Request error occurred in GSE | Code: 12345 | Description: Bad request",
+          "type": "ERROR",
+          "code": "120-3-3015"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+    "cancelRoomReservationRequest": {
+        "firstName": "John",
+        "lastName": "Holding",
+        "confirmationNumber": "M083DF771",
+        "cancellationReason": "WEATHER",
+        "inAuthTransactionId": "12345678",
+        "overrideDepositForfeit": false
+    },
+    "reservationType": "ROOM",
+    "paymentSessionId": "b4b3ac91-692f-477c-840d-304e731bb008"
+}

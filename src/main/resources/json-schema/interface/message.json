@@ -1,0 +1,297 @@
+{
+	"type": "object",
+	"required": false,
+	"javaType": "com.mgmresorts.order.dto.services.Wrapper",
+	"additionalProperties": false,
+	"properties": {
+		"checkoutRequest": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.order.dto.services.CheckoutRequest",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.InHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"cartId": {
+					"type": "string",
+					"description": "The cart's id. It is required to have either cart id or mgm id. If both are included, the mgm id will be ignored."
+				},
+				"mgmId": {
+					"type": "string",
+					"description": "The customer's mgm id. It is required to have either cart id or mgm id. If both are included, the mgm id will be ignored."
+				},
+				"itineraryId": {
+					"type": "string",
+					"description": "Itinerary id: Optional, create if missing"
+				},
+				"guestProfile": {
+					"required": true,
+					"descriptopn": "Fulfillment request contract",
+					"$ref": "elements.json#/definitions/guestProfile"
+				},
+				"billings": {
+					"required": true,
+					"type": "array",
+					"items": {
+						"$ref": "elements.json#/definitions/billing"
+					}
+				},
+				"inAuthTransactionId": {
+					"type": "string",
+					"description": "Transaction id"
+				},
+				"enableJwb": {
+					"type": "boolean",
+					"default": false,
+					"description": "Enable JWB flag"
+				},
+				"cartType": {
+					"required": false,
+					"$ref": "elements.json#/definitions/type",
+					"description": "Specifies the expected type of the cart. Will be considered when mgmId is passed with it and ignored when cartId is passed."
+				},
+				"cartVersion": {
+					"required": false,
+					"$ref": "elements.json#/definitions/version",
+					"description": "Specifies the expected version of the cart. Will be considered when mgmId is passed with it and ignored when cartId is passed."
+				},
+				"progressiveCheckout": {
+					"type": "boolean",
+					"default": false,
+					"description": "Flag to indicate the use of progressive checkout."
+				},
+				"paymentCaptured": {
+					"type": "boolean",
+					"default": false,
+					"description": "Flag to indicate whether payment was captured via payment widget."
+				}
+			}
+		},
+		"checkoutResponse": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.order.dto.services.CheckoutResponse",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.OutHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"order": {
+					"description": "The order created from checking out the cart.",
+					"$ref": "elements.json#/definitions/order"
+				}
+			}
+		},
+		"retrieveReservationResponse": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.order.dto.services.RetrieveReservationResponse",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.OutHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"paymentSessionId": {
+					"type": "string"
+				},
+				"roomReservationResponse": {
+					"existingJavaType": "com.mgmresorts.rbs.model.RoomReservationResponse"
+				},
+				"showReservationResponse": {
+					"existingJavaType": "com.mgmresorts.sbs.model.ShowReservationResponse"
+				},
+				"diningReservationResponse": {
+					"existingJavaType": "com.mgmresorts.dbs.model.SearchReservationResponse"
+				},
+				"errorRoomReservationResponse": {
+					"required": false,
+					"existingJavaType": "com.mgmresorts.rbs.model.ErrorResponse"
+				},
+				"errorShowReservationResponse": {
+					"required": false,
+					"existingJavaType": "com.mgmresorts.sbs.model.ErrorResponse"
+				},
+				"errorDiningReservationResponse": {
+					"required": false,
+					"existingJavaType": "com.mgmresorts.dbs.model.Response"
+				},
+				"errorPaymentSessionResponse": {
+					"required": false,
+					"descriptopn": "Error response during get payment session.",
+					"existingJavaType": "com.mgmresorts.psm.model.SessionError"
+				},
+				"isPackage": {
+					"type": "boolean",
+					"default": false,
+					"description": "Flag to indicate if reservation is of package 2.0"
+				},
+				"order": {
+					"description": "The order related to the confirmation number",
+					"$ref": "elements.json#/definitions/order"
+				}
+			}
+		},
+		"previewReservationRequest": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.order.dto.services.PreviewReservationRequest",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.InHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"paymentSessionId": {
+					"type": "string",
+					"description": "The payment session id. It is required in case of any additional deposit to be collected or refund."
+				},
+				"reservationType": {
+					"required": false,
+					"$ref": "elements.json#/definitions/reservationType",
+					"description": "Specifies the expected reservation type."
+				},
+				"previewRoomReservationRequest": {
+					"required": false,
+					"descriptopn": "Pre-modify preview reservation request.",
+					"existingJavaType": "com.mgmresorts.rbs.model.PremodifyPutRequest"
+				}
+			}
+		},
+		"previewReservationResponse": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.order.dto.services.PreviewReservationResponse",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.OutHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"paymentSessionId": {
+					"type": "string",
+					"description": "The payment session id. It is required in case of any additional deposit to be collected or refund."
+				},
+				"roomReservationResponse": {
+					"required": false,
+					"descriptopn": "Updated room reservation preview response.",
+					"existingJavaType": "com.mgmresorts.rbs.model.RoomReservationResponse"
+				},
+				"errorRoomReservationResponse": {
+					"required": false,
+					"descriptopn": "Error response during update room reservation preview.",
+					"existingJavaType": "com.mgmresorts.rbs.model.ErrorResponse"
+				},
+				"errorPaymentSessionResponse": {
+					"required": false,
+					"descriptopn": "Error response during update payment session.",
+					"existingJavaType": "com.mgmresorts.psm.model.SessionError"
+				}
+			}
+		},
+		"cancelReservationRequest": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.order.dto.services.CancelReservationRequest",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.InHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"paymentSessionId": {
+					"type": "string",
+					"description": "The payment session id. It is required in case of any additional deposit to be collected or refund."
+				},
+				"reservationType": {
+					"required": false,
+					"$ref": "elements.json#/definitions/reservationType",
+					"description": "Specifies the expected reservation type."
+				},
+				"cancelRoomReservationRequest": {
+					"required": false,
+					"descriptopn": "Cancel room reservation request.",
+					"existingJavaType": "com.mgmresorts.rbs.model.CancelRoomReservationV3Request"
+				}
+			}
+		},
+		"cancelReservationResponse": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.order.dto.services.CancelReservationResponse",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.OutHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"roomReservationResponse": {
+					"required": false,
+					"descriptopn": "Cancel room reservation response.",
+					"existingJavaType": "com.mgmresorts.rbs.model.RoomReservationResponse"
+				},
+				"errorRoomReservationResponse": {
+					"required": false,
+					"descriptopn": "Error response during cancel room reservation.",
+					"existingJavaType": "com.mgmresorts.rbs.model.ErrorResponse"
+				},
+				"errorPaymentSessionResponse": {
+					"required": false,
+					"descriptopn": "Error response during get payment session.",
+					"existingJavaType": "com.mgmresorts.psm.model.SessionError"
+				},
+				"errorPaymentRefundResponse": {
+					"required": false,
+					"descriptopn": "Error response during payment refund.",
+					"existingJavaType": "com.mgmresorts.pps.model.PaymentExceptionResponse"
+				},
+				"orderId": {
+					"type": "string",
+					"description": "The order id"
+				}
+			}
+		},
+		"updateReservationRequest": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.order.dto.services.UpdateReservationRequest",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.InHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"paymentSessionId": {
+					"type": "string",
+					"description": "The payment session id. It is required to fetch payment id and authorization code from payment session."
+				},
+				"reservationType": {
+					"required": false,
+					"$ref": "elements.json#/definitions/reservationType",
+					"description": "Specifies the expected reservation type."
+				},
+				"modifyRoomReservationRequest": {
+					"required": false,
+					"description": "Commit to modified reservation request.",
+					"existingJavaType": "com.mgmresorts.rbs.model.ModifyCommitPutRequest"
+				}
+			}
+		},
+		"updateReservationResponse": {
+			"type": "object",
+			"required": false,
+			"javaType": "com.mgmresorts.order.dto.services.UpdateReservationResponse",
+			"extendsJavaClass": "com.mgmresorts.common.dto.services.OutHeaderSupport",
+			"additionalProperties": false,
+			"properties": {
+				"paymentSessionId": {
+					"type": "string",
+					"description": "The payment session id. It is needed in case of price change error."
+				},
+				"roomReservationResponse": {
+					"required": false,
+					"description": "Modified room reservation commit response.",
+					"existingJavaType": "com.mgmresorts.rbs.model.RoomReservationResponse"
+				},
+				"errorRoomReservationResponse": {
+					"required": false,
+					"description": "Error response during update room reservation modify commit.",
+					"existingJavaType": "com.mgmresorts.rbs.model.ErrorResponseError"
+				},
+				"errorPaymentSessionResponse": {
+					"required": false,
+					"description": "Error response during update payment session.",
+					"existingJavaType": "com.mgmresorts.psm.model.SessionError"
+				},
+				"errorPaymentProcessingResponse": {
+					"required": false,
+					"descriptopn": "Error response during payment refund.",
+					"existingJavaType": "com.mgmresorts.pps.model.PaymentExceptionResponse"
+				},
+				"orderId": {
+					"type": "string",
+					"description": "The order id"
+				}
+			}
+		}
+	}
+}

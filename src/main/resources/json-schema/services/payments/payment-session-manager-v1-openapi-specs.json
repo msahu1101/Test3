@@ -1,0 +1,1487 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Payment Sessions Service API",
+    "description": "Payment Sessions Service Documentation",
+    "license": {
+      "name": "MGM License"
+    },
+    "version": "V1"
+  },
+  "servers": [
+    {
+      "url": "https://pd-dev.devtest.vegas/payment/session",
+      "description": "Generated server url"
+    }
+  ],
+  "security": [
+    {
+      "Bearer Authentication": []
+    }
+  ],
+  "paths": {
+    "/api/v1/paymentSessions": {
+      "put": {
+        "tags": [
+          "payment-sessions-controller"
+        ],
+        "operationId": "enablePaymentSession",
+        "parameters": [
+          {
+            "name": "x-mgm-source",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-mgm-journey-id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-mgm-correlation-id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-mgm-transaction-id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-mgm-channel",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnableSessionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Session Created/Session Updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnableSessionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Max Retries Exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Session Inactive",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Invalid Session",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionError"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Invalid Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "mgm-roles": [
+              "service",
+              "guest"
+            ]
+          },
+          {
+            "service-role": [
+              "write"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "payment-sessions-controller"
+        ],
+        "operationId": "enableProfilePaymentSession",
+        "parameters": [
+          {
+            "name": "x-mgm-source",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-mgm-journey-id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-mgm-correlation-id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-mgm-transaction-id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-mgm-channel",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnableProfileSessionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Session Created/Session Updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnableSessionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionError"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Invalid Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "mgm-roles": [
+              "service",
+              "guest"
+            ]
+          },
+          {
+            "service-role": [
+              "write"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/paymentSessions/{sessionId}": {
+      "get": {
+        "tags": [
+          "payment-sessions-controller"
+        ],
+        "operationId": "retrieveSessionBySessionID",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-mgm-source",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-mgm-journey-id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-mgm-correlation-id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-mgm-transaction-id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-mgm-channel",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Session Retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RetrieveSessionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Not applicable to this endpoint"
+          },
+          "404": {
+            "description": "Invalid Session",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionError"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Invalid Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "mgm-roles": [
+              "service",
+              "guest"
+            ]
+          },
+          {
+            "service-role": [
+              "write"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "payment-sessions-controller"
+        ],
+        "operationId": "destroyPaymentSession",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-mgm-source",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-mgm-journey-id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-mgm-correlation-id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-mgm-transaction-id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-mgm-channel",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Session Destroyed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DestroySessionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Not applicable to this endpoint"
+          },
+          "404": {
+            "description": "Invalid Session",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionError"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Invalid Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "mgm-roles": [
+              "service",
+              "guest"
+            ]
+          },
+          {
+            "service-role": [
+              "write"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "payment-sessions-controller"
+        ],
+        "operationId": "updatePaymentSession",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-mgm-source",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-mgm-journey-id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-mgm-correlation-id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-mgm-transaction-id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-mgm-channel",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSessionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Session Updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateSessionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Max Retries Exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Session Inactive",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Invalid Session",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionError"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Invalid Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "mgm-roles": [
+              "service",
+              "guest"
+            ]
+          },
+          {
+            "service-role": [
+              "write"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/health": {
+      "get": {
+        "tags": [
+          "payment-sessions-controller"
+        ],
+        "operationId": "test",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "mgm-roles": [
+              "service",
+              "guest"
+            ]
+          },
+          {
+            "service-role": [
+              "write"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AdditionalAttributes": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "object"
+          }
+        }
+      },
+      "AdditionalFraudParams": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "Address": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string"
+          },
+          "address2": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "zip": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "type": {
+            "pattern": "^(Home|Business|Alternate|Other)$",
+            "type": "string"
+          }
+        }
+      },
+      "Amount": {
+        "type": "object",
+        "properties": {
+          "totalAmount": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TotalAmount"
+            }
+          },
+          "itemizedCharges": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ItemizedCharges"
+            }
+          },
+          "taxesAndFees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TFCosts"
+            }
+          },
+          "discounts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Costs"
+            }
+          }
+        }
+      },
+      "BillingAddress": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string"
+          },
+          "address2": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "postalCode": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          }
+        }
+      },
+      "CardDetails": {
+        "type": "object",
+        "properties": {
+          "mgmToken": {
+            "type": "string"
+          },
+          "gatewayId": {
+            "pattern": "^(SHFT|JPMC|FPAY)$",
+            "type": "string"
+          },
+          "creditCardHolderName": {
+            "type": "string"
+          },
+          "tenderType": {
+            "pattern": "^(Credit Card|Debit Card|Gift Card)$",
+            "type": "string"
+          },
+          "issuerType": {
+            "pattern": "^(Visa|Mastercard|Discover|American Express|Diners Club|JCB|Union Pay)$",
+            "type": "string"
+          },
+          "tenderDisplay": {
+            "type": "string"
+          },
+          "expiryMonth": {
+            "pattern": "0[1-9]|1[0-2]",
+            "type": "string"
+          },
+          "expiryYear": {
+            "pattern": "[0-9][0-9]",
+            "type": "string"
+          },
+          "billingAddress": {
+            "$ref": "#/components/schemas/BillingAddress"
+          }
+        }
+      },
+      "Costs": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "Delivery": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "Duration": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string"
+          },
+          "startTime": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "string"
+          },
+          "endTime": {
+            "type": "string"
+          }
+        }
+      },
+      "EnableSessionRequest": {
+        "required": [
+          "orderItems",
+          "transaction"
+        ],
+        "type": "object",
+        "properties": {
+          "transaction": {
+            "$ref": "#/components/schemas/Transaction"
+          },
+          "guestDetails": {
+            "$ref": "#/components/schemas/GuestDetails"
+          },
+          "cardDetails": {
+            "$ref": "#/components/schemas/CardDetails"
+          },
+          "orderItems": {
+            "$ref": "#/components/schemas/OrderItems"
+          },
+          "additionalAttributes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdditionalAttributes"
+            }
+          }
+        }
+      },
+      "GuestDetails": {
+        "type": "object",
+        "properties": {
+          "mgmId": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "middleName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string"
+          },
+          "loggedIn": {
+            "type": "boolean"
+          },
+          "email": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string"
+          },
+          "lastModifiedDate": {
+            "type": "string"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          }
+        }
+      },
+      "Item": {
+        "required": [
+          "confirmationNumber",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "confirmationNumber": {
+            "type": "string"
+          },
+          "itemId": {
+            "type": "string"
+          },
+          "itemType": {
+            "pattern": "^(Room|Show|Dining)$",
+            "type": "string"
+          },
+          "itemName": {
+            "type": "string"
+          },
+          "seasonId": {
+            "type": "string"
+          },
+          "propertyId": {
+            "type": "string"
+          },
+          "propertyName": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberOfGuests": {
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "seat": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Seat"
+            }
+          },
+          "delivery": {
+            "$ref": "#/components/schemas/Delivery"
+          },
+          "duration": {
+            "$ref": "#/components/schemas/Duration"
+          },
+          "locationAddress": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/Amount"
+          },
+          "additionalFraudParams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdditionalFraudParams"
+            }
+          }
+        }
+      },
+      "ItemAuthGroup": {
+        "required": [
+          "groupId",
+          "items",
+          "itemsGroupTotal"
+        ],
+        "type": "object",
+        "properties": {
+          "groupId": {
+            "type": "string"
+          },
+          "clientId": {
+            "type": "string"
+          },
+          "authDeclineCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "verifyDeclineCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "itemsGroupTotal": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ItemsGroupTotal"
+            }
+          },
+          "paymentAuthResults": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PaymentAuthResults"
+            }
+          },
+          "paymentFraudResults": {
+            "$ref": "#/components/schemas/PaymentFraudResults"
+          },
+          "paymentVerifyResults": {
+            "$ref": "#/components/schemas/PaymentVerifyResults"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Item"
+            }
+          }
+        }
+      },
+      "ItemizedCharges": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "ItemsGroupTotal": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "OrderItems": {
+        "required": [
+          "itemAuthGroups",
+          "orderReferenceNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "orderReferenceNumber": {
+            "type": "string"
+          },
+          "itemAuthGroups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ItemAuthGroup"
+            }
+          }
+        }
+      },
+      "PaymentAuthResults": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "authorizedAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "decision": {
+            "type": "string"
+          },
+          "responseCode": {
+            "type": "string"
+          },
+          "paymentId": {
+            "type": "string"
+          },
+          "authorizationCode": {
+            "type": "string"
+          },
+          "authorizedDateTime": {
+            "type": "string"
+          },
+          "avsCode": {
+            "type": "string"
+          },
+          "cvCode": {
+            "type": "string"
+          },
+          "reconciliationId": {
+            "type": "string"
+          },
+          "remainingAuthAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "status": {
+            "type": "string"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "errorDescription": {
+            "type": "string"
+          }
+        }
+      },
+      "PaymentFraudResults": {
+        "type": "object",
+        "properties": {
+          "recommendationCode": {
+            "type": "string"
+          },
+          "fraudAgent": {
+            "type": "string"
+          },
+          "decision": {
+            "type": "string"
+          },
+          "reasonCode": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "errorDescription": {
+            "type": "string"
+          }
+        }
+      },
+      "PaymentVerifyResults": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "decision": {
+            "type": "string"
+          },
+          "responseCode": {
+            "type": "string"
+          },
+          "authorizationCode": {
+            "type": "string"
+          },
+          "authorizedDateTime": {
+            "type": "string"
+          },
+          "avsCode": {
+            "type": "string"
+          },
+          "cvCode": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "errorDescription": {
+            "type": "string"
+          }
+        }
+      },
+      "Seat": {
+        "type": "object",
+        "properties": {
+          "row": {
+            "type": "string"
+          },
+          "section": {
+            "type": "string"
+          },
+          "seatNumber": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "TFCosts": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "pattern": "^(FEE|TAX)$",
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "TotalAmount": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "Transaction": {
+        "required": [
+          "cartType",
+          "checkoutTime",
+          "sessionType",
+          "transactionType"
+        ],
+        "type": "object",
+        "properties": {
+          "transactionId": {
+            "type": "string"
+          },
+          "salesChannel": {
+            "type": "string"
+          },
+          "checkoutTime": {
+            "type": "string"
+          },
+          "cartType": {
+            "pattern": "^(GLOBAL|PACKAGE)$",
+            "type": "string"
+          },
+          "transactionType": {
+            "pattern": "^(Online|Mobile|Call-Center|Face-to-Face)$",
+            "type": "string"
+          },
+          "orderStatus": {
+            "pattern": "^(PENDING|COMPLETED)$",
+            "type": "string"
+          },
+          "sessionType": {
+            "pattern": "^(Payment|Retrieve|Modify|Refund)$",
+            "type": "string"
+          },
+          "timeToLive": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sessionId": {
+            "type": "string"
+          }
+        }
+      },
+      "EnableSessionResponse": {
+        "type": "object",
+        "properties": {
+          "sessionId": {
+            "type": "string"
+          },
+          "sessionExpiresOn": {
+            "type": "string"
+          },
+          "sessionStatus": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "SessionError": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "string"
+          },
+          "errorMessage": {
+            "type": "string"
+          }
+        }
+      },
+      "EnableProfileSessionRequest": {
+        "required": [
+          "guestDetails",
+          "transaction"
+        ],
+        "type": "object",
+        "properties": {
+          "transaction": {
+            "$ref": "#/components/schemas/ProfileTransaction"
+          },
+          "guestDetails": {
+            "$ref": "#/components/schemas/GuestDetails"
+          }
+        }
+      },
+      "ProfileTransaction": {
+        "required": [
+          "sessionType",
+          "transactionType"
+        ],
+        "type": "object",
+        "properties": {
+          "transactionType": {
+            "pattern": "^(Online|Mobile)$",
+            "type": "string"
+          },
+          "sessionType": {
+            "pattern": "^(Profile)$",
+            "type": "string"
+          }
+        }
+      },
+      "UpdateItemAuthGroup": {
+        "type": "object",
+        "properties": {
+          "groupId": {
+            "type": "string"
+          },
+          "authDeclineCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "verifyDeclineCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "paymentAuthResults": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PaymentAuthResults"
+            }
+          },
+          "paymentFraudResults": {
+            "$ref": "#/components/schemas/PaymentFraudResults"
+          },
+          "paymentVerifyResults": {
+            "$ref": "#/components/schemas/PaymentVerifyResults"
+          }
+        }
+      },
+      "UpdateOrderItems": {
+        "type": "object",
+        "properties": {
+          "orderReferenceNumber": {
+            "type": "string"
+          },
+          "itemAuthGroups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UpdateItemAuthGroup"
+            }
+          }
+        }
+      },
+      "UpdateSessionRequest": {
+        "type": "object",
+        "properties": {
+          "transaction": {
+            "$ref": "#/components/schemas/UpdateTransaction"
+          },
+          "guestDetails": {
+            "$ref": "#/components/schemas/GuestDetails"
+          },
+          "cardDetails": {
+            "$ref": "#/components/schemas/CardDetails"
+          },
+          "orderItems": {
+            "$ref": "#/components/schemas/UpdateOrderItems"
+          }
+        }
+      },
+      "UpdateTransaction": {
+        "type": "object",
+        "properties": {
+          "transactionId": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateSessionResponse": {
+        "type": "object",
+        "properties": {
+          "sessionId": {
+            "type": "string"
+          },
+          "sessionExpiresOn": {
+            "type": "string"
+          },
+          "sessionStatus": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "RetrieveSessionResponse": {
+        "type": "object",
+        "properties": {
+          "sessionId": {
+            "type": "string"
+          },
+          "sessionType": {
+            "type": "string"
+          },
+          "sessionStatus": {
+            "type": "string"
+          },
+          "sessionExpiresOn": {
+            "type": "string"
+          },
+          "transaction": {
+            "$ref": "#/components/schemas/Transaction"
+          },
+          "guestDetails": {
+            "$ref": "#/components/schemas/GuestDetails"
+          },
+          "cardDetails": {
+            "$ref": "#/components/schemas/CardDetails"
+          },
+          "orderItems": {
+            "$ref": "#/components/schemas/OrderItems"
+          },
+          "additionalAttributes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdditionalAttributes"
+            }
+          }
+        }
+      },
+      "DestroySessionResponse": {
+        "type": "object",
+        "properties": {
+          "sessionId": {
+            "type": "string"
+          },
+          "sessionStatus": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer Authentication": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

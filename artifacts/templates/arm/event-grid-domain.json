@@ -1,0 +1,38 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "eventgrid_domain_name": {
+            "type": "String"
+        },
+        "eventgrid_schema": {
+            "type": "String"
+        }
+    },
+    "variables": {
+    },
+    "resources": [
+        {
+            "type": "Microsoft.EventGrid/domains",
+            "apiVersion": "2020-04-01-preview",
+            "name": "[parameters('eventgrid_domain_name')]",
+            "location": "westus",
+            "sku": {
+                "name": "Basic"
+            },
+            "identity": {
+                "type": "None"
+            },
+            "properties": {
+                "inputSchema": "[parameters('eventgrid_schema')]",
+                "publicNetworkAccess": "Enabled"
+            }
+        }
+    ],
+    "outputs": {
+        "eventgrid_domain_name": {
+            "type": "String",
+            "value": "[parameters('eventgrid_domain_name')]"
+        }
+    }
+}

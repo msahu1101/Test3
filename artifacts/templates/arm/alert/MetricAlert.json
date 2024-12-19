@@ -1,0 +1,132 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+		"alertData": {
+          "type": "array"
+        },
+		"environment": {
+            "type": "string",
+            "allowedValues": [
+                "prod",
+                "preprod",
+                "int",
+				"qa",
+                "dev"
+            ],
+			"metadata": {
+                "description": "Alert Message."
+            }
+        },
+		"isEnabled": {
+            "type": "bool",
+            "defaultValue": true,
+            "metadata": {
+                "description": "Specifies whether the alert is enabled"
+            }
+        },
+        "windowSize": {
+            "type": "string",
+            "defaultValue": "PT5M",
+            "allowedValues": [
+                "PT1M",
+                "PT5M",
+                "PT15M",
+                "PT30M",
+                "PT1H",
+                "PT6H",
+                "PT12H",
+                "PT24H"
+            ],
+            "metadata": {
+                "description": "Period of time used to monitor alert activity based on the threshold. Must be between one minute and one day. ISO 8601 duration format."
+            }
+        },
+        "evaluationFrequency": {
+            "type": "string",
+            "defaultValue": "PT5M",
+            "allowedValues": [
+                "PT1M",
+                "PT5M",
+                "PT15M",
+                "PT30M",
+                "PT1H"
+            ],
+            "metadata": {
+                "description": "How often the metric alert is evaluated represented in ISO 8601 duration format"
+            }
+        },
+		
+		
+        "actionGroup": {
+            "type": "object",
+            "metadata": {
+                "description": "It contans all the actions data"
+            }
+        }
+	},
+    "variables": {  
+		
+		"actionGrpPrefix":
+            "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', parameters('actionGroup').resourceGroup, '/providers/microsoft.insights/actiongroups/')]",
+		
+		"copy": [
+            {
+                "name": "alertName",
+                "count": "[length(parameters('alertData'))]",
+                "input": "[concat(parameters('alertData')[copyIndex('alertName')].name, ' ', parameters('alertData')[copyIndex('alertName')].threshold, ' - ', parameters('alertData')[copyIndex('alertName')].resource)]"
+            }
+        ]	
+	},
+    "resources": [
+        {
+            "name": "[concat('Sev', parameters('alertData')[copyIndex()].severity, ' | ', parameters('environment'),' | ', variables('alertName')[copyIndex()])]",
+            "type": "Microsoft.Insights/metricAlerts",
+            "location": "global",
+            "apiVersion": "2018-03-01",
+            "tags": {},
+            "properties": {
+                "description": "[concat('P', parameters('alertData')[copyIndex()].severity, ' ', variables('alertName')[copyIndex()])]",
+                "severity": "[parameters('alertData')[copyIndex()].severity]",
+                "enabled": "[parameters('isEnabled')]",
+                "scopes": ["[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/', 'Microsoft.', parameters('alertData')[copyIndex()].metricNamespace, '/' , parameters('alertData')[copyIndex()].resource)]"],
+				
+				"evaluationFrequency":"[parameters('evaluationFrequency')]",
+                "windowSize": "[parameters('windowSize')]",
+				"templateType": 8,
+                "criteria": {
+                    "odata.type": "Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria",
+                    "allOf": [
+                        {
+                            "name" : "1st criterion",
+                            "metricName": "[parameters('alertData')[copyIndex()].metricName]",
+							"metricNamespace": "[concat('Microsoft.', parameters('alertData')[copyIndex()].metricNamespace)]",
+                            "dimensions": "[parameters('alertData')[copyIndex()].dimensions]",
+                            "operator": "[parameters('alertData')[copyIndex()].operator]",
+                            "threshold" : "[parameters('alertData')[copyIndex()].threshold]",
+                            "timeAggregation": "[parameters('alertData')[copyIndex()].timeAggregation]",
+							"monitorTemplateType": 8,
+							"criterionType": "StaticThresholdCriterion"
+                        }
+                    ]
+                },
+				"autoMitigate": true,
+				"targetResourceType": "[concat('Microsoft.', parameters('alertData')[copyIndex()].metricNamespace)]",
+				"targetResourceRegion": "westus",
+                "actions": [
+                    {
+                        "actionGroupId": "[concat(variables('actionGrpPrefix'), parameters('actionGroup').names[0])]"
+					}
+				]
+            },
+			"copy": {
+				"name": "alertLoop",
+				"count": "[length(parameters('alertData'))]",
+				"mode": "serial",
+				"batchSize": 1
+			}
+		}
+	]
+}
+
+

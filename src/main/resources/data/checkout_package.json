@@ -1,0 +1,50 @@
+{
+	"cartId": "616bbb86-15bb-432f-ba7a-650559bbe60c",
+	"cartType": "PACKAGE",
+	"inAuthTransactionId": "8a3d34be200d",
+	"guestProfile": {
+		"firstName": "John",
+		"lastName": "Holding",
+		"emailAddress1": "tray@mgmresorts.com",
+			"addresses": [
+                {
+                    "preferred": "false",
+                    "street1": "6770 Edmond St",
+                    "street2": "",
+                    "city": "Las Vegas",
+                    "state": "NV",
+                    "country": "US",
+                    "postalCode": "89118",
+                    "type": "Home"
+                }
+            ],
+            "phoneNumbers":[
+            	{
+            		"type": "Home",
+            		"number": "7026929138"
+            	}
+            ]
+	},
+	"billings": [
+		{
+				"payment": {
+					"firstName": "John",
+					"lastName": "Holding",
+					"amount": 3330.28,
+					"maskedNumber": "XXXXXXXXXXXX1111",
+					"cardHolder": "John Holding",
+					"cvv": "123",
+					"expiry": "10/2022",
+					"type": "Visa",
+					"ccToken": "4111110A001DQXFHY79D9XCZ1133"
+				},
+				"address": {
+					"street1": "6770 Edmond St",
+					"city": "Las Vegas",
+					"postalCode": "89118",
+					"state": "NV",
+					"country": "US"
+				}
+			}
+	]
+}

@@ -1,0 +1,440 @@
+{
+    "definitions": {
+        "dateRange": {
+            "description": "Common dateRange object",
+            "title": "DateRange",
+            "type": "object",
+            "required": false,
+            "javaType": "com.mgmresorts.itineraries.dto.client.itinerary.DateRange",
+            "properties": {
+                "startDate": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "endDate": {
+                    "type": "string",
+                    "format": "date"
+                }
+            }
+        },
+        "operaState": {
+            "type": "string",
+            "description": "The desired Opera Reservation States",
+            "title": "The desired Opera Reservation States",
+            "javaType": "com.mgmresorts.itineraries.dto.client.itinerary.OperaState",
+            "enum": [
+                "CHECKEDOUT",
+                "INHOUSE",
+                "RESERVED",
+                "CANCELED",
+                "NOSHOW",
+                "REQUESTED",
+                "REQUESTDENIED",
+                "LEGCANCELED",
+                "WAITLISTED",
+                "WAITLISTTOACTIVE",
+                "PROSPECT"
+            ]
+        },
+        "inItinerary": {
+            "type": "object",
+            "required": false,
+            "javaType": "com.mgmresorts.itineraries.dto.client.itinerary.InItinerary",
+            "properties": {
+                "itineraryName": {
+                    "type": "string"
+                },
+                "customerId": {
+                    "type": "string",
+                    "required": true
+                },
+                "tripParams": {
+                    "required": true,
+                    "$ref": "itinerary.json#/definitions/tripParams"
+                },
+                "roomReservationBasic": {
+                    "type": "object",
+                    "required": false,
+                    "$ref": "itinerary.json#/definitions/roomReservationBasic"
+                },
+                "showReservationBasic": {
+                    "type": "object",
+                    "required": false,
+                    "$ref": "itinerary.json#/definitions/showReservationBasic"
+                },
+                "diningReservationBasic": {
+                    "type": "object",
+                    "required": false,
+                    "$ref": "itinerary.json#/definitions/diningReservationBasic"
+                }
+            }
+        },
+        "itineraryData": {
+            "type": "object",
+            "required": false,
+            "javaType": "com.mgmresorts.itineraries.dto.client.itinerary.ItineraryData",
+            "additionalProperties": false,
+            "properties": {
+                "itineraryId": {
+                    "type": "string",
+                    "required": true,
+                    "description": "Itinerary Id."
+                },
+                "ucpItineraryId": {
+                    "type": "string",
+                    "required": true,
+                    "description": "UCP Itinerary Id."
+                },
+                "itineraryName": {
+                    "type": "string",
+                    "required": true,
+                    "description": "Itinerary Name."
+                },
+                "customerId": {
+                    "type": "string",
+                    "required": true
+                },
+                "tripParams": {
+                    "required": true,
+                    "$ref": "#/definitions/tripParams"
+                },
+                "roomReservations": {
+                    "type": "array",
+                    "required": true,
+                    "items": {
+                        "type": "object",
+                        "$ref": "#/definitions/roomReservationBasic"
+                    }
+                },
+                "showReservations": {
+                    "type": "array",
+                    "required": true,
+                    "items": {
+                        "type": "object",
+                        "$ref": "#/definitions/showReservationBasic"
+                    }
+                },
+                "diningReservations": {
+                    "type": "array",
+                    "required": true,
+                    "items": {
+                        "type": "object",
+                        "$ref": "#/definitions/diningReservationBasic"
+                    }
+                }
+            }
+        },
+        "showReservationSearchKey": {
+            "type": "object",
+            "required": false,
+            "javaType": "com.mgmresorts.itineraries.dto.client.itinerary.ShowReservationSearchKey",
+            "properties": {
+                "eventDateFrom": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "eventDateTo": {
+                    "type": "string",
+                    "format": "date"
+                }
+            }
+        },
+        "roomReservationSearchKey": {
+            "type": "object",
+            "required": false,
+            "javaType": "com.mgmresorts.itineraries.dto.client.itinerary.RoomReservationSearchKey",
+            "properties": {
+                "checkInDateRange": {
+                    "type": "object",
+                    "description": "Room check-in date range",
+                    "title": "Room check-in date range",
+                    "$ref": "#/definitions/dateRange"
+                },
+                "checkInDate": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Room check-in date",
+                    "title": "Room check-in date"
+                },
+                "checkOutDate": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Room check-out date",
+                    "title": "Room check-out date"
+                },
+                "propertyId": {
+                    "type": "string"
+                },
+                "hotelCode": {
+                    "type": "string"
+                },
+                "reservationStatus": {
+                    "type": "string",
+                    "enum": [
+                    "RESERVED", 
+                    "NOSHOW", 
+                    "INHOUSE", 
+                    "CANCELED", 
+                    "CHECKEDOUT"
+                    ]
+                }
+            }
+        },
+        "diningReservationSearchKey": {
+            "type": "object",
+            "required": false,
+            "javaType": "com.mgmresorts.itineraries.dto.client.itinerary.DiningReservationSearchKey",
+            "properties": {
+                "reservationDateTo": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "reservationDateFrom": {
+                    "type": "string",
+                    "format": "date"
+                }
+            }
+        },
+        "roomReservationBasic": {
+            "type": "object",
+            "javaType": "com.mgmresorts.itineraries.dto.client.itinerary.RoomReservationBasic",
+            "properties": {
+                "otaConfirmationNumber": {
+                    "type": "string",
+                    "description": "otaConfirmationNo",
+                    "title": "otaConfirmationNo"
+                },
+                "confirmationNumber": {
+                    "type": "string",
+                    "required": true,
+                    "description": "confirmation number is mandatory in reservation basic information sent in request",
+                    "title": "confirmation number"
+                },
+                "operaConfirmationNumber": {
+                    "type": "string",
+                    "description": "opera confirmation number",
+                    "title": "opera confirmation number"
+                },
+                "operaState": {
+                    "type": "string"
+                },
+                "nrgStatus": {
+                    "type": "boolean"
+                },
+                "numAdults": {
+                    "type": "integer"
+                },
+                "numChildren": {
+                    "type": "integer"
+                },
+                "numRooms": {
+                    "type": "integer"
+                },
+                "roomTypeId": {
+                    "type": "string"
+                },
+                "propertyId": {
+                    "type": "string",
+                    "description": "Property Id",
+                    "title": "Property Id"
+                },
+                "checkInDate": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "checkOutDate": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "state": {
+                    "type": "string",
+                    "description": "The reservation state.",
+                    "title": "Reservation State",
+                    "enum": [
+                        "SAVED",
+                        "BOOKED",
+                        "CANCELLED",
+                        "AUTOSAVED"
+                    ]
+                }
+            }
+        },
+        "showReservationBasic": {
+            "type": "object",
+            "javaType": "com.mgmresorts.itineraries.dto.client.itinerary.ShowReservationBasic",
+            "properties": {
+                "confirmationNumber": {
+                    "type": "string",
+                    "required": true,
+                    "description": "confirmation number is mandatory in reservation basic information sent in request",
+                    "title": "confirmation number"
+                },
+                "showId": {
+                    "type": "string",
+                    "description": "Show Id",
+                    "title": "Show Id"
+                },
+                "showEventId": {
+                    "type": "string",
+                    "description": "Show event Id",
+                    "title": "Show event Id"
+                },
+                "showSeats": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"$ref": "reservations.json#/definitions/showSeat"
+					}
+				},
+                "numAdults": {
+                    "type": "integer",
+                    "description": "No Of Adults",
+                    "title": "No of Adults"
+                },
+                "numChildren": {
+                    "type": "integer",
+                    "description": "No Of Children",
+                    "title": "No of Children"
+                },
+                "eventDate": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "state": {
+                    "type": "string",
+                    "description": "The reservation state.",
+                    "title": "Reservation State",
+                    "enum": [
+                        "SAVED",
+                        "BOOKED",
+                        "CANCELLED",
+                        "AUTOSAVED"
+                    ]
+                }
+            }
+        },
+        "diningReservationBasic": {
+            "type": "object",
+            "javaType": "com.mgmresorts.itineraries.dto.client.itinerary.DiningReservationBasic",
+            "properties": {
+                "confirmationNumber": {
+                    "type": "string",
+                    "required": true,
+                    "description": "confirmation number is mandatory in reservation basic information sent in request",
+                    "title": "confirmation number"
+                },
+                "restaurantId": {
+                    "type": "string",
+                    "description": "Restaurant Id",
+                    "title": "Restaurant Id"
+                },
+                "numAdults": {
+                    "type": "integer",
+                    "description": "No Of Adults",
+                    "title": "No of Adults"
+                },
+                "numChildren": {
+                    "type": "integer",
+                    "description": "No Of Children",
+                    "title": "No of Children"
+                },
+                "reservationDateTime": {
+                    "description": "date time will be always in String",
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string",
+                    "description": "The reservation state.",
+                    "title": "Reservation State",
+                    "enum": [
+                        "SAVED",
+                        "BOOKED",
+                        "CANCELLED",
+                        "AUTOSAVED"
+                    ]
+                }
+            }
+        },
+        "tripParams": {
+            "type": "object",
+            "required": false,
+            "additionalProperties": false,
+            "javaType": "com.mgmresorts.itineraries.dto.client.itinerary.TripParams",
+            "properties": {
+                "numAdults": {
+                    "type": "integer",
+                    "description": "No of Adults",
+                    "title": "No of Adults"
+                },
+                "numChildren": {
+                    "type": "integer",
+                    "description": "No of Children",
+                    "title": "No of Children"
+                },
+                "departureDate": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "arrivalDate": {
+                    "type": "string",
+                    "format": "date"
+                }
+            }
+        },
+        "itineraryDataFull": {
+            "type": "object",
+            "required": false,
+            "javaType": "com.mgmresorts.itineraries.dto.client.itinerary.ItineraryDataFull",
+            "additionalProperties": false,
+            "properties": {
+                "itineraryId": {
+                    "type": "string",
+                    "required": true,
+                    "description": "Itinerary Id."
+                },
+                "ucpItineraryId": {
+                    "type": "string",
+                    "required": true,
+                    "description": "UCP Itinerary Id."
+                },
+                "itineraryName": {
+                    "type": "string",
+                    "required": true,
+                    "description": "Itinerary Name."
+                },
+                "customerId": {
+                    "type": "string",
+                    "required": true
+                },
+                "tripParams": {
+                    "required": true,
+                    "$ref": "#/definitions/tripParams"
+                },
+                "roomReservations": {
+                    "type": "array",
+                    "required": true,
+                    "items": {
+                        "type": "object",
+                        "$ref": "reservations.json#/definitions/roomReservation"
+                    }
+                },
+                "showReservations": {
+                    "type": "array",
+                    "required": true,
+                    "items": {
+                        "type": "object",
+                        "$ref": "reservations.json#/definitions/showReservation"
+                    }
+                },
+                "diningReservations": {
+                    "type": "array",
+                    "required": true,
+                    "items": {
+                        "type": "object",
+                        "$ref": "reservations.json#/definitions/diningReservation"
+                    }
+                }
+            }
+        }
+    }
+}

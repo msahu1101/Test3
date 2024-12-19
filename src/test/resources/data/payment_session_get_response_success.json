@@ -1,0 +1,482 @@
+{
+  "sessionId": "c0ee79f5-26ab-4cbe-9128-8e5fdc47a2a3",
+  "sessionType": "Payment",
+  "sessionStatus": "New",
+  "sessionExpiresOn": "2024-01-09T15:15:23.945578300",
+  "transaction": {
+    "transactionId": "string",
+    "checkoutTime": "string",
+    "cartType": "GLOBAL",
+    "transactionType": "Online",
+    "salesChannel": "mgmri",
+    "orderStatus": "PENDING",
+    "sessionType": "Payment",
+    "timeToLive": 25,
+    "sessionId": "string"
+  },
+  "guestDetails": {
+    "mgmId": "string",
+    "firstName": "Test",
+    "middleName": "string",
+    "lastName": "User",
+    "phoneNumber": "702",
+    "loggedIn": true,
+    "email": "string",
+    "created": "Timestamp",
+    "lastModifiedDate": "yyyy-mm-dd HH:mm:ss",
+    "address": {
+      "address": "string",
+      "address2": "string",
+      "city": "Las Vegas",
+      "state": "NV",
+      "zip": "string",
+      "country": "string"
+    }
+  },
+  "cardDetails": {
+    "mgmToken": "string",
+    "gatewayId": "SHFT",
+    "creditCardHolderName": "Test User",
+    "tenderType": "Credit Card",
+    "issuerType": "Visa",
+    "tenderDisplay": "XXXXXXXXXXXX4111",
+    "expiryMonth": "02",
+    "expiryYear": "17",
+    "billingAddress": {
+      "address": "string",
+      "address2": "string",
+      "state": "NV",
+      "city": "Henderson",
+      "postalCode": "string",
+      "country": "US",
+      "phoneNumber": "string",
+      "email": "string"
+    }
+  },
+  "orderItems": {
+    "orderReferenceNumber": "86495f06-d98a-4934-b014-b59ed8f9e5ca",
+    "itemAuthGroups": [
+      {
+        "groupId": "string",
+        "clientId": "23232",
+        "itemsGroupTotal": [
+          {
+            "name": "authAmount",
+            "value": 250.0
+          },
+          {
+            "name": "taxTotal",
+            "value": 85.87
+          }
+        ],
+        "paymentAuthResults": [
+          {
+            "type": "Authorize",
+            "authorizedAmount": 250.0,
+            "decision": "decision",
+            "responseCode": "responseCode",
+            "paymentId": "GT8756Y",
+            "authorizationCode": "HDB456H",
+            "authorizedDateTime": "authorizedDateTime",
+            "avsCode": "avsCode",
+            "cvCode": "cvCode",
+            "reconciliationId": "reconciliationId",
+            "remainingAuthAmount": 0.0,
+            "status": "SUCCESS",
+            "errorCode": "",
+            "errorDescription": ""
+          }
+        ],
+        "paymentFraudResults": {
+          "recommendationCode": "recommendationCode",
+          "fraudAgent": "Forter",
+          "decision": "approve",
+          "reasonCode": "no fraud",
+          "status": "SUCCESS",
+          "errorCode": "",
+          "errorDescription": ""
+        },
+        "items": [
+          {
+            "id": "71e7412c-9692-42d5-9582-3e9bba473db9",
+            "confirmationNumber": "string",
+            "itemId": "string",
+            "itemType": "string",
+            "itemName": "string",
+            "seasonId": "string",
+            "propertyId": "string",
+            "propertyName": "string",
+            "description": "string",
+            "quantity": 2,
+            "numberOfGuests": 5,
+            "seat": [
+              {
+                "row": "String",
+                "section": "String",
+                "seatNumber": "String",
+                "price": 0.0
+              }
+            ],
+            "delivery": {
+              "type": "string",
+              "method": "string",
+              "amount": 89.06
+            },
+            "duration": {
+              "startDate": "yyyy-mm-dd",
+              "startTime": "string",
+              "endDate": "yyyy-mm-dd",
+              "endTime": "string"
+            },
+            "locationAddress": {
+              "address": "string",
+              "address2": "string",
+              "city": "string",
+              "state": "string",
+              "zip": "string",
+              "country": "string"
+            },
+            "amount": {
+              "totalAmount": [
+                {
+                  "name": "authAmount",
+                  "value": 425.0
+                },
+                {
+                  "name": "taxTotal",
+                  "value": 85.87
+                }
+              ],
+              "itemizedCharges": [
+                {
+                  "name": "roomTotal",
+                  "value": 374.85
+                },
+                {
+                  "name": "depositDue",
+                  "value": 425.0
+                },
+                {
+                  "name": "totalRoomCharges",
+                  "value": 999.0
+                },
+                {
+                  "name": "additionalCharges",
+                  "value": 0.0
+                }
+              ],
+              "taxesAndFees": [
+                {
+                  "type": "FEE",
+                  "code": "roomCharge",
+                  "amount": 88.44
+                },
+                {
+                  "type": "TAX",
+                  "code": "resorttaxes",
+                  "amount": 113.61
+                }
+              ],
+              "discounts": [
+                {
+                  "type": "offer",
+                  "code": "d5d8ce02-f64a-46bb-b8e5-711852bfd840",
+                  "amount": 8.97
+                }
+              ]
+            },
+            "additionalFraudParams": [
+              {
+                "name": "someName",
+                "value": 12.5
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "groupId": "string",
+        "clientId": "23232",
+        "itemsGroupTotal": [
+          {
+            "name": "authAmount",
+            "value": 255.67
+          },
+          {
+            "name": "taxTotal",
+            "value": 85.87
+          }
+        ],
+        "paymentAuthResults": [
+          {
+            "type": "Authorize",
+            "authorizedAmount": 255.67,
+            "decision": "decision",
+            "responseCode": "responseCode",
+            "paymentId": "6875GT",
+            "authorizationCode": "3268TY",
+            "authorizedDateTime": "authorizedDateTime",
+            "avsCode": "avsCode",
+            "cvCode": "cvCode",
+            "reconciliationId": "reconciliationId",
+            "remainingAuthAmount": 0.0,
+            "status": "SUCCESS",
+            "errorCode": "",
+            "errorDescription": ""
+          }
+        ],
+        "paymentFraudResults": {
+          "recommendationCode": "recommendationCode",
+          "fraudAgent": "Forter",
+          "decision": "approve",
+          "reasonCode": "no fraud",
+          "status": "SUCCESS",
+          "errorCode": "",
+          "errorDescription": ""
+        },
+        "items": [
+          {
+            "id": "81e7412c-9692-42d5-9582-3e9bba473db9",
+            "confirmationNumber": "string",
+            "itemId": "string",
+            "itemType": "string",
+            "itemName": "string",
+            "seasonId": "string",
+            "propertyId": "string",
+            "propertyName": "string",
+            "description": "string",
+            "quantity": 2,
+            "numberOfGuests": 5,
+            "seat": [
+              {
+                "row": "String",
+                "section": "String",
+                "seatNumber": "String",
+                "price": 0.0
+              }
+            ],
+            "delivery": {
+              "type": "string",
+              "method": "string",
+              "amount": 89.06
+            },
+            "duration": {
+              "startDate": "yyyy-mm-dd",
+              "startTime": "string",
+              "endDate": "yyyy-mm-dd",
+              "endTime": "string"
+            },
+            "locationAddress": {
+              "address": "string",
+              "address2": "string",
+              "city": "string",
+              "state": "string",
+              "zip": "string",
+              "country": "string"
+            },
+            "amount": {
+              "totalAmount": [
+                {
+                  "name": "authAmount",
+                  "value": 425.0
+                },
+                {
+                  "name": "taxTotal",
+                  "value": 85.87
+                }
+              ],
+              "itemizedCharges": [
+                {
+                  "name": "roomTotal",
+                  "value": 374.85
+                },
+                {
+                  "name": "depositDue",
+                  "value": 425.0
+                },
+                {
+                  "name": "totalRoomCharges",
+                  "value": 999.0
+                },
+                {
+                  "name": "additionalCharges",
+                  "value": 0.0
+                }
+              ],
+              "taxesAndFees": [
+                {
+                  "type": "FEE",
+                  "code": "roomCharge",
+                  "amount": 88.44
+                },
+                {
+                  "type": "TAX",
+                  "code": "resorttaxes",
+                  "amount": 113.61
+                }
+              ],
+              "discounts": [
+                {
+                  "type": "offer",
+                  "code": "d5d8ce02-f64a-46bb-b8e5-711852bfd840",
+                  "amount": 8.97
+                }
+              ]
+            },
+            "additionalFraudParams": [
+              {
+                "name": "someName",
+                "value": 12.5
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "authDeclineCount": 0,
+        "authFraudDeclineCount": 0,
+        "clientId": "MGM-TCOLV-LODG-ADV-DEPOSIT-WEB",
+        "groupId": "a62b794f-af55-46fb-bfe4-c33c1c1641f4",
+        "items": [
+          {
+            "confirmationNumber": "PENDING",
+            "propertyId": "e5d3f1c9-833a-83f1-e053-d303fe0ad83c",
+            "seasonId": null,
+            "seat": null,
+            "id": "a62b794f-af55-46fb-bfe4-c33c1c1641f4",
+            "description": null,
+            "amount": {
+              "taxesAndFees": [
+                {
+                  "code": "resortFeeAndTax",
+                  "type": "TAX",
+                  "amount": 56.69
+                },
+                {
+                  "code": "roomChargeTax",
+                  "type": "TAX",
+                  "amount": 267.6
+                },
+                {
+                  "code": "tourismFeeAndTax",
+                  "type": "TAX",
+                  "amount": 0
+                },
+                {
+                  "code": "casinoSurchargeAndTax",
+                  "type": "TAX",
+                  "amount": 0
+                },
+                {
+                  "code": "occupancyFee",
+                  "type": "FEE",
+                  "amount": 0
+                }
+              ],
+              "discounts": null,
+              "itemizedCharges": [
+                {
+                  "name": "roomTotal",
+                  "value": 2267.6
+                },
+                {
+                  "name": "depositDue",
+                  "value": 2267.6
+                },
+                {
+                  "name": "totalRoomCharges",
+                  "value": 2000
+                }
+              ],
+              "totalAmount": [
+                {
+                  "name": "total",
+                  "value": 2324.29
+                },
+                {
+                  "name": "authAmount",
+                  "value": 100.0
+                },
+                {
+                  "name": "taxTotal",
+                  "value": 274.29
+                }
+              ]
+            },
+            "propertyName": "The Cosmopolitan of Las Vegas",
+            "itemType": "Room",
+            "quantity": 2,
+            "additionalFraudParams": null,
+            "delivery": null,
+            "duration": {
+              "endDate": "2024-11-03T00:00:00.0000000Z",
+              "startDate": "2024-11-02T00:00:00.0000000Z",
+              "startTime": "3:00 PM",
+              "endTime": "11:00 AM"
+            },
+            "itemId": "c9b0ee08-3eff-421d-a141-80f8013e8e53",
+            "itemName": "Terrace Studio Two Queen Beds Fountain View",
+            "locationAddress": {
+              "type": null,
+              "state": "NV",
+              "country": "USA",
+              "city": "Las Vegas",
+              "zip": "89109",
+              "address": "3708 Las Vegas Boulevard South",
+              "address2": null
+            },
+            "numberOfGuests": 2
+          }
+        ],
+        "itemsGroupTotal": [
+          {
+            "name": "authAmount",
+            "value": 2267.6
+          },
+          {
+            "name": "taxTotal",
+            "value": 274.29
+          }
+        ],
+        "paymentAuthResults": [],
+        "paymentFraudResults": {
+          "status": "approved",
+          "decision": "approved",
+          "reasonCode": "5237260000001857563:mgmri_Distance between Device Location and Billing Zip:3;5237260000001857564:mgmri_Distance between Device Location and Member Zip:-1;5237260000001857547:mgmri_GDIS Times Seen:3;5237260000001130477:mgmri_Same Device Used with More Than 1 BIN Country in 7 Days:300;5237260000001130482:mgmri_Same Device Used with More Than 1 Customer Email in 1 Day:400;5237260000001130481:mgmri_Same Device Used with More Than 1 Card Number in 7 Days:300;5237260000001130495:mgmri_Same Device Used with More Than 1 IP Address in 1 Hour:500;5237260000001130499:mgmri_Same Device Used with More Than 1 Transaction in 1 Hour:500;5237260000001130450:mgmri_Device Real IP Country Not Equal to BIN Country:400;5237260000001130448:mgmri_Device Real IP Address Not Equal to IP Address:200;5237260000001130453:mgmri_Distance from Billing Postal Code to Device Real IP Address:75;5237260000001832837:Guest Phone Number is 11 Digits and Begins with 1:0;5237260000001130384:mgmri_Transaction Is ACCEPT:500;",
+          "errorCode": null,
+          "fraudAgent": "Accertify",
+          "recommendationCode": null,
+          "errorDescription": null
+        },
+        "paymentVerifyResults": {
+          "status": "SUCCESS",
+          "type": "Verify",
+          "decision": "SUCCESS",
+          "errorCode": null,
+          "authorizationCode": "821305",
+          "authorizedDateTime": "2024-08-15T20:12:14.2196414Z",
+          "avsCode": null,
+          "cvCode": null,
+          "errorDescription": null,
+          "responseCode": "A"
+        },
+        "verifyDeclineCount": 0,
+        "verifyFraudDeclineCount": 0
+      }
+    ]
+  },
+  "additionalAttributes": [
+    {
+      "name": "customerReference",
+      "value": "Can be any type, define as Object"
+    },
+    {
+      "name": "productDescriptors",
+      "value": "Room, Event"
+    },
+    {
+      "name": "additionalOrderId",
+      "value": "32323"
+    }
+  ]
+}

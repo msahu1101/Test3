@@ -1,0 +1,106 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "variables": {},
+    "parameters": {
+    "environment" : {
+      "type" : "string",
+      "metadata": {
+        "description": "Prod or Non-Prod for the alert title."
+      }
+    },
+    "region": {
+      "type" : "string",
+      "metadata": {
+        "description": "Region acronym for the alert title"
+      }
+    },
+    "subscription_id" : {
+      "type" : "string",
+      "metadata": {
+        "description": "Subscription ID"
+      }
+    },
+      "action_group_name" : {
+        "type" : "string",
+        "metadata": {
+          "description": "Action Group Name"
+        }
+      },
+      "action_group_resource_group_name" : {
+        "type" : "string",
+        "metadata": {
+          "description": "Resource group name for the action group"
+        }
+      },
+    "app_insights_name" : {
+      "type" : "string",
+      "metadata": {
+        "description": "Application Insights Name"
+      }
+    },
+    "app_service_resource_group_name" : {
+      "type" : "string",
+      "metadata": {
+        "description": "Resource group name"
+      }
+    },
+    "functionNames": {
+      "type" : "array",
+      "metadata": {
+        "description": "Function names and titles"
+      }
+    },
+    "successRateAlerts": {
+      "type" : "array",
+      "metadata": {
+        "description": "Alert parameters for alerts using failure rate."
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "microsoft.insights/metricAlerts",
+      "apiVersion": "2018-03-01",
+      "name": "[concat(parameters('environment'), ' ', parameters('functionNames')[div(copyIndex(),length(parameters('successRateAlerts')))].title, ' Failures P', parameters('successRateAlerts')[mod(copyIndex(),length(parameters('successRateAlerts')))].severity, ' Region ', parameters('region'))]",
+      "location": "global",
+      "properties": {
+        "description": "[concat('In ',parameters('environment'),', the ', parameters('functionNames')[div(copyIndex(),length(parameters('successRateAlerts')))].name, ' api had a success rate of less than ', parameters('successRateAlerts')[mod(copyIndex(),length(parameters('successRateAlerts')))].threshold, '%.')]",
+        "severity": "[parameters('successRateAlerts')[mod(copyIndex(),length(parameters('successRateAlerts')))].severity]",
+        "enabled": true,
+        "scopes": [
+          "[concat('/subscriptions/', parameters('subscription_id'), '/resourceGroups/',parameters('app_service_resource_group_name'),'/providers/microsoft.insights/components/',parameters('app_insights_name'))]"
+        ],
+        "evaluationFrequency": "PT1M",
+        "windowSize": "PT5M",
+        "criteria": {
+          "allOf": [
+            {
+              "threshold": "[parameters('successRateAlerts')[mod(copyIndex(),length(parameters('successRateAlerts')))].threshold]",
+              "name": "Metric1",
+              "metricNamespace": "Azure.ApplicationInsights",
+              "metricName": "[concat(parameters('functionNames')[div(copyIndex(),length(parameters('successRateAlerts')))].name, ' SuccessRate')]",
+              "operator": "LessThanOrEqual",
+              "timeAggregation": "Average",
+              "criterionType": "StaticThresholdCriterion",
+              "skipMetricValidation": true
+            }
+          ],
+          "odata.type": "Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria"
+        },
+        "autoMitigate": true,
+        "targetResourceType": "microsoft.insights/components",
+        "actions": [
+          {
+            "actionGroupId": "[concat('/subscriptions/', parameters('subscription_id'), '/resourceGroups/',parameters('action_group_resource_group_name'),'/providers/microsoft.insights/actiongroups/',parameters('action_group_name'))]",
+            "webHookProperties": {}
+          }
+        ]
+      },
+      "copy": {
+        "name": "copyMetricAlert",
+        "count": "[mul(length(parameters('successRateAlerts')), length(parameters('functionNames')))]"
+      }
+    }
+  ]
+}

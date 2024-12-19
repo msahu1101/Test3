@@ -1,0 +1,18 @@
+{
+  "header": {
+    "origin": "API",
+    "mgmCorrelationId": "08e29491-1ff3-4d40-b997-fbd7b9c8c381",
+    "apiVersion": "3.26",
+    "executionId": "25a16346-1f53-4604-a8c5-7025f58a4418",
+    "status": {
+      "code": "FAILURE",
+      "messages": [
+        {
+          "text": "Internal Server error occurred in GSE | Code: 1015 | Description: <ServerUnavailable>[Server currently unavailable]",
+          "type": "ERROR",
+          "code": "120-3-3013"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,99 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"team": {
+			"type": "string",
+			"defaultValue": "Cart/Order/Trip/NGL Services"
+		},
+		"storage_account_name": {
+			"type": "string",
+			"metadata": {
+				"description": "The name of the storage that you wish to create."
+			}
+		},
+		"account_type": {
+			"type": "string",
+			"metadata": {
+				"description": "Storage Account type"
+			}
+		},
+		"account_kind": {
+			"type": "string",
+			"metadata": {
+				"description": "Storage Account kind"
+			}
+		},
+		"network_acls": {
+			"type": "string",
+			"metadata": {
+				"description": "Storage Network Access Control List"
+			}
+		},
+		"vnet_resource_group_name": {
+			"type": "string",
+			"metadata": {
+				"description": "Resource Group of the vnet which gets asociated with Storage"
+			}
+		},
+		"vnet_name": {
+			"type": "string",
+			"metadata": {
+				"description": "vnet Name which gets asociated with Storage"
+			}
+		},
+		"subnet_name": {
+			"type": "string",
+			"metadata": {
+				"description": "Storage Network Access Control List"
+			}
+		},
+		"environment": {
+			"type": "string",
+			"metadata": {
+				"description": "Application Environment"
+			}
+		}
+	},
+	"variables": {
+		"subnetId": "[resourceId(parameters('vnet_resource_group_name') ,'Microsoft.Network/virtualNetworks/subnets',parameters('vnet_name'),parameters('subnet_name'))]"
+	},
+	"resources": [
+		{
+			"type": "Microsoft.Storage/storageAccounts",
+			"name": "[parameters('storage_account_name')]",
+			"apiVersion": "2019-04-01",
+			"location": "[resourceGroup().location]",
+			"sku": {
+				"name": "[parameters('account_type')]"
+			},
+			"tags": {
+				"environment": "[parameters('environment')]",
+				"creator": "[concat(parameters('team'), ' Team')]",
+				"application": "[parameters('team')]",
+				"businessSponsor": "Sudhakar Veluru",
+				"appOwner": "Pramod Baswaraju",
+				"lead": "Pramod Baswaraju",
+				"businessCostCenter": "516-800-80182 Digital Engineering"
+			},
+			"kind": "[parameters('account_kind')]",
+			"properties": {
+				"allowBlobPublicAccess": false,
+				"supportsHttpsTrafficOnly": true,
+				"networkAcls": {
+					"bypass": "[parameters('network_acls')]",
+					"virtualNetworkRules": [
+						{
+							"id": "[variables('subnetId')]",
+							"action": "Allow"
+						}
+					],
+					"defaultAction": "Deny"
+				},
+				"deleteRetentionPolicy": {
+					"enabled": true
+				}
+			}
+		}
+	]
+}

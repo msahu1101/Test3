@@ -1,0 +1,65 @@
+{
+	"type": "object",
+	"required": false,
+	"javaType": "com.mgmresorts.cart.dto.product.room.v1.services.Wrapper",
+	"additionalProperties": false,
+	"properties": {
+		"room": {
+			"type": "object",
+			"javaType": "com.mgmresorts.cart.dto.product.room.v1.Room",
+			"additionalProperties": false,
+			"properties": {
+				"checkInDate": {
+					"type": "string",
+					"description": "Room Checkin date",
+					"format": "date"
+				},
+				"checkOutDate": {
+					"type": "string",
+					"description": "Room Checkout date",
+					"format": "date"
+				},
+				"numberOfRooms": {
+					"type": "integer",
+					"description": "Number of rooms required in the reservation"
+				},
+				"numberOfAdults": {
+					"type": "integer",
+					"description": "Number of adult guests in the reservation"
+				},
+				"numberOfChildren": {
+					"type": "integer",
+					"description": "Number of children in the reservation"
+				},
+				"propertyId": {
+					"type": "string",
+					"description": "Hotel code (uuid) of the property"
+				},
+				"roomTypeId": {
+					"type": "string",
+					"description": "Room type Id"
+				},
+				"programId": {
+					"type": "string",
+					"description": "Program Id"
+				},
+				"promoCode": {
+					"type": "string",
+					"description": "Promo code if applicable for GSE property"
+				},
+				"promo": {
+					"type": "string",
+					"description": "Promo code if applicable for ACRS property"
+				},
+				"checkPrice": {
+					"type": "number",
+					"description": "Previous priced values to compare differences in case there is any"
+				},
+				"myVegasCode": {
+					"type": "string",
+					"description": "MY VEGAS Promo code if applicable"
+				}
+			}
+		}
+	}
+}

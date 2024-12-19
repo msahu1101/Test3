@@ -1,0 +1,100 @@
+{
+    "$ref": "#/definitions/event",
+    "type": "object",
+    "definitions": {
+        "data": {
+            "type": "object",
+            "additionalProperties": false,
+			"javaType": "com.mgmresorts.event.dto.OrderServiceEventData",
+            "extendsJavaClass": "com.mgmresorts.event.dto.EventData",
+            "properties": {
+                "callbackUrl": {
+                    "type": "string"
+                },
+                "headers": {
+                    "type": "object",
+                    "required": false,
+                    "$ref": "show-reservation-event.json#/definitions/headersMap"
+                },
+                "dataGovernance": {
+                    "type": "object",
+                    "required": false,
+                    "$ref": "show-reservation-event.json#/definitions/reservationDataGovernance"
+                },
+                "body": {
+                    "description": "This is going to contain the Backend Source System Create Reservation Response",
+                    "type": "object",
+                    "required": false,
+                    "$ref": "show-reservation-event.json#/definitions/reservationFromBody"
+                }
+            }
+        },
+        "event": {
+            "type": "object",
+            "javaType": "com.mgmresorts.event.dto.OrderServiceEvent",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "topic": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "subject": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "data": {
+                    "$ref": "#/definitions/data"
+                },
+                "eventType": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "eventTime": {
+                    "format": "date-time",
+                    "type": "string"
+                },
+                "metadataVersion": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "dataVersion": {
+                    "type": "string",
+                    "minLength": 1
+                }
+            },
+            "required": [
+                "specversion",
+                "id",
+                "type",
+                "source"
+            ]
+        },
+        "payload": {
+            "type": "object",
+            "javaType": "com.mgmresorts.event.dto.OrderServicePayload",
+            "additionalProperties": false,
+            "properties": {
+                "callbackUrl": {
+                    "description": "This endpoint can be used for bigger payloads (>1MB)",
+                    "type": "string"
+                },
+                "referenceNumber": {
+                    "description": "This is going to contain the primary id of the payload",
+                    "type": "string"
+                },
+                "content": {
+                    "description": "This is going to contain plain/encrypted data",
+                    "type": "string"
+                },
+                "privateKey": {
+                    "description": "This is going to contain private key identifier",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

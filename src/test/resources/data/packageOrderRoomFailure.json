@@ -1,0 +1,66 @@
+{
+  "id": "302fc506-f85f-4073-b422-297a3fb8819a",
+  "cartId": "5f82d3f1-3422-49a5-aba3-25a7a8e0dbb6",
+  "customerId": "851405897986",
+  "type": "PACKAGE",
+  "status": "FAILURE",
+  "canRetryCheckout": true,
+  "orderLineItems": [{
+    "orderLineItemId": "c69f7f70-4f2e-4426-ae31-5f765ecf4754",
+    "cartLineItemId": "aac74599-db61-414f-8d41-7b5376ad7020",
+    "status": "FAILURE",
+    "messages": [],
+    "content": "{\"eventDate\":\"2022-07-01\",\"eventTime\":\"8:00 PM\",\"eventTz\":\"2022-07-02T03:00Z\",\"seasonId\":\"62db7605-3a5a-4d3d-b208-f4f57419af49\",\"showEventId\":\"a862b476-2ba3-4509-adc8-f6bcf8944b8e\",\"programId\":\"7396a4bb-2443-431b-ae48-7fb77cff8bfc\",\"propertyId\":\"bee81f88-286d-43dd-91b5-3917d9d62a68\",\"comp\":false,\"hdePackage\":true,\"discounted\":false,\"permissibleDeliveryMethods\":[{\"default\":true,\"eprinting\":false,\"code\":\"DS\",\"amount\":0.0,\"description\":\"SMS Delivery 72 Hours Prior to Event\",\"ePrinting\":false,\"name\":\"DELAYSMS\",\"active\":true,\"id\":\"34fd9b33-9e2d-49ff-a6ec-e62e26d615b2\"}],\"tickets\":[{\"priceCode\":\"BZ\",\"priceCodeDescription\":\"Adult OFF\",\"holdClass\":\"PT-HDE-1\",\"basePrice\":545.87,\"discountedPrice\":545.87,\"holdId\":\"100506211\",\"holdDuration\":1652361848629,\"state\":\"HELD\",\"showEventId\":\"a862b476-2ba3-4509-adc8-f6bcf8944b8e\",\"ticketTypeCode\":\"_1K\",\"ticketTypeCodeDescription\":\"HDE Pck 1\",\"seat\":{\"seatNumber\":19,\"sectionName\":\"304\",\"rowName\":\"D\"}},{\"priceCode\":\"BZ\",\"priceCodeDescription\":\"Adult OFF\",\"holdClass\":\"PT-HDE-1\",\"basePrice\":545.87,\"discountedPrice\":545.87,\"holdId\":\"100506211\",\"holdDuration\":1652361848629,\"state\":\"HELD\",\"showEventId\":\"a862b476-2ba3-4509-adc8-f6bcf8944b8e\",\"ticketTypeCode\":\"_1K\",\"ticketTypeCodeDescription\":\"HDE Pck 1\",\"seat\":{\"seatNumber\":20,\"sectionName\":\"304\",\"rowName\":\"D\"}}],\"charges\":{\"discountedSubtotal\":1091.7400,\"showSubtotal\":1091.7400,\"let\":98.2600,\"deliveryFee\":0.0000,\"gratuity\":0.0000,\"reservationTotal\":1190.0000,\"serviceCharge\":{\"amount\":0.0000,\"itemized\":{\"charge\":0.0000,\"tax\":0.0000}},\"transactionFee\":{\"amount\":0.0000,\"itemized\":{\"charge\":0.0000,\"tax\":0.0000}}}}",
+    "specialRequests": [],
+    "addOnComponents": [],
+    "enableJwb": false,
+    "productType": "SHOW",
+    "propertyId": "bee81f88-286d-43dd-91b5-3917d9d62a68",
+    "productId": "a862b476-2ba3-4509-adc8-f6bcf8944b8e",
+    "packageId": "Aero22-1-2022-07-01",
+    "packageLineItemId": "44a49feb-1a30-4626-8285-939585f4edc1"
+  }, {
+    "orderLineItemId": "4182b5a9-215a-4e55-90cd-c836bc30eaa2",
+    "cartLineItemId": "2e4c91ac-0664-4abf-b2a2-3feada3c0d4e",
+    "status": "FAILURE",
+    "messages": [{
+      "code": "124-2-3005",
+      "type": "ERROR",
+      "sourceSystemError": {
+        "sourceSystemMessage": "<InvalidProgramId>[Reservation program id '132a7e73-2c96-4ee0-83cc-deb0c06a0db3' is invalid]",
+        "sourceSystemCode": "632-2-242"
+      }
+    }
+    ],
+    "content": "{\"propertyId\":\"44e610ab-c209-4232-8bb4-51f7b9b13a75\",\"roomTypeId\":\"5d2a0e75-aa3d-421c-8fbc-d7afbddc43b7\",\"programId\":\"132a7e73-2c96-4ee0-83cc-deb0c06a0db3\",\"customerId\":\"0\",\"perpetualPricing\":false,\"guaranteeCode\":\"CC\",\"tripDetails\":{\"checkInDate\":\"2022-07-01\",\"checkOutDate\":\"2022-07-04\",\"numAdults\":2,\"numChildren\":0,\"numRooms\":1},\"bookings\":[{\"date\":\"2022-07-01\",\"basePrice\":99999.00,\"customerPrice\":0.00,\"price\":666.67,\"isDiscounted\":true,\"programIdIsRateTable\":false,\"overridePrice\":-1.00,\"overrideProgramIdIsRateTable\":false,\"isComp\":false,\"resortFeeIsSpecified\":false,\"resortFee\":45.00,\"programId\":\"032a7e73-2c96-4ee0-83cc-deb0c06a0db3\",\"pricingRuleId\":\"95f3b666-e868-47ba-8c4c-4c5fb81f039d\"},{\"date\":\"2022-07-02\",\"basePrice\":99999.00,\"customerPrice\":0.00,\"price\":666.67,\"isDiscounted\":true,\"programIdIsRateTable\":false,\"overridePrice\":-1.00,\"overrideProgramIdIsRateTable\":false,\"isComp\":false,\"resortFeeIsSpecified\":false,\"resortFee\":45.00,\"programId\":\"032a7e73-2c96-4ee0-83cc-deb0c06a0db3\",\"pricingRuleId\":\"95f3b666-e868-47ba-8c4c-4c5fb81f039d\"},{\"date\":\"2022-07-03\",\"basePrice\":99999.00,\"customerPrice\":0.00,\"price\":666.67,\"isDiscounted\":true,\"programIdIsRateTable\":false,\"overridePrice\":-1.00,\"overrideProgramIdIsRateTable\":false,\"isComp\":false,\"resortFeeIsSpecified\":false,\"resortFee\":45.00,\"programId\":\"032a7e73-2c96-4ee0-83cc-deb0c06a0db3\",\"pricingRuleId\":\"95f3b666-e868-47ba-8c4c-4c5fb81f039d\"}],\"chargesAndTaxes\":{\"charges\":[{\"date\":\"2022-07-01\",\"amount\":1036.67,\"itemized\":[{\"itemType\":\"RoomCharge\",\"amount\":666.67,\"item\":\"Room Charge\"},{\"itemType\":\"ExtraGuestCharge\",\"amount\":0.00,\"item\":\"Extra Guest Charge\"},{\"itemType\":\"ResortFee\",\"amount\":45.00,\"item\":\"Resort Fee\"}]},{\"date\":\"2022-07-02\",\"amount\":1036.67,\"itemized\":[{\"itemType\":\"RoomCharge\",\"amount\":666.67,\"item\":\"Room Charge\"},{\"itemType\":\"ExtraGuestCharge\",\"amount\":0.00,\"item\":\"Extra Guest Charge\"},{\"itemType\":\"ResortFee\",\"amount\":45.00,\"item\":\"Resort Fee\"}]},{\"date\":\"2022-07-03\",\"amount\":1036.67,\"itemized\":[{\"itemType\":\"RoomCharge\",\"amount\":666.67,\"item\":\"Room Charge\"},{\"itemType\":\"ExtraGuestCharge\",\"amount\":0.00,\"item\":\"Extra Guest Charge\"},{\"itemType\":\"ResortFee\",\"amount\":45.00,\"item\":\"Resort Fee\"}]}],\"taxesAndFees\":[{\"date\":\"2022-07-01\",\"amount\":138.71,\"itemized\":[{\"itemType\":\"RoomChargeTax\",\"amount\":89.20,\"item\":\"Room Tax\"},{\"itemType\":\"ExtraGuestChargeTax\",\"amount\":0.00,\"item\":\"Extra Guest Tax\"},{\"itemType\":\"ResortFeeTax\",\"amount\":6.02,\"item\":\"Resort Fee Tax\"}]},{\"date\":\"2022-07-02\",\"amount\":138.71,\"itemized\":[{\"itemType\":\"RoomChargeTax\",\"amount\":89.20,\"item\":\"Room Tax\"},{\"itemType\":\"ExtraGuestChargeTax\",\"amount\":0.00,\"item\":\"Extra Guest Tax\"},{\"itemType\":\"ResortFeeTax\",\"amount\":6.02,\"item\":\"Resort Fee Tax\"}]},{\"date\":\"2022-07-03\",\"amount\":138.71,\"itemized\":[{\"itemType\":\"RoomChargeTax\",\"amount\":89.20,\"item\":\"Room Tax\"},{\"itemType\":\"ExtraGuestChargeTax\",\"amount\":0.00,\"item\":\"Extra Guest Tax\"},{\"itemType\":\"ResortFeeTax\",\"amount\":6.02,\"item\":\"Resort Fee Tax\"}]}]},\"availableComponents\":[{\"id\":\"3285f953-bf77-47f7-afbe-b07b120d5b52\",\"code\":\"DOGFRIENDLYSTE\",\"shortDescription\":\"Dog Friendly Fee\",\"longDescription\":\"Bellagio Hotel &amp; Casino&nbsp;is excited and prepared to accommodate your dog. Up to two dogs are allowed, with a maximum combined weight of less than 100 lbs.&nbsp;(Price per night based on one dog, fees for additional dog will be applied at check-in, if applicable.)\",\"active\":true,\"depositAmount\":595.25,\"pricingApplied\":\"NIGHTLY\",\"tripPrice\":525.00,\"tripTax\":70.26,\"price\":175.00,\"prices\":[{\"date\":\"2022-07-01\",\"amount\":175.00,\"tax\":23.42},{\"date\":\"2022-07-02\",\"amount\":175.00,\"tax\":23.42},{\"date\":\"2022-07-03\",\"amount\":175.00,\"tax\":23.42}]},{\"id\":\"54876f0d-85dc-4c49-ab86-928ec76418c0\",\"code\":\"PKCHLS\",\"shortDescription\":\"VIP Arrival Experience\",\"longDescription\":\"-Complimentary Airport Roundtrip Limousine Service-Private Concierge Services-Private Registration-Daily presentation of appetizing morning, afternoon and evening delicacies-Complimentary Business Services\",\"active\":true,\"depositAmount\":510.21,\"pricingApplied\":\"NIGHTLY\",\"tripPrice\":450.00,\"tripTax\":60.21,\"price\":150.00,\"prices\":[{\"date\":\"2022-07-01\",\"amount\":150.00,\"tax\":20.07},{\"date\":\"2022-07-02\",\"amount\":150.00,\"tax\":20.07},{\"date\":\"2022-07-03\",\"amount\":150.00,\"tax\":20.07}]}],\"ratesSummary\":{\"roomSubtotal\":299997.0000,\"programDiscount\":297996.9900,\"discountedSubtotal\":2000.0100,\"discountedAveragePrice\":666.6700,\"roomRequestsTotal\":0.0000,\"adjustedRoomSubtotal\":2000.0100,\"resortFee\":135.0000,\"resortFeePerNight\":45.0000,\"tripSubtotal\":2135.0100,\"resortFeeAndTax\":153.0600,\"roomChargeTax\":267.6000,\"occupancyFee\":0.0000,\"tourismFee\":0.0000,\"tourismFeeAndTax\":0.0000,\"casinoSurcharge\":0.0000,\"casinoSurchargeAndTax\":0.0000,\"reservationTotal\":2420.6700,\"depositDue\":2267.6100,\"balanceUponCheckIn\":153.0600},\"depositDetails\":{\"dueDate\":\"2022-05-11\",\"amountPolicy\":\"PercentAmount\",\"amount\":2267.61,\"forfeitDate\":\"2019-10-06\",\"forfeitAmount\":3373.07,\"overrideAmount\":-1.00,\"depositRuleCode\":\"FULL\",\"cancellationRuleCode\":\"FULL\",\"itemized\":[{\"itemType\":\"RoomCharge\",\"amount\":2000.01,\"item\":\"Room Charge\"},{\"itemType\":\"RoomChargeTax\",\"amount\":267.60,\"item\":\"Room Tax\"},{\"amount\":0.00,\"item\":\"Extra Guest Charge\"},{\"amount\":0.00,\"item\":\"Extra Guest Tax\"}]},\"depositPolicy\":{\"depositRequired\":true,\"creditCardRequired\":true},\"markets\":[{\"date\":\"2022-07-01\",\"marketCode\":\"TPKG\",\"sourceCode\":\"TFITIC\"},{\"date\":\"2022-07-02\",\"marketCode\":\"TPKG\",\"sourceCode\":\"TFITIC\"},{\"date\":\"2022-07-03\",\"marketCode\":\"TPKG\",\"sourceCode\":\"TFITIC\"}]}",
+    "itineraryId": "9652180994",
+    "lineItemCharge": 299997.0000,
+    "lineItemTax": 267.6000,
+    "lineItemPrice": 2420.6700,
+    "lineItemDeposit": 2267.6100,
+    "lineItemDiscount": 297996.9900,
+    "lineItemBalance": 153.0600,
+    "lineItemTourismFeeAndTax": 0.0000,
+    "lineItemResortFeePerNight": 45.0000,
+    "lineItemOccupancyFee": 0.0000,
+    "lineItemResortFeeAndTax": 153.0600,
+    "lineItemAdjustedItemSubtotal": 2000.0100,
+    "addOnsPrice": 0.0000,
+    "addOnsTax": 0.0000,
+    "averagePricePerNight": 666.6700,
+    "specialRequests": [],
+    "addOnComponents": [],
+    "enableJwb": false,
+    "numberOfNights": 3,
+    "lineItemCasinoSurcharge": 0.0000,
+    "lineItemCasinoSurchargeAndTax": 0.0000,
+    "productType": "ROOM",
+    "propertyId": "44e610ab-c209-4232-8bb4-51f7b9b13a75",
+    "productId": "5d2a0e75-aa3d-421c-8fbc-d7afbddc43b7",
+    "programId": "032a7e73-2c96-4ee0-83cc-deb0c06a0db3",
+    "packageId": "Aero22-1-2022-07-01",
+    "packageLineItemId": "44a49feb-1a30-4626-8285-939585f4edc1"
+  }
+  ],
+  "enableJwb": false
+}

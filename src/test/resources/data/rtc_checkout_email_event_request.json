@@ -1,0 +1,212 @@
+{
+	"correlationId": "fa650d71-b9d7-4151-ac58-d2b734875056",
+	"timestamp": "2024-11-15T06:30:12.250Z",
+	"reservationType": "PACKAGE",
+	"reservationVersion": "V2",
+	"reservationEvent": {
+		"id": "U8TX4654YJ6S",
+		"metadata": {
+			"defaultChannel": "EMAIL",
+			"fallbackChannel": "EMAIL"
+		},
+		"packageConfigDetails": {
+			"packageCategoryId": "Pkg_953598-deluxe-package",
+			"packageName": "Deluxe Package",
+			"packagePriceBreakdownType": "TRANSPARENT",
+			"seatMapOptions": "SEATMAP",
+			"packagePricingDetails": {
+				"amountDue": 51.02,
+				"amountPaid": 384.63,
+				"lastFourCC": "1111",
+				"packageStartingPrice": 235.62,
+				"packageTotal": 435.65,
+				"packageSubTotal": 405.65,
+				"paymentMethod": "Visa",
+				"roomModification": 115.64,
+				"roomTotal": 277.78,
+				"showModification": 16.36,
+				"showTotal": 89.84
+			},
+			"packageComponentDetails": [
+				{
+					"code": "CFBP2",
+					"id": "COMPONENTCD-v-CFBP2-d-TYP-v-COMPONENT-d-PROP-v-MV001-d-NRPCD-v-CFBP2",
+					"description": "F&B Inclusion Tier 2",
+					"longDescription": "CFBP2",
+					"pricingApplied": "CHECKIN",
+					"shortDescription": "CFBP2",
+					"ratePlanCode": "CFBP2",
+					"taxRate": 0,
+					"ratePlanName": "CFBP2",
+					"amtAftTax": 200,
+					"end": "2025-06-04T00:00:00.0000000Z",
+					"nightlyCharge": false,
+					"start": "2025-06-03T00:00:00.0000000Z"
+				},
+				{
+					"code": "CFBP2",
+					"id": "COMPONENTCD-v-CFBP2-d-TYP-v-COMPONENT-d-PROP-v-MV001-d-NRPCD-v-CFBP2",
+					"description": "F&B Inclusion Tier 2",
+					"longDescription": "CFBP2",
+					"pricingApplied": "CHECKIN",
+					"shortDescription": "CFBP2",
+					"ratePlanCode": "CFBP2",
+					"taxRate": 0,
+					"ratePlanName": "CFBP2",
+					"amtAftTax": 200,
+					"end": "2025-06-04T00:00:00.0000000Z",
+					"nightlyCharge": false,
+					"start": "2025-06-03T00:00:00.0000000Z"
+				}
+			]
+		},
+		"reservations": [
+			{
+				"showReservation": {
+					"allDayEventFlag": false,
+					"chargeDetails": {
+						"amountPaid": 89.84,
+						"deliveryFee": 0.0,
+						"gratuity": 0.0,
+						"let": 7.42,
+						"reservationTotal": 89.84,
+						"serviceCharge": {
+							"amount": 0.0,
+							"itemized": {
+								"charge": 0.0,
+								"tax": 0.0
+							}
+						},
+						"showSubtotal": 82.42,
+						"transactionFee": {
+							"amount": 0.0,
+							"itemized": {
+								"charge": 0.0,
+								"tax": 0.0
+							}
+						}
+					},
+					"confirmationNumber": "114872184",
+					"deliveryMethod": "Tickets by Email and Mobile",
+					"guestDetails": {
+						"address": {
+							"addressLine1": "840 Grier Drive",
+							"city": "Las Vegas",
+							"state": "NV",
+							"zipCode": "89119"
+						},
+						"emailAddress": "trayyyyyyy@mgmresorts.com",
+						"firstName": "TestF",
+						"lastName": "TestL",
+						"phoneNumber": "+1 (212) 345-6585"
+					},
+					"id": "8d65905d-fd05-4f96-a214-0730207d4715",
+					"multiDayEvent": false,
+					"operation": "CREATE",
+					"phoneNumber": "702.597.7600",
+					"propertyDetails": {
+						"city": "Las Vegas",
+						"country": "United States",
+						"operaPropertyCode": "930",
+						"postalCode": "89109",
+						"propertyId": "f8d6a944-7816-412f-a39a-9a63aad26833",
+						"propertyName": "Excalibur Hotel & Casino",
+						"propertyTimeZone": "America/Los_Angeles",
+						"state": "NV",
+						"street1": "3850 S. Las Vegas Blvd."
+					},
+					"showDate": "2025-06-13",
+					"showImage": "/transform/1MKhuryJ0S06Im69/EXC143840343.jpg",
+					"showName": "The Mac King Comedy Magic Show",
+					"showSeats": [
+						{
+							"row": "TBL",
+							"seatNumber": "9",
+							"section": "TBL9",
+							"priceCodeDescription": "General",
+							"ticketTypeCodeDescription": "Admission"
+						},
+						{
+							"row": "TBL",
+							"seatNumber": "10",
+							"section": "TBL9",
+							"priceCodeDescription": "General",
+							"ticketTypeCodeDescription": "Admission"
+						}
+					],
+					"showTime": "03:00 PM",
+					"showVenue": "Thunderland Showroom",
+					"status": "SUCCESS",
+					"ticketCount": 2
+				}
+			},
+			{
+				"roomReservation": {
+					"arrivalDate": "2025-06-13",
+					"chargeDetails": {
+						"amountPaid": 294.79,
+						"casinoOccupancyFee": 0.0,
+						"depositForfeit": 294.79,
+						"discountedSubtotal": 200.0,
+						"dueUponCheckin": 51.02,
+						"forfeitDate": "2025-06-10",
+						"reservationTotal": 345.81,
+						"resortFee": 45.0,
+						"resortFeeAvgPerNight": 45.0,
+						"resortFeeTax": 6.02,
+						"roomChargeTax": 34.79,
+						"tourismPromotionFee": 0.0,
+						"tourismPromotionFeeAndTax": 0.0
+					},
+					"confirmationNumber": "6DT6NZQVDQ",
+					"departureDate": "2025-06-14",
+					"guestDetails": {
+						"address": {
+							"addressLine1": "840 Grier Drive",
+							"city": "Las Vegas",
+							"state": "NV",
+							"zipCode": "89119"
+						},
+						"emailAddress": "trayyyyyyy@mgmresorts.com",
+						"firstName": "TestF",
+						"lastName": "TestL",
+						"phoneNumber": "+1 (212) 345-6585"
+					},
+					"id": "776150ac-e4dd-4199-960e-70154e0651cc",
+					"numberOfGuests": 2,
+					"offerDescription": "Guaranteed best rates.",
+					"offerName": "Flexible Rate",
+					"operation": "CREATE",
+					"prePromotionalCopy": "yes",
+					"propertyDetails": {
+						"city": "Las Vegas",
+						"country": "USA",
+						"operaPropertyCode": "930",
+						"postalCode": "89158",
+						"propertyId": "e2704b04-d515-45b0-8afd-4fa1424ff0a8",
+						"propertyName": "ARIA Resort & Casino",
+						"propertyTimeZone": "America/Los_Angeles",
+						"state": "NV",
+						"street1": "3730 S Las Vegas Blvd"
+					},
+					"reservationPhone": "866.359.7757",
+					"reservationConciergeEmail": "concierge@bellagioresorts.com",
+					"roomDetails": {
+						"roomImage": "/transform/so7MR0XYinx56Uk2/ARI129512934.tif",
+						"roomName": "Sky Suites Two Bedroom Penthouse ? Mountain View",
+						"roomRequests": [
+							{
+								"requestCode": "LATECO",
+								"requestPrice": 60.0
+							}
+						],
+						"roomRequestsCount": 1
+					},
+					"status": "SUCCESS",
+					"stayDuration": 1
+				}
+			}
+		],
+		"status": "SUCCESS"
+	}
+}

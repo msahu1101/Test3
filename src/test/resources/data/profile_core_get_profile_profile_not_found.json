@@ -1,0 +1,18 @@
+{
+  "header": {
+    "origin": "API",
+    "mgmCorerelationId": "8a407035-d0da-44b6-a897-dceb3ee0a1e8",
+    "apiVersion": "2.24",
+    "executionId": "e0321a3d-3e17-4904-9497-c7ed73deb96d",
+    "status": {
+      "code": "FAILURE",
+      "messages": [
+        {
+          "text": "No profile found with id: 112780541",
+          "type": "ERROR",
+          "code": "102-2-3064"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "type": "object",
+  "javaType": "com.mgmresorts.content.model.PackageConfig",
+  "additionalProperties": false,
+  "title": "The root schema",
+  "description": "The root schema comprises the entire JSON document.",
+  "default": {},
+  "properties": {
+    "active": {
+      "type": "boolean"
+    },
+    "packageCategoryId": {
+      "type": "string"
+    },
+    "packageId": {
+      "type": "string"
+    },
+    "showEventDate": {
+      "type": "string"
+    },
+    "showProgramId": {
+      "type": "string"
+    },
+    "segmentId": {
+      "type": "string"
+    },
+    "groupBlockCode": {
+      "type": "string"
+    },
+    "minLos": {
+      "type": "number",
+      "format": "int64"
+    },
+    "packageTier": {
+      "type": "number",
+      "format": "int64"
+    },
+    "contentType": {
+      "type": "string"
+    }
+  }
+}

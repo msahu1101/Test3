@@ -1,0 +1,69 @@
+{
+	"cartId": "7848da88-820b-48b8-afcd-f3b748d0a81d",
+	"mgmId": "00uxa97o33twlFmqb0h7",
+	"itineraryId": "6910504450",
+	"inAuthTransactionId": "8a3d34be200d",
+	"agent": {
+		"agentId": "05801806",
+		"agentType": "IATA"
+	},
+	"guestProfile": {
+		"id": "12546932738",
+		"firstName": "Mike",
+		"lastName": "Hedden",
+			"addresses": [
+                {
+                    "preferred": "false",
+                    "street1": "123 Main St",
+                    "street2": "",
+                    "city": "Las Vegas",
+                    "state": "NV",
+                    "country": "US",
+                    "postalCode": "89118",
+                    "type": "Home"
+                }
+            ]
+	},
+	"billings": [
+		{
+				"payment": {
+					"firstName": "firstfirst",
+					"lastName": "last",
+					"amount": 379930.28,
+					"maskedNumber": "XXXXXXXXXXXX1111",
+					"cardHolder": "first last",
+					"cvv": "123",
+					"expiry": "10/2022",
+					"type": "Visa",
+					"ccToken": "4111110A001DQXFHY79D9XCZ1111"
+				},
+				"address": {
+					"street1": "234 W Main St",
+					"city": "Las Vegas",
+					"postalCode": "89129",
+					"state": "NV",
+					"country": "US"
+				}
+			},
+			{
+				"payment": {
+					"firstName": "first",
+					"lastName": "last",
+					"amount": 23023.38,
+					"maskedNumber": "XXXXXXXXXXXX1111",
+					"cardHolder": "first last",
+					"cvv": "123",
+					"expiry": "10/2022",
+					"type": "Visa",
+					"ccToken": "4111110A001DQXFHY79D9XCZ1111"
+				},
+				"address": {
+					"street1": "234 W Main St",
+					"city": "Las Vegas",
+					"postalCode": "89129",
+					"state": "NV",
+					"country": "US"
+				}
+			}
+	]
+}

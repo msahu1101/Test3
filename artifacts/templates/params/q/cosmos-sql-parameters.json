@@ -1,0 +1,84 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"team": {
+			"type": "string",
+			"value": "Order Services"
+		},
+		"environment": {
+			"type": "string",
+			"value": "$(TARGET_APP_SERVICE_ENVIRONMENT)"
+		},
+		"account-name": {
+			"type": "string",
+			"value": "mgmshoppingcartorder-$(TARGET_APP_SERVICE_LOCATION)-cdb-$(TARGET_APP_SERVICE_ENVIRONMENT)"
+		},
+		"location": {
+			"type": "string",
+			"value": "West US"
+		},
+		"default-consistency-level": {
+			"type": "string",
+			"value": "Session"
+		},
+		"multiple-write-locations": {
+			"type": "bool",
+			"value": false
+		},
+		"automatic-failover": {
+			"type": "bool",
+			"value": false
+		},
+		"database-name": {
+			"type": "string",
+			"value": "order-management"
+		},
+		"database-throughput": {
+			"type": "int",
+			"value": 4000
+		},
+		"container-name": {
+			"type": "string",
+			"value": "order"
+		},
+		"container-lock-name": {
+			"type": "string",
+			"value": "order-lock"
+		},
+		"primary-region": {
+			"type": "string",
+			"value": "West US"
+		},
+		"max-staleness-prefix": {
+			"type": "int",
+			"value": 100000
+		},
+		"max-interval-in-seconds": {
+			"type": "int",
+			"value": 300
+		},
+		"vnet-resource-group-name": {
+			"type": "string",
+			"value": "shoppingcartvnet-$(TARGET_APP_SERVICE_LOCATION)-rg-$(TARGET_NETWORK_ENVIRONMENT)"
+		},
+		"vnet-name": {
+			"type": "string",
+			"value": "shoppingcart-$(TARGET_APP_SERVICE_LOCATION)-vnet-$(TARGET_NETWORK_ENVIRONMENT)"
+		},
+		"subnet-name": {
+			"type": "string",
+			"value": "orderservicecore-$(TARGET_APP_SERVICE_LOCATION)-sn-$(TARGET_APP_SERVICE_ENVIRONMENT)"
+		},
+		"container-ttl": {
+			"type": "int",
+			"value": 31536000
+		},
+		"container-lock-ttl": {
+			"type": "int",
+			"value": 5
+		}
+	},
+	"resources": [
+	]
+}

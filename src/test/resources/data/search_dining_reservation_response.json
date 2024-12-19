@@ -1,0 +1,31 @@
+{
+    "restaurantReservationList": [
+        {
+            "id": "5f3ba223-6807-4f24-9e5f-db937aac5f28",
+            "itineraryId": "6480665089",
+            "restaurantId": "40872441-efdd-4189-a81c-d9da7f3fa803",
+            "propertyId": "66964e2b-2550-4476-84c3-1a4c0c5c067f",
+            "sevenRoomsProfileId": "16APE4S",
+            "bookDate": "2021-01-29T18:50:32.154+00:00",
+            "reservationDateTime": "2021-01-30 06:00:00",
+            "zonedReservationDateTime": "2021-01-30T14:00:00.000+00:00",
+            "numAdults": 2,
+            "numChildren": 0,
+            "diningArea": "diningArea",
+            "comments": "comments",
+            "agentInfo": {
+                "agentId": "agent",
+                "agentType": "frontDesk"
+            },
+            "state": "Cancelled",
+            "hostStatus": "CANCELED",
+            "channel": "ice",
+            "source": "ice",
+            "confirmationNumber": "MGMLV-1ALLB324G",
+            "createdAt": "2021-01-29T18:50:32.154+00:00",
+            "updatedAt": "2021-01-29T18:50:34.639+00:00",
+            "isCancellable": false,
+            "skipFraudCheck": false
+        }
+    ]
+}

@@ -1,0 +1,876 @@
+{
+	"$id": "https://github.com/MGMResorts/rtc-common-event-schema/version/0.0.3",
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"title": "RTC Package Emails Schema",
+	"version": "DRAFT",
+	"description": "RTC Reservation Schema for reservations.",
+	"type": "object",
+	"javaType": "com.mgmresorts.rtc.RtcReservationEvent",
+	"properties": {
+		"correlationId": {
+			"type": "string",
+			"description": "Unique correlation ID",
+			"format": "uuid"
+		},
+		"timestamp": {
+			"type": "string",
+			"description": "Time event was received",
+			"format": "date-time"
+		},
+		"reservationType": {
+			"type": "string",
+			"enum": [
+				"ROOM",
+				"SHOW",
+				"DINING",
+				"PACKAGE",
+				"OMNI"
+			]
+		},
+		"reservationVersion": {
+			"type": "string",
+			"enum": [
+				"V1",
+				"V2"
+			],
+			"javaEnums": [
+				{
+					"name": "V1"
+				},
+				{
+					"name": "V2"
+				}
+			]
+		},
+		"reservationEvent": {
+			"$ref": "#/typeDefinitions/reservationEventBody"
+		}
+	},
+	"additionalProperties": false,
+	"required": [
+		"reservationType",
+		"reservationEvent"
+	],
+	"typeDefinitions": {
+		"reservationEventBody": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "Reservation event ID"
+				},
+				"source": {
+					"type": "string",
+					"description": "Source of the event"
+				},
+				"status": {
+					"$ref": "#/typeDefinitions/reservationStatusTypeElement"
+				},
+				"metadata": {
+					"$ref": "#/typeDefinitions/metadata"
+				},
+				"packageConfigDetails": {
+					"type": "object",
+					"description": "Packe configuration details. Applicable only if type is 'PACKAGE'",
+					"properties": {
+						"packageCategoryId": {
+							"type": "string"
+						},
+						"packageName": {
+							"type": "string"
+						},
+						"packagePriceBreakdownType": {
+							"type": "string"
+						},
+						"packageInclusions": {
+							"type": "array",
+							"items": {
+								"$ref": "#/typeDefinitions/packageInclusionsElement"
+							}
+						},
+						"seatMapOptions": {
+							"type": "string",
+							"description": "Seat map options for the package",
+							"enum": [
+								"SECTION_SELECTION",
+								"GENERAL_ADMISSION",
+								"SEATMAP"
+							]
+						},
+						"packageComponentDetails": {
+							"type": "array",
+							"items": {
+								"$ref": "#/typeDefinitions/packageComponentDetailsElement"
+							}
+						},
+						"packagePricingDetails": {
+							"type": "object",
+							"description": "Package pricing details",
+							"properties": {
+								"packageStartingPrice": {
+									"type": "number"
+								},
+								"packageTotal": {
+									"type": "number"
+								},
+								"packageSubTotal": {
+									"type": "number"
+								},
+								"roomModification": {
+									"type": "number"
+								},
+								"showModification": {
+									"type": "number"
+								},
+								"roomTotal": {
+									"type": "number"
+								},
+								"showTotal": {
+									"type": "number"
+								},
+								"amountPaid": {
+									"type": "number"
+								},
+								"amountDue": {
+									"type": "number"
+								},
+								"paymentMethod": {
+									"type": "string"
+								},
+								"lastFourCC": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"reservations": {
+					"type": "array",
+					"items": {
+						"$ref": "#/typeDefinitions/reservationsElement"
+					}
+				}
+			},
+			"required": [
+				"id",
+				"source",
+				"reservations"
+			]
+		},
+		"reservationsElement": {
+			"type": "object",
+			"description": "List of reservations. Minimum one required",
+			"properties": {
+				"roomReservation": {
+					"$ref": "#/typeDefinitions/roomReservation"
+				},
+				"showReservation": {
+					"$ref": "#/typeDefinitions/showReservation"
+				},
+				"diningReservation": {
+					"$ref": "#/typeDefinitions/diningReservation"
+				}
+			}
+		},
+		"roomReservation": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "Room Reservation Event ID"
+				},
+				"operation": {
+					"$ref": "#/typeDefinitions/operationTypeElement"
+				},
+				"status": {
+					"$ref": "#/typeDefinitions/reservationStatusTypeElement"
+				},
+				"confirmationNumber": {
+					"type": "string"
+				},
+				"offerDescription": {
+					"type": "string"
+				},
+				"offerName": {
+					"type": "string"
+				},
+				"prePromotionalCopy": {
+					"type": "string",
+					"description": "Values 'yes' or 'no'"
+				},
+				"arrivalDate": {
+					"type": "string",
+					"description": "Arrival date for the guests for this reservation"
+				},
+				"stayDuration": {
+					"type": "integer",
+					"description": "Staty duration for this reservation",
+					"minimum": 0
+				},
+				"departureDate": {
+					"type": "string",
+					"description": "Departure date for the guests for this reservation"
+				},
+				"viewItineraryLink": {
+					"type": "string",
+					"description": "URL for viewing the reservation"
+				},
+				"propertyDetails": {
+					"$ref": "#/typeDefinitions/propertyDetailsElement"
+				},
+				"numberOfGuests": {
+					"type": "integer",
+					"description": "Number of guests on the reservation"
+				},
+				"guestDetails": {
+					"$ref": "#/typeDefinitions/guestDetailsElement"
+				},
+				"roomDetails": {
+					"$ref": "#/typeDefinitions/roomDetailsElement"
+				},
+				"reservationPhone": {
+					"type": "string",
+					"description": "Reservation Phone Number"
+				},
+				"chargeDetails": {
+					"$ref": "#/typeDefinitions/chargeDetailsElement"
+				},
+				"reservationConciergeEmail": {
+					"type": "string",
+					"description": "Email address for the reservation concierge"
+				}
+			}
+		},
+		"showReservation": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "Show Reservation Event ID"
+				},
+				"operation": {
+					"$ref": "#/typeDefinitions/operationTypeElement"
+				},
+				"status": {
+					"$ref": "#/typeDefinitions/reservationStatusTypeElement"
+				},
+				"confirmationNumber": {
+					"type": "string"
+				},
+				"propertyDetails": {
+					"$ref": "#/typeDefinitions/propertyDetailsElement"
+				},
+				"showVenue": {
+					"type": "string"
+				},
+				"showDate": {
+					"type": "string"
+				},
+				"showEventOpeningTime": {
+					"type": "string"
+				},
+				"showEventClosingTime": {
+					"type": "string"
+				},
+				"multiDayEvent": {
+					"type": "boolean"
+				},
+				"showStartDate": {
+					"type": "string"
+				},
+				"showEndDate": {
+					"type": "string"
+				},
+				"showName": {
+					"type": "string"
+				},
+				"showImage": {
+					"type": "string",
+					"description": "URL of the image to display in email",
+					"format": "uri"
+				},
+				"additionalText": {
+					"type": "string",
+					"description": "Additional text to be displayed for shows"
+				},
+				"allDayEventFlag": {
+					"type": "boolean"
+				},
+				"viewDetailsLink": {
+					"type": "string"
+				},
+				"guestDetails": {
+					"$ref": "#/typeDefinitions/guestDetailsElement"
+				},
+				"deliveryMethod": {
+					"type": "string"
+				},
+				"phoneNumber": {
+					"type": "string"
+				},
+				"ticketCount": {
+					"type": "integer"
+				},
+				"chargeDetails": {
+					"$ref": "#/typeDefinitions/chargeDetailsElement"
+				},
+				"showSeats": {
+					"type": "array",
+					"minItems": 0,
+					"items": {
+						"$ref": "#/typeDefinitions/seatDetailsElement"
+					}
+				},
+				"showTime": {
+					"type": "string",
+					"description": "For events that are not all day events"
+				}
+			}
+		},
+		"diningReservation": {
+			"type": "object",
+			"description": "Dining Reservation - DRAFT/PLACEHOLDER",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "Reservation Event ID"
+				},
+				"status": {
+					"$ref": "#/typeDefinitions/reservationStatusTypeElement"
+				},
+				"reservationDate": {
+					"type": "string",
+					"description": "Reservation date in mm-dd-yyyy format"
+				},
+				"reservationTime": {
+					"type": "string",
+					"description": "Reservation time in HH:MM am/pm format"
+				},
+				"restaurantName": {
+					"type": "string",
+					"description": "Name of the restaurant"
+				},
+				"restaurantImage": {
+					"type": "string",
+					"description": "URL of the image to be displayed for dining reservation",
+					"format": "uri"
+				},
+				"propertyDetails": {
+					"$ref": "#/typeDefinitions/propertyDetailsElement"
+				},
+				"guestDetails": {
+					"$ref": "#/typeDefinitions/guestDetailsElement"
+				},
+				"additionalText": {
+					"type": "string",
+					"description": "Placeholder field for additional text to be displayed in the email"
+				}
+			}
+		},
+		"guestDetailsElement": {
+			"type": "object",
+			"description": "Guest details",
+			"properties": {
+				"firstName": {
+					"type": "string",
+					"description": "First name of the guest"
+				},
+				"lastName": {
+					"type": "string",
+					"description": "Last name of the guest"
+				},
+				"emailAddress": {
+					"type": "string",
+					"description": "Email address",
+					"format": "email"
+				},
+				"phoneNumber": {
+					"type": "string",
+					"description": "Phone number"
+				},
+				"address": {
+					"type": "object",
+					"$ref": "#/typeDefinitions/addressElement"
+				}
+			}
+		},
+		"addressElement": {
+			"type": "object",
+			"properties": {
+				"addressLine1": {
+					"type": "string"
+				},
+				"addressLine2": {
+					"type": "string"
+				},
+				"city": {
+					"type": "string"
+				},
+				"state": {
+					"type": "string"
+				},
+				"zipCode": {
+					"type": "string"
+				}
+			}
+		},
+		"propertyDetailsElement": {
+			"type": "object",
+			"properties": {
+				"operaPropertyCode": {
+					"type": "string",
+					"description": "Opera property code"
+				},
+				"propertyId": {
+					"type": "string",
+					"description": "Property ID"
+				},
+				"propertyName": {
+					"type": "string",
+					"description": "Name of the property"
+				},
+				"propertyTimeZone": {
+					"type": "string",
+					"description": "Abbreviate string for propery timezone. Example: PST"
+				},
+				"street1": {
+					"type": "string",
+					"description": "Street Address1 component of the property address"
+				},
+				"street2": {
+					"type": "string",
+					"description": "Street Address2 component of the property address"
+				},
+				"city": {
+					"type": "string",
+					"description": "City component of the property address"
+				},
+				"state": {
+					"type": "string",
+					"description": "State component of the property address"
+				},
+				"postalCode": {
+					"type": "string",
+					"description": "Postal Code component of the property address"
+				},
+				"country": {
+					"type": "string",
+					"description": "ountry component of the property address"
+				}
+			}
+		},
+		"roomDetailsElement": {
+			"type": "object",
+			"properties": {
+				"roomName": {
+					"type": "string"
+				},
+				"roomImage": {
+					"type": "string",
+					"description": "URL of the image to be displayed for the room",
+					"format": "uri"
+				},
+				"roomDescription": {
+					"type": "string",
+					"description": "Short description for the room"
+				},
+				"roomRequestsCount": {
+					"type": "integer",
+					"minimum": 0
+				},
+				"roomRequests": {
+					"type": "array",
+					"minItems": 0,
+					"items": {
+						"$ref": "#/typeDefinitions/roomRequestElement"
+					}
+				}
+			}
+		},
+		"roomRequestElement": {
+			"type": "object",
+			"description": "Additional guest selected requests for the room",
+			"properties": {
+				"requestCode": {
+					"type": "string",
+					"description": "Room Request Code"
+				},
+				"requestDescription": {
+					"type": "string",
+					"description": "Room request description"
+				},
+				"requestPrice": {
+					"type": "number",
+					"description": "Price for the option selected",
+					"minimum": 0
+				}
+			},
+			"additionalProperties": false,
+			"required": [
+				"requestCode",
+				"requestDescription",
+				"requestPrice"
+			]
+		},
+		"chargeDetailsElement": {
+			"type": "object",
+			"properties": {
+				"reservationTotal": {
+					"type": "number",
+					"minimum": 0
+				},
+				"resortFee": {
+					"type": "number",
+					"minimum": 0
+				},
+				"resortFeeTax": {
+					"type": "number",
+					"minimum": 0,
+					"description": "Resort Fee Tax component (separate from Resort Fee)"
+				},
+				"resortFeeAvgPerNight": {
+					"type": "number",
+					"minimum": 0
+				},
+				"tourismFeeAvgPerNight": {
+					"type": "number",
+					"minimum": 0
+				},
+				"occupancyFeeAvgPerNight": {
+					"type": "number",
+					"minimum": 0
+				},
+				"tourismPromotionFee": {
+					"type": "number",
+					"minimum": 0
+				},
+				"tourismPromotionFeeAndTax": {
+					"type": "number",
+					"minimum": 0
+				},
+				"casinoOccupancyFee": {
+					"type": "number",
+					"minimum": 0
+				},
+				"roomRateTax": {
+					"type": "number",
+					"minimum": 0
+				},
+				"amountPaid": {
+					"type": "number",
+					"minimum": 0
+				},
+				"dueUponCheckin": {
+					"type": "number",
+					"minimum": 0
+				},
+				"forfeitDate": {
+					"type": "string",
+					"description": "Refunds are typically forfeit after this date"
+				},
+				"refundAmount": {
+					"type": "number",
+					"minimum": 0
+				},
+				"depositForfeit": {
+					"type": "number",
+					"minimum": 0
+				},
+				"discountedSubtotal": {
+					"type": "number",
+					"minimum": 0
+				},
+				"roomChargeTax": {
+					"type": "number",
+					"minimum": 0
+				},
+				"showSubtotal": {
+					"type": "number",
+					"minimum": 0
+				},
+				"let": {
+					"type": "number",
+					"minimum": 0
+				},
+				"deliveryFee": {
+					"type": "number",
+					"minimum": 0
+				},
+				"gratuity": {
+					"type": "number",
+					"minimum": 0
+				},
+				"serviceCharge": {
+					"type": "object",
+					"$ref": "#/typeDefinitions/serviceChargeElement"
+				},
+				"transactionFee": {
+					"type": "object",
+					"$ref": "#/typeDefinitions/transactionFeeElement"
+				}
+			}
+		},
+		"serviceChargeElement": {
+			"type": "object",
+			"properties": {
+				"amount": {
+					"type": "number",
+					"minimum": 0
+				},
+				"itemized": {
+					"type": "object",
+					"$ref": "#/typeDefinitions/itemizedElement"
+				}
+			}
+		},
+		"transactionFeeElement": {
+			"type": "object",
+			"properties": {
+				"amount": {
+					"type": "number",
+					"minimum": 0
+				},
+				"itemized": {
+					"type": "object",
+					"$ref": "#/typeDefinitions/itemizedElement"
+				}
+			}
+		},
+		"itemizedElement": {
+			"type": "object",
+			"properties": {
+				"charge": {
+					"type": "number",
+					"minimum": 0
+				},
+				"tax": {
+					"type": "number",
+					"minimum": 0
+				}
+			}
+		},
+		"reservationStatusTypeElement": {
+			"type": "string",
+			"description": "Reservation Status Enum",
+			"enum": [
+				"SUCCESS",
+				"FAILURE",
+				"PAYMENT_FAILURE",
+				"PARTIAL"
+			]
+		},
+		"operationTypeElement": {
+			"type": "string",
+			"description": "Used to describe the operation type, Example, CREATE, MODIFY or CANCEL",
+			"enum": [
+				"CREATE",
+				"MODIFY",
+				"UPDATE",
+				"CANCEL"
+			]
+		},
+		"metadata": {
+			"type": "object",
+			"properties": {
+				"correlationId": {
+					"type": "string",
+					"description": "Unique correlation ID",
+					"format": "uuid"
+				},
+				"eventId": {
+					"type": "string"
+				},
+				"defaultChannel": {
+					"$ref": "#/typeDefinitions/channelEnum"
+				},
+				"fallbackChannel": {
+					"$ref": "#/typeDefinitions/channelEnum"
+				}
+			},
+			"additionalProperties": false
+		},
+		"channelEnum": {
+			"type": "string",
+			"description": "Channel for the communication",
+			"enum": [
+				"EMAIL",
+				"PUSH",
+				"SMS"
+			]
+		},
+		"seatDetailsElement": {
+			"type": "object",
+			"description": "Show seat selection details",
+			"properties": {
+				"section": {
+					"type": "string",
+					"description": "Seat section"
+				},
+				"row": {
+					"type": "string",
+					"description": "Seat Row"
+				},
+				"seatNumber": {
+					"type": "string",
+					"description": "Seat number"
+				},
+				"priceCodeDescription": {
+					"type": "string",
+					"description": "Price code description"
+				},
+				"ticketTypeCodeDescription": {
+					"type": "string",
+					"description": "Ticket type code description"
+				}
+			}
+		},
+		"inclusionMultiplierTypeEnum": {
+			"type": "string",
+			"description": "Inclusion multiplier",
+			"enum": [
+				"PER_PACKAGE",
+				"PER_PERSON"
+			]
+		},
+		"propertyComponentElement": {
+			"type": "object",
+			"description": "Package Inclusion Property element",
+			"properties": {
+				"componentId": {
+					"type": "string"
+				},
+				"property": {
+					"type": "string"
+				}
+			}
+		},
+		"offerComponentElement": {
+			"type": "object",
+			"required": false,
+			"additionalProperties": false,
+			"properties": {
+				"componentCode": {
+					"type": "string"
+				},
+				"propertyComponents": {
+					"description": "Property Components array",
+					"type": "array",
+					"items": {
+						"$ref": "#/typeDefinitions/propertyComponentElement"
+					}
+				}
+			}
+		},
+		"assetElement": {
+			"type": "object",
+			"description": "Package Inclusion Asset",
+			"properties": {
+				"assetId": {
+					"type": "string"
+				},
+				"assetName": {
+					"type": "string"
+				},
+				"assetType": {
+					"type": "string"
+				},
+				"description": {
+					"type": "string"
+				},
+				"mimeType": {
+					"type": "string"
+				},
+				"transformBaseUrl": {
+					"type": "string"
+				}
+			}
+		},
+		"packageInclusionsElement": {
+			"type": "object",
+			"description": "Package Inclusions element",
+			"properties": {
+				"name": {
+					"type": "string"
+				},
+				"bookingDestinationUrl": {
+					"type": "string"
+				},
+				"carouselGridDisplayText": {
+					"type": "string"
+				},
+				"description": {
+					"type": "string"
+				},
+				"detailText": {
+					"type": "string"
+				},
+				"displayInCarouselGrid": {
+					"type": "boolean"
+				},
+				"enabled": {
+					"type": "boolean"
+				},
+				"asset": {
+					"$ref": "#/typeDefinitions/assetElement"
+				},
+				"bookingDestinationDisplayText": {
+					"type": "string"
+				},
+				"inclusionMultiplierType": {
+					"$ref": "#/typeDefinitions/inclusionMultiplierTypeEnum"
+				},
+				"rateComponents": {
+					"type": "array",
+					"items": {
+						"$ref": "#/typeDefinitions/offerComponentElement"
+					}
+				}
+			}
+		},
+		"packageComponentDetailsElement": {
+			"type": "object",
+			"description": "Package Component Details",
+			"properties": {
+				"code": {
+					"type": "string"
+				},
+				"start": {
+					"type": "string"
+				},
+				"end": {
+					"type": "string"
+				},
+				"id": {
+					"type": "string"
+				},
+				"description": {
+					"type": "string"
+				},
+				"longDescription": {
+					"type": "string"
+				},
+				"shortDescription": {
+					"type": "string"
+				},
+				"taxRate": {
+					"type": "number"
+				},
+				"nightlyCharge": {
+					"type": "boolean"
+				},
+				"pricingApplied": {
+					"type": "string"
+				},
+				"ratePlanCode": {
+					"type": "string"
+				},
+				"ratePlanName": {
+					"type": "string"
+				},
+				"amtAfterTax": {
+					"type": "number"
+				}
+			}
+		}
+	}
+}

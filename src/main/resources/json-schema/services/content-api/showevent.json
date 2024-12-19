@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "type": "object",
+  "javaType": "com.mgmresorts.content.model.ShowEvent",
+  "additionalProperties": false,
+  "title": "The root schema",
+  "description": "The root schema comprises the entire JSON document.",
+  "default": {},
+  "properties": {
+    "eventDate": {
+      "type": "string"
+    },
+    "eventTime": {
+      "type": "string"
+    },
+    "eventTz": {
+      "type": "string"
+    },
+    "propertyId": {
+      "type": "string"
+    },
+    "showId": {
+      "type": "string"
+    },
+    "seasonId": {
+      "type": "string"
+    },
+    "eventCode": {
+      "type": "string"
+    },
+    "eventId": {
+      "type": "string"
+    },
+    "active": {
+      "type": "boolean"
+    },
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    }
+}
+}

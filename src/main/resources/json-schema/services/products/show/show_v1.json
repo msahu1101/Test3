@@ -1,0 +1,83 @@
+{
+	"type": "object",
+	"required": false,
+	"javaType": "com.mgmresorts.cart.dto.product.show.v1.services.Wrapper",
+	"additionalProperties": false,
+	"properties": {
+		"show": {
+			"type": "object",
+			"javaType": "com.mgmresorts.cart.dto.product.show.v1.Show",
+			"additionalProperties": false,
+			"properties": {
+				"propertyId": {
+					"type": "string",
+					"description": "Hotel code (uuid) of the property"
+				},
+				"programId": {
+					"type": "string",
+					"description": "Show Program Id"
+				},
+				"showEventId": {
+					"required": true,
+					"type": "string",
+					"description": "Sow event id (uuid)"
+				},
+				"showEventDate": {
+					"required": false,
+					"type": "string",
+					"description": "Sow event date",
+					"format": "date"
+				},
+				"myVegasCode": {
+					"type": "string",
+					"description": "MY VEGAS Redemption code if applicable"
+				},
+				"showSeats": {
+					"required": true,
+					"type": "array",
+					"description": "Selected show seats",
+					"items": {
+						"$ref": "#/definitions/showSeat"
+					}
+				}
+			}
+		}
+	},
+	"definitions": {
+		"showSeat": {
+			"type": "object",
+			"additionalProperties": false,
+			"javaType": "com.mgmresorts.cart.dto.product.show.v1.ShowSeat",
+			"properties": {
+				"priceCode": {
+					"description": "The selected price code",
+					"type": "string"
+				},
+				"ticketTypeCode": {
+					"description": "The selected ticket type code",
+					"type": "string"
+				},
+				"numTickets": {
+					"type": "integer",
+					"description": "Number of tickets to hold best seats"
+				},
+				"numAdaTickets": {
+					"type": "integer",
+					"description": "Number of accessible tickets to hold best seats"
+				},
+				"section": {
+					"description": "Section name of seat",
+					"type": "string"
+				},
+				"row": {
+					"description": "Row number of seat",
+					"type": "string"
+				},
+				"seat": {
+					"description": "Seat number",
+					"type": "string"
+				}
+			}
+		}
+	}
+}

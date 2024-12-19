@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<!-- global settings -->
+	<entry key="application.domain">order-services</entry>
+	<entry key="application.domain.errorcode">124</entry>
+	<entry key="application.backend.canned-mode">false</entry>
+	<entry key="cache.disabled.global">true</entry>
+	<entry key="auth.disabled.global">false</entry>
+	<entry key="auth.disabled.verify.token">false</entry>
+	<entry key="auth.disabled.verify.roles">false</entry>
+	<entry key="auth.check.token.cache">1800000</entry>
+	<entry key="auth.url.jkws">https://preprod-api.apigee.devtest.vegas/identity/authorization/v1/mgmsvc/.well-known/jwks</entry>
+	<entry key="security.disabled.global">false</entry>
+
+	<!-- live site -->
+	<entry key="livesite_event_hub_policy@secure">d-livesite-event-hub-connection</entry>
+	<entry key="livesite.request.mask">service:request</entry>
+	<entry key="livesite.response.mask">service:response</entry>
+	<!-- End -->
+
+	<!-- cosmos db -->
+	<entry key="datastore.cosmos.url">https://mgmshoppingcartorder-uw-cdb-d.documents.azure.com:443</entry>
+	<entry key="datastore.cosmos.secret">to-be-replaced</entry>
+	<entry key="datastore.cosmos.proxy.enable">false</entry>
+	<entry key="datastore.cosmos.proxy.host">mproxy.mgmresorts.local</entry>
+	<entry key="datastore.cosmos.proxy.port">8080</entry>
+	<entry key="order.database.name">order-management</entry>
+	<entry key="order.database.collection">order</entry>
+	<entry key="order.lock.database.name">order-management</entry>
+	<entry key="order.lock.database.collection">order-lock</entry>
+	<entry key="order.confirmation.database.name">order-management</entry>
+	<entry key="order.confirmation.database.collection">order-conf-mapping</entry>
+	<entry key="order.lock.ttl.seconds">240</entry>
+	<entry key="order.ttl.days">365</entry>
+	<entry key="order.confirmation.mapping.ttl.days">365</entry>
+
+	<!-- order -->
+	<entry key="order.id.length">12</entry>
+
+	<!-- key vault -->
+	<entry key="keyVault.base.url">https://shoppingcartprv-uw-kv-d.vault.azure.net</entry>
+	<entry key="function.app.system.identity.id"></entry>
+	<entry key="function.app.user.identity.id">fde0d5a6-d4d0-4096-a495-6fc19b1133ab</entry>
+	<entry key="keyVault.ar.tenant">ddb8592f-ed74-4329-bfd2-571b7c34699e</entry>
+	<entry key="keyVault.client.id">0a5b286d-f259-43d0-a9af-93af708f453d</entry>
+	<entry key="keyVault.client.key">to be replaced in devops</entry>
+
+	<!-- security -->
+	<entry key="global.onewayhash.salt@secure">d-global-onewayhash-salt</entry>
+	<entry key="global.encryption.key">security-key-alias-1</entry>
+
+	<!-- Identity Authorization Service common endpoint -->
+	<entry key="identity.auth.apigee.endpoint">https://qa2-api.apigee.devtest.vegas/identity/authorization</entry>
+		<!--each functional validation endpoints -->
+	<entry key="identity.auth.svc.token">/v1/mgmsvc/token</entry>
+	<entry key="identity.auth.client.id">mgm_order_service</entry>
+	<entry key="identity.auth.client.secret@secure">order-service-oauth-key</entry>
+	
+	<!-- Shopping Cart Service common endpoint -->
+	<entry key="shopping.cart.apigee.endpoint">https://dev-api.apigee.devtest.vegas/shopping</entry>
+	<!--each functional validation endpoints -->
+	<entry key="shopping.cart.read">/v1/cart</entry>
+	<entry key="shopping.cart.update">/v1/cart</entry>
+	<entry key="shopping.cart.payment.session">/v1/cart</entry>
+	
+	<!-- Itinerary Service common endpoint -->
+	<entry key="itinerary.apigee.endpoint">https://qa2-api.apigee.devtest.vegas/itinerary</entry>
+	<!--each functional validation endpoints -->
+	<entry key="itinerary.create">/v3/service</entry>
+	
+	<!-- Profile Core Service common endpoint -->
+	<entry key="profile.core.apigee.endpoint">https://qa2-api.apigee.devtest.vegas/profile/core</entry>
+	<!--each functional validation endpoints -->
+	<entry key="profile.core.create">/v2/service</entry>
+	<entry key="profile.core.get">/v2/service</entry>
+
+	
+	<!-- Room Booking Service common endpoint -->
+	<entry key="rbs.apigee.endpoint">https://qa2-api.apigee.devtest.vegas/booking/room</entry>
+	<!--each functional validation endpoints -->
+	<entry key="rbs.reservation.create">/v2/reservation</entry>
+	<entry key="rbs.reservation.get">/v2/reservation</entry>
+	<entry key="rbs.reservation.preview">/v2/reservation/preview</entry>
+	<entry key="rbs.reservation.commit">/v2/reservation/commit</entry>
+	<entry key="rbs.reservation.refund.commit">/v2/reservation/commit/refund</entry>
+	<entry key="rbs.reservation.v3.cancel">/v3/reservation/cancel</entry>
+	<entry key="rbs.reservation.release">/v3/reservation/release</entry>
+	
+	<!-- Show Booking Service common endpoints -->
+	<entry key="sbs.apigee.endpoint">https://qa2-api.apigee.devtest.vegas/booking/show</entry>
+	<!--each functional validation endpoints -->
+	<entry key="sbs.reservation.create">/v2/reservation</entry>
+	<entry key="sbs.reservation.get">/v2/reservation</entry>
+	<entry key="sbs.health">/v2/health</entry>
+	
+	<!--Dining Booking Service common endpoint -->
+	<entry key="dbs.apigee.endpoint">https://qa2-api.apigee.devtest.vegas/booking/restaurant</entry>
+	<!--each functional validation endpoints -->
+	<entry key="dbs.reservation.create">/v1/reservation</entry>
+	<entry key="dbs.reservation.search">/v1/reservations/search</entry>
+	
+	<!--Legacy Payment Processing Service common endpoint -->
+	<entry key="pps.legacy.apigee.endpoint">https://qa2-api.apigee.devtest.vegas/mpay</entry>
+	<!--each functional validation endpoints -->
+	<entry key="pps.legacy.payment.validation">/v1/payment</entry>
+	
+	<!--Payment Diversity Payment Processing Service common endpoint -->
+	<entry key="pps.apigee.endpoint">https://qa3-api.apigee.devtest.vegas/payment/processor/api</entry>
+	<!--each functional validation endpoints -->
+	<entry key="pps.payment.capture">/v1/capture</entry>
+	<entry key="pps.payment.void">/v1/void</entry>
+	<entry key="pps.payment.refund">/v1/refund</entry>
+	
+	<!--Payment Diversity Payment Session Management Service common endpoint -->
+	<entry key="psm.apigee.endpoint">https://qa3-api.apigee.devtest.vegas/payment/session/api</entry>
+	<!--each functional validation endpoints -->
+	<entry key="psm.payment.session.create-update">/v1/paymentSessions</entry>
+	<entry key="psm.payment.session.get">/v1/paymentSessions</entry>
+	<entry key="psm.client.id">to be replaced</entry>
+	
+	<!-- Content API Service common endpoint -->
+	<entry key="content.api.url">https://uat-content.devtest.vegas/content-api</entry>
+	<!--each functional validation endpoints -->
+	<entry key="content.api.get.package.config">/v3/en/package-config</entry>
+	<entry key="content.api.get.show.event">/v3/en/show-event</entry>
+
+	<!-- PIM API Service common endpoint -->
+	<entry key="pim.api.url">https://qa2-api.apigee.devtest.vegas/product-catalog-api</entry>
+	<!--each functional validation endpoints -->
+	<entry key="pim.api.get.package.config">/v1/packagecategory</entry>
+	
+	<!-- RTC API Service common endpoint -->
+	<entry key="rtc.api.url">https://qa2-api.apigee.devtest.vegas/rtc-api</entry>
+	<!--each functional validation endpoints -->
+	<entry key="rtc.checkout.email.event">/v1/email/ordercheckout</entry>
+
+	<entry key="all.api.scopes">cart:read cart:update cart:delete rooms.reservation:create itinerary:create profile:create profile:read myvegas.code:read myvegas.code:update shows.reservation:create restaurants.reservation:create payments.processor:payment rooms.reservation:read rooms.reservation:update shows.reservation:read restaurants.reservations:read</entry>
+	
+	<entry key="payload.mask.config.file">security/mask-config/pii-tags-order.json</entry>
+	
+	<!-- thread pools -->
+	<entry key="order.other.sub.pool.size">400</entry>
+	<entry key="order.other.sub.pool.timeout">1800000</entry>
+	<entry key="thread.pool.single.run.per.group.size">50</entry>
+	<entry key="order.non.package.pool.size">100</entry>
+	<entry key="order.non.package.pool.timeout">1800000</entry>
+	<entry key="order.package.pool.size">100</entry>
+	<entry key="order.package.pool.timeout">1800000</entry>
+	<entry key="order.package.pool.timeout.seconds">25</entry>
+	<entry key="order.common.pool.progressive.timeout.seconds">22</entry>
+	<entry key="order.non.package.pool.timeout.seconds">120</entry>
+	<!-- reservation -->
+	<entry key="reservation.pool.size">50</entry>
+	<entry key="reservation.pool.timeout">1800000</entry>
+	<!-- events -->
+	<entry key="application.event.enabled">false</entry>
+	<entry key="event.topic.default">event-generic</entry>
+	<entry key="event.topic.order">mgmcartevents-uw-egt-d</entry>
+	<entry key="event.eventgrid.endpoint">https://mgmcartevents-uw-egd-d.westus-1.eventgrid.azure.net/api/events</entry>
+	<entry key="event.eventgrid.key@secure">d-event-eventgrid-cart-key</entry>
+	<entry key="eventor-pool.size">50</entry>
+	<entry key="event.payload.masking.groups">event:success:response</entry>
+	<entry key="event.failure.payload.masking.groups">event:failure:response</entry>
+	
+	<!-- Enterprise events -->
+	<entry key="application.enterprise.event.enabled">true</entry>
+	<entry key="application.enterprise.event.encryption.disabled">false</entry>
+	<entry key="enterprise.event.eventgrid.endpoint">https://ei-shopping-cart-uw-egd-da.westus-1.eventgrid.azure.net/api/events</entry>
+	<entry key="enterprise.event.eventgrid.key@secure">d-enterprise-event-eventgrid-cart-key</entry>
+	<entry key="enterprise.event.eventgrid.key.enabled">false</entry>
+	<entry key="enterprise-eventor-pool.size">50</entry>
+	<entry key="enterprise-eventor-pool.timeout">1800000</entry>
+	<entry key="enterprise.event.payload.masking.disabled">false</entry>
+	<entry key="enterprise.event.success.payload.masking.groups">event:success:response</entry>
+	<entry key="enterprise.event.failure.payload.masking.groups">event:failure:response</entry>
+	<entry key="enterprise.event.eventgrid.keyvault.name">ei-shopping-cart-uw-kv-d</entry>
+	<entry key="enterprise.event.eventgrid.encryption.key.name">shopping-cart-encryption-key</entry>
+	<entry key="enterprise.event.eventgrid.encryption.key.expiration.minutes">43200</entry>
+	<entry key="enterprise.event.eventgrid.keyvault.service.principal.enabled">false</entry>
+	<entry key="Event.Cart.Checkout.pci.enabled">true</entry>
+	<entry key="Event.Cart.Checkout.pii.enabled">true</entry>
+
+	<!--grace time for order checkout-->
+	<entry key="order.checkout.grace.seconds">60</entry>
+	<entry key="order.jwb.checkout.grace.seconds">60</entry>
+    
+   	<!-- Email -->
+	<entry key="application.email.server">V00WI365SMTP01P.MGMMIRAGE.ORG</entry>
+	<entry key="application.email.port">25</entry>
+	<entry key="sbs.reservation.send.email.to">QE-PremiumPackage@MGMResorts.onmicrosoft.com</entry>
+	<entry key="sbs.reservation.send.email.cc">cartorderservices@mgmresorts.com</entry>
+	<entry key="sbs.reservation.send.email.bcc"></entry>
+
+	<entry key="pps.payment.failure.send.email.to">cartorderservices@mgmresorts.com</entry>
+	<entry key="pps.payment.failure.send.email.cc">cartorderservices@mgmresorts.com</entry>
+	<entry key="pps.payment.failure.send.email.bcc"></entry>
+	
+	<entry key="identity.merge.account.failure.send.email.to">cartorderservices@mgmresorts.com</entry>
+	<entry key="identity.merge.account.failure.send.email.cc"></entry>
+	<entry key="identity.merge.account.failure.send.email.bcc"></entry>
+	
+	<!-- Payment Service -->
+	<entry key="payment.method.validation.enabled">false</entry>
+	<entry key="payment.authorization.merchantid">Bellagio2</entry>
+
+	<!-- Payment Processing Service -->
+	<entry key="pps.payment.capture.retry.count">3</entry>
+	<entry key="pps.payment.void.retry.count">3</entry>
+	<entry key="pps.payment.refund.retry.count">3</entry>
+	<entry key="pps.client.id">to be replaced</entry>
+
+	<!--Service role scope-->
+	<entry key="service.role.scope">service:role</entry>
+
+	<!--Async-->
+	<entry key="async.enabled">false</entry>
+
+	<entry key="http.simulation.enable">false</entry>
+	<entry key="http.simulation.enable.recording">false</entry>
+	<entry key="http.simulation.enable.failonmissingfile">false</entry>
+
+	<!-- TCOLV capture/void suppression-->
+	<entry key="tcolv.skip.payment.processing">true</entry>
+	<entry key="tcolv.property.id">e5d3f1c9-833a-83f1-e053-d303fe0ad83c</entry>
+
+</properties>

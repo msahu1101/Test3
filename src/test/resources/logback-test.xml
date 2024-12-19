@@ -1,0 +1,12 @@
+<configuration>
+	<appender name="PlainText"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder
+			class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+			<layout class="com.mgmresorts.common.logging.LogLayout" />
+		</encoder>
+	</appender>
+	<root level="OFF">
+		<appender-ref ref="PlainText" />
+	</root>
+</configuration>

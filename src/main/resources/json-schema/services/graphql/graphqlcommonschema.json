@@ -1,0 +1,74 @@
+{
+	"type": "object",
+	"required": true,
+	"javaType": "com.mgmresorts.graphql.dto.services.Wrapper",
+	"additionalProperties": false,
+	"properties": {
+		"graphQLCommonRequest": {
+			"type": "object",
+			"required": true,
+			"javaType": "com.mgmresorts.graphql.dto.services.GraphQLCommonRequest",
+			"additionalProperties": false,
+			"properties": {
+				"query": {
+					"required": true,
+					"type": "string",
+					"description": "The actual query for the graphql operation goes here."
+				},
+				"operationName": {
+					"required": true,
+					"type": "string",
+					"description": "The operation name for the graphql operation goes here."
+				},
+				"variables": {
+					"required": true,
+					"existingJavaType": "java.util.Map<String,String>",
+					"description": "The variables for the graphql operation goes here."
+				}
+			}
+		}
+	},
+	"definitions": {
+		"graphQLError": {
+			"type": "object",
+			"required": true,
+			"javaType": "com.mgmresorts.graphql.dto.services.GraphQLError",
+			"additionalProperties": false,
+			"properties": {
+				"message": {
+					"required": true,
+					"type": "string",
+					"description": "The error message."
+				},
+				"extensions": {
+					"required": true,
+					"description": "The additional error details.",
+					"$ref": "#/definitions/graphQLErrorExtensions"
+				}
+			}
+		},
+		"graphQLErrorExtensions": {
+			"type": "object",
+			"required": true,
+			"javaType": "com.mgmresorts.graphql.dto.services.GraphQLErrorExtensions",
+			"additionalProperties": false,
+			"properties": {
+				"code": {
+					"type": "string"
+				},
+				"serviceName": {
+					"type": "string"
+				},
+				"correlationId": {
+					"type": "string"
+				},
+				"status": {
+					"type": "string"
+				},
+				"upstreamErrorCode": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}

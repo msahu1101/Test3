@@ -1,0 +1,668 @@
+{
+  "cart": {
+    "cartId": "20094970-9cb2-4de0-8ad4-9b8293ee8e06",
+    "ttl": "2024-05-29T00:14:01.7559954Z[Etc/GMT]",
+    "priceExpiresAt": "2024-05-28T23:28:08.0756013Z",
+    "cartLineItems": [
+      {
+        "addedAt": "2024-05-28T23:13:08.0756013Z",
+        "type": "SHOW",
+        "lineItemPrice": 53.6400,
+        "lineItemStrikethroughPrice": 67.3800,
+        "lineItemDeposit": 53.6400,
+        "lineItemTax": 4.4300,
+        "lineItemTotalCharges": 54.9500,
+        "lineItemDiscount": 13.7400,
+        "lineItemBalance": 0.0000,
+        "adjustedItemSubtotal": 41.2100,
+        "addOnsPrice": 0.0000,
+        "addOnsTax": 0.0000,
+        "addOnsDeposit": 0.0000,
+        "adjustedTripSubtotalWithAddOns": 41.2100,
+        "actualTripSubtotalWithAddOns": 54.9500,
+        "upsellAverageNightlyPriceDifference": 0.0000,
+        "startsAt": "2024-07-07T05:00:00Z",
+        "bookEndDate": "2024-12-31T08:00:00Z",
+        "content": "{\"eventDate\":\"2024-07-06\",\"eventTime\":\"10:00 PM\",\"eventTz\":\"2024-07-07T05:00Z\",\"seasonId\":\"Season_954506\",\"showEventId\":\"Event_954518\",\"programId\":\"EntOffer_953625\",\"propertyId\":\"f8d6a944-7816-412f-a39a-9a63aad26833\",\"comp\":false,\"hdePackage\":false,\"paymentRequired\":true,\"discounted\":true,\"permissibleDeliveryMethods\":[{\"default\":true,\"eprinting\":true,\"code\":\"WC\",\"amount\":0.0,\"description\":\"Will Call\",\"ePrinting\":true,\"name\":\"Will Call\",\"active\":true,\"id\":\"DELIVERY_METHOD_CODE-WC\"}],\"tickets\":[{\"priceCode\":\"A\",\"priceCodeDescription\":\"Category A\",\"holdClass\":\"ADA-COMPANION\",\"adaCompanion\":true,\"basePrice\":54.95,\"discountedPrice\":41.21,\"let\":3.71,\"gratuity\":0.0,\"holdId\":\"114646058\",\"holdLineItemId\":1,\"holdDuration\":1716938903846,\"state\":\"HELD\",\"showEventId\":\"Event_954518\",\"ticketTypeCode\":\"_F2\",\"ticketTypeCodeDescription\":\"Eblast Offer\",\"accessible\":false,\"seat\":{\"seatNumber\":3,\"sectionName\":\"TBL2\",\"rowName\":\"TBL\"}}],\"charges\":{\"discountedSubtotal\":41.2100,\"showSubtotal\":54.9500,\"let\":3.7100,\"deliveryFee\":0.0000,\"gratuity\":0.0000,\"reservationTotal\":53.6400,\"serviceCharge\":{\"amount\":8.7200,\"itemized\":{\"charge\":8.0000,\"tax\":0.7200}},\"transactionFee\":{\"amount\":0.0000,\"itemized\":{\"charge\":0.0000,\"tax\":0.0000}}}}",
+        "contentVersion": "V2",
+        "cartLineItemId": "628959a3-75c6-4593-a6c6-6977ee4c6417",
+        "packageLineItemId": "19950947-e1ff-4e23-8ad5-408a81bdb19a",
+        "packageType": "SHOW_AND_ROOM",
+        "productId": "Event_954518",
+        "priceExpiresAt": "2024-05-28T23:28:08.0756013Z",
+        "invalidAt": "2024-08-26T23:13:08.0756013Z",
+        "clientChannel": "web",
+        "clientSource": "mgmri",
+        "propertyId": "f8d6a944-7816-412f-a39a-9a63aad26833",
+        "propertyName": "Excalibur Hotel & Casino",
+        "propertyAddress": {
+          "address1": "3850 S. Las Vegas Blvd.",
+          "city": "Las Vegas",
+          "state": "Nevada",
+          "zip": "89109",
+          "country": "United States"
+        },
+        "timeZone": "America/Los_Angeles",
+        "status": "SAVED",
+        "isCheckoutEligible": true,
+        "enableJwb": false,
+        "itemSelectionDetails": {
+          "showSelectionDetails": {
+            "offerType": "PACKAGE",
+            "eventDate": "2024-07-06",
+            "eventTime": "10:00 PM",
+            "seasonId": "Season_954506",
+            "programId": "EntOffer_953625",
+            "programName": "Accessibility Seats SoldOut",
+            "eventId": "Event_954518",
+            "eventCode": "MKY0706E",
+            "showId": "the-mac-king-comedy-magic-show",
+            "myVegasComp": false,
+            "hdePackage": false,
+            "ratesSummary": {
+              "deliveryFee": 0.0000,
+              "gratuity": 0.0000,
+              "let": 3.7100,
+              "serviceChargeFee": 8.0000,
+              "serviceChargeTax": 0.7200,
+              "serviceChargeFeeAndTax": 8.7200,
+              "transactionFee": 0.0000,
+              "transactionTax": 0.0000,
+              "showSubtotal": 54.9500,
+              "discountedSubtotal": 41.2100,
+              "reservationTotal": 53.6400
+            },
+            "numberOfTickets": 1,
+            "permissibleDeliveryMethods": [
+              {
+                "selected": true,
+                "id": "DELIVERY_METHOD_CODE-WC",
+                "code": "WC",
+                "name": "Will Call",
+                "description": "Will Call",
+                "active": true,
+                "defaultDeliveryMethod": true,
+                "ePrinting": true,
+                "amount": 0.0000
+              }
+            ],
+            "showTickets": [
+              {
+                "priceCode": "A",
+                "priceCodeDescription": "Category A",
+                "ticketTypeCodeDescription": "Eblast Offer",
+                "ticketTypeCode": "_F2",
+                "holdClass": "ADA-COMPANION",
+                "holdId": "114646058",
+                "basePrice": 54.9500,
+                "discountedPrice": 41.2100,
+                "accessible": false,
+                "adaCompanion": true,
+                "seat": {
+                  "sectionName": "TBL2",
+                  "rowName": "TBL",
+                  "seatNumber": 3
+                }
+              }
+            ],
+            "allDayEventShowTimeDetails": {
+              "allDayEvent": false
+            }
+          }
+        },
+        "paymentRequired": true,
+        "upsellAvailable": false,
+        "upgraded": false
+      },
+      {
+        "addedAt": "2024-05-28T23:13:49.2395021Z[Etc/GMT]",
+        "type": "ROOM",
+        "lineItemPrice": 277.7800,
+        "lineItemStrikethroughPrice": 277.7800,
+        "lineItemDeposit": 226.7600,
+        "lineItemTax": 32.7800,
+        "lineItemTotalCharges": 200.0000,
+        "lineItemDiscount": 0.0000,
+        "lineItemBalance": 51.0200,
+        "adjustedItemSubtotal": 200.0000,
+        "addOnsPrice": 0.0000,
+        "addOnsTax": 0.0000,
+        "addOnsDeposit": 0.0000,
+        "adjustedTripSubtotalWithAddOns": 245.0000,
+        "actualTripSubtotalWithAddOns": 245.0000,
+        "upsellAverageNightlyPriceDifference": 0.0000,
+        "startsAt": "2024-07-06T00:00:00Z",
+        "endsAt": "2024-07-07T00:00:00Z",
+        "content": "{\"propertyId\":\"e2704b04-d515-45b0-8afd-4fa1424ff0a8\",\"roomTypeId\":\"ROOMCD-v-S2PCQ-d-PROP-v-MV930\",\"programId\":\"RPCD-v-BAR-d-PROP-v-MV930\",\"customerId\":\"0\",\"perpetualPricing\":false,\"f1Package\":false,\"pricingMode\":\"PROGRAM\",\"tripDetails\":{\"checkInDate\":\"2024-07-06\",\"checkOutDate\":\"2024-07-07\",\"numAdults\":1,\"numChildren\":0,\"numRooms\":1},\"bookings\":[{\"date\":\"2024-07-06\",\"basePrice\":200.00,\"customerPrice\":0.00,\"price\":200.00,\"isDiscounted\":false,\"programIdIsRateTable\":false,\"overridePrice\":-1.00,\"overrideProgramIdIsRateTable\":false,\"isComp\":false,\"resortFeeIsSpecified\":false,\"resortFee\":0.00,\"programId\":\"RPCD-v-BAR-d-PROP-v-MV930\"}],\"chargesAndTaxes\":{\"charges\":[{\"date\":\"2024-07-06\",\"amount\":245.00,\"itemized\":[{\"itemType\":\"RoomCharge\",\"amount\":200.00},{\"itemType\":\"ResortFee\",\"amount\":45.00,\"item\":\"RSFEE\"}]}],\"taxesAndFees\":[{\"date\":\"2024-07-06\",\"amount\":32.78,\"itemized\":[{\"itemType\":\"RoomChargeTax\",\"amount\":26.76,\"item\":\"OCTAX\"},{\"itemType\":\"ResortFeeTax\",\"amount\":6.02,\"item\":\"RSFTX\"}]}]},\"availableComponents\":[{\"id\":\"COMPONENTCD-v-PROCESSFEE-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-CCAUTHFEE\",\"code\":\"PROCESSFEE\",\"active\":true,\"nonEditable\":false,\"depositAmount\":0.00,\"pricingApplied\":\"CHECKOUT\",\"tripPrice\":0.00,\"tripTax\":0.00,\"price\":0.00,\"prices\":[{\"date\":\"2024-07-06\",\"amount\":0.00,\"tax\":0.00},{\"date\":\"2024-07-07\",\"amount\":0.00,\"tax\":0.00}]},{\"id\":\"COMPONENTCD-v-DOGFEE-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-DOGFRIENDLY\",\"code\":\"DOGFEE\",\"active\":true,\"nonEditable\":false,\"depositAmount\":170.07,\"pricingApplied\":\"NIGHTLY\",\"tripPrice\":150.00,\"tripTax\":20.07,\"price\":150.00,\"prices\":[{\"date\":\"2024-07-06\",\"amount\":150.00,\"tax\":20.07}]},{\"id\":\"COMPONENTCD-v-DOGFEE-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-DOGFRIENDLYSTE\",\"code\":\"DOGFEE\",\"active\":true,\"nonEditable\":false,\"depositAmount\":226.76,\"pricingApplied\":\"NIGHTLY\",\"tripPrice\":200.00,\"tripTax\":26.76,\"price\":200.00,\"prices\":[{\"date\":\"2024-07-06\",\"amount\":200.00,\"tax\":26.76}]},{\"id\":\"COMPONENTCD-v-EARLYCI-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-EARLYCI\",\"code\":\"EARLYCI\",\"active\":true,\"nonEditable\":false,\"depositAmount\":34.01,\"pricingApplied\":\"CHECKIN\",\"tripPrice\":30.00,\"tripTax\":4.01,\"price\":30.00,\"prices\":[{\"date\":\"2024-07-06\",\"amount\":30.00,\"tax\":4.01}]},{\"id\":\"COMPONENTCD-v-EARLYCI-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-EARLYCKIN\",\"code\":\"EARLYCI\",\"active\":true,\"nonEditable\":false,\"depositAmount\":34.01,\"pricingApplied\":\"CHECKIN\",\"tripPrice\":30.00,\"tripTax\":4.01,\"price\":30.00,\"prices\":[{\"date\":\"2024-07-06\",\"amount\":30.00,\"tax\":4.01}]},{\"id\":\"COMPONENTCD-v-DOGFEE-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-ELLIOTTDOGGYFEE\",\"code\":\"DOGFEE\",\"shortDescription\":\"DOG FEE NON ROOM PRODUCT RATE PLAN FOR CQ RESTEST\",\"longDescription\":\"DOG FEE NON ROOM PRODUCT RATE PLAN FOR CQ RESTEST\",\"active\":true,\"nonEditable\":false,\"depositAmount\":56.69,\"pricingApplied\":\"NIGHTLY\",\"tripPrice\":50.00,\"tripTax\":6.69,\"price\":50.00,\"prices\":[{\"date\":\"2024-07-06\",\"amount\":50.00,\"tax\":6.69}]},{\"id\":\"COMPONENTCD-v-LATECO-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-LATECHKOUT\",\"code\":\"LATECO\",\"active\":true,\"nonEditable\":false,\"depositAmount\":68.03,\"pricingApplied\":\"CHECKOUT\",\"tripPrice\":60.00,\"tripTax\":8.03,\"price\":60.00,\"prices\":[{\"date\":\"2024-07-06\",\"amount\":60.00,\"tax\":8.03}]},{\"id\":\"COMPONENTCD-v-LATECO-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-LATECKOUT\",\"code\":\"LATECO\",\"active\":true,\"nonEditable\":false,\"depositAmount\":68.03,\"pricingApplied\":\"CHECKOUT\",\"tripPrice\":60.00,\"tripTax\":8.03,\"price\":60.00,\"prices\":[{\"date\":\"2024-07-06\",\"amount\":60.00,\"tax\":8.03}]},{\"id\":\"COMPONENTCD-v-LATECO-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-LATECKOUT1P\",\"code\":\"LATECO\",\"active\":true,\"nonEditable\":false,\"depositAmount\":45.35,\"pricingApplied\":\"CHECKOUT\",\"tripPrice\":40.00,\"tripTax\":5.35,\"price\":40.00,\"prices\":[{\"date\":\"2024-07-06\",\"amount\":40.00,\"tax\":5.35}]},{\"id\":\"COMPONENTCD-v-LATECO-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-LATECKOUT60\",\"code\":\"LATECO\",\"active\":true,\"nonEditable\":false,\"depositAmount\":68.03,\"pricingApplied\":\"CHECKOUT\",\"tripPrice\":60.00,\"tripTax\":8.03,\"price\":60.00,\"prices\":[{\"date\":\"2024-07-06\",\"amount\":60.00,\"tax\":8.03}]},{\"id\":\"COMPONENTCD-v-EARLYCI-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-MECI\",\"code\":\"EARLYCI\",\"active\":true,\"nonEditable\":false,\"depositAmount\":45.35,\"pricingApplied\":\"CHECKIN\",\"tripPrice\":40.00,\"tripTax\":5.35,\"price\":40.00,\"prices\":[{\"date\":\"2024-07-06\",\"amount\":40.00,\"tax\":5.35}]},{\"id\":\"COMPONENTCD-v-EARLYCI-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-MECIA11\",\"code\":\"EARLYCI\",\"active\":true,\"nonEditable\":false,\"depositAmount\":34.01,\"pricingApplied\":\"CHECKOUT\",\"tripPrice\":60.00,\"tripTax\":8.02,\"price\":30.00,\"prices\":[{\"date\":\"2024-07-06\",\"amount\":30.00,\"tax\":4.01},{\"date\":\"2024-07-07\",\"amount\":30.00,\"tax\":4.01}]},{\"id\":\"COMPONENTCD-v-EARLYCI-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-MECIP01\",\"code\":\"EARLYCI\",\"active\":true,\"nonEditable\":false,\"depositAmount\":22.68,\"pricingApplied\":\"CHECKIN\",\"tripPrice\":20.00,\"tripTax\":2.68,\"price\":20.00,\"prices\":[{\"date\":\"2024-07-06\",\"amount\":20.00,\"tax\":2.68}]},{\"id\":\"COMPONENTCD-v-LATECO-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-MLCO\",\"code\":\"LATECO\",\"active\":true,\"nonEditable\":false,\"depositAmount\":68.03,\"pricingApplied\":\"CHECKIN\",\"tripPrice\":60.00,\"tripTax\":8.03,\"price\":60.00,\"prices\":[{\"date\":\"2024-07-06\",\"amount\":60.00,\"tax\":8.03}]},{\"id\":\"COMPONENTCD-v-LATECO-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-MLCOP03\",\"code\":\"LATECO\",\"active\":true,\"nonEditable\":false,\"depositAmount\":68.03,\"pricingApplied\":\"CHECKIN\",\"tripPrice\":60.00,\"tripTax\":8.03,\"price\":60.00,\"prices\":[{\"date\":\"2024-07-06\",\"amount\":60.00,\"tax\":8.03}]},{\"id\":\"COMPONENTCD-v-LATECO-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-MLCOP06\",\"code\":\"LATECO\",\"active\":true,\"nonEditable\":false,\"depositAmount\":68.03,\"pricingApplied\":\"CHECKIN\",\"tripPrice\":60.00,\"tripTax\":8.03,\"price\":60.00,\"prices\":[{\"date\":\"2024-07-06\",\"amount\":60.00,\"tax\":8.03}]},{\"id\":\"COMPONENTCD-v-PARKING-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-MPSP\",\"code\":\"PARKING\",\"active\":true,\"nonEditable\":false,\"depositAmount\":20.41,\"pricingApplied\":\"NIGHTLY\",\"tripPrice\":18.00,\"tripTax\":2.41,\"price\":18.00,\"prices\":[{\"date\":\"2024-07-06\",\"amount\":18.00,\"tax\":2.41}]},{\"id\":\"COMPONENTCD-v-MYVEGASFEE-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-MYVEGASFEE\",\"code\":\"MYVEGASFEE\",\"active\":true,\"nonEditable\":false,\"depositAmount\":0.00,\"pricingApplied\":\"CHECKIN\",\"tripPrice\":0.00,\"tripTax\":0.00,\"price\":0.00,\"prices\":[{\"date\":\"2024-07-06\",\"amount\":0.00,\"tax\":0.00}]},{\"id\":\"COMPONENTCD-v-PARKING-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-PP1\",\"code\":\"PARKING\",\"active\":true,\"nonEditable\":false,\"depositAmount\":20.41,\"pricingApplied\":\"NIGHTLY\",\"tripPrice\":18.00,\"tripTax\":2.41,\"price\":18.00,\"prices\":[{\"date\":\"2024-07-06\",\"amount\":18.00,\"tax\":2.41}]},{\"id\":\"COMPONENTCD-v-PARKING-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-PP2\",\"code\":\"PARKING\",\"active\":true,\"nonEditable\":false,\"depositAmount\":0.00,\"pricingApplied\":\"NIGHTLY\",\"tripPrice\":0.00,\"tripTax\":0.00,\"price\":0.00,\"prices\":[{\"date\":\"2024-07-06\",\"amount\":0.00,\"tax\":0.00}]}],\"ratesSummary\":{\"roomSubtotal\":200.0000,\"programDiscount\":0.0000,\"discountedSubtotal\":200.0000,\"discountedAveragePrice\":200.0000,\"roomRequestsTotal\":0.0000,\"adjustedRoomSubtotal\":200.0000,\"resortFee\":45.0000,\"resortFeePerNight\":45.0000,\"tripSubtotal\":245.0000,\"resortFeeAndTax\":51.0200,\"roomChargeTax\":26.7600,\"occupancyFee\":0.0000,\"tourismFee\":0.0000,\"tourismFeeAndTax\":0.0000,\"casinoSurcharge\":0.0000,\"casinoSurchargeAndTax\":0.0000,\"reservationTotal\":277.7800,\"depositDue\":226.7600,\"balanceUponCheckIn\":51.0200},\"depositDetails\":{\"dueDate\":\"2024-05-28\",\"amount\":226.76,\"forfeitDate\":\"2024-07-03\",\"forfeitAmount\":226.76,\"overrideAmount\":-1.00},\"depositPolicy\":{\"depositRequired\":true,\"creditCardRequired\":false}}",
+        "contentVersion": "V2",
+        "cartLineItemId": "632adaf7-7af7-479b-a45c-e9d0e8207c3e",
+        "packageLineItemId": "19950947-e1ff-4e23-8ad5-408a81bdb19a",
+        "packageType": "SHOW_AND_ROOM",
+        "productId": "ROOMCD-v-S2PCQ-d-PROP-v-MV930",
+        "priceExpiresAt": "2024-05-28T23:43:49.2395021Z[Etc/GMT]",
+        "invalidAt": "2024-08-26T23:13:49.2395021Z[Etc/GMT]",
+        "clientChannel": "web",
+        "clientSource": "mgmri",
+        "propertyId": "e2704b04-d515-45b0-8afd-4fa1424ff0a8",
+        "status": "SAVED",
+        "isCheckoutEligible": true,
+        "enableJwb": false,
+        "itemSelectionDetails": {
+          "roomSelectionDetails": {
+            "offerType": "PACKAGE",
+            "programId": "RPCD-v-BAR-d-PROP-v-MV930",
+            "addOnComponents": [
+              {
+                "id": "COMPONENTCD-v-PROCESSFEE-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-CCAUTHFEE",
+                "code": "PROCESSFEE",
+                "active": true,
+                "nonEditable": false,
+                "selected": false,
+                "pricingApplied": "CHECKOUT",
+                "tripPrice": 0.0000,
+                "tripTax": 0.0000,
+                "price": 0.0000,
+                "depositAmount": 0.0000,
+                "prices": [
+                  {
+                    "date": "2024-07-06",
+                    "amount": 0.0000,
+                    "tax": 0.0000
+                  },
+                  {
+                    "date": "2024-07-07",
+                    "amount": 0.0000,
+                    "tax": 0.0000
+                  }
+                ]
+              },
+              {
+                "id": "COMPONENTCD-v-DOGFEE-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-DOGFRIENDLY",
+                "code": "DOGFEE",
+                "active": true,
+                "nonEditable": false,
+                "selected": false,
+                "pricingApplied": "NIGHTLY",
+                "tripPrice": 150.0000,
+                "tripTax": 20.0700,
+                "price": 150.0000,
+                "depositAmount": 170.0700,
+                "prices": [
+                  {
+                    "date": "2024-07-06",
+                    "amount": 150.0000,
+                    "tax": 20.0700
+                  }
+                ]
+              },
+              {
+                "id": "COMPONENTCD-v-DOGFEE-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-DOGFRIENDLYSTE",
+                "code": "DOGFEE",
+                "active": true,
+                "nonEditable": false,
+                "selected": false,
+                "pricingApplied": "NIGHTLY",
+                "tripPrice": 200.0000,
+                "tripTax": 26.7600,
+                "price": 200.0000,
+                "depositAmount": 226.7600,
+                "prices": [
+                  {
+                    "date": "2024-07-06",
+                    "amount": 200.0000,
+                    "tax": 26.7600
+                  }
+                ]
+              },
+              {
+                "id": "COMPONENTCD-v-EARLYCI-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-EARLYCI",
+                "code": "EARLYCI",
+                "active": true,
+                "nonEditable": false,
+                "selected": false,
+                "pricingApplied": "CHECKIN",
+                "tripPrice": 30.0000,
+                "tripTax": 4.0100,
+                "price": 30.0000,
+                "depositAmount": 34.0100,
+                "prices": [
+                  {
+                    "date": "2024-07-06",
+                    "amount": 30.0000,
+                    "tax": 4.0100
+                  }
+                ]
+              },
+              {
+                "id": "COMPONENTCD-v-EARLYCI-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-EARLYCKIN",
+                "code": "EARLYCI",
+                "active": true,
+                "nonEditable": false,
+                "selected": false,
+                "pricingApplied": "CHECKIN",
+                "tripPrice": 30.0000,
+                "tripTax": 4.0100,
+                "price": 30.0000,
+                "depositAmount": 34.0100,
+                "prices": [
+                  {
+                    "date": "2024-07-06",
+                    "amount": 30.0000,
+                    "tax": 4.0100
+                  }
+                ]
+              },
+              {
+                "id": "COMPONENTCD-v-DOGFEE-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-ELLIOTTDOGGYFEE",
+                "code": "DOGFEE",
+                "shortDescription": "DOG FEE NON ROOM PRODUCT RATE PLAN FOR CQ RESTEST",
+                "longDescription": "DOG FEE NON ROOM PRODUCT RATE PLAN FOR CQ RESTEST",
+                "active": true,
+                "nonEditable": false,
+                "selected": false,
+                "pricingApplied": "NIGHTLY",
+                "tripPrice": 50.0000,
+                "tripTax": 6.6900,
+                "price": 50.0000,
+                "depositAmount": 56.6900,
+                "prices": [
+                  {
+                    "date": "2024-07-06",
+                    "amount": 50.0000,
+                    "tax": 6.6900
+                  }
+                ]
+              },
+              {
+                "id": "COMPONENTCD-v-LATECO-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-LATECHKOUT",
+                "code": "LATECO",
+                "active": true,
+                "nonEditable": false,
+                "selected": false,
+                "pricingApplied": "CHECKOUT",
+                "tripPrice": 60.0000,
+                "tripTax": 8.0300,
+                "price": 60.0000,
+                "depositAmount": 68.0300,
+                "prices": [
+                  {
+                    "date": "2024-07-06",
+                    "amount": 60.0000,
+                    "tax": 8.0300
+                  }
+                ]
+              },
+              {
+                "id": "COMPONENTCD-v-LATECO-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-LATECKOUT",
+                "code": "LATECO",
+                "active": true,
+                "nonEditable": false,
+                "selected": false,
+                "pricingApplied": "CHECKOUT",
+                "tripPrice": 60.0000,
+                "tripTax": 8.0300,
+                "price": 60.0000,
+                "depositAmount": 68.0300,
+                "prices": [
+                  {
+                    "date": "2024-07-06",
+                    "amount": 60.0000,
+                    "tax": 8.0300
+                  }
+                ]
+              },
+              {
+                "id": "COMPONENTCD-v-LATECO-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-LATECKOUT1P",
+                "code": "LATECO",
+                "active": true,
+                "nonEditable": false,
+                "selected": false,
+                "pricingApplied": "CHECKOUT",
+                "tripPrice": 40.0000,
+                "tripTax": 5.3500,
+                "price": 40.0000,
+                "depositAmount": 45.3500,
+                "prices": [
+                  {
+                    "date": "2024-07-06",
+                    "amount": 40.0000,
+                    "tax": 5.3500
+                  }
+                ]
+              },
+              {
+                "id": "COMPONENTCD-v-LATECO-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-LATECKOUT60",
+                "code": "LATECO",
+                "active": true,
+                "nonEditable": false,
+                "selected": false,
+                "pricingApplied": "CHECKOUT",
+                "tripPrice": 60.0000,
+                "tripTax": 8.0300,
+                "price": 60.0000,
+                "depositAmount": 68.0300,
+                "prices": [
+                  {
+                    "date": "2024-07-06",
+                    "amount": 60.0000,
+                    "tax": 8.0300
+                  }
+                ]
+              },
+              {
+                "id": "COMPONENTCD-v-EARLYCI-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-MECI",
+                "code": "EARLYCI",
+                "active": true,
+                "nonEditable": false,
+                "selected": false,
+                "pricingApplied": "CHECKIN",
+                "tripPrice": 40.0000,
+                "tripTax": 5.3500,
+                "price": 40.0000,
+                "depositAmount": 45.3500,
+                "prices": [
+                  {
+                    "date": "2024-07-06",
+                    "amount": 40.0000,
+                    "tax": 5.3500
+                  }
+                ]
+              },
+              {
+                "id": "COMPONENTCD-v-EARLYCI-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-MECIA11",
+                "code": "EARLYCI",
+                "active": true,
+                "nonEditable": false,
+                "selected": false,
+                "pricingApplied": "CHECKOUT",
+                "tripPrice": 60.0000,
+                "tripTax": 8.0200,
+                "price": 30.0000,
+                "depositAmount": 34.0100,
+                "prices": [
+                  {
+                    "date": "2024-07-06",
+                    "amount": 30.0000,
+                    "tax": 4.0100
+                  },
+                  {
+                    "date": "2024-07-07",
+                    "amount": 30.0000,
+                    "tax": 4.0100
+                  }
+                ]
+              },
+              {
+                "id": "COMPONENTCD-v-EARLYCI-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-MECIP01",
+                "code": "EARLYCI",
+                "active": true,
+                "nonEditable": false,
+                "selected": false,
+                "pricingApplied": "CHECKIN",
+                "tripPrice": 20.0000,
+                "tripTax": 2.6800,
+                "price": 20.0000,
+                "depositAmount": 22.6800,
+                "prices": [
+                  {
+                    "date": "2024-07-06",
+                    "amount": 20.0000,
+                    "tax": 2.6800
+                  }
+                ]
+              },
+              {
+                "id": "COMPONENTCD-v-LATECO-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-MLCO",
+                "code": "LATECO",
+                "active": true,
+                "nonEditable": false,
+                "selected": false,
+                "pricingApplied": "CHECKIN",
+                "tripPrice": 60.0000,
+                "tripTax": 8.0300,
+                "price": 60.0000,
+                "depositAmount": 68.0300,
+                "prices": [
+                  {
+                    "date": "2024-07-06",
+                    "amount": 60.0000,
+                    "tax": 8.0300
+                  }
+                ]
+              },
+              {
+                "id": "COMPONENTCD-v-LATECO-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-MLCOP03",
+                "code": "LATECO",
+                "active": true,
+                "nonEditable": false,
+                "selected": false,
+                "pricingApplied": "CHECKIN",
+                "tripPrice": 60.0000,
+                "tripTax": 8.0300,
+                "price": 60.0000,
+                "depositAmount": 68.0300,
+                "prices": [
+                  {
+                    "date": "2024-07-06",
+                    "amount": 60.0000,
+                    "tax": 8.0300
+                  }
+                ]
+              },
+              {
+                "id": "COMPONENTCD-v-LATECO-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-MLCOP06",
+                "code": "LATECO",
+                "active": true,
+                "nonEditable": false,
+                "selected": false,
+                "pricingApplied": "CHECKIN",
+                "tripPrice": 60.0000,
+                "tripTax": 8.0300,
+                "price": 60.0000,
+                "depositAmount": 68.0300,
+                "prices": [
+                  {
+                    "date": "2024-07-06",
+                    "amount": 60.0000,
+                    "tax": 8.0300
+                  }
+                ]
+              },
+              {
+                "id": "COMPONENTCD-v-PARKING-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-MPSP",
+                "code": "PARKING",
+                "active": true,
+                "nonEditable": false,
+                "selected": false,
+                "pricingApplied": "NIGHTLY",
+                "tripPrice": 18.0000,
+                "tripTax": 2.4100,
+                "price": 18.0000,
+                "depositAmount": 20.4100,
+                "prices": [
+                  {
+                    "date": "2024-07-06",
+                    "amount": 18.0000,
+                    "tax": 2.4100
+                  }
+                ]
+              },
+              {
+                "id": "COMPONENTCD-v-MYVEGASFEE-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-MYVEGASFEE",
+                "code": "MYVEGASFEE",
+                "active": true,
+                "nonEditable": false,
+                "selected": false,
+                "pricingApplied": "CHECKIN",
+                "tripPrice": 0.0000,
+                "tripTax": 0.0000,
+                "price": 0.0000,
+                "depositAmount": 0.0000,
+                "prices": [
+                  {
+                    "date": "2024-07-06",
+                    "amount": 0.0000,
+                    "tax": 0.0000
+                  }
+                ]
+              },
+              {
+                "id": "COMPONENTCD-v-PARKING-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-PP1",
+                "code": "PARKING",
+                "active": true,
+                "nonEditable": false,
+                "selected": false,
+                "pricingApplied": "NIGHTLY",
+                "tripPrice": 18.0000,
+                "tripTax": 2.4100,
+                "price": 18.0000,
+                "depositAmount": 20.4100,
+                "prices": [
+                  {
+                    "date": "2024-07-06",
+                    "amount": 18.0000,
+                    "tax": 2.4100
+                  }
+                ]
+              },
+              {
+                "id": "COMPONENTCD-v-PARKING-d-TYP-v-COMPONENT-d-PROP-v-MV930-d-NRPCD-v-PP2",
+                "code": "PARKING",
+                "active": true,
+                "nonEditable": false,
+                "selected": false,
+                "pricingApplied": "NIGHTLY",
+                "tripPrice": 0.0000,
+                "tripTax": 0.0000,
+                "price": 0.0000,
+                "depositAmount": 0.0000,
+                "prices": [
+                  {
+                    "date": "2024-07-06",
+                    "amount": 0.0000,
+                    "tax": 0.0000
+                  }
+                ]
+              }
+            ],
+            "f1Package": false,
+            "bookings": [
+              {
+                "date": "2024-07-06",
+                "basePrice": 200.0000,
+                "customerPrice": 0.0000,
+                "price": 200.0000,
+                "isDiscounted": false,
+                "programIdIsRateTable": false,
+                "overridePrice": -1.0000,
+                "overrideProgramIdIsRateTable": false,
+                "isComp": false,
+                "resortFeeIsSpecified": false,
+                "resortFee": 0.0000,
+                "programId": "RPCD-v-BAR-d-PROP-v-MV930"
+              }
+            ],
+            "numberOfNights": 1,
+            "ratesSummary": {
+              "roomSubtotal": 200.0000,
+              "programDiscount": 0.0000,
+              "discountedSubtotal": 200.0000,
+              "discountedAveragePrice": 200.0000,
+              "roomRequestsTotal": 0.0000,
+              "adjustedRoomSubtotal": 200.0000,
+              "resortFee": 45.0000,
+              "resortFeePerNight": 45.0000,
+              "tripSubtotal": 245.0000,
+              "resortFeeAndTax": 51.0200,
+              "roomChargeTax": 26.7600,
+              "occupancyFee": 0.0000,
+              "tourismFee": 0.0000,
+              "tourismFeeAndTax": 0.0000,
+              "casinoSurcharge": 0.0000,
+              "casinoSurchargeAndTax": 0.0000,
+              "reservationTotal": 277.7800,
+              "depositDue": 226.7600,
+              "previousDeposit": 0.0000,
+              "changeInDeposit": 0.0000,
+              "balanceUponCheckIn": 51.0200,
+              "averagePricePerNight": 200.0000
+            }
+          }
+        },
+        "paymentRequired": true,
+        "upsellAvailable": false,
+        "upgraded": false
+      }
+    ],
+    "packageConfigDetails": {
+      "packageCategoryId": "Pkg_953654-premier-package",
+      "packagePriceBreakdown": "Build As You Go",
+      "packagePricingDetails": {
+        "packageBaseTotal": 311.4900,
+        "packageStartingPrice": 0.0000,
+        "packageTotal": 311.4900,
+        "roomModification": 0.0000,
+        "showModification": 0.0000,
+        "roomTotal": 277.7800,
+        "showTotal": 33.7100,
+        "packageInclusions": []
+      }
+    },
+    "priceDetails": {
+      "totalCharge": 254.9500,
+      "totalTax": 37.2100,
+      "totalPrice": 331.4200,
+      "totalStrikethroughPrice": 345.1600,
+      "totalDeposit": 280.4000,
+      "totalDiscount": 13.7400,
+      "totalBalance": 51.0200,
+      "totalAdjustedItemSubtotal": 241.2100,
+      "totalItemsSubtotal": 286.2100
+    },
+    "roomTotals": {
+      "totalTourismFeeAndTax": 0.0000,
+      "totalCasinoSurchargeAndTax": 0.0000,
+      "totalResortFeePerNight": 45.0000,
+      "totalOccupancyFee": 0.0000,
+      "totalResortFeeAndTax": 51.0200,
+      "totalTripSubtotal": 245.0000,
+      "totalPrice": 277.7800,
+      "totalRoomChargeTax": 26.7600,
+      "totalAdjustedItemSubtotal": 200.0000
+    },
+    "showTotals": {
+      "totalDeliveryFee": 0.0000,
+      "totalGratuity": 0.0000,
+      "totalLet": 3.7100,
+      "totalServiceChargeFee": 8.0000,
+      "totalServiceChargeTax": 0.7200,
+      "totalTransactionFee": 0.0000,
+      "totalTransactionTax": 0.0000,
+      "totalPrice": 53.6400,
+      "totalServiceChargeFeeAndTax": 8.7200,
+      "totalAdjustedItemSubtotal": 41.2100
+    },
+    "isCheckoutEligible": true,
+    "type": "PACKAGE",
+    "version": "V2",
+    "status": "ACTIVE",
+    "minHoldDuration": 900,
+    "diningMaxCount": 9,
+    "showMaxCount": 9,
+    "roomMaxCount": 9,
+    "repriced": false,
+    "enableJwb": false,
+    "jwbFlow": false,
+    "metaData": {
+      "lineItemsMetadata": [],
+      "triggeringCartLineItemIds": [
+        "632adaf7-7af7-479b-a45c-e9d0e8207c3e"
+      ],
+      "createdAt": "2024-05-28T23:13:27.7543683Z"
+    },
+    "isTimerExtended": false,
+    "paymentRequired": true,
+    "perpetualOfferEligible": false,
+    "paymentSessionId": "774ef619-fbb6-40fe-9f2f-1befc696393d"
+  }
+}

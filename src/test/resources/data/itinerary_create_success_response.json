@@ -1,0 +1,35 @@
+{
+  "itinerary": {
+    "itineraryId": "9328393730",
+    "ucpItineraryId": "8f0b71b7-90f9-4aac-8c68-a53a8b915e3d",
+    "itineraryName": "a5bf5c0c-a742-4cb6-8f6b-a4c3334aec6d",
+    "customerId": "847552971010",
+    "profileId": "dafa079b-72e6-43ac-bc65-85131f8fbe8f",
+    "tripParams": {
+      "numAdults": 2,
+      "numChildren": 1,
+      "departureDate": "2021-08-03",
+      "arrivalDate": "2021-08-01"
+    },
+    "roomReservations": [],
+    "showReservations": [],
+    "diningReservations": [],
+    "metadata": {
+      "createdAt": "2021-07-10T18:19:28.918Z",
+      "createdBy": "devops_carts",
+      "modifiedAt": "2021-07-10T18:19:28.918Z",
+      "modifiedBy": "devops_carts",
+      "version": 1
+    }
+  },
+  "header": {
+    "origin": "API",
+    "mgmCorerelationId": "",
+    "apiVersion": "3.1",
+    "executionId": "5943626c-6739-49dd-b314-a608e06200c5",
+    "status": {
+      "code": "SUCCESS",
+      "messages": []
+    }
+  }
+}

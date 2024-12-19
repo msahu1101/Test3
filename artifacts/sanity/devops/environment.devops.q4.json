@@ -1,0 +1,105 @@
+{
+	"id": "0832ded8-4c31-4b51-b709-cc70735ed573",
+	"name": "Order-Service-Devops-Qa4",
+	"values": [
+		{
+			"key": "ords_client_id",
+			"value": "mgm_order_service",
+			"enabled": true
+		},
+		{
+			"key": "ords_client_secret",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "oath_token_endpoint",
+			"value": "https://qa4-api.apigee.devtest.vegas/identity/authorization/v1/mgmsvc/token",
+			"enabled": true
+		},
+		{
+			"key": "room_availability_endpoint",
+			"value": "https://qa4-api.apigee.devtest.vegas/booking/room/v3/availability/trip",
+			"enabled": true
+		},
+		{
+			"key": "add_product_cart_endpoint",
+			"value": "https://qa4-api.apigee.devtest.vegas/shopping/v1/cart/product",
+			"enabled": true
+		},
+		{
+			"key": "get_cart_endpoint",
+			"value": "https://qa4-api.apigee.devtest.vegas/shopping/v1/cart",
+			"enabled": true
+		},
+		{
+			"key": "property_id",
+			"value": "e2704b04-d515-45b0-8afd-4fa1424ff0a8",
+			"enabled": true
+		},
+		{
+			"key": "checkin_date",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "checkout_date",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "x_mgm_correlation_id",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "oauth_access_token",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "first_name",
+			"value": "test",
+			"enabled": true
+		},
+		{
+			"key": "last_name",
+			"value": "user",
+			"enabled": true
+		},
+		{
+			"key": "room_type_id_1",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "room_type_id_2",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "cart_id",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "program_id_1",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "program_id_2",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "total_price",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2022-10-19T20:39:42.191Z",
+	"_postman_exported_using": "Postman/9.31.21"
+}
