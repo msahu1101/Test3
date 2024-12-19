@@ -6,12 +6,12 @@
 		<server>
 			<id>MGMResorts_Maven</id>
 			<username>MGMResortsDigitalEngineering</username>
-			<password>eabzpfdswygulgzj26q5p7zlo7bs2mx5ef3roh3tq7teyaecrifq</password>
+			<!--<password>eabzpfdswygulgzj26q5p7zlo7bs2mx5ef3roh3tq7teyaecrifq</password>-->
 		</server>
 		<server>
 			<id>mgm_repository</id>
 			<username>MGMResortsDigitalEngineering</username>
-			<password>r7l3hspzops3vfdxxqvbiooesskyovampoubfd6uyrunclk4mthq</password>
+			<!--<password>r7l3hspzops3vfdxxqvbiooesskyovampoubfd6uyrunclk4mthq</password>-->
 		</server>
 	</servers>
 </settings>
